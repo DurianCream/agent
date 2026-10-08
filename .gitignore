@@ -1,0 +1,16 @@
+.ai-agent-runs/
+__pycache__/
+*.py[cod]
+.codex-orchestration-backups/
+.env
+.env.*
+!.env.example
+id_rsa
+id_ed25519
+*.key
+*.pem
+*.p12
+*.pfx
+credentials.json
+token.json
+tokens.json
