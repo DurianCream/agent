@@ -604,6 +604,8 @@ def parser():
     sub.add_parser("list")
     init = sub.add_parser("init")
     init.add_argument("--repo", help="Registered repository ID for durable work records")
+    for name in ("project", "service", "environment", "issue"):
+        init.add_argument("--" + name)
     init.add_argument("--module", required=True)
     init.add_argument("--task", required=True)
     init.add_argument("--objective", required=True)
@@ -633,9 +635,12 @@ def main(argv=None):
             if args.repo:
                 import repoctl
                 repoctl.repo(args.repo)
+                scope = repoctl.validate_scope(repoctl.scope_args(args))
+            else:
+                require(not any(getattr(args, key) for key in ("project", "service", "environment", "issue")), "Scope requires --repo")
             data = init_task(args.module, args.task, args.objective, args.criterion)
             if args.repo:
-                data["repository"] = repoctl.bind(args.repo, args.task)
+                data["repository"] = repoctl.bind(args.repo, args.task, scope=scope)
         elif args.command == "transition":
             data = transition(args.task, args.state)
         elif args.command == "register":

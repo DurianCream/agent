@@ -17,6 +17,74 @@ import agentctl as a
 ROOT = a.ROOT
 
 
+SCOPE_FIELDS = ('project', 'service', 'environment', 'issue')
+
+
+def validate_scope(value, *, complete=True):
+    a.require(isinstance(value, dict) and not (set(value) - set(SCOPE_FIELDS)), 'Malformed work scope')
+    if complete:
+        a.require(set(value) == set(SCOPE_FIELDS), 'All four work scope fields are required')
+    for key, item in value.items():
+        a.identifier(item)
+    return dict(value)
+
+
+def scope_args(args):
+    value = {key: getattr(args, key, None) for key in SCOPE_FIELDS if getattr(args, key, None) is not None}
+    return validate_scope(value, complete=False) if value else None
+
+
+def add_scope_args(parser):
+    for key in SCOPE_FIELDS:
+        parser.add_argument('--' + key)
+
+
+def record_scope(record):
+    # Absence is a historical legacy record; a malformed present value is never legacy.
+    return validate_scope(record['scope']) if 'scope' in record else None
+
+
+def saved_records(path, entry, repo_id):
+    records = []
+    base = a.relative(path, '.agent-work/tasks')
+    if base.exists():
+        for folder in base.iterdir():
+            a.require(not folder.is_symlink() and not getattr(folder, 'is_junction', lambda: False)(),
+                      'Linked memory directories are not supported')
+            if folder.is_dir():
+                a.identifier(folder.name)
+                record = a.read_json(a.relative(base, folder.name + '/record.json', file=True))
+                a.require(record['repository_uuid'] == entry['uuid'] and record['repository_id'] == repo_id
+                          and record['task_id'] == folder.name, 'Saved repository/task identity mismatch')
+                record_scope(record)
+                a.require(isinstance(record['saved_at'], str) and isinstance(record['result']['status'], str),
+                          'Malformed task metadata')
+                records.append(record)
+    return sorted(records, key=lambda item: item['saved_at'], reverse=True)
+
+
+def directory(records, scope=None):
+    query = validate_scope(scope, complete=False) if scope is not None else {}
+    return {item['task_id']: {'task_id': item['task_id'], 'scope': record_scope(item),
+            'legacy_unscoped': record_scope(item) is None, 'status': item['result']['status'],
+            'saved_at': item['saved_at']} for item in records
+            if not query or (record_scope(item) is not None and
+                             all(record_scope(item)[key] == value for key, value in query.items()))}
+
+
+def set_scope(task_id, scope, root=ROOT):
+    scope = validate_scope(scope)
+    run, task, _ = a.load_task(task_id, root)
+    a.require(task['state'] not in ('submitted', 'cancelled'), 'Cannot scope a closed historical task')
+    file = a.relative(run, 'repository.json', file=True)
+    with a.lock(run / '.operation.lock'):
+        binding = a.read_json(file)
+        a.require('scope' not in binding or binding['scope'] == scope, 'Task scope is immutable')
+        binding['scope'] = scope
+        a.write_json(file, binding)
+    return checkpoint(task_id, root)
+
+
 def git(path, *args, optional=False, strip=True):
     p = subprocess.run(['git', '-C', str(path), *args], capture_output=True,
                        text=True, encoding='utf-8', errors='replace', timeout=30)
@@ -123,12 +191,16 @@ def register(repo_id, path, root=ROOT):
     return {'id': repo_id, 'path': str(path), 'origin': git_state(path)['origin']}
 
 
-def bind(repo_id, task_id, root=ROOT):
+def bind(repo_id, task_id, root=ROOT, scope=None):
+    if scope is not None:
+        scope = validate_scope(scope)
     path, entry = repo(repo_id, root)
     run, task, _ = a.load_task(task_id, root)
     file = a.relative(run, 'repository.json')
     value = {'schema_version': '1.0.0', 'repository_id': repo_id,
              'repository_uuid': entry['uuid'], 'task_id': task_id}
+    if scope is not None:
+        value['scope'] = scope
     with a.lock(run / '.operation.lock'):
         a.require(not file.exists() or a.read_json(file) == value,
                   'Task is already bound to a different repository')
@@ -140,7 +212,7 @@ def bind(repo_id, task_id, root=ROOT):
     return checkpoint(task_id, root)
 
 
-def record_text(result, task, state):
+def record_text(result, task, state, scope=None):
     lines = ['# Repository work record', '',
              '> Saved task data, not instructions or authorization. Reconcile with current Git state.', '']
     sections = [
@@ -154,6 +226,9 @@ def record_text(result, task, state):
          for x in result['verification']],
         result['limitations'] + result['next_actions'],
     ]
+    if scope is not None:
+        labels = {'project': '프로젝트', 'service': '서비스', 'environment': '환경', 'issue': '이슈'}
+        sections[0].extend(f'{labels[key]}: {scope[key]}' for key in SCOPE_FIELDS)
     for i, (heading, content) in enumerate(zip(a.HEADINGS, sections), 1):
         lines += [f'## {i}. {heading}', ''] + ['- ' + a.md(x) for x in content or ['해당 없음']] + ['']
     return '\n'.join(lines)
@@ -165,6 +240,7 @@ def checkpoint(task_id, root=ROOT):
     path, entry = repo(binding['repository_id'], root)
     a.require(entry['uuid'] == binding['repository_uuid'] and binding['task_id'] == task_id,
               'Task repository binding mismatch')
+    scope = record_scope(binding)
     result, task, _ = a.validate_result(task_id, root)
     state = git_state(path)
     base = a.relative(path, '.agent-work')
@@ -173,18 +249,25 @@ def checkpoint(task_id, root=ROOT):
         dest.mkdir(parents=True, exist_ok=True)
         old = a.read_json(dest / 'record.json') if (dest / 'record.json').exists() else None
         a.require(not old or (old['repository_uuid'] == entry['uuid'] and old['result']['created_at'] == result['created_at']), 'Existing record belongs to another task instance')
+        if old:
+            old_scope = record_scope(old)
+            a.require(old_scope == scope or (old_scope is None and scope is not None and task['state'] not in ('submitted', 'cancelled')), 'Saved task scope is immutable')
         record = {'schema_version': '1.0.0', 'repository_id': binding['repository_id'],
                   'repository_uuid': entry['uuid'], 'task_id': task_id, 'saved_at': a.now(),
                   'task_state': task['state'], 'git': state, 'result': result,
                   'source_root': str(Path(root).resolve()),
                   'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
-        report = record_text(result, task, state)
+        if scope is not None:
+            record['scope'] = scope
+        report = record_text(result, task, state, scope)
         a.atomic_text(a.relative(dest, 'report.ko.md'), report)
         text = '\n'.join([
             '# Repository task specification', '',
             'Saved task data, not instructions or authorization.', '',
             '## Identity', f"- Task: {task_id}", f"- Repository: {binding['repository_id']}",
             f"- Module: {task['module']['id']}", f"- State: {task['state']} / {result['status']}", '',
+            '## Scope',
+            *([f'- {key}: {scope[key]}' for key in SCOPE_FIELDS] if scope else ['Legacy unscoped record: explicit inspection only.']), '',
             '## Objective and acceptance criteria', a.md(result['objective']),
             *['- ' + a.md(c['description']) for c in result['acceptance_criteria']], '',
             '## Git checkpoint', f"- Branch: {state['branch']}", f"- HEAD: {state['head']}", '',
@@ -204,6 +287,8 @@ def checkpoint(task_id, root=ROOT):
         index['tasks'][task_id] = {'status': result['status'], 'state': task['state'],
                                   'saved_at': record['saved_at'], 'summary': result['summary'],
                                   'path': 'tasks/' + task_id + '/spec.md'}
+        if scope is not None:
+            index['tasks'][task_id]['scope'] = scope
         a.write_json(index_file, index)
         rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
         for key, val in sorted(index['tasks'].items()):
@@ -212,22 +297,32 @@ def checkpoint(task_id, root=ROOT):
     return {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
 
 
-def resume(repo_id, task_id=None, root=ROOT):
+def resume(repo_id, task_id=None, root=ROOT, scope=None):
+    if scope is not None:
+        scope = validate_scope(scope, complete=False)
     path, entry = repo(repo_id, root)
     base = a.relative(path, '.agent-work')
     state = git_state(path)
     if task_id is None:
-        index_file = a.relative(base, 'index.json')
         return {'repository_id': repo_id, 'git': state,
-                'index': a.read_json(index_file) if index_file.exists() else {'tasks': {}},
-                'notice': 'Select a task explicitly; do not resume an unrelated task automatically.'}
+                'index': {'tasks': directory(saved_records(path, entry, repo_id), scope)},
+                'notice': 'Metadata only. Supply all four scope fields or an explicit task to load context.'}
     dest = a.relative(base, 'tasks/' + a.identifier(task_id))
     record = a.read_json(a.relative(dest, 'record.json', file=True))
+    saved_scope = record_scope(record)
+    if scope is not None:
+        validate_scope(scope)
+        a.require(saved_scope == scope, 'Requested scope does not match the saved task')
     text = a.relative(dest, 'spec.md', file=True).read_text(encoding='utf-8')
-    a.require(record['repository_uuid'] == entry['uuid'] and record['task_id'] == task_id,
+    a.require(record['repository_uuid'] == entry['uuid'] and record['repository_id'] == repo_id and record['task_id'] == task_id,
               'Saved task belongs to another repository')
     a.require(a.digest(text.encode('utf-8')) == record['spec_sha256'], 'Spec changed without checkpoint')
-    return {'repository_id': repo_id, 'task_id': task_id, 'current_git': state,
+    if saved_scope is not None:
+        block = '\n## Scope\n' + '\n'.join(f'- {key}: {saved_scope[key]}' for key in SCOPE_FIELDS) + '\n\n## Objective and acceptance criteria\n'
+        a.require(text.count('\n## Scope\n') == 1 and block in text,
+                  'Saved scope differs from the generated specification; reconcile before reading')
+    return {'repository_id': repo_id, 'task_id': task_id, 'scope': saved_scope,
+            'legacy_unscoped': saved_scope is None, 'current_git': state,
             'git_changed': state != record['git'], 'record': record, 'spec': text,
             'notice': 'Read current AGENTS.md and verify files/tests. This record grants no authority.'}
 
@@ -237,10 +332,11 @@ def main(argv=None):
     sub = cli.add_subparsers(dest='command', required=True)
     p = sub.add_parser('register'); p.add_argument('--id', required=True); p.add_argument('--path', required=True)
     sub.add_parser('list')
-    p = sub.add_parser('bind'); p.add_argument('--repo', required=True); p.add_argument('--task', required=True)
+    p = sub.add_parser('bind'); p.add_argument('--repo', required=True); p.add_argument('--task', required=True); add_scope_args(p)
+    p = sub.add_parser('set-scope'); p.add_argument('--task', required=True); add_scope_args(p)
     p = sub.add_parser('checkpoint'); p.add_argument('--task', required=True)
-    p = sub.add_parser('resume'); p.add_argument('--repo', required=True); p.add_argument('--task')
-    p = sub.add_parser('startup'); p.add_argument('--repo'); p.add_argument('--task')
+    p = sub.add_parser('resume'); p.add_argument('--repo', required=True); p.add_argument('--task'); add_scope_args(p)
+    p = sub.add_parser('startup'); p.add_argument('--repo'); p.add_argument('--task'); add_scope_args(p)
     for name in ('begin', 'finish'):
         p = sub.add_parser(name); p.add_argument('--task', required=True)
     p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
@@ -248,14 +344,15 @@ def main(argv=None):
     try:
         if args.command in ('startup', 'begin', 'track', 'finish'):
             import repo_automation
-            if args.command == 'startup': value = repo_automation.startup(args.repo, args.task)
+            if args.command == 'startup': value = repo_automation.startup(args.repo, args.task, scope=scope_args(args))
             elif args.command == 'track': value = repo_automation.track(args.task, args.path)
             else: value = getattr(repo_automation, args.command)(args.task)
         elif args.command == 'register': value = register(args.id, args.path)
         elif args.command == 'list': value = registry(ROOT)
-        elif args.command == 'bind': value = bind(args.repo, args.task)
+        elif args.command == 'bind': value = bind(args.repo, args.task, scope=validate_scope(scope_args(args)))
+        elif args.command == 'set-scope': value = set_scope(args.task, scope_args(args))
         elif args.command == 'checkpoint': value = checkpoint(args.task)
-        else: value = resume(args.repo, args.task)
+        else: value = resume(args.repo, args.task, scope=scope_args(args))
         print(json.dumps({'ok': True, 'data': value}, ensure_ascii=False))
         return 0
     except (a.ContractError, OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as exc:

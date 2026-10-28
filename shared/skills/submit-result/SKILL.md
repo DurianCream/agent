@@ -7,7 +7,7 @@ description: Produce and submit the common seven-section result for artifact-pro
 
 Use runtime/agentctl.py at the repository root. Ordinary conversation does not require an execution record.
 
-1. Start with `python runtime/agentctl.py init --module <registered-id> --task <task-id> --objective <objective> --criterion <acceptance-criterion>`. Repeat --criterion as needed. Add --repo <repo-id> for a registered target repository. To continue existing work, inspect task.json instead of creating a replacement task.
+1. Start with `python runtime/agentctl.py init --module <registered-id> --task <task-id> --objective <objective> --criterion <acceptance-criterion>`. Repeat --criterion as needed. For a registered target repository, add --repo <repo-id> and all four scope flags: --project <project-id> --service <service-id> --environment <environment-id> --issue <issue-id>. New repository-bound tasks require the complete scope. Do not guess an environment or copy the latest task scope. To continue existing work, inspect task.json instead of creating a replacement task.
 2. Run `transition <task-id> running`. Store actual artifacts in outputs/<task-id>/ and verification logs in runs/<task-id>/evidence/.
 3. Populate the fixed fields in runs/<task-id>/result.json. artifacts.path and verification.evidence are repository-root-relative. artifacts.sha256 may be null initially; submit computes it. Write user-facing narrative in Korean; schema keys remain unchanged.
 4. Link real verification IDs in acceptance_criteria.verification_ids. Passed/failed checks require readable evidence files. Record unexecuted checks as not_run, and non-applicable checks as not_applicable with a reason. Never mark completed without proving every required criterion.
@@ -16,3 +16,5 @@ Use runtime/agentctl.py at the repository root. Ordinary conversation does not r
 7. Final chat replies must retain seven ordered sections: basic information; objective and acceptance criteria; result summary; work performed; artifacts; verification results; unresolved issues and next actions. Use the result generator's Korean labels and Korean narrative. Be concise without omitting sections. State when an item is not applicable, unverified, or unexecuted.
 
 Schema and policy sources are shared/schemas/result.schema.json and shared/policies/common.json. Existing tasks use their frozen versions under runs/<task-id>/snapshot/files/. Structural checks do not establish the truth of evidence.
+
+Keep the task scope immutable. Preserve legacy unclassified records without inferring a classification. An active legacy binding can receive its first explicit scope with repoctl set-scope; submitted reports and snapshots must not be rewritten.

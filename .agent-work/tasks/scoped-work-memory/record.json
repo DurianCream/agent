@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "scoped-work-memory",
+  "saved_at": "2026-10-28T14:11:19+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "c5c1aa1bf345d846a62766dfb50cac0f7b82928c",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M AGENTS.md\n M README.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n M \"docs/\\354\\236\\221\\354\\227\\205\\352\\270\\260\\353\\241\\235-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M modules/coding/module.json\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/agentctl.py\n M runtime/native-map.json\n M runtime/repo_automation.py\n M runtime/repoctl.py\n M runtime/tests/test_repo_automation.py\n M runtime/tests/test_repoctl.py\n M shared/policies/common.json\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n?? .agent-work/tasks/scoped-work-memory/\n?? runtime/tests/test_work_scope.py",
+    "worktree_sha256": "a6ba420988f0ea96568b83b571f283127d54b37ea01cbf311c0f2eadf2b05bf4"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "scoped-work-memory",
+    "module": {
+      "id": "coding",
+      "version": "0.1.2"
+    },
+    "created_at": "2026-10-28T13:59:37+09:00",
+    "objective": "Isolate work memory by project service environment and issue",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Startup returns full records only for the exact selected scope",
+        "required": true,
+        "verification_ids": [
+          "tests",
+          "startup",
+          "review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Different projects services environments issues and legacy records do not leak into context",
+        "required": true,
+        "verification_ids": [
+          "tests",
+          "startup",
+          "review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Scoped records survive fresh process and clone and publish safely",
+        "required": true,
+        "verification_ids": [
+          "tests",
+          "config",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "프로젝트·서비스·환경·이슈별 작업 기록을 분리하고 네 구분이 정확히 일치하는 기록만 자동으로 읽도록 구현했다.",
+    "work": [
+      "coding 담당이 binding·record·index·영어 명세와 한국어 보고서에 작업 범위를 추가하고 범위 불변성을 구현했다.",
+      "최신 3개 기록 자동 로딩을 제거하고, 무범위·부분 범위는 목록 정보만 반환하도록 변경했다.",
+      "새 저장소 작업의 CLI에는 네 구분을 필수화하고, 과거 미분류 기록은 보존하면서 자동 본문 로딩에서는 제외했다.",
+      "메인이 영어 에이전트 지침·한국어 안내와 정책·스킬 버전 참조를 동기화하고 실제 startup 조회를 검증했다.",
+      "별도 evaluator가 교차 범위 누출·명시적 조회·식별자 일관성을 검토했으며 발견한 검사를 보완했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/scoped-work-memory/setup.json",
+        "description": "작업 기록 범위 분리 적용 요약",
+        "sha256": "3dae3e136760b3b74959937ea81f2e4fd95c88fce7c98acfe4711dc8983d7941"
+      }
+    ],
+    "verification": [
+      {
+        "id": "tests",
+        "name": "범위 분리 및 전체 회귀",
+        "method": "89개 unittest: 네 구분의 교차 차단, 기존 기록, 부분 범위, 잘못된 기록, 별도 프로세스·clone·게시 회귀",
+        "outcome": "passed",
+        "evidence": [
+          "runs/scoped-work-memory/evidence/tests.txt"
+        ],
+        "notes": "본문 식별 문자열이 다른 범위 조회에 나타나지 않는지 검사"
+      },
+      {
+        "id": "startup",
+        "name": "실제 multi 시작 조회",
+        "method": "별도 프로세스에서 무범위·부분 범위·정확한 범위·다른 환경 조회",
+        "outcome": "passed",
+        "evidence": [
+          "runs/scoped-work-memory/evidence/checks.json"
+        ],
+        "notes": "무범위·부분 범위·다른 환경은 context=[]; 정확한 범위는 현재 작업만 로딩"
+      },
+      {
+        "id": "review",
+        "name": "독립 평가",
+        "method": "별도 evaluator 코드 검토 및 분리 테스트",
+        "outcome": "passed",
+        "evidence": [
+          "runs/scoped-work-memory/evidence/review.json"
+        ],
+        "notes": "게시 전 독립 검토"
+      },
+      {
+        "id": "config",
+        "name": "생성 설정·계약·영어 지침",
+        "method": "doctor, sync --check, 지침 언어 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/scoped-work-memory/evidence/checks.json"
+        ],
+        "notes": "과거 스냅샷은 변경하지 않음"
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "범위 선택은 현재 요청과 목록 정보를 바탕으로 에이전트가 수행한다. 불명확하면 필요한 구분을 확인하며 기록 본문은 로딩하지 않는다.",
+      "기존 미분류 기록은 자동 본문 조회에서 제외된다. 명시적인 개별 조회는 가능하며, 과거 제출 보고서와 스냅샷을 임의로 재분류하지 않는다.",
+      "범위 구분은 기록 선택 규칙이며 OS 권한 격리나 악의적인 파일 편집에 대한 인증 기능은 아니다."
+    ],
+    "next_actions": [
+      "새 채팅에서 프로젝트·서비스·환경·이슈가 드러나는 일반 작업 요청을 하면 관련 기록만 자동 조회한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "scoped-work-memory"
+  },
+  "spec_sha256": "0f5a64841a947699df4336da53ed945e4f0b165ad69097fa03aca21e3a072f68"
+}

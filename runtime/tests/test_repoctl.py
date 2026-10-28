@@ -113,7 +113,8 @@ class RepositoryMemoryTests(unittest.TestCase):
                                capture_output=True, text=True, encoding='utf-8')
             self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
             return json.loads(p.stdout)
-        command('init', '--repo', 'sample', '--module', 'coding', '--task', 'cli-task',
+        command('init', '--repo', 'sample', '--project', 'test-project', '--service', 'test-service',
+                '--environment', 'test', '--issue', 'cli-test', '--module', 'coding', '--task', 'cli-task',
                 '--objective', 'CLI integration', '--criterion', 'Persist task')
         self.assertEqual(r.resume('sample', 'cli-task', self.root)['record']['task_state'], 'queued')
         command('transition', 'cli-task', 'running')

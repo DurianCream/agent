@@ -42,7 +42,7 @@ class AutomationTests(unittest.TestCase):
         a.init_task('coding', 'auto-task', 'Automated task', ['Persist and publish'], self.root)
 
     def bind(self):
-        r.bind('sample', 'auto-task', self.root)
+        r.bind('sample', 'auto-task', self.root, scope={'project': 'test-project', 'service': 'test-service', 'environment': 'test', 'issue': 'publish'})
 
     def complete(self):
         a.transition('auto-task', 'running', self.root)
@@ -75,7 +75,7 @@ class AutomationTests(unittest.TestCase):
         clone = self.base / 'clone'
         subprocess.run(['git', 'clone', '-q', '-b', 'main', str(self.remote), str(clone)], check=True)
         clean_framework = self.base / 'new-framework'; clean_framework.mkdir()
-        startup = auto.startup(root=clean_framework, cwd=clone)
+        startup = auto.startup(root=clean_framework, cwd=clone, scope={'project': 'test-project', 'service': 'test-service', 'environment': 'test', 'issue': 'publish'})
         self.assertEqual(startup['context'][0]['task_id'], 'auto-task')
         self.assertIn('Do', startup['context'][0]['record']['result']['summary'])
 

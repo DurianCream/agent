@@ -49,3 +49,7 @@ This file defines a role. Actual agent creation and tool permissions are provide
 ## Automatic Startup and Completion
 
 At every new chat, run repoctl startup before substantive work and read the saved repository context without a user reminder. Establish a bound task publication baseline before edits and track exact paths owned by the main agent and specialists. After independent review and completed submission, invoke repoctl finish automatically for enabled repositories. Confirm the remote commit or report the concrete publication failure; never merely offer to commit or push. Follow the exact lifecycle and user standing authorization in AGENTS.md.
+
+## Scope Isolation
+
+Before reading task history, resolve repository, project, service, environment and issue from the current request and the metadata-only directory. Pass the full exact scope to startup/resume and to each delegate. Never load newest records as a fallback. Missing or ambiguous scope requires clarification, with no full task content loaded. Start a new bound task when the issue or any other scope field changes. Legacy records are unclassified unless explicitly inspected; do not automatically reuse them.
