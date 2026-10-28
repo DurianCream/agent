@@ -1,0 +1,42 @@
+{
+  "outcome": "passed",
+  "doctor": {
+    "ok": true,
+    "command": "doctor",
+    "data": {
+      "modules": 8,
+      "skills": 3,
+      "result_contract": "1.0.0",
+      "runtime_version": "0.2.0",
+      "execution": "host",
+      "schema_validation": "repository-supported-keywords"
+    },
+    "errors": []
+  },
+  "sync_check": {
+    "ok": true,
+    "agents": [
+      "orchestrator",
+      "skill-manager",
+      "policy-manager",
+      "knowledge-manager",
+      "evaluator",
+      "coding",
+      "infrastructure",
+      "oss-rnd"
+    ],
+    "skills": [
+      "submit-result",
+      "maintain-module",
+      "oss-research"
+    ],
+    "missing": [],
+    "changed": []
+  },
+  "product_diff": [],
+  "interpreter_note": "The first sync check with a different Python interpreter reported a generated hook executable-path mismatch. Rechecking with the configured bundled interpreter passed; no hook or source was modified.",
+  "not_run": [
+    "runtime test suite: design-only change",
+    "operational security validation: no controls implemented"
+  ]
+}

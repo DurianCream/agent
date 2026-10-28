@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "ax-controls-design",
+  "reviewer": "/root/review_saved_work",
+  "role": "evaluator",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "execution-control-continuous-validation-design"
+  },
+  "objective": "Independently review implementability, security boundaries, contract consistency and staged acceptance of the proposed execution-control and continuous-validation design; do not implement controls.",
+  "outcome": "passed",
+  "reviewed_files": {
+    "outputs/ax-controls-design/implementation-spec.en.md": "26506d7810408b1fc4963488b5b4a49f552c065189b4ddd55f2a77f8e8b7828c",
+    "outputs/ax-controls-design/contracts.schema.json": "c9ff07d6ab0c6a5923e9258c17650563feea9a3804f636fc9cbe2ffac40d767f",
+    "outputs/ax-controls-design/examples.json": "d812698b5150d435a5c53c749e1ff920ee13a49408a17b3991e2b5cea7f41e76",
+    "outputs/ax-controls-design/risk-policy.en.md": "43d29a10d41c2999242d134d2e43ed6aa81b1bf076c34b2234c36cb6ea198977",
+    "outputs/ax-controls-design/control-matrix.json": "a360de77c556e6ea39e64d2901a93a0c8a7bb81bc6728ab1a207b614842e760e",
+    "outputs/ax-controls-design/design.ko.md": "3491a146d3dae186729e2ae40c7e211558fcb59f5f1aab09190cbb5db266fc39"
+  },
+  "checks": [
+    {
+      "id": "design-scope-and-compatibility",
+      "outcome": "passed",
+      "method": "Read current task acceptance criteria and the six design artifacts; compare with current module contract and implementation entry points.",
+      "notes": "Existing roles and result schema remain; companion enrollment is opt-in for new tasks and historical snapshots are not rewritten. Proposed files/functions, responsible roles, P0-P3 deliverables and activation dependencies are explicit. Main session still owns durable checkpoint, final validation, submission and publication."
+    },
+    {
+      "id": "trust-and-authorization",
+      "outcome": "passed",
+      "method": "Trace untrusted candidate inputs through authenticated admission, protected policy/grant stores, final allow, executor and receipt.",
+      "notes": "No workspace policy or model assertion can confer authority. The review-decision to approval to final-allow graph is noncircular. Existing exact Git standing authorization is preserved without redundant prompts. Host limits remain upper bounds; P0 observes only and P1 claims entry-point enforcement only."
+    },
+    {
+      "id": "effects-and-recovery",
+      "outcome": "passed",
+      "method": "Inspect atomic admission, immutable artifact materialization, resource leases, conditional writes, nonce consumption, stop epochs, postcondition readback and unknown-outcome reconciliation.",
+      "notes": "The design prohibits high-risk mutations when atomic preconditions cannot be enforced, blind retries after unknown effects, and unauthenticated rollback. Non-cancellable in-flight effects are disclosed rather than represented as cancelled without effect. Target-specific deployment remains an implementation prerequisite."
+    },
+    {
+      "id": "trusted-evaluation-and-publication-boundaries",
+      "outcome": "passed",
+      "method": "Adversarial design review and affected-area reread after author remediation of R1 and R2.",
+      "notes": "Owner-approved suites/oracles/coverage are independently pinned outside candidate write access; a trusted external observer derives mandatory outcomes. Candidate reports and exit status cannot manufacture success. Protected publication requires its own remote/service or credential boundary, independently of production execution isolation. T29 and T30 specify corresponding future acceptance cases."
+    },
+    {
+      "id": "schema-and-example-structure",
+      "outcome": "passed",
+      "method": "Independently ran jsonschema Draft202012Validator.check_schema and validated all eight synthetic envelopes with FormatChecker using local work/ax-controls-design/vendor dependencies.",
+      "notes": "All eight envelopes passed shape validation. No signature validity or operational execution is implied. Schema conditions for review chains, mandatory-pass check outcomes and receipt success were inspected. Semantic cross-record and trust verification remain mandatory in future runtime."
+    },
+    {
+      "id": "fixture-digest-and-reference-bindings",
+      "outcome": "passed",
+      "method": "Independently recomputed all eight ASCII/integer fixture envelope digests, the schema file digest, ordered artifact-set digest, and request/review/approval/final-allow/receipt references using Python assertions.",
+      "notes": "All assertions passed. Sorted compact JSON was used only for the fixture's documented ASCII/integer subset; this is not a full RFC8785 implementation or known-answer-vector test."
+    },
+    {
+      "id": "continuous-validation-and-governance",
+      "outcome": "passed",
+      "method": "Cross-read English implementation/policy, Korean explanation and control matrix for trigger, threshold, ownership and stage consistency.",
+      "notes": "Change-triggered, periodic and incident evaluations are specified without claiming a scheduler is installed. Required safety failures block release. Numeric quality proposals are inactive until owner calibration; default deterministic checks and manual ambiguity review align. Monitoring/stop/retention owners and legal applicability remain explicit activation dependencies, not invented compliance claims."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "high",
+      "status": "resolved",
+      "file": "outputs/ax-controls-design/implementation-spec.en.md",
+      "section": "10. Trusted evaluation and independent review",
+      "finding": "Initial signer isolation prevented key theft but did not explicitly prevent hostile candidate tests/oracles or fake reports and exit status from producing a signed false pass.",
+      "required_remedy": "Select owner-approved immutable mandatory suite/oracles independently of the candidate; keep observer/harness outside candidate control; derive outcomes from trusted observations; add test-removal/oracle-tampering/fake-report acceptance case.",
+      "resolution": "Implementation section 10 now pins the suite package separately from candidate artifact_set_digest and isolates the observer; T29 tests the attack. Policy and control matrix specify immutable coverage and reject candidate JUnit/stdout/exit0 as authoritative. Korean guide explains the trusted test boundary."
+    },
+    {
+      "id": "R2",
+      "severity": "medium",
+      "status": "resolved",
+      "file": "outputs/ax-controls-design/implementation-spec.en.md",
+      "section": "14. Compatibility, immutable enrollment, and release rules",
+      "finding": "Initial older-validator rejection wording could imply a local updated CLI blocks direct publication by an older CLI using the same credentials.",
+      "required_remedy": "Limit P1 checks to compliant entry points; separately require protected remote/release-service enforcement or remove direct publication credentials; add older-CLI/direct-Git bypass acceptance.",
+      "resolution": "Section 14 now expressly permits that P1 bypass limitation and separates protected publication from production executor enrollment. T30 and the policy/matrix/Korean explanation state the actual boundary required."
+    },
+    {
+      "id": "R3",
+      "severity": "low",
+      "status": "resolved",
+      "file": "outputs/ax-controls-design/implementation-spec.en.md",
+      "section": "11. Continuous validation and monitoring",
+      "finding": "Provisional numeric quality values needed an explicit inactive-until-calibrated condition to match the policy default.",
+      "required_remedy": "Treat numeric values as discussion candidates only until owner approval; default to mandatory deterministic pass and manual ambiguity review.",
+      "resolution": "Implementation and policy explicitly make numeric proposals inactive before approved task-specific calibration, aligning the default behavior."
+    }
+  ],
+  "blocking_findings": [],
+  "not_run": [
+    {
+      "check": "Execution-control runtime and adversarial behavior tests",
+      "reason": "Design-only task; execution gateway, signer, trusted runner and protected adapters are not implemented."
+    },
+    {
+      "check": "Cryptographic signature verification and full RFC8785 test vectors",
+      "reason": "Examples intentionally use invalid placeholder signatures; no production cryptographic implementation is provided."
+    },
+    {
+      "check": "Host isolation, live target effects, remote publication bypass and stop/recovery drills",
+      "reason": "Require separate authorized implementation and deployment; current review is not a penetration test."
+    },
+    {
+      "check": "Legal/compliance audit",
+      "reason": "Applicable organizational context and obligations are unresolved; design references are not certification."
+    }
+  ],
+  "remaining_risks": [
+    "The design is implementable but supplies no operational security guarantee until each stage's controls and attack cases are actually implemented and tested.",
+    "Trusted stores, identities, key facility, CI/observer image, audit destination, secret scanner and target-specific conditional-write support must be selected and verified before activation.",
+    "Local P1 tools remain bypassable by equivalent same-privilege shell or Git paths; protected effects and protected publication require separately proven execution boundaries.",
+    "Finite behavioral evaluation, independent role authorship and signed measurements do not prove zero model failure or universal regulatory compliance."
+  ],
+  "reviewer_changes": [
+    "Created only this independent review evidence file; authored design documents, runtime product files and task snapshots were not modified."
+  ],
+  "further_delegation": "not_run: prohibited by parent and unnecessary"
+}

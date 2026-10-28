@@ -1,0 +1,400 @@
+{
+  "kind": "design_structure_verification",
+  "checked_at": "2026-10-28T06:32:51.425877+00:00",
+  "jsonschema_version": "4.26.0",
+  "outcome": "passed",
+  "checks": [
+    {
+      "id": "draft-2020-12-meta-schema",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-1-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-1-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-2-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-2-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-3-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-3-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-4-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-4-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-5-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-5-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-6-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-6-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-7-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-7-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-8-shape",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-8-digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "all-six-contract-types",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "unique-record-digests",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-3-request_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-4-request_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-4-decision_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-5-request_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-5-review_target_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-5-approval-reference",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-6-request_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-6-decision_digest",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "fixture-6-approval-reference",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "negative-extra-envelope-key",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-missing-version",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-unsupported-version",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-unknown-record-type",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-wrong-payload-type",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-malformed-digest",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-extra-action-property",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "negative-invalid-time",
+      "outcome": "passed",
+      "detail": "Shape rejection only; no action executed."
+    },
+    {
+      "id": "schema-reference-current",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "synthetic-warning",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "unique-control-ids",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-01",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-02",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-03",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-04",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-05",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-06",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-07",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-EC-08",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-CV-01",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-CV-02",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-CV-03",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-CV-04",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-GV-01",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "control-GV-02",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-P0",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-P1",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-P2",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-P3",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-implementation-spec.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-risk-policy.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-implementation-spec.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-risk-policy.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-contracts.schema.json",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-examples.json",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "design.ko.md-link-control-matrix.json",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "implementation-spec.en.md-P0",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "implementation-spec.en.md-P1",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "implementation-spec.en.md-P2",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "implementation-spec.en.md-P3",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "risk-policy.en.md-P0",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "risk-policy.en.md-P1",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "risk-policy.en.md-P2",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "risk-policy.en.md-P3",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "seven-korean-sections",
+      "outcome": "passed",
+      "detail": ""
+    }
+  ],
+  "counts": {
+    "envelopes": 8,
+    "controls": 14,
+    "planned_policy_scenarios": 35,
+    "negative_shape_fixtures": 8
+  },
+  "files": {
+    "design.ko.md": "3491a146d3dae186729e2ae40c7e211558fcb59f5f1aab09190cbb5db266fc39",
+    "implementation-spec.en.md": "26506d7810408b1fc4963488b5b4a49f552c065189b4ddd55f2a77f8e8b7828c",
+    "risk-policy.en.md": "43d29a10d41c2999242d134d2e43ed6aa81b1bf076c34b2234c36cb6ea198977",
+    "contracts.schema.json": "c9ff07d6ab0c6a5923e9258c17650563feea9a3804f636fc9cbe2ffac40d767f",
+    "examples.json": "d812698b5150d435a5c53c749e1ff920ee13a49408a17b3991e2b5cea7f41e76",
+    "control-matrix.json": "a360de77c556e6ea39e64d2901a93a0c8a7bb81bc6728ab1a207b614842e760e",
+    "verify_design.py": "796766cac2c3f1f4e7aa34ebc956d33b7462b1f919b2338f942a93e1773fb91f"
+  },
+  "not_run": [
+    "runtime execution and security tests",
+    "Ed25519 signature verification",
+    "full RFC8785 canonicalization conformance",
+    "production isolation/CI/monitor deployment",
+    "regulatory compliance audit"
+  ],
+  "limitations": [
+    "Fixture signatures and outcomes are synthetic and never constitute authorization.",
+    "Digest checks cover only the restricted ASCII fixture subset; this is not a production JCS implementation.",
+    "Semantic authority and real enforcement are assessed by independent design review, not established by schema validation."
+  ]
+}

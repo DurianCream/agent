@@ -1,0 +1,220 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "ax-controls-design",
+  "saved_at": "2026-10-28T15:39:55+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "50f8e2822bed13806fb77b5d9ba3e3169175f75f",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n?? .agent-work/tasks/ax-controls-design/",
+    "worktree_sha256": "532e3bcb546c0ad5545284c5203b73015dc5f46c607f1e34844201dfeedf7612"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "ax-controls-design",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.3"
+    },
+    "created_at": "2026-10-28T15:11:07+09:00",
+    "objective": "기존 모듈 구조를 유지하는 실행 통제·지속 검증 설계를 구현 가능한 명세와 단계별 검증 기준으로 저장한다.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "기존 코드 연결점·신뢰 경계·우회 방지 조건과 단계별 보장 수준을 명시한다.",
+        "required": true,
+        "verification_ids": [
+          "independent-review",
+          "repository"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "행동·정책·승인·실행 증거·평가 계약과 실패·중단·복구 동작을 구체화한다.",
+        "required": true,
+        "verification_ids": [
+          "contracts",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "지속 평가 사례·변경 트리거·통과 기준·CI 및 운영 감시를 설계한다.",
+        "required": true,
+        "verification_ids": [
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "호환성·파일별 구현 계획·우선순위·책임 및 미결정 항목을 기록한다.",
+        "required": true,
+        "verification_ids": [
+          "independent-review",
+          "archive"
+        ]
+      },
+      {
+        "id": "criterion-5",
+        "description": "독립 검토와 예제 구조 검증을 통과하고 명세 및 재개 기록을 저장한다.",
+        "required": true,
+        "verification_ids": [
+          "contracts",
+          "independent-review",
+          "archive"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "기존 8개 역할과 결과 계약 1.0.0을 유지하면서 실행 통제·지속 검증을 추가하는 구현 설계를 완료하고 작업 명세에 연결했다. 실제 기능은 아직 구현하지 않았다.",
+    "work": [
+      "coding 담당이 기존 코드 연결점, 파일·함수별 구현 목록, P0~P3 단계, 데이터 계약과 합성 예제 8개를 작성했다.",
+      "policy-manager 담당이 위험별 허용·차단·검토, 기존 상시 승인 재사용, 중단·복구·감사·책임 체계와 통제 14개를 설계했다.",
+      "메인이 한국어 설계 설명과 재현 가능한 계약 검증 도구를 작성하고 명세·예제·통제표를 통합했다.",
+      "별도 evaluator가 신뢰된 테스트 기준 조작과 기존 CLI·직접 Git 게시 우회 문제를 지적했고, 작성자가 보완한 뒤 영향 구간 재검토를 받았다.",
+      "검토한 설계에는 인수 테스트 30개와 정책별 향후 검증 시나리오 35개가 포함된다. 두 목록은 관련 내용을 교차 참조하며 단순 합산한 실행 테스트 수가 아니다.",
+      "상세 설계의 Git 보존본은 .agent-work/tasks/ax-controls-design/design.ko.md와 implementation-spec.en.md이며 design-manifest.json에 파일별 해시를 기록했다.",
+      "현재 런타임·역할·정책·활성 스키마·권한 설정과 과거 작업 스냅샷은 변경하지 않았다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/ax-controls-design/design.ko.md",
+        "description": "한국어 설계 설명과 단계별 도입 기준",
+        "sha256": "3491a146d3dae186729e2ae40c7e211558fcb59f5f1aab09190cbb5db266fc39"
+      },
+      {
+        "path": "outputs/ax-controls-design/implementation-spec.en.md",
+        "description": "영어 구현 명세와 파일·함수별 작업 목록",
+        "sha256": "26506d7810408b1fc4963488b5b4a49f552c065189b4ddd55f2a77f8e8b7828c"
+      },
+      {
+        "path": "outputs/ax-controls-design/risk-policy.en.md",
+        "description": "영어 위험 정책 및 운영·책임 기준",
+        "sha256": "43d29a10d41c2999242d134d2e43ed6aa81b1bf076c34b2234c36cb6ea198977"
+      },
+      {
+        "path": "outputs/ax-controls-design/contracts.schema.json",
+        "description": "후속 구현용 JSON Schema 2020-12 초안",
+        "sha256": "c9ff07d6ab0c6a5923e9258c17650563feea9a3804f636fc9cbe2ffac40d767f"
+      },
+      {
+        "path": "outputs/ax-controls-design/examples.json",
+        "description": "실행·승인 권한이 없는 합성 계약 예제 8개",
+        "sha256": "d812698b5150d435a5c53c749e1ff920ee13a49408a17b3991e2b5cea7f41e76"
+      },
+      {
+        "path": "outputs/ax-controls-design/control-matrix.json",
+        "description": "통제 14개 및 향후 검증 시나리오 추적표",
+        "sha256": "a360de77c556e6ea39e64d2901a93a0c8a7bb81bc6728ab1a207b614842e760e"
+      },
+      {
+        "path": "outputs/ax-controls-design/verify_design.py",
+        "description": "설계 예제의 구조·참조·해시 검증 도구",
+        "sha256": "796766cac2c3f1f4e7aa34ebc956d33b7462b1f919b2338f942a93e1773fb91f"
+      }
+    ],
+    "verification": [
+      {
+        "id": "contracts",
+        "name": "계약 및 문서 구조 검사",
+        "method": "jsonschema 4.26.0 Draft202012Validator, 합성 예제·해시·참조·부정 구조·문서 링크 73개 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/ax-controls-design/evidence/contracts-check.json"
+        ],
+        "notes": "예제 8개, 부정 구조 예제 8개. 실제 서명·실행 통제 검증이 아니다."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 설계 평가",
+        "method": "작성하지 않은 evaluator가 신뢰 경계·승인 연결·검증 조작·게시 우회·호환성과 수용 기준 검토 및 보완 재검토",
+        "outcome": "passed",
+        "evidence": [
+          "runs/ax-controls-design/evidence/independent-review.json"
+        ],
+        "notes": "설계 의미 검토. 운영 보안 시험이나 규제 준수 감사가 아니다."
+      },
+      {
+        "id": "repository",
+        "name": "기존 구성 보존 검사",
+        "method": "doctor, 구성된 Python으로 sync_codex --check, 제품·설정 파일 Git 차이 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/ax-controls-design/evidence/repo-checks.json"
+        ],
+        "notes": "다른 Python의 최초 hook 경로 차이를 진단하고 구성된 실행기로 통과 확인. 소스·설정 변경 없음."
+      },
+      {
+        "id": "archive",
+        "name": "작업 명세와 상세 설계 보존",
+        "method": "작업 전용 경로에 산출물 7개와 제한된 검증 증거를 바이트 동일하게 복사하고 해시 목록 기록",
+        "outcome": "passed",
+        "evidence": [
+          "runs/ax-controls-design/evidence/archive-check.json",
+          "runs/ax-controls-design/evidence/design-manifest.json"
+        ],
+        "notes": "자동 생성 작업 명세와 record.json에서 상세 보존본을 찾을 수 있다."
+      },
+      {
+        "id": "runtime-implementation",
+        "name": "실제 실행·운영 검증",
+        "method": "후속 P0~P3 구현 작업에서 수행",
+        "outcome": "not_applicable",
+        "evidence": [],
+        "notes": "설계 완료 기준에는 해당하지 않는다. 실제 기능·보안·운영 시험 실행 상태는 not_run이며 후속 구현 범위다."
+      }
+    ],
+    "sources": [
+      {
+        "title": "Microsoft AI agent orchestration patterns",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+        "accessed_at": "2026-10-28T06:39:02.644850+00:00",
+        "claim_kind": "fact"
+      },
+      {
+        "title": "OpenAI Guardrails and human review",
+        "url": "https://developers.openai.com/api/docs/guides/agents/guardrails-approvals",
+        "accessed_at": "2026-10-28T06:39:02.644850+00:00",
+        "claim_kind": "fact"
+      },
+      {
+        "title": "OpenAI Evaluation best practices",
+        "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+        "accessed_at": "2026-10-28T06:39:02.644850+00:00",
+        "claim_kind": "fact"
+      },
+      {
+        "title": "NIST AI RMF 1.0",
+        "url": "https://nvlpubs.nist.gov/nistpubs/ai/nist.ai.100-1.pdf",
+        "accessed_at": "2026-10-28T06:39:02.644850+00:00",
+        "claim_kind": "fact"
+      }
+    ],
+    "limitations": [
+      "완료 상태는 설계 산출물에 적용된다. 실제 실행 통제·지속 평가·운영 감시·배포는 미구현이다.",
+      "P1의 같은 권한 CLI는 직접 셸·이전 CLI·Git 호출로 우회할 수 있다. 보호된 실행과 게시에는 별도 계정·자격증명·네트워크·원격 또는 서비스 경계가 필요하다.",
+      "합성 서명은 무효이며 구조 검사는 암호 검증이나 보안성을 입증하지 않는다.",
+      "운영 시스템·승인자·정책 관리자·키 저장소·데이터 보존과 적용 규제는 후속 도입 전에 확정해야 한다.",
+      "과거 작업과 현재 결과 계약 1.0.0은 보존하며, 설계된 통제 수준을 과거 기록에 소급 적용하지 않는다."
+    ],
+    "next_actions": [
+      "새 작업에서 .agent-work/tasks/ax-controls-design/design-manifest.json과 implementation-spec.en.md를 읽고 게시 커밋·해시를 확인한다.",
+      "P0: 계약 검증기·관찰 모드 정책 판정기·합성 평가셋을 구현하고 독립 평가를 받는다.",
+      "P1: 개발 어댑터·신뢰된 검증 증거·제출 검사·CI를 연결한다. 보호된 게시 경계는 별도로 검증한다.",
+      "P2: 실제 호스트와 책임자를 확정하고 실행 계정·자격증명·네트워크 격리 및 중단·복구를 검증한 후 제한된 시범 업무를 승인한다.",
+      "P3: 감시·실패 사례 재평가·지표 보정·준수 요건 관리를 운영하면서 검증된 범위만 확대한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "execution-control-continuous-validation-design"
+  },
+  "spec_sha256": "d18bf5080899fa2bbb617ef36954bf10d0ea057b5c8845400670062634d2b3cf"
+}

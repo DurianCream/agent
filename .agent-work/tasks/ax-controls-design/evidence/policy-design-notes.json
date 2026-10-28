@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "ax-controls-design",
+  "role": "policy-manager",
+  "scope": {"project": "multi", "service": "agent-framework", "environment": "development", "issue": "execution-control-continuous-validation-design"},
+  "authorization": "Design artifacts only; no active role, policy, runtime or production changes. No further delegation.",
+  "owned_paths": ["outputs/ax-controls-design/risk-policy.en.md", "outputs/ax-controls-design/control-matrix.json", "runs/ax-controls-design/evidence/policy-design-notes.json"],
+  "decisions": [
+    "Preserve existing roles and exact standing/task authorization; do not add per-step approvals for bounded low-risk operations.",
+    "Treat proposed policy text as design, not execution authority; host restrictions remain upper bounds.",
+    "Protect policy, grants and execution credentials outside agent-writable stores before claiming enforcement.",
+    "Use allow/deny/require_review, low/medium/high/critical and observe/enforce shared contract values.",
+    "Require_review is not executable: action_approval binds the original review decision; a final allow references review_target_digest and approval_digests to avoid circular signing dependencies.",
+    "Use P0 advisory observe, P1 development/CI gates with bypass caveat, P2 isolated explicitly authorized pilot and P3 monitoring/calibration/controlled expansion.",
+    "Do not invent applicable legislation or safety percentages; map actual requirements with human accountable owners.",
+    "Zero observed violations in mandatory catastrophic negative tests is a finite release condition, not a guarantee of zero real-world risk."
+  ],
+  "changes": [
+    "Authored a normative English risk-policy specification with risk table, authority separation, trusted grant handling, non-bypass requirements, evaluation gates, incident stop/recovery and unresolved decisions.",
+    "Authored 14 proposed controls covering execution, continuous validation and governance, each with technical enforcement, accountability, evidence, phases and failure behavior.",
+    "Defined 35 future implementation test scenarios with deterministic expected outcomes, including T-CV-03c mapped to runtime T29 and T-EC-05c mapped to T30.",
+    "Independent review found a trusted suite-selection gap. Added mandatory owner-approved manifests/oracles outside candidate write access, trusted external observation, and rejection of forged JUnit/exit0/test-removal claims.",
+    "Independent review found direct Git/legacy CLI publication bypass. Made P1 cooperation limitation explicit and required a separate destination/release-service enforcement boundary or removal of direct agent write credentials before claiming protected publication. Existing exact Git standing authorization is retained.",
+    "Clarified companion numeric quality thresholds are inactive calibration candidates until an owner-approved profile activates them."
+  ],
+  "verification": [
+    {"id": "policy-design-structure", "outcome": "passed", "method": "Python json parse, duplicate control/test ID checks, required field checks, phase membership checks and specification line-budget check", "observed_controls": 14, "observed_future_scenarios": 35, "notes": "Rechecked after trusted-suite and publication-boundary remediation. Checks validate document structure only; these are not execution-control test results."},
+    {"id": "runtime-security-evaluation", "outcome": "not_run", "method": "Future implementation test scenarios", "notes": "No runtime implementation is part of this design task; no operational protection or regulatory compliance claimed."},
+    {"id": "independent-review-followup", "outcome": "not_run", "method": "Parent-coordinated separate evaluator recheck", "notes": "Parent relayed the trusted mandatory-suite defect. Author remediated it; evaluator recheck remains pending and this author does not self-approve."}
+  ],
+  "remaining_actions": [
+    "Parent integrates contract field references and Korean design narrative and obtains independent evaluation.",
+    "Future implementation must choose protected identity/signing/grant stores, prove equivalent execution paths controlled, configure owners and calibrate task-specific data/thresholds.",
+    "Before sensitive or production pilot, resolve authority, credential isolation, incident response ownership, telemetry retention and applicable organizational/legal requirements.",
+    "Parent manages task checkpoint, validate/submit and publication lifecycle."
+  ],
+  "source_accessed_at": "2026-10-28"
+}

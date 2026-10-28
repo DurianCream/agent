@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "reviewed_design_snapshot",
+  "task_id": "ax-controls-design",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "execution-control-continuous-validation-design"
+  },
+  "status": "design_complete_not_implemented",
+  "created_at": "2026-10-28T06:39:02.403436+00:00",
+  "baseline_commit": "50f8e2822bed13806fb77b5d9ba3e3169175f75f",
+  "design_entry": "design.ko.md",
+  "implementation_entry": "implementation-spec.en.md",
+  "source_of_truth": "The submitted result.json indexes reviewed artifacts. These byte-identical task-owned copies preserve them in Git because outputs/ and runs/ are ignored. Do not edit a submitted design snapshot; start a follow-up task.",
+  "files": [
+    {
+      "path": ".agent-work/tasks/ax-controls-design/design.ko.md",
+      "sha256": "3491a146d3dae186729e2ae40c7e211558fcb59f5f1aab09190cbb5db266fc39"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/implementation-spec.en.md",
+      "sha256": "26506d7810408b1fc4963488b5b4a49f552c065189b4ddd55f2a77f8e8b7828c"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/risk-policy.en.md",
+      "sha256": "43d29a10d41c2999242d134d2e43ed6aa81b1bf076c34b2234c36cb6ea198977"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/contracts.schema.json",
+      "sha256": "c9ff07d6ab0c6a5923e9258c17650563feea9a3804f636fc9cbe2ffac40d767f"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/examples.json",
+      "sha256": "d812698b5150d435a5c53c749e1ff920ee13a49408a17b3991e2b5cea7f41e76"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/control-matrix.json",
+      "sha256": "a360de77c556e6ea39e64d2901a93a0c8a7bb81bc6728ab1a207b614842e760e"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/verify_design.py",
+      "sha256": "796766cac2c3f1f4e7aa34ebc956d33b7462b1f919b2338f942a93e1773fb91f"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/contracts-check.json",
+      "sha256": "40743af2b969093d04a0c17829d291d932127b03e42ce8fb5797bddffeb5e2a5"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/independent-review.json",
+      "sha256": "fb24c01bb6ba2e4d2d059487503986b5ec21c58e9a68d48c70662c093ee6d164"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/runtime-design-notes.json",
+      "sha256": "225a3a0562b30fd5507dc38eb6084e8e656f63e2c46b4b962dab59447ac5b121"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/policy-design-notes.json",
+      "sha256": "d5d0672b778289d322e873015d34ea9f454ec5cbdd746ec977c01ceb9fba3553"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/orchestrator-notes.json",
+      "sha256": "c9df0e5b84d45ecafb538f542fc8a7130f2c3b27e8e9efbcbecd3a6c55cbec46"
+    },
+    {
+      "path": ".agent-work/tasks/ax-controls-design/evidence/repo-checks.json",
+      "sha256": "b62abd9ad8e406982f0a4967495aba7bfac1638d4a677574b946144473174113"
+    }
+  ],
+  "future_implementation": "Start P0 in a new bound task; reference this design snapshot and its publication commit. No implementation or production rollout is authorized by this snapshot itself."
+}

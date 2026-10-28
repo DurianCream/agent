@@ -1,0 +1,34 @@
+{
+  "role": "orchestrator",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "execution-control-continuous-validation-design"
+  },
+  "decisions": [
+    "Design only; preserve existing runtime and role configuration.",
+    "Use P0/P1/P2/P3 with explicit enforcement limits.",
+    "Preserve scoped standing publication authorization.",
+    "Persist byte-identical deliverable copies in the task-owned memory directory because outputs is ignored by Git.",
+    "Independent review required immutable trusted suites/oracles and a separate protected publication boundary; authors corrected both.",
+    "Draft JSON contracts and synthetic examples were structurally validated; no production security claims.",
+    "Independent review required immutable trusted suites/oracles and a separate protected publication boundary; authors corrected both.",
+    "Draft JSON contracts and synthetic examples were structurally validated; no production security claims."
+  ],
+  "owned": [
+    "outputs/ax-controls-design/design.ko.md",
+    "runs/ax-controls-design/result.json"
+  ],
+  "remaining": [
+    "Publish exact task-owned durable design copies",
+    "Future implementation starts with a new bound P0 task"
+  ],
+  "status": "design_complete",
+  "verification": [
+    "73 structural checks and 8 negative shape fixtures passed",
+    "Independent evaluator reviewed final design",
+    "Configured runtime doctor and generated adapter checks passed",
+    "Product/runtime/configuration diff empty"
+  ]
+}

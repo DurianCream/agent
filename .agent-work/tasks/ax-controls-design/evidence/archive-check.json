@@ -1,0 +1,8 @@
+{
+  "outcome": "passed",
+  "artifacts_copied": 7,
+  "evidence_copied": 6,
+  "all_byte_identical": true,
+  "manifest": "design-manifest.json",
+  "note": "Only task-owned final designs and bounded review evidence copied; no historical task files changed."
+}

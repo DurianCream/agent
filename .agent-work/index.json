@@ -40,6 +40,19 @@
         "environment": "development",
         "issue": "legacy-memory-classification"
       }
+    },
+    "ax-controls-design": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-28T15:39:55+09:00",
+      "summary": "기존 8개 역할과 결과 계약 1.0.0을 유지하면서 실행 통제·지속 검증을 추가하는 구현 설계를 완료하고 작업 명세에 연결했다. 실제 기능은 아직 구현하지 않았다.",
+      "path": "tasks/ax-controls-design/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "execution-control-continuous-validation-design"
+      }
     }
   }
 }

@@ -1,0 +1,73 @@
+{
+  "task_id": "ax-controls-design",
+  "role": "coding",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "execution-control-continuous-validation-design"
+  },
+  "decisions": [
+    "Design-only draft contracts under outputs; no active runtime/schema/config changes.",
+    "Existing result1.0 preserved with proposed immutable companion enrollment.",
+    "Host isolation required before protected workload claims; wrappers remain bypassable.",
+    "Standing exact Git authorization preserved through bounded one-action derivation.",
+    "Synthetic signatures deliberately invalid; JSON shape is not trust.",
+    "Final allow decision binds initial require_review and approval digests without circularity.",
+    "Phase naming aligned P0 observe/P1 dev enforcement/P2 isolated pilot/P3 monitoring and calibrated expansion.",
+    "Independent review remediation: trusted owner-approved mandatory suite/oracle/harness package is outside candidate control; candidate artifacts are separate attestation subjects.",
+    "Independent review remediation: P1 cannot stop old CLI/direct Git bypass; protected publication requires independent remote/service enforcement or removal of direct credentials.",
+    "Numeric quality thresholds remain inactive calibration candidates until owner-approved; deterministic mandatory checks and manual ambiguity review apply by default."
+  ],
+  "files_changed": [
+    "outputs/ax-controls-design/implementation-spec.en.md",
+    "outputs/ax-controls-design/contracts.schema.json",
+    "outputs/ax-controls-design/examples.json"
+  ],
+  "verification": {
+    "source_integration_points": "inspected at baseline 50f8e2822bed13806fb77b5d9ba3e3169175f75f",
+    "schema_and_examples": {
+      "outcome": "passed",
+      "validator": "jsonschema 4.26.0 Draft202012Validator with FormatChecker",
+      "schema_valid": true,
+      "valid_examples": 8,
+      "envelope_digests": "passed for ASCII integer fixture JCS subset",
+      "acyclic_approval_graph": "passed",
+      "negative_shape_cases_rejected": [
+        "extra_field",
+        "unsafe_integer",
+        "adapter_parameter_mismatch",
+        "false_success_without_readback_digest",
+        "final_allow_missing_required_grant"
+      ],
+      "cryptographic_signatures": "not_run: deliberately invalid synthetic signatures, not authorization",
+      "production_rfc8785": "not_run: production canonicalization implementation remains future work"
+    },
+    "runtime_tests": "not_run: no runtime implementation",
+    "security_enforcement": "not_run: proposed only",
+    "review_remediation": {
+      "outcome": "passed",
+      "method": "Read-back assertions over revised specification; design-only checks, not executed security tests.",
+      "checks": {
+        "trusted_suite_outside_candidate": true,
+        "oracle_harness_package_pinned": true,
+        "candidate_subject_distinct": true,
+        "trusted_observer_not_candidate_reports": true,
+        "candidate_cannot_change_mandatory_suite": true,
+        "adversarial_test_t29": true,
+        "p1_old_cli_bypass_explicit": true,
+        "publication_boundary_independent": true,
+        "adversarial_test_t30": true,
+        "quality_thresholds_inactive": true,
+        "default_quality_gate": true
+      },
+      "acceptance_cases": 30,
+      "schema_changes": "none: suite_ref semantically identifies approved package; artifact_set_digest remains candidate subject"
+    }
+  },
+  "remaining": [
+    "Independent evaluator recheck of sections 3, 10, 11, 12 and 14.",
+    "Parent integrates and publishes final artifacts.",
+    "All implementation/runtime/security acceptance tests remain future work."
+  ]
+}
