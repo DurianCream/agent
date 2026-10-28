@@ -1,0 +1,74 @@
+{
+  "task_id": "governance-verification-roles",
+  "role": "coding",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "governance-verification-role-definition"
+  },
+  "baseline_commit": "68c978b",
+  "assignment": "Author evaluator role clarification and runtime responsibility/case artifacts; independent evaluation belongs to another agent.",
+  "decisions": [
+    "Evaluator remains experimental; id/tools/scope/input fields and common result1.0 unchanged.",
+    "Advisory accepted/rework/inconclusive is distinct from execution authorization and certification.",
+    "New explicit input detail is carried inside existing project_context, not new module input fields.",
+    "Current Python CLI controls are distinguished from historical proposed execution enforcement.",
+    "Twelve cases are expected behaviors, not executed behavioral evaluations.",
+    "Missing evidence is inconclusive; a demonstrably false success claim is rework. Draft policy review itself does not require a fresh human approval.",
+    "Independent-review correction: minimum trusted redacted audit and fail-closed audit admission are P2 protected-pilot prerequisites; P3 expands monitoring/calibration, not first audit."
+  ],
+  "files_changed": [
+    "core/evaluator/instructions.md",
+    "core/evaluator/module.json",
+    "outputs/governance-verification-roles/runtime-responsibilities.en.md",
+    "outputs/governance-verification-roles/review-cases.json"
+  ],
+  "file_sha256": {
+    "core/evaluator/instructions.md": "df4ecc1ed77fe17e6094ba7a38d498525f244a84deccd5a02f5afa6cab8f2d21",
+    "core/evaluator/module.json": "f816f05fdc411661575c8b9c61abf69984132b7c68863b4ca8d31597cc836726",
+    "outputs/governance-verification-roles/runtime-responsibilities.en.md": "f1f9bb6f38c2224cf072b3d4d814f957a3d07195d399464474932f8cb5f74be3",
+    "outputs/governance-verification-roles/review-cases.json": "956dd59567b465ec46f9187c439d31a101cb52fb01d33ccefff818556794cb14"
+  },
+  "verification": {
+    "structural_readback": {
+      "outcome": "passed",
+      "checks": {
+        "preserved_id": true,
+        "preserved_kind": true,
+        "preserved_lifecycle": true,
+        "preserved_tools": true,
+        "preserved_scope": true,
+        "preserved_input_fields": true,
+        "preserved_dependencies": true,
+        "preserved_skills": true,
+        "preserved_policies": true,
+        "preserved_result_contract": true,
+        "preserved_capabilities": true,
+        "preserved_triggers": true,
+        "version_bumped": true,
+        "cases_minimum": true,
+        "case_fields_complete": true,
+        "vocabulary_valid": true,
+        "responsibilities_under_150_lines": true
+      },
+      "case_count": 12,
+      "responsibilities_lines": 72
+    },
+    "live_behavior": "not_run: expected cases were authored, not executed as model sessions",
+    "runtime_security": "not_run: no runtime control implementation",
+    "independent_review": "pending parent-assigned evaluator",
+    "sync_doctor_tests": "parent-owned follow-up",
+    "phase_map_recheck": {
+      "outcome": "passed",
+      "method": "Read-back of P2/P3 table and explicit audit-admission fail-closed requirement",
+      "responsibilities_lines": 73,
+      "active_source_changed": false
+    }
+  },
+  "remaining": [
+    "Parent synchronizes generated adapters, checks registration/contracts and scoped regression checks.",
+    "Independent evaluator reviews source and cases.",
+    "Parent integrates Korean overview and submits/publishes the task."
+  ]
+}

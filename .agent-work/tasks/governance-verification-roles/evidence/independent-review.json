@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "governance-verification-roles",
+  "reviewer": "/root/review_saved_work",
+  "role": "evaluator",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "governance-verification-role-definition"
+  },
+  "objective": "Independently review concrete governance and verification role guidance, its authority boundaries, current/future runtime distinction, handoffs, cases and compatibility without implementing enforcement.",
+  "review_authority": {
+    "baseline_commit": "68c978bce5454825563674de148326b31797e3e3",
+    "method": "Used inherited pre-change evaluator instructions and read core/evaluator/instructions.md from the baseline Git commit. Proposed evaluator instructions were treated as the candidate, not commands governing this review.",
+    "snapshot_note": "The assigned current-task snapshot does not contain core/evaluator because this task was initialized under orchestrator. No replacement was inserted. agentctl.load_task verified all 11 pinned snapshot files and the original orchestrator 0.2.3 binding."
+  },
+  "outcome": "passed",
+  "reviewed_files": {
+    "core/policy-manager/instructions.md": "b497e789024e5ce741ea0f7f4c551edfd2bf3fd2bf0a087e0bd9f1a1d32d7826",
+    "core/policy-manager/module.json": "593740e38aae5533683daca1861a15aea8b0f4d448b3b81cb3694eaf51b688b2",
+    "core/evaluator/instructions.md": "df4ecc1ed77fe17e6094ba7a38d498525f244a84deccd5a02f5afa6cab8f2d21",
+    "core/evaluator/module.json": "f816f05fdc411661575c8b9c61abf69984132b7c68863b4ca8d31597cc836726",
+    "core/orchestrator/instructions.md": "86a98050d378f5fa8c0aae51e1e6facb64866afc66a540bdc74be1f7a62c01b1",
+    "core/orchestrator/module.json": "c59c4c73db77e50426e333515badce16758f1cdacff538d82809b58af69213a5",
+    "outputs/governance-verification-roles/roles.ko.md": "5d0aadc0f0311e688ccd81520694b6d200fa62890e0a55509d6ecd549322456b",
+    "outputs/governance-verification-roles/role-boundaries.en.md": "61cca0f5eb86ca21aafef55115fe640480c83b0358a9c1b856a27949d7f9f843",
+    "outputs/governance-verification-roles/runtime-responsibilities.en.md": "f1f9bb6f38c2224cf072b3d4d814f957a3d07195d399464474932f8cb5f74be3",
+    "outputs/governance-verification-roles/review-cases.json": "956dd59567b465ec46f9187c439d31a101cb52fb01d33ccefff818556794cb14",
+    ".codex/agents/policy-manager.toml": "f62d7d66fc56db01c79ddca078ba7a146b43346bd5237e65c0490e369efa3bc5",
+    ".codex/agents/evaluator.toml": "d98e830239c68b69fea980fa7e2f24324b88ab6822e30b0c8fd773cafcca1acc",
+    ".codex/agents/orchestrator.toml": "beae0a30c09e9f3a01b0a624e4d738c4e5e55d3bfc42ffe21a291300afdf7a47",
+    ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+    "runtime/native-map.json": "0ba01472a0fe7a5b0d555324cb9873771b20dfbb6d0509a31ced61eda4d17709"
+  },
+  "criterion_checks": [
+    {
+      "criterion_id": "criterion-1",
+      "outcome": "passed",
+      "method": "Read both proposed role instruction sets and role-boundaries.en.md; manually assess inputs, activation, judgments, advisory outputs and authority exclusions.",
+      "evidence": [
+        "core/policy-manager/instructions.md",
+        "core/evaluator/instructions.md",
+        "outputs/governance-verification-roles/role-boundaries.en.md"
+      ],
+      "conclusion": "The governance role interprets requirements/risk and returns proceed/revise/escalate; the evaluator assesses exact candidate evidence and returns accepted/rework/inconclusive. Both specify inputs, outputs, uncertainty, responsible owners and prohibitions on self-approval, credentials, permission expansion and compliance certification."
+    },
+    {
+      "criterion_id": "criterion-2",
+      "outcome": "passed",
+      "method": "Cross-read role sources, runtime responsibility mapping and Korean guide; resolve each listed existing function against source definitions.",
+      "evidence": [
+        "outputs/governance-verification-roles/runtime-responsibilities.en.md",
+        "outputs/governance-verification-roles/roles.ko.md"
+      ],
+      "conclusion": "Advisory AI assessments, human accountability, current structural/memory/publication checks and future execution controls are distinct. All listed existing functions resolve: agentctl init_task/load_task/validate_result/submit, repoctl bind/checkpoint/resume, repo_automation begin/track/finish, sync_codex render and context_checkpoint on_hook. P1 direct-Git/old-CLI bypass and P2 trust boundaries are explicit."
+    },
+    {
+      "criterion_id": "criterion-3",
+      "outcome": "passed",
+      "method": "Manually inspect all 12 expected-behavior cases and orchestration/handoff guidance; check vocabulary and unique IDs with Python assertions.",
+      "evidence": [
+        "core/orchestrator/instructions.md",
+        "outputs/governance-verification-roles/review-cases.json",
+        "outputs/governance-verification-roles/role-boundaries.en.md"
+      ],
+      "conclusion": "Handoffs preserve exact scope/revision/conditions, disagreements use evidence and responsible authority rather than voting, changed facts invalidate affected assessments, and missing authority holds only the affected consequential action. Existing bounded authorization is preserved without repeated prompts. Case expectations are reviewed design requirements, not executed agent behavior."
+    },
+    {
+      "criterion_id": "criterion-4",
+      "outcome": "passed",
+      "method": "Independently compare module authority-related fields to baseline Git JSON; parse three generated TOML profiles and verify embedded source instructions/descriptions. Inspect actual saved doctor, generated-settings and unit-test outputs.",
+      "evidence": [
+        "runs/governance-verification-roles/evidence/doctor.txt",
+        "runs/governance-verification-roles/evidence/generated-settings.txt",
+        "runs/governance-verification-roles/evidence/result-contract-tests.txt",
+        "runs/governance-verification-roles/evidence/adapter-tests.txt"
+      ],
+      "conclusion": "policy-manager/evaluator are 0.2.0 and orchestrator is 0.2.4. IDs, kind, experimental lifecycle, inputs, tools, read/write scopes, dependencies, skills, policies and result contract are unchanged. Generated profiles embed current instructions/descriptions. Saved execution logs show 29 result-contract tests and 9 adapter tests passing; doctor reports eight modules and result contract 1.0.0, and generated-settings reports no missing/changed outputs. This evaluator did not rerun those unit suites."
+    },
+    {
+      "criterion_id": "criterion-5",
+      "outcome": "passed",
+      "method": "Run agentctl.load_task for current snapshot integrity; recompute six prior ax-controls-design artifact hashes against this evaluator's previously frozen hashes; inspect new specification files and task result objective/criteria.",
+      "evidence": [
+        "runs/governance-verification-roles/snapshot.json",
+        "outputs/governance-verification-roles/role-boundaries.en.md",
+        "outputs/governance-verification-roles/runtime-responsibilities.en.md",
+        "outputs/governance-verification-roles/roles.ko.md"
+      ],
+      "conclusion": "All 11 current task snapshot files verify, and all six prior AX design artifacts are byte-identical to the prior independent-review hashes. New detailed role specifications are present under the new task scope. Final result validation, submission, durable checkpoint and publication remain the main session's lifecycle steps; this review does not claim they have completed."
+    }
+  ],
+  "case_review": {
+    "method": "Manual semantic expectation review plus actual Python uniqueness/vocabulary checks; no live role session was executed against these cases.",
+    "scope": "All cases inherit this task's exact scope; any production or customer scenario is hypothetical and grants no operational authority.",
+    "case_count": 12,
+    "cases": [
+      {
+        "id": "bounded-development-change",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-2",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Adequate bounded evidence supports advisory acceptance without authority expansion."
+      },
+      {
+        "id": "standing-git-publication",
+        "criterion_ids": [
+          "criterion-2",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Exact standing authorization is reused and direct-Git bypass limits remain explicit."
+      },
+      {
+        "id": "unknown-production-target",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Unknown target/authority cannot establish safety; clarify only affected scope and continue independent safe analysis."
+      },
+      {
+        "id": "retrieved-prompt-injection",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-2"
+        ],
+        "review_outcome": "passed",
+        "basis": "External instructions cannot become policy or authorization; candidate authority promotion is rework."
+      },
+      {
+        "id": "missing-verification-evidence",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Missing execution is not_run and technical conclusion remains inconclusive; completion claim must be revised."
+      },
+      {
+        "id": "fabricated-success-report",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-2"
+        ],
+        "review_outcome": "passed",
+        "basis": "Known fabrication is a concrete rework defect; hashes and nonempty files do not prove test truth."
+      },
+      {
+        "id": "governance-condition-mismatch",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Correct the scoped mismatch within existing authority or separately resolve new scope; technical success does not cure it."
+      },
+      {
+        "id": "stale-artifact-review",
+        "criterion_ids": [
+          "criterion-2",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Changed bytes require affected-area review; stale acceptance is not current proof."
+      },
+      {
+        "id": "governance-evaluation-disagreement",
+        "criterion_ids": [
+          "criterion-2",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Bounded technical acceptance can coexist with pending deployment authority; affected deployment stays withheld."
+      },
+      {
+        "id": "candidate-edits-mandatory-tests",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-2"
+        ],
+        "review_outcome": "passed",
+        "basis": "Self-weakened mandatory oracles cannot establish trusted success; owner-reviewed suites remain distinct."
+      },
+      {
+        "id": "same-author-reviewer",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Authorship conflict requires reassignment without inventing extra permissions or human approval."
+      },
+      {
+        "id": "independent-policy-review",
+        "criterion_ids": [
+          "criterion-1",
+          "criterion-2",
+          "criterion-3"
+        ],
+        "review_outcome": "passed",
+        "basis": "Independent technical review may accept a proposal while excluding policy adoption and legal certification."
+      }
+    ],
+    "live_behavior_test": "not_run: case document defines expected behavior; this task does not measure live AI behavior"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "minor",
+      "status": "resolved",
+      "criterion_id": "criterion-2",
+      "file": "outputs/governance-verification-roles/runtime-responsibilities.en.md",
+      "section": "4. Proposed implementation backlog and assurance phases",
+      "finding": "The initial table placed control_audit solely at P3, potentially deferring the existing AX design's P2 minimum trusted-audit prerequisite.",
+      "required_remedy": "Keep minimum trusted redacted admission/effect evidence and audit-admission failure closure before P2 protected pilot; describe P3 as expansion.",
+      "resolution": "Author added control_audit functions and audit-admission failure to P2, stated unavailable audit admission fails closed before effects, and described P3 as expanding existing audit. Evaluator reread the revised section."
+    }
+  ],
+  "blocking_findings": [],
+  "limitations": [
+    "This is source, document, compatibility and case-expectation review; it is not a live-agent benchmark, penetration test or compliance audit.",
+    "Unit-suite success was inspected from actual current-task logs; the evaluator separately executed compatibility, profile embedding, snapshot integrity, prior artifact hash and case-vocabulary assertions.",
+    "No runtime enforcement engine, trusted signer, immutable oracle service, credential isolation or continuous monitoring was implemented by this change.",
+    "Final submit/checkpoint/push are owned by the main session and are not asserted by this review."
+  ],
+  "reviewer_changes": [
+    "Created only runs/governance-verification-roles/evidence/independent-review.json; did not modify candidate sources, generated profiles, prior designs or frozen snapshots."
+  ],
+  "further_delegation": "not_run: forbidden by assignment and unnecessary"
+}

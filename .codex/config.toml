@@ -21,7 +21,7 @@ description = "Maintain skills, module registration, dependencies, and versions.
 config_file = "agents/skill-manager.toml"
 
 [agents.policy-manager]
-description = "Maintain common and project rules, and review policy conflicts."
+description = "Assess contextual governance requirements and policy conflicts, and propose testable controls without granting execution authority."
 config_file = "agents/policy-manager.toml"
 
 [agents.knowledge-manager]
@@ -29,7 +29,7 @@ description = "Maintain sourced knowledge, design decisions, and project context
 config_file = "agents/knowledge-manager.toml"
 
 [agents.evaluator]
-description = "Verify acceptance criteria, regressions, and failure cases."
+description = "Independently assess correctness, evidence, regressions, and uncertainty without granting execution authority."
 config_file = "agents/evaluator.toml"
 
 [agents.coding]

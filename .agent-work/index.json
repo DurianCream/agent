@@ -53,6 +53,19 @@
         "environment": "development",
         "issue": "execution-control-continuous-validation-design"
       }
+    },
+    "governance-verification-roles": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-28T16:13:41+09:00",
+      "summary": "거버넌스·검증 역할의 판단·산출물·권한 경계와 인계 절차를 구체화하고 실제 역할 지침 및 새 작업 명세에 반영했다. runtime 강제 기능은 현재 검사와 후속 구현으로 구분했다.",
+      "path": "tasks/governance-verification-roles/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "governance-verification-role-definition"
+      }
     }
   }
 }

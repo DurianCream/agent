@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "task_id": "governance-verification-roles",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "governance-verification-role-definition"
+  },
+  "baseline_commit": "68c978bce5454825563674de148326b31797e3e3",
+  "prior_design": {
+    "task_id": "ax-controls-design",
+    "commit": "68c978bce5454825563674de148326b31797e3e3",
+    "treatment": "unchanged historical design; role refinement in current task"
+  },
+  "status": "role_definitions_updated_runtime_controls_not_implemented",
+  "versions": {
+    "policy-manager": "0.2.0",
+    "evaluator": "0.2.0",
+    "orchestrator": "0.2.4"
+  },
+  "active_source_hashes": {
+    "core/policy-manager/instructions.md": "b497e789024e5ce741ea0f7f4c551edfd2bf3fd2bf0a087e0bd9f1a1d32d7826",
+    "core/policy-manager/module.json": "593740e38aae5533683daca1861a15aea8b0f4d448b3b81cb3694eaf51b688b2",
+    "core/evaluator/instructions.md": "df4ecc1ed77fe17e6094ba7a38d498525f244a84deccd5a02f5afa6cab8f2d21",
+    "core/evaluator/module.json": "f816f05fdc411661575c8b9c61abf69984132b7c68863b4ca8d31597cc836726",
+    "core/orchestrator/instructions.md": "86a98050d378f5fa8c0aae51e1e6facb64866afc66a540bdc74be1f7a62c01b1",
+    "core/orchestrator/module.json": "c59c4c73db77e50426e333515badce16758f1cdacff538d82809b58af69213a5",
+    ".codex/agents/policy-manager.toml": "f62d7d66fc56db01c79ddca078ba7a146b43346bd5237e65c0490e369efa3bc5",
+    ".codex/agents/evaluator.toml": "d98e830239c68b69fea980fa7e2f24324b88ab6822e30b0c8fd773cafcca1acc",
+    ".codex/agents/orchestrator.toml": "beae0a30c09e9f3a01b0a624e4d738c4e5e55d3bfc42ffe21a291300afdf7a47",
+    ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+    "runtime/native-map.json": "0ba01472a0fe7a5b0d555324cb9873771b20dfbb6d0509a31ced61eda4d17709"
+  },
+  "durable_files": {
+    ".agent-work/tasks/governance-verification-roles/roles.ko.md": "5d0aadc0f0311e688ccd81520694b6d200fa62890e0a55509d6ecd549322456b",
+    ".agent-work/tasks/governance-verification-roles/role-boundaries.en.md": "61cca0f5eb86ca21aafef55115fe640480c83b0358a9c1b856a27949d7f9f843",
+    ".agent-work/tasks/governance-verification-roles/runtime-responsibilities.en.md": "f1f9bb6f38c2224cf072b3d4d814f957a3d07195d399464474932f8cb5f74be3",
+    ".agent-work/tasks/governance-verification-roles/review-cases.json": "956dd59567b465ec46f9187c439d31a101cb52fb01d33ccefff818556794cb14",
+    ".agent-work/tasks/governance-verification-roles/evidence/compatibility-check.json": "5dfca5d30513e005c6d6fb4d239e7a0441d29234f4264f1839a007ad8403044e",
+    ".agent-work/tasks/governance-verification-roles/evidence/independent-review.json": "60ed8bd2bcc6298725384a36de5495e1729fdfea1b5debdcf77f4b8985e907a1",
+    ".agent-work/tasks/governance-verification-roles/evidence/policy-role-notes.json": "46a176a93bfa0e4e2c0d635f18bb06d20b2a5752e172335cf8d43183fc4b908a",
+    ".agent-work/tasks/governance-verification-roles/evidence/evaluator-role-notes.json": "dbfd356d5942f99e7838e43bdca75e0ad30185522fa7abf0a4fd7a0e37572b08",
+    ".agent-work/tasks/governance-verification-roles/evidence/orchestrator-notes.json": "c841f0fda17baf96ba4ef15f65d280817200375ebc0e9c1a6c5289e34040093f"
+  },
+  "note": "The submitted result is authoritative. These byte-identical task-owned copies preserve ignored outputs/evidence; use a new task for revisions."
+}

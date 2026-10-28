@@ -1,0 +1,204 @@
+{
+  "outcome": "passed",
+  "recheck_note": "Documentation-only recheck; verified unchanged role and generated sources before reusing actual CLI/unit-test results.",
+  "checks": [
+    {
+      "id": "doctor",
+      "outcome": "passed",
+      "detail": "CLI result checked"
+    },
+    {
+      "id": "generated-settings",
+      "outcome": "passed",
+      "detail": "CLI result checked"
+    },
+    {
+      "id": "result-contract-tests",
+      "outcome": "passed",
+      "detail": "tests=29"
+    },
+    {
+      "id": "adapter-tests",
+      "outcome": "passed",
+      "detail": "tests=9"
+    },
+    {
+      "id": "policy-manager-authority-compatibility",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "policy-manager-version",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "policy-manager-english",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "evaluator-authority-compatibility",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "evaluator-version",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "evaluator-english",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "orchestrator-authority-compatibility",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "orchestrator-version",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "orchestrator-english",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-count",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "unique-case-ids",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "cases-not-executed-label",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-bounded-development-change",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-standing-git-publication",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-unknown-production-target",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-retrieved-prompt-injection",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-missing-verification-evidence",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-fabricated-success-report",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-governance-condition-mismatch",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-stale-artifact-review",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-governance-evaluation-disagreement",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-candidate-edits-mandatory-tests",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-same-author-reviewer",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "case-independent-policy-review",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "roles.ko.md-link-role-boundaries.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "roles.ko.md-link-runtime-responsibilities.en.md",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "roles.ko.md-link-review-cases.json",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "seven-user-sections",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "prior-design-unmodified",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "runtime-logic-unmodified",
+      "outcome": "passed",
+      "detail": ""
+    },
+    {
+      "id": "prior-design-hashes",
+      "outcome": "passed",
+      "detail": ""
+    }
+  ],
+  "case_count": 12,
+  "files": {
+    "core/policy-manager/instructions.md": "b497e789024e5ce741ea0f7f4c551edfd2bf3fd2bf0a087e0bd9f1a1d32d7826",
+    "core/policy-manager/module.json": "593740e38aae5533683daca1861a15aea8b0f4d448b3b81cb3694eaf51b688b2",
+    "core/evaluator/instructions.md": "df4ecc1ed77fe17e6094ba7a38d498525f244a84deccd5a02f5afa6cab8f2d21",
+    "core/evaluator/module.json": "f816f05fdc411661575c8b9c61abf69984132b7c68863b4ca8d31597cc836726",
+    "core/orchestrator/instructions.md": "86a98050d378f5fa8c0aae51e1e6facb64866afc66a540bdc74be1f7a62c01b1",
+    "core/orchestrator/module.json": "c59c4c73db77e50426e333515badce16758f1cdacff538d82809b58af69213a5",
+    "outputs/governance-verification-roles/roles.ko.md": "5d0aadc0f0311e688ccd81520694b6d200fa62890e0a55509d6ecd549322456b",
+    "outputs/governance-verification-roles/role-boundaries.en.md": "61cca0f5eb86ca21aafef55115fe640480c83b0358a9c1b856a27949d7f9f843",
+    "outputs/governance-verification-roles/runtime-responsibilities.en.md": "f1f9bb6f38c2224cf072b3d4d814f957a3d07195d399464474932f8cb5f74be3",
+    "outputs/governance-verification-roles/review-cases.json": "956dd59567b465ec46f9187c439d31a101cb52fb01d33ccefff818556794cb14",
+    ".codex/agents/policy-manager.toml": "f62d7d66fc56db01c79ddca078ba7a146b43346bd5237e65c0490e369efa3bc5",
+    ".codex/agents/evaluator.toml": "d98e830239c68b69fea980fa7e2f24324b88ab6822e30b0c8fd773cafcca1acc",
+    ".codex/agents/orchestrator.toml": "beae0a30c09e9f3a01b0a624e4d738c4e5e55d3bfc42ffe21a291300afdf7a47",
+    ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+    "runtime/native-map.json": "0ba01472a0fe7a5b0d555324cb9873771b20dfbb6d0509a31ced61eda4d17709"
+  },
+  "limits": [
+    "Role-case expectations were checked for document consistency; no live agent scenario run is claimed.",
+    "Existing unit tests exercise result contracts and adapter generation, not production security enforcement.",
+    "Actual control gateway, signature/identity isolation and operational continuous evaluation remain unimplemented."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "governance-verification-roles",
+  "role": "policy-manager",
+  "scope": {"project": "multi", "service": "agent-framework", "environment": "development", "issue": "governance-verification-role-definition"},
+  "baseline_commit": "68c978bce5454825563674de148326b31797e3e3",
+  "authorization": "Implement governance role instructions and task specification only. No delegation, runtime enforcement, permission expansion, prior design/snapshot edits, generated-adapter edits, submission or publication by this child.",
+  "owned_paths": ["core/policy-manager/instructions.md", "core/policy-manager/module.json", "outputs/governance-verification-roles/role-boundaries.en.md", "runs/governance-verification-roles/evidence/policy-role-notes.json"],
+  "decisions": [
+    "Keep the policy-manager identity and experimental lifecycle; update behavioral version from 0.1.3 to 0.2.0.",
+    "Preserve module input_fields, tools, scope, dependencies, skills, policies and result contract 1.0.0.",
+    "Activate governance for material policy/risk/data/authority/deployment-scope change or unresolved applicability/review requests, not every routine action.",
+    "Governance output is advisory proceed/revise/escalate with evidence-based risk, testable requirements, owner, conditions and review triggers; it is not signed runtime allow/approval.",
+    "Coordinate evaluator assessment accepted/rework/inconclusive, criterion_outcomes and pending_authorization fields without changing common result.json.",
+    "Preserve existing task and exact standing Git authorization; ordinary authorized repository edits do not require a new policy activation ceremony.",
+    "Distinguish ordinary repository-source editing from activation of protected runtime trust policy, credential or authority changes.",
+    "Unresolved effects are withheld or escalated specifically; unrelated authorized bounded read-only diagnosis may continue."
+  ],
+  "changes": [
+    "Expanded policy-manager instructions with activation, four-field input interpretation, advisory output, contextual judgments, handoff, disagreement/change control and forbidden authority.",
+    "Added governance-context and testable-control capabilities and specific activation triggers to the module without expanding permissions.",
+    "Created a 108-line English role-boundaries specification with current/planned runtime matrix, before/after-action loop, compatible advisory shapes and six practical acceptance cases."
+  ],
+  "verification": [
+    {"id": "policy-role-contract", "outcome": "passed", "method": "Compared current module JSON against git baseline 68c978b", "notes": "id, schema_version, kind, lifecycle, input_fields, tools, scope, dependencies, skills, policies and result_contract unchanged; version 0.2.0 and lifecycle experimental confirmed."},
+    {"id": "policy-role-source", "outcome": "passed", "method": "Checked advisory vocabulary, no-routine-governance rule, runtime decision boundary, read-only diagnostic scope, English-only source and document line limit", "notes": "Instructions 59 lines; role-boundaries specification 108 lines, below requested 170-line limit. Evaluator field vocabulary coordinated with coding author."},
+    {"id": "runtime-enforcement", "outcome": "not_run", "method": "No runtime implementation in this assigned change", "notes": "Role guidance does not implement a broker, signing service, credentials isolation, trusted observer or continuous monitor."},
+    {"id": "parent-integration", "outcome": "not_run", "method": "Parent-owned sync, doctor, compatibility and independent evaluator checks", "notes": "Pending parent integration; no behavioral safety/compliance guarantee from structural checks."}
+  ],
+  "remaining_actions": [
+    "Parent integrates orchestrator routing, Korean guide and evaluator role changes.",
+    "Parent synchronizes generated adapters and runs registration/doctor/compatibility checks after all source edits settle.",
+    "Independent evaluator checks six cases, authority distinctions and missing-evidence/disagreement handling.",
+    "Parent checkpoints, validates/submits and publishes according to existing authorized lifecycle."
+  ]
+}

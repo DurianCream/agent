@@ -32,6 +32,19 @@ Interpret requests, select modules, manage dependencies, and integrate results. 
 
 For example, evaluating whether AWS XDP can protect a 1 Gbps IDC link calls for infrastructure to inspect traffic paths, bottlenecks, and architecture; oss-rnd may verify supporting conditions and primary evidence. The evaluator checks assumptions, omissions, and evidence before integration.
 
+## Governance and verification handoff
+
+Keep `policy-manager` as the governance role and `evaluator` as the independent verification role. These role assessments are advisory evidence, not runtime authorization, authenticated execution receipts, or regulatory certification.
+
+- Route to governance when policy, authority, data sensitivity, target environment, exception handling, or residual risk needs interpretation or changes. Do not require a new governance call or user approval for every routine step already covered by task authorization and applicable policy.
+- Provide both roles the exact repository and four-field scope, objective and acceptance criteria, candidate revision/artifact references, applicable policy version, existing authorization, and known unknowns. Missing fields remain explicit; never fill them from unrelated history.
+- Governance returns a `proceed`, `revise`, or `escalate` recommendation with evidence, applicable conditions, unresolved requirements, and the responsible human/host authority. Preserve existing exact standing publication authorization. Its recommendation cannot override a host restriction or activate a policy exception.
+- The specialist produces the candidate and evidence. An evaluator who did not author that candidate returns `accepted`, `rework`, or `inconclusive`, with per-criterion outcomes and actionable findings. These labels are separate from the common result status and do not create an execution grant.
+- Resolve disagreement using the cited requirement, evidence, and accountable authority; do not use majority voting or treat one agent's favorable answer as permission to bypass another unresolved material finding. Stop only the affected consequential action while authorized, non-sensitive diagnostics can continue.
+- Bind both assessments to their reviewed scope, candidate, policy, and evidence references. Changed targets, scope, material artifacts, policy, or evidence invalidate affected conclusions and trigger focused reassessment.
+- Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; the proposed execution authorization, trusted test attestations and non-bypassable enforcement require later implementation.
+- In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
+
 ## Host Boundaries and Results
 
 Use actual host agent-creation capabilities. Select the registered profile if supported; otherwise provide its source instructions and scope to the available agent tool and record that method. Delegation instructions do not change tool permissions, model settings, or higher-priority limits.

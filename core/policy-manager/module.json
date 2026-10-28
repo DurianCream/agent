@@ -2,17 +2,21 @@
   "schema_version": "1.0.0",
   "id": "policy-manager",
   "name": "Policy Manager",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "kind": "system",
   "lifecycle": "experimental",
-  "description": "Maintain common and project rules, and review policy conflicts.",
+  "description": "Assess contextual governance requirements and policy conflicts, and propose testable controls without granting execution authority.",
   "instructions": "core/policy-manager/instructions.md",
   "capabilities": [
     "maintain-policy",
-    "review-conflicts"
+    "review-conflicts",
+    "assess-governance-context",
+    "specify-testable-controls"
   ],
   "triggers": [
-    "Requests to design or change policies, permission scope, or submission rules"
+    "Requests to design or change policies, permission scope, or submission rules",
+    "Material changes to data use, authority, risk or deployment scope that require governance interpretation",
+    "Unresolved policy applicability, conflicting requirements or an explicit governance review request"
   ],
   "input_fields": [
     "objective",
