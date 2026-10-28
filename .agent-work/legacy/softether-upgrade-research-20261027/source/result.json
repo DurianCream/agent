@@ -1,0 +1,405 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "softether-upgrade-research-20261027",
+  "module": {
+    "id": "orchestrator",
+    "version": "0.2.0"
+  },
+  "created_at": "2026-10-27T10:07:12+09:00",
+  "objective": "Linux SoftEther 서버와 Windows 클라이언트에서 기존 RADIUS 인증을 유지하는 프로토콜 선택 및 NAT 단말 감사로그 설계를 공식 근거로 정리",
+  "acceptance_criteria": [
+    {
+      "id": "criterion-1",
+      "description": "주요 VPN 프로토콜의 실제 지원 범위와 RADIUS 제약을 공식 근거로 비교하고 하나를 권고한다",
+      "required": true,
+      "verification_ids": [
+        "protocol-docs",
+        "independent-review"
+      ]
+    },
+    {
+      "id": "criterion-2",
+      "description": "사용자·접속 IP·단말·VPN 서버·시작과 종료 시각의 수집 필드와 NAT 및 단말 신뢰 한계를 구분한다",
+      "required": true,
+      "verification_ids": [
+        "audit-docs",
+        "independent-review"
+      ]
+    },
+    {
+      "id": "criterion-3",
+      "description": "감사로그 설정 방향·업그레이드 절차·검증 시나리오와 미확인을 제시한다",
+      "required": true,
+      "verification_ids": [
+        "operations-plan",
+        "independent-review"
+      ]
+    },
+    {
+      "id": "criterion-4",
+      "description": "별도 evaluator가 근거와 핵심 결론을 검증한다",
+      "required": true,
+      "verification_ids": [
+        "independent-review"
+      ]
+    }
+  ],
+  "status": "completed",
+  "summary": "공식 문서와 Stable v4.44 고정 소스를 근거로 고유 SSL-VPN+Windows SoftEther Client+기존 RADIUS를 권고하고 NAT·PC 신뢰 한계를 구분한 감사로그 설계를 완료했다. 별도 evaluator가 필수 조사 기준을 검증했다. 실제 배포와 연결 시험은 not_run.",
+  "work": [
+    "oss-rnd와 infrastructure 전문 에이전트를 실제 실행해 프로토콜/RADIUS와 감사로그 소스를 분담 조사했다.",
+    "공식 4.44 변경 이력과 고정 소스로 오래된 README의 OpenVPN AEAD 설명을 교정했다.",
+    "Client unique ID의 난수 실행 인스턴스 성격, NAT 한계, RADIUS 인증/Accounting 차이와 인증서 병행 제약을 확인했다.",
+    "로컬 원본 보존·TLS 중앙 수집·재전송·프로세스 세대별 세션 상관키와 단말 증거 연계안을 작성했다.",
+    "별도 evaluator가 핵심 공식 근거를 직접 검증했고 프로세스 세대별 상관키, Client 암호화 활성/검증 표현, 미사용 경로 관리의 보완까지 확인했다."
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/softether-upgrade-research-20261027/report.md",
+      "description": "통합 프로토콜 선택·RADIUS·NAT 감사로그 설계·도입 시험 보고서",
+      "sha256": "a97e4af2b6bd6855287172cc632d593d37c6d6dad9eaad5fd94fcf5efe21d82f"
+    },
+    {
+      "path": "outputs/softether-upgrade-research-20261027/protocol-research.md",
+      "description": "oss-rnd의 공식 프로토콜 및 RADIUS 조사",
+      "sha256": "4dfe036808ad3331fdae4df7aab1038014dbbbc73bc4638179317a4176777f42"
+    },
+    {
+      "path": "outputs/softether-upgrade-research-20261027/audit-research.md",
+      "description": "infrastructure의 로그 필드·CLI·단말 식별 한계 조사",
+      "sha256": "b2a25e363473895e5ca08eaa26a0b08942fa6d0fc1c93ac7796fc2bdf371b53d"
+    },
+    {
+      "path": "outputs/softether-upgrade-research-20261027/upgrade-operations.md",
+      "description": "메인의 업그레이드·복구·수집 운영 검토",
+      "sha256": "d84fd311635cdeb4cf97d51dce019920db06920812356f2a3ab7e3176d338bd3"
+    }
+  ],
+  "verification": [
+    {
+      "id": "protocol-docs",
+      "name": "프로토콜·RADIUS 공식 근거 교차 확인",
+      "method": "공식 변경 이력·매뉴얼·Stable v4.44 태그 코드 조사",
+      "outcome": "passed",
+      "evidence": [
+        "outputs/softether-upgrade-research-20261027/protocol-research.md"
+      ],
+      "notes": "문헌/정적 소스의 확인이며 대상 RADIUS와 연결 시험은 not_run."
+    },
+    {
+      "id": "audit-docs",
+      "name": "감사 필드·NAT·단말 신뢰 한계 정적 확인",
+      "method": "공식 logging/Hub 명령 및 Protocol/Cedar/Logging/Radius/Session 소스 추적",
+      "outcome": "passed",
+      "evidence": [
+        "outputs/softether-upgrade-research-20261027/audit-research.md"
+      ],
+      "notes": "Client unique ID와 별도 PACK machine hash를 구분하고 관측/보고/추정값을 분리했다."
+    },
+    {
+      "id": "operations-plan",
+      "name": "운영 절차·인수 시험 범위 검토",
+      "method": "공식 Linux/설정/rsyslog 문서와 사용자 조건으로 설계 검토",
+      "outcome": "passed",
+      "evidence": [
+        "outputs/softether-upgrade-research-20261027/upgrade-operations.md",
+        "outputs/softether-upgrade-research-20261027/report.md",
+        "runs/softether-upgrade-research-20261027/evidence/research-method.md"
+      ],
+      "notes": "운영 서버 변경은 범위 밖. 표의 실환경 시나리오는 모두 not_run으로 명시했다."
+    },
+    {
+      "id": "independent-review",
+      "name": "별도 evaluator의 독립 의미 검증",
+      "method": "작성에 관여하지 않은 evaluator의 공식 근거와 통합 결론 교차 검토",
+      "outcome": "passed",
+      "evidence": [
+        "runs/softether-upgrade-research-20261027/evidence/evaluator-review.md",
+        "runs/softether-upgrade-research-20261027/evidence/reviewed-file-hashes.json"
+      ],
+      "notes": "작성에 관여하지 않은 evaluator가 공식 자료/고정 코드/수정 사항을 직접 확인. 판정은 문헌 조사와 설계 범위이며 실환경은 not_run."
+    }
+  ],
+  "sources": [
+    {
+      "title": "공식 변경 이력",
+      "url": "https://www.softether.org/5-download/history",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 릴리스",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/tag/v4.44-9807-rtm",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Protocol.c",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Protocol.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "OpenVPN 인증 분기",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Interop_OpenVPN.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "SoftEther 공식 연결 기능",
+      "url": "https://www.softether.org/1-features/1._Ultimate_Powerful_VPN_Connectivity",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "SoftEther 규격",
+      "url": "https://www.softether.org/spec",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Stable/Developer 비교",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN/blob/master/README.md",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "strongSwan eap-radius",
+      "url": "https://docs.strongswan.org/docs/latest/plugins/eap-radius.html",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "WireGuard 프로토콜",
+      "url": "https://www.wireguard.com/protocol/",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 사용자 인증",
+      "url": "https://www.softether.org/4-docs/1-manual/2/2.2_User_Authentication",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 PPP 구현",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/IPsec_PPP.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Radius.c",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Radius.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Cedar.c",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Cedar.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Logging Service",
+      "url": "https://www.softether.org/4-docs/1-manual/3/3.A",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Session.c",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Session.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 3.3.17",
+      "url": "https://www.softether.org/4-docs/1-manual/3/3.3",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "imfile",
+      "url": "https://docs.rsyslog.com/doc/configuration/modules/imfile.html",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "큐 내구성",
+      "url": "https://docs.rsyslog.com/doc/concepts/queues.html",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "TLS",
+      "url": "https://docs.rsyslog.com/doc/concepts/ns_gtls.html",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 Hub 명령",
+      "url": "https://www.softether.org/4-docs/1-manual/6/6.4",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 서버 명령",
+      "url": "https://www.softether.org/4-docs/1-manual/6/6.3",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Logging.c",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Logging.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 Linux 서비스 관리",
+      "url": "https://www.softether.org/4-docs/1-manual/7/7.3",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "SoftEther 연결 기능",
+      "url": "https://www.softether.org/features/1._Ultimate_Powerful_VPN_Connectivity",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "OpenVPN username/password 전달",
+      "url": "https://openvpn.net/community-docs/using-alternative-authentication-methods/",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 매뉴얼 4.4.15",
+      "url": "https://www.softether.org/4-docs/1-manual/4._SoftEther_VPN_Client_Manual/4.4_Making_Connection_to_VPN_Server",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "사용자 인증 매뉴얼",
+      "url": "https://www.softether.org/4-docs/1-manual/2._SoftEther_VPN_Essential_Architecture/2.2_User_Authentication",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "4.44 Server.c 설정 읽기",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/blob/v4.44-9807-rtm/src/Cedar/Server.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Credential Guard 공식 주의사항",
+      "url": "https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/considerations-known-issues",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Microsoft 2026-10 변경 안내",
+      "url": "https://support.microsoft.com/en-au/servicing/os/windows/docs/2025/08/upcoming-changes-to-ntlmv1-in-windows-11-version-24h2-and-windows-server-2025",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 사이트",
+      "url": "https://www.softether.org/",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "commit",
+      "url": "https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/commit/ed17437",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "공식 Logging Service",
+      "url": "https://www.softether.org/4-docs/1-manual/3._SoftEther_VPN_Server_Manual/3.A_Logging_Service",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 버전 공식 문자열 테이블",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/bin/hamcore/strtable_en.stb",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Protocol.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Protocol.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Cedar.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Cedar.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Client.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Client.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Virtual Hub Functions",
+      "url": "https://www.softether.org/4-docs/1-manual/3._SoftEther_VPN_Server_Manual/3.4_Virtual_Hub_Functions",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Making Connection to VPN Server",
+      "url": "https://www.softether.org/4-docs/1-manual/4/4.4",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "RFC 2866",
+      "url": "https://www.rfc-editor.org/rfc/rfc2866",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Radius.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Radius.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "고정 Radius.h",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Radius.h",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "3.3.17",
+      "url": "https://www.softether.org/4-docs/1-manual/3/3.3_VPN_Server_Administration",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Logging.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Logging.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Session.c",
+      "url": "https://raw.githubusercontent.com/SoftEtherVPN/SoftEtherVPN_Stable/v4.44-9807-rtm/src/Cedar/Session.c",
+      "accessed_at": "2026-10-27T10:17:05+09:00",
+      "claim_kind": "fact"
+    }
+  ],
+  "limitations": [
+    "실제 Linux 서버/Windows Client/RADIUS 접속·업그레이드·설정 적용·처리량 시험은 not_run. 자료조사와 설계가 요청 범위다.",
+    "현재 build, OS/CPU/설치 방식, RADIUS 제품·PAP/MS-CHAPv2/MFA 정책, NAT/LB/DHCP/노드/단말관리 구성이 미확인이다.",
+    "PC hostname/로컬 주소/가상 MAC/실행 인스턴스 unique ID는 영구 또는 위조 저항성 있는 자산 증명이 아니다.",
+    "클라이언트/서버 crash 또는 망단절에서 실제 물리 종료 순간을 로그만으로 확정할 수 없다."
+  ],
+  "next_actions": [
+    "현재 서버/Client build, Linux/Windows 환경, RADIUS 제품·인증 정책과 NAT/DHCP/노드/단말관리 구성을 수집한다.",
+    "PC 식별 요구 수준과 로그 보존 정책을 결정하고 격리 파일럿에서 제시한 실환경 인수 시험을 실행한다."
+  ]
+}

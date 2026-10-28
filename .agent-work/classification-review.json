@@ -1,0 +1,997 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-28T05:30:48.663Z",
+  "inventory": {
+    "legacy_total": 10,
+    "durable_legacy": 2,
+    "local_run_legacy": 8,
+    "confirmed": 8,
+    "needs_confirmation": 2
+  },
+  "taxonomy": {
+    "project": "Named work project, not merely the folder holding a record.",
+    "service": "Logical component or deployed service being worked on.",
+    "environment": "The evidenced work/target environment; development denotes local framework construction and validation here.",
+    "issue": "Stable subject identifier; phases remain separate task IDs."
+  },
+  "import_review": {
+    "scope": "Original result JSON and generated result reports only; selected overview artifacts inspected for classification.",
+    "high_confidence_secret_pattern_matches": [],
+    "limitations": [
+      "A targeted pattern check and content review is not a complete secret audit.",
+      "Do not copy raw conversation logs, authentication material, whole snapshots, or embedded executable setup packages merely to classify records."
+    ]
+  },
+  "records": [
+    {
+      "task_id": "install-agent-system",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "agent-system-installation"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "agent-system-installation"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The objective explicitly installs the modular agent configuration into multi."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The summary identifies roles, work modules, common skills and the result-submission framework."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The work installs local files and executes doctor plus 29 contract tests; this is local framework development/setup, not an infrastructure production deployment."
+        },
+        "issue": {
+          "value": "agent-system-installation",
+          "confidence": "high",
+          "evidence": "Initial installation of the modular agent system."
+        }
+      },
+      "evidence_paths": [
+        "runs/install-agent-system/result.json",
+        "outputs/install-agent-system/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/install-agent-system/result.json",
+          "bytes": 3705,
+          "sha256": "ad6e5179cb3484dc963732dba72262b6815118d106118fb8d885a0f1fd6cf70c",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/install-agent-system/result.md",
+          "bytes": 3579,
+          "sha256": "596166d40a6228c867fa21d462ea15162abfc2a5e9381dc3bb9bac080fb8685a",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "install-agent-system",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/install-agent-system/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective explicitly installs the modular agent configuration into multi."
+        },
+        {
+          "field": "service",
+          "source": "runs/install-agent-system/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The summary identifies roles, work modules, common skills and the result-submission framework."
+        },
+        {
+          "field": "environment",
+          "source": "runs/install-agent-system/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The work installs local files and executes doctor plus 29 contract tests; this is local framework development/setup, not an infrastructure production deployment."
+        },
+        {
+          "field": "issue",
+          "source": "runs/install-agent-system/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Initial installation of the modular agent system."
+        }
+      ]
+    },
+    {
+      "task_id": "register-codex-native",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "native-agent-registration"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "native-agent-registration"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The objective explicitly names multi project role and skill registration."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The work creates .codex profiles and .agents skill adapters for the agent framework."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The result describes local Codex discovery and adapter regression checks while preserving global configuration."
+        },
+        "issue": {
+          "value": "native-agent-registration",
+          "confidence": "high",
+          "evidence": "Register framework roles and skills with native Codex discovery."
+        }
+      },
+      "evidence_paths": [
+        "runs/register-codex-native/result.json",
+        "outputs/register-codex-native/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/register-codex-native/result.json",
+          "bytes": 5207,
+          "sha256": "94ed54667e794b7f1d0cbe587af197a1a711997d318dcc318b2b72a159af8c06",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/register-codex-native/result.md",
+          "bytes": 5104,
+          "sha256": "d02282f8d51e801d5ee76fdc5607727bd229d1ff97fc7ff067e01aad5430c45b",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "register-codex-native",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/register-codex-native/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective explicitly names multi project role and skill registration."
+        },
+        {
+          "field": "service",
+          "source": "runs/register-codex-native/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The work creates .codex profiles and .agents skill adapters for the agent framework."
+        },
+        {
+          "field": "environment",
+          "source": "runs/register-codex-native/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The result describes local Codex discovery and adapter regression checks while preserving global configuration."
+        },
+        {
+          "field": "issue",
+          "source": "runs/register-codex-native/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Register framework roles and skills with native Codex discovery."
+        }
+      ]
+    },
+    {
+      "task_id": "remove-context-management",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "context-management-removal"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "context-management-removal"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The summary explicitly names multi."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "Changes affect runtime/codex-settings.toml and generated Codex project configuration."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The work changes a project-local runtime feature and checks configuration synchronization; no external service deployment is described."
+        },
+        "issue": {
+          "value": "context-management-removal",
+          "confidence": "high",
+          "evidence": "Disable the context_management feature while retaining other configuration."
+        }
+      },
+      "evidence_paths": [
+        "runs/remove-context-management/result.json",
+        "outputs/remove-context-management/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/remove-context-management/result.json",
+          "bytes": 2534,
+          "sha256": "0dbe4cfeededc21a6c1ceb9f1db7994f9e9b1c312ac4a4e931adb2ee290570a9",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/remove-context-management/result.md",
+          "bytes": 2639,
+          "sha256": "7247619455d1680a5dc69e1af9678b71e169bc564ea2eaf3b3afb030a2cf288a",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "remove-context-management",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/remove-context-management/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The summary explicitly names multi."
+        },
+        {
+          "field": "service",
+          "source": "runs/remove-context-management/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Changes affect runtime/codex-settings.toml and generated Codex project configuration."
+        },
+        {
+          "field": "environment",
+          "source": "runs/remove-context-management/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The work changes a project-local runtime feature and checks configuration synchronization; no external service deployment is described."
+        },
+        {
+          "field": "issue",
+          "source": "runs/remove-context-management/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Disable the context_management feature while retaining other configuration."
+        }
+      ]
+    },
+    {
+      "task_id": "review-security-audit-skill-20261026",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "security-audit-skill-review"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "security-audit-skill-review"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The objective and REVIEW.md section 2 target adoption into this modular agent repository; the record is held in multi."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The review evaluates an optional skill for integration with the existing result contract and framework, not a deployed security service."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The work reproduces upstream validator tests on Windows Node and explicitly excludes installation and target-system auditing."
+        },
+        "issue": {
+          "value": "security-audit-skill-review",
+          "confidence": "high",
+          "evidence": "Assess the Cloudflare security-audit skill for adoption and validator compatibility."
+        }
+      },
+      "evidence_paths": [
+        "runs/review-security-audit-skill-20261026/result.json",
+        "outputs/review-security-audit-skill-20261026/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/review-security-audit-skill-20261026/result.json",
+          "bytes": 9600,
+          "sha256": "dc7d036101ae0cb738bddb83aa242911cc9fcab1711c4a7ca0c66742e770cb90",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/review-security-audit-skill-20261026/result.md",
+          "bytes": 9925,
+          "sha256": "27957b9df590fea761c8b8b794e30142043f37e80c3658e6b400269d1f35f665",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "review-security-audit-skill-20261026",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/review-security-audit-skill-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective and REVIEW.md section 2 target adoption into this modular agent repository; the record is held in multi."
+        },
+        {
+          "field": "service",
+          "source": "runs/review-security-audit-skill-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The review evaluates an optional skill for integration with the existing result contract and framework, not a deployed security service."
+        },
+        {
+          "field": "environment",
+          "source": "runs/review-security-audit-skill-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The work reproduces upstream validator tests on Windows Node and explicitly excludes installation and target-system auditing."
+        },
+        {
+          "field": "issue",
+          "source": "runs/review-security-audit-skill-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Assess the Cloudflare security-audit skill for adoption and validator compatibility."
+        }
+      ]
+    },
+    {
+      "task_id": "single-md-wsl-agent-setup-20261026",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "wsl-single-file-setup"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "wsl-single-file-setup"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The objective packages the current modular framework and WSL.md identifies the same Windows/WSL multi checkout."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The package contains the framework registry, eight roles, three skills, policies, schemas and runtime."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "Validation restores the package into a fresh WSL temporary path and runs 29 contract tests; no production service change is reported."
+        },
+        "issue": {
+          "value": "wsl-single-file-setup",
+          "confidence": "high",
+          "evidence": "Build and validate a self-contained single-Markdown WSL setup package."
+        }
+      },
+      "evidence_paths": [
+        "runs/single-md-wsl-agent-setup-20261026/result.json",
+        "outputs/single-md-wsl-agent-setup-20261026/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/single-md-wsl-agent-setup-20261026/result.json",
+          "bytes": 6911,
+          "sha256": "fe7c52c1c6696db6557f07c8764ce9b1e481d9293556b3f12b7699f0f0b27bbe",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/single-md-wsl-agent-setup-20261026/result.md",
+          "bytes": 8144,
+          "sha256": "91353749ec383375920805553d23e2a1c859f5432a301f636df540dd766ad582",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "single-md-wsl-agent-setup-20261026",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/single-md-wsl-agent-setup-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective packages the current modular framework and WSL.md identifies the same Windows/WSL multi checkout."
+        },
+        {
+          "field": "service",
+          "source": "runs/single-md-wsl-agent-setup-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The package contains the framework registry, eight roles, three skills, policies, schemas and runtime."
+        },
+        {
+          "field": "environment",
+          "source": "runs/single-md-wsl-agent-setup-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Validation restores the package into a fresh WSL temporary path and runs 29 contract tests; no production service change is reported."
+        },
+        {
+          "field": "issue",
+          "source": "runs/single-md-wsl-agent-setup-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Build and validate a self-contained single-Markdown WSL setup package."
+        }
+      ]
+    },
+    {
+      "task_id": "softether-ssl-vpn-runbook-20261027",
+      "source_kind": "local_run_result",
+      "classification_status": "needs_confirmation",
+      "scope": null,
+      "proposed_scope": {
+        "project": null,
+        "service": "softether",
+        "environment": null,
+        "issue": "softether-upgrade-audit"
+      },
+      "field_assessment": {
+        "project": {
+          "value": null,
+          "confidence": "unresolved",
+          "evidence": "The result names Linux/Windows/RADIUS technology but no customer, organization or named infrastructure project. Storage in multi is not proof of a target infrastructure project."
+        },
+        "service": {
+          "value": "softether",
+          "confidence": "high",
+          "evidence": "The objective and report explicitly concern SoftEther VPN Server and Windows Client with existing RADIUS."
+        },
+        "environment": {
+          "value": null,
+          "confidence": "unresolved",
+          "evidence": "The result explicitly states that production-server access, deployment and actual upgrade/connectivity tests were not performed. Current build, OS, topology and target inventory are unconfirmed; an operational runbook does not identify a production instance."
+        },
+        "issue": {
+          "value": "softether-upgrade-audit",
+          "confidence": "high",
+          "evidence": "Both records concern maintaining RADIUS while upgrading SoftEther and designing or documenting NAT/client audit logging. Research and runbook are distinct tasks under the same proposed issue family."
+        }
+      },
+      "evidence_paths": [
+        "runs/softether-ssl-vpn-runbook-20261027/result.json",
+        "outputs/softether-ssl-vpn-runbook-20261027/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/softether-ssl-vpn-runbook-20261027/result.json",
+          "bytes": 17459,
+          "sha256": "31a97fd3469e17071be37709ed33a8072a6072a117a69f0e9e046ffceba03ac9",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/softether-ssl-vpn-runbook-20261027/result.md",
+          "bytes": 15133,
+          "sha256": "96da11647355fc27cd836ec87b618f8e9fcf98495fa6d1291bd9e50740d693c0",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [
+        "project",
+        "environment"
+      ],
+      "notes": [
+        "Do not infer production from operational wording.",
+        "Do not use placeholder Hub, node, account or path names as infrastructure identity.",
+        "Do not auto-load until the missing project and environment are explicitly resolved."
+      ],
+      "id": "softether-ssl-vpn-runbook-20261027",
+      "status": "needs-review",
+      "unknown_fields": [
+        "project",
+        "environment"
+      ],
+      "rationale": [
+        "Do not infer production from operational wording.",
+        "Do not use placeholder Hub, node, account or path names as infrastructure identity.",
+        "Do not auto-load until the missing project and environment are explicitly resolved."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/softether-ssl-vpn-runbook-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The result names Linux/Windows/RADIUS technology but no customer, organization or named infrastructure project. Storage in multi is not proof of a target infrastructure project."
+        },
+        {
+          "field": "service",
+          "source": "runs/softether-ssl-vpn-runbook-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective and report explicitly concern SoftEther VPN Server and Windows Client with existing RADIUS."
+        },
+        {
+          "field": "environment",
+          "source": "runs/softether-ssl-vpn-runbook-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The result explicitly states that production-server access, deployment and actual upgrade/connectivity tests were not performed. Current build, OS, topology and target inventory are unconfirmed; an operational runbook does not identify a production instance."
+        },
+        {
+          "field": "issue",
+          "source": "runs/softether-ssl-vpn-runbook-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Both records concern maintaining RADIUS while upgrading SoftEther and designing or documenting NAT/client audit logging. Research and runbook are distinct tasks under the same proposed issue family."
+        }
+      ]
+    },
+    {
+      "task_id": "softether-upgrade-research-20261027",
+      "source_kind": "local_run_result",
+      "classification_status": "needs_confirmation",
+      "scope": null,
+      "proposed_scope": {
+        "project": null,
+        "service": "softether",
+        "environment": null,
+        "issue": "softether-upgrade-audit"
+      },
+      "field_assessment": {
+        "project": {
+          "value": null,
+          "confidence": "unresolved",
+          "evidence": "The result names Linux/Windows/RADIUS technology but no customer, organization or named infrastructure project. Storage in multi is not proof of a target infrastructure project."
+        },
+        "service": {
+          "value": "softether",
+          "confidence": "high",
+          "evidence": "The objective and report explicitly concern SoftEther VPN Server and Windows Client with existing RADIUS."
+        },
+        "environment": {
+          "value": null,
+          "confidence": "unresolved",
+          "evidence": "The result explicitly states that production-server access, deployment and actual upgrade/connectivity tests were not performed. Current build, OS, topology and target inventory are unconfirmed; an operational runbook does not identify a production instance."
+        },
+        "issue": {
+          "value": "softether-upgrade-audit",
+          "confidence": "high",
+          "evidence": "Both records concern maintaining RADIUS while upgrading SoftEther and designing or documenting NAT/client audit logging. Research and runbook are distinct tasks under the same proposed issue family."
+        }
+      },
+      "evidence_paths": [
+        "runs/softether-upgrade-research-20261027/result.json",
+        "outputs/softether-upgrade-research-20261027/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/softether-upgrade-research-20261027/result.json",
+          "bytes": 16706,
+          "sha256": "e52fc4a747256968097f67eeb02c10a0e6387ed008d427327b63b54b6bfce387",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/softether-upgrade-research-20261027/result.md",
+          "bytes": 13068,
+          "sha256": "11117d1fa5fd547ba7209d2468f03b7e4091e6e570a0886ec7907d6054ae7438",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [
+        "project",
+        "environment"
+      ],
+      "notes": [
+        "Do not infer production from operational wording.",
+        "Do not use placeholder Hub, node, account or path names as infrastructure identity.",
+        "Do not auto-load until the missing project and environment are explicitly resolved."
+      ],
+      "id": "softether-upgrade-research-20261027",
+      "status": "needs-review",
+      "unknown_fields": [
+        "project",
+        "environment"
+      ],
+      "rationale": [
+        "Do not infer production from operational wording.",
+        "Do not use placeholder Hub, node, account or path names as infrastructure identity.",
+        "Do not auto-load until the missing project and environment are explicitly resolved."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/softether-upgrade-research-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The result names Linux/Windows/RADIUS technology but no customer, organization or named infrastructure project. Storage in multi is not proof of a target infrastructure project."
+        },
+        {
+          "field": "service",
+          "source": "runs/softether-upgrade-research-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective and report explicitly concern SoftEther VPN Server and Windows Client with existing RADIUS."
+        },
+        {
+          "field": "environment",
+          "source": "runs/softether-upgrade-research-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The result explicitly states that production-server access, deployment and actual upgrade/connectivity tests were not performed. Current build, OS, topology and target inventory are unconfirmed; an operational runbook does not identify a production instance."
+        },
+        {
+          "field": "issue",
+          "source": "runs/softether-upgrade-research-20261027/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Both records concern maintaining RADIUS while upgrading SoftEther and designing or documenting NAT/client audit logging. Research and runbook are distinct tasks under the same proposed issue family."
+        }
+      ]
+    },
+    {
+      "task_id": "wsl-agent-compatibility-20261026",
+      "source_kind": "local_run_result",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "wsl-compatibility"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "wsl-compatibility"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "outputs/wsl-agent-compatibility-20261026/WSL.md explicitly gives C:/Users/dhyun/Documents/ChatGPT/multi and its /mnt/c equivalent."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The objective and checks concern the modular agent framework and its WSL launcher."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "Ubuntu WSL2 compatibility tests run on the local checkout and temporary filesystem; actual Codex launch is explicitly not run."
+        },
+        "issue": {
+          "value": "wsl-compatibility",
+          "confidence": "high",
+          "evidence": "Validate WSL compatibility and prepare the project launch workflow."
+        }
+      },
+      "evidence_paths": [
+        "runs/wsl-agent-compatibility-20261026/result.json",
+        "outputs/wsl-agent-compatibility-20261026/result.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": "runs/wsl-agent-compatibility-20261026/result.json",
+          "bytes": 7982,
+          "sha256": "3d3af3f554151d105141617e2f1fa6c45513524ae2873514c51404eef5b9fe83",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": "outputs/wsl-agent-compatibility-20261026/result.md",
+          "bytes": 8292,
+          "sha256": "930ad00c3c60e6bc600c7e5d0dbbd3f94b76c486cd84c0f9c894c002cae3e794",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "wsl-agent-compatibility-20261026",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": "runs/wsl-agent-compatibility-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "outputs/wsl-agent-compatibility-20261026/WSL.md explicitly gives C:/Users/dhyun/Documents/ChatGPT/multi and its /mnt/c equivalent."
+        },
+        {
+          "field": "service",
+          "source": "runs/wsl-agent-compatibility-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "The objective and checks concern the modular agent framework and its WSL launcher."
+        },
+        {
+          "field": "environment",
+          "source": "runs/wsl-agent-compatibility-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Ubuntu WSL2 compatibility tests run on the local checkout and temporary filesystem; actual Codex launch is explicitly not run."
+        },
+        {
+          "field": "issue",
+          "source": "runs/wsl-agent-compatibility-20261026/result.json",
+          "locator": "objective; work; limitations",
+          "observation": "Validate WSL compatibility and prepare the project launch workflow."
+        }
+      ]
+    },
+    {
+      "task_id": "automatic-workflow",
+      "source_kind": "durable_record",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "automatic-workflow"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "automatic-workflow"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The record source_root and repository_id identify multi."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The work adds startup/begin/track/finish to the agent framework."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The result tests the local framework and temporary bare Git remotes, then enables publication for the multi source repository."
+        },
+        "issue": {
+          "value": "automatic-workflow",
+          "confidence": "high",
+          "evidence": "Automate memory loading and task completion publication."
+        }
+      },
+      "evidence_paths": [
+        ".agent-work/tasks/automatic-workflow/record.json",
+        ".agent-work/tasks/automatic-workflow/spec.md",
+        ".agent-work/tasks/automatic-workflow/report.ko.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": ".agent-work/tasks/automatic-workflow/record.json",
+          "bytes": 6372,
+          "sha256": "904e3ffbf538830adb5e68b512cd726923a3c05e19bda0a9e5f033a89fd200e2",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": ".agent-work/tasks/automatic-workflow/spec.md",
+          "bytes": 1077,
+          "sha256": "b52c894d887dda4ca15fdae64331b4ed2fb405a2a80d102d464edfae4f33065c",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": ".agent-work/tasks/automatic-workflow/report.ko.md",
+          "bytes": 2644,
+          "sha256": "b138a24cf90b796d4dbcfc4f2d13a372adeff2c605ae46345333d88285b133df",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "automatic-workflow",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": ".agent-work/tasks/automatic-workflow/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The record source_root and repository_id identify multi."
+        },
+        {
+          "field": "service",
+          "source": ".agent-work/tasks/automatic-workflow/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The work adds startup/begin/track/finish to the agent framework."
+        },
+        {
+          "field": "environment",
+          "source": ".agent-work/tasks/automatic-workflow/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The result tests the local framework and temporary bare Git remotes, then enables publication for the multi source repository."
+        },
+        {
+          "field": "issue",
+          "source": ".agent-work/tasks/automatic-workflow/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "Automate memory loading and task completion publication."
+        }
+      ]
+    },
+    {
+      "task_id": "repository-memory",
+      "source_kind": "durable_record",
+      "classification_status": "confirmed",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "repository-memory"
+      },
+      "proposed_scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "repository-memory"
+      },
+      "field_assessment": {
+        "project": {
+          "value": "multi",
+          "confidence": "high",
+          "evidence": "The record source_root and repository_id identify multi."
+        },
+        "service": {
+          "value": "agent-framework",
+          "confidence": "high",
+          "evidence": "The work implements repoctl and agentctl durable-work-record integration."
+        },
+        "environment": {
+          "value": "development",
+          "confidence": "high",
+          "evidence": "The work changes and tests local framework code and verifies fresh-clone recovery before publishing the framework repository."
+        },
+        "issue": {
+          "value": "repository-memory",
+          "confidence": "high",
+          "evidence": "Implement repository-bound durable work records and restore them across chats."
+        }
+      },
+      "evidence_paths": [
+        ".agent-work/tasks/repository-memory/record.json",
+        ".agent-work/tasks/repository-memory/spec.md",
+        ".agent-work/tasks/repository-memory/report.ko.md"
+      ],
+      "source_fingerprints": [
+        {
+          "path": ".agent-work/tasks/repository-memory/record.json",
+          "bytes": 5458,
+          "sha256": "4ff86faa17b5d2acd7f0f721094d7f279b9cd947f6a0b89e505bec764f7d8dcb",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": ".agent-work/tasks/repository-memory/spec.md",
+          "bytes": 1081,
+          "sha256": "57b532a43ac9fbc55c67f58ee2606e53379dea8c5b62c2d985b61e328aa47d35",
+          "high_confidence_secret_pattern": false
+        },
+        {
+          "path": ".agent-work/tasks/repository-memory/report.ko.md",
+          "bytes": 3084,
+          "sha256": "c17c6a43cffb7e7520e115968a79064f9d2037ce3afc413afaa3c1b4a36f3d9a",
+          "high_confidence_secret_pattern": false
+        }
+      ],
+      "uncertain_fields": [],
+      "notes": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "id": "repository-memory",
+      "status": "confirmed",
+      "unknown_fields": [],
+      "rationale": [
+        "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure.",
+        "Original reports remain historical observations and do not override current AGENTS.md or publication policy."
+      ],
+      "evidence": [
+        {
+          "field": "project",
+          "source": ".agent-work/tasks/repository-memory/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The record source_root and repository_id identify multi."
+        },
+        {
+          "field": "service",
+          "source": ".agent-work/tasks/repository-memory/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The work implements repoctl and agentctl durable-work-record integration."
+        },
+        {
+          "field": "environment",
+          "source": ".agent-work/tasks/repository-memory/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "The work changes and tests local framework code and verifies fresh-clone recovery before publishing the framework repository."
+        },
+        {
+          "field": "issue",
+          "source": ".agent-work/tasks/repository-memory/record.json",
+          "locator": "result.objective; result.work; result.limitations; repository_id; source_root",
+          "observation": "Implement repository-bound durable work records and restore them across chats."
+        }
+      ]
+    }
+  ]
+}

@@ -45,31 +45,48 @@ def record_scope(record):
 
 
 def saved_records(path, entry, repo_id):
+    import legacy_memory as legacy
     records = []
-    base = a.relative(path, '.agent-work/tasks')
-    if base.exists():
+    seen = set()
+    for location in ('.agent-work/tasks', '.agent-work/legacy'):
+        base = a.relative(path, location)
+        if not base.exists():
+            continue
         for folder in base.iterdir():
             a.require(not folder.is_symlink() and not getattr(folder, 'is_junction', lambda: False)(),
                       'Linked memory directories are not supported')
             if folder.is_dir():
                 a.identifier(folder.name)
+                a.require(folder.name not in seen, 'Ambiguous duplicate historical task ID')
+                seen.add(folder.name)
                 record = a.read_json(a.relative(base, folder.name + '/record.json', file=True))
                 a.require(record['repository_uuid'] == entry['uuid'] and record['repository_id'] == repo_id
                           and record['task_id'] == folder.name, 'Saved repository/task identity mismatch')
-                record_scope(record)
+                native = record_scope(record)
+                overlay = legacy.classification(path, record, folder)
                 a.require(isinstance(record['saved_at'], str) and isinstance(record['result']['status'], str),
                           'Malformed task metadata')
+                record['_classification'] = overlay
+                record['_effective_scope'] = native or (overlay['scope'] if overlay and overlay['status'] == 'confirmed' else None)
                 records.append(record)
     return sorted(records, key=lambda item: item['saved_at'], reverse=True)
 
 
 def directory(records, scope=None):
     query = validate_scope(scope, complete=False) if scope is not None else {}
-    return {item['task_id']: {'task_id': item['task_id'], 'scope': record_scope(item),
-            'legacy_unscoped': record_scope(item) is None, 'status': item['result']['status'],
-            'saved_at': item['saved_at']} for item in records
-            if not query or (record_scope(item) is not None and
-                             all(record_scope(item)[key] == value for key, value in query.items()))}
+    output = {}
+    for item in records:
+        effective = item.get('_effective_scope', record_scope(item))
+        if query and (effective is None or any(effective[key] != value for key, value in query.items())):
+            continue
+        overlay = item.get('_classification')
+        output[item['task_id']] = {'task_id': item['task_id'], 'scope': effective,
+            'original_scope': record_scope(item), 'legacy_unscoped': record_scope(item) is None,
+            'classification_status': overlay['status'] if overlay else 'unclassified',
+            'proposed_scope': overlay.get('proposed_scope') if overlay else None,
+            'unknown_fields': overlay.get('unknown_fields') if overlay else None,
+            'status': item['result']['status'], 'saved_at': item['saved_at']}
+    return output
 
 
 def set_scope(task_id, scope, root=ROOT):
@@ -307,12 +324,15 @@ def resume(repo_id, task_id=None, root=ROOT, scope=None):
         return {'repository_id': repo_id, 'git': state,
                 'index': {'tasks': directory(saved_records(path, entry, repo_id), scope)},
                 'notice': 'Metadata only. Supply all four scope fields or an explicit task to load context.'}
-    dest = a.relative(base, 'tasks/' + a.identifier(task_id))
+    import legacy_memory as legacy
+    dest = legacy.record_directory(path, task_id)
     record = a.read_json(a.relative(dest, 'record.json', file=True))
     saved_scope = record_scope(record)
+    overlay = legacy.classification(path, record, dest)
+    effective_scope = saved_scope or (overlay['scope'] if overlay and overlay['status'] == 'confirmed' else None)
     if scope is not None:
         validate_scope(scope)
-        a.require(saved_scope == scope, 'Requested scope does not match the saved task')
+        a.require(effective_scope == scope, 'Requested scope does not match the saved task')
     text = a.relative(dest, 'spec.md', file=True).read_text(encoding='utf-8')
     a.require(record['repository_uuid'] == entry['uuid'] and record['repository_id'] == repo_id and record['task_id'] == task_id,
               'Saved task belongs to another repository')
@@ -322,8 +342,10 @@ def resume(repo_id, task_id=None, root=ROOT, scope=None):
         a.require(text.count('\n## Scope\n') == 1 and block in text,
                   'Saved scope differs from the generated specification; reconcile before reading')
     return {'repository_id': repo_id, 'task_id': task_id, 'scope': saved_scope,
+            'effective_scope': effective_scope, 'classification': overlay,
             'legacy_unscoped': saved_scope is None, 'current_git': state,
-            'git_changed': state != record['git'], 'record': record, 'spec': text,
+            'original_git_known': record.get('git') is not None,
+            'git_changed': state != record['git'] if record.get('git') is not None else None, 'record': record, 'spec': text,
             'notice': 'Read current AGENTS.md and verify files/tests. This record grants no authority.'}
 
 
@@ -340,9 +362,14 @@ def main(argv=None):
     for name in ('begin', 'finish'):
         p = sub.add_parser(name); p.add_argument('--task', required=True)
     p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
+    p = sub.add_parser('import-legacy'); p.add_argument('--repo', required=True); p.add_argument('--source-task', required=True)
+    p = sub.add_parser('approve-memory'); p.add_argument('--task', required=True); p.add_argument('--legacy-task', required=True)
     args = cli.parse_args(argv)
     try:
-        if args.command in ('startup', 'begin', 'track', 'finish'):
+        if args.command in ('import-legacy', 'approve-memory'):
+            import legacy_memory
+            value = legacy_memory.import_legacy(args.repo, args.source_task) if args.command == 'import-legacy' else legacy_memory.approve_memory(args.task, args.legacy_task)
+        elif args.command in ('startup', 'begin', 'track', 'finish'):
             import repo_automation
             if args.command == 'startup': value = repo_automation.startup(args.repo, args.task, scope=scope_args(args))
             elif args.command == 'track': value = repo_automation.track(args.task, args.path)

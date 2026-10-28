@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "softether-upgrade-research-20261027",
+  "module": {
+    "id": "orchestrator",
+    "version": "0.2.0"
+  },
+  "objective": "Linux SoftEther 서버와 Windows 클라이언트에서 기존 RADIUS 인증을 유지하는 프로토콜 선택 및 NAT 단말 감사로그 설계를 공식 근거로 정리",
+  "created_at": "2026-10-27T10:07:12+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "주요 VPN 프로토콜의 실제 지원 범위와 RADIUS 제약을 공식 근거로 비교하고 하나를 권고한다",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "사용자·접속 IP·단말·VPN 서버·시작과 종료 시각의 수집 필드와 NAT 및 단말 신뢰 한계를 구분한다",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "감사로그 설정 방향·업그레이드 절차·검증 시나리오와 미확인을 제시한다",
+      "required": true
+    },
+    {
+      "id": "criterion-4",
+      "description": "별도 evaluator가 근거와 핵심 결론을 검증한다",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "495a7b670f6142525dbd4318f92f91f34a38d046a067571c51466a3085da53d7",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "e52fc4a747256968097f67eeb02c10a0e6387ed008d427327b63b54b6bfce387",
+    "report_sha256": "11117d1fa5fd547ba7209d2468f03b7e4091e6e570a0886ec7907d6054ae7438",
+    "evidence": [
+      {
+        "path": "outputs/softether-upgrade-research-20261027/audit-research.md",
+        "sha256": "b2a25e363473895e5ca08eaa26a0b08942fa6d0fc1c93ac7796fc2bdf371b53d"
+      },
+      {
+        "path": "outputs/softether-upgrade-research-20261027/protocol-research.md",
+        "sha256": "4dfe036808ad3331fdae4df7aab1038014dbbbc73bc4638179317a4176777f42"
+      },
+      {
+        "path": "outputs/softether-upgrade-research-20261027/report.md",
+        "sha256": "a97e4af2b6bd6855287172cc632d593d37c6d6dad9eaad5fd94fcf5efe21d82f"
+      },
+      {
+        "path": "outputs/softether-upgrade-research-20261027/upgrade-operations.md",
+        "sha256": "d84fd311635cdeb4cf97d51dce019920db06920812356f2a3ab7e3176d338bd3"
+      },
+      {
+        "path": "runs/softether-upgrade-research-20261027/evidence/evaluator-review.md",
+        "sha256": "2e25fa6e569f2bb9e45fe92ddd5b0a54d3b3d8b1dcddd7cb2453a973763e6562"
+      },
+      {
+        "path": "runs/softether-upgrade-research-20261027/evidence/research-method.md",
+        "sha256": "bead71e7f262de1889bfcd17895baa1ee8a0105ff33642a2aad14c2cbdc83956"
+      },
+      {
+        "path": "runs/softether-upgrade-research-20261027/evidence/reviewed-file-hashes.json",
+        "sha256": "7faa829ba7e8ba473078a5d0f75715411143e551dd2196cb162ddb8ff8ac1b5e"
+      }
+    ]
+  }
+}

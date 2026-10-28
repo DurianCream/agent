@@ -19,7 +19,7 @@
     ".codex/agents/orchestrator.toml": "0abd3037f364e3d53743345c53da963c57a6bfbae5684e4c8f0baaf7f3b6988f",
     ".codex/agents/skill-manager.toml": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979",
     ".codex/agents/policy-manager.toml": "bcc3f1a5e93379c6651638f4c7e6c825fd9c52d557f963f92761ccc25258f955",
-    ".codex/agents/knowledge-manager.toml": "112f8d3715c2387320f9ef77c9f7a026cc829d01c5633ee36a4c3dadb81ab8c1",
+    ".codex/agents/knowledge-manager.toml": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74",
     ".codex/agents/evaluator.toml": "0e18721741d337d124554ac9672db221c3245a1c2107b463e29910394f607846",
     ".codex/agents/coding.toml": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8",
     ".codex/agents/infrastructure.toml": "34484d11c5b31d48748c5b795642b0b142550ece49f2091f811dff82cfe5fefb",

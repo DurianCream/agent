@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "softether-ssl-vpn-runbook-20261027",
+  "module": {
+    "id": "orchestrator",
+    "version": "0.2.0"
+  },
+  "objective": "既存RADIUSを維持するLinux SoftEther native SSL-VPNアップグレード・監査設定とNAT下Windows端末の接続履歴確認の手順書作成",
+  "created_at": "2026-10-27T14:38:12+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "기존 RADIUS와 구성·데이터를 보존하는 Linux/Windows 업그레이드·검증·복구 절차를 공식 근거로 제시한다",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "감사로그 활성화와 NAT PC정보·접속 및 종료의 실제 조회 명령·연계 예시를 정확히 제시한다",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "모의 예시와 실측을 구분하고 NAT·단말식별·종료누락·로그유실 한계 및 인수 시험을 명시한다",
+      "required": true
+    },
+    {
+      "id": "criterion-4",
+      "description": "별도 evaluator가 핵심 명령과 안전성·근거를 검증한다",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "10a3ef778c7f99d79697736f08acc57334278081ad38923500e90090e1aee9de",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "31a97fd3469e17071be37709ed33a8072a6072a117a69f0e9e046ffceba03ac9",
+    "report_sha256": "96da11647355fc27cd836ec87b618f8e9fcf98495fa6d1291bd9e50740d693c0",
+    "evidence": [
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/acceptance-tests.md",
+        "sha256": "206d702350a0d4a40be52b958c02460f6d1c4376e9ccbeb424e2eb49fd2e4035"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/audit-steps.md",
+        "sha256": "b7bff80a6a30594fde055790086d8a3592a98f02d636b2703cf97d2ca0b7891c"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/central-logging.md",
+        "sha256": "dee2acf5949386af848f7b1411514d34a13fde656abd1116975611eb3f5b3555"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/examples/README.md",
+        "sha256": "a2682d2126be7c7ef62b11841ba5f0fb8043f5cbda5390eea803d5c87ec63676"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/examples/rsyslog-softether.conf.example",
+        "sha256": "a5d76884aab6261905698f45aa7935b56f32045b05f777416338b841a511f800"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/examples/synthetic-normalized-events.jsonl",
+        "sha256": "5d235e98fd5c71ba0aadf31d0f78e48037815894dce3b1d7a4a026582e754f37"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/runbook.md",
+        "sha256": "4a2ddc9e418a08aa51e7a030f7e5a7bb78784c950ce775abb23ae4d37187a72b"
+      },
+      {
+        "path": "outputs/softether-ssl-vpn-runbook-20261027/upgrade-steps.md",
+        "sha256": "60e4554afd22ecd29b2e4073c16655d3b715b443a2f349767ee96202223bfb75"
+      },
+      {
+        "path": "runs/softether-ssl-vpn-runbook-20261027/evidence/evaluator-review.md",
+        "sha256": "56003d06a2133e1c2a43a7851e43aaee12d0f40e111e72dfcc2e9dd8bc4deabc"
+      },
+      {
+        "path": "runs/softether-ssl-vpn-runbook-20261027/evidence/method.md",
+        "sha256": "b00c6571b5d7022c62b7efea694b8cb7eac1242e9726ab56eb7870fa78cd2ef8"
+      },
+      {
+        "path": "runs/softether-ssl-vpn-runbook-20261027/evidence/reviewed-file-hashes.json",
+        "sha256": "a301ce984adbd46895047bc521f699cecac9cf9da40c250875653e7220324b10"
+      },
+      {
+        "path": "runs/softether-ssl-vpn-runbook-20261027/evidence/synthetic-data-check.json",
+        "sha256": "250e54a5ba31821d43e3eccec092d84f7553f5ec634bccf43a95ff2a584eb00b"
+      }
+    ]
+  }
+}

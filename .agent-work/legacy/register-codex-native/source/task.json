@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "register-codex-native",
+  "module": {
+    "id": "skill-manager",
+    "version": "0.1.0"
+  },
+  "objective": "multi 프로젝트의 역할·스킬을 Codex 네이티브 서브 에이전트와 자동 탐색 스킬로 연결한다.",
+  "created_at": "2026-10-27T09:04:47+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "커스텀 역할 8개와 공통 스킬 3개가 실제 Codex 프롬프트에서 탐색된다.",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "연결 일치 검사와 기존 29개 동작 테스트를 통과한다.",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "전역 설정·모델·권한·MCP와 미승인 외부 스킬을 변경하지 않는다.",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "9812b8eb7f666e173b405ce88a4b6f3ae2fe43cb4a80c3b5f93cd60f5d1d9f16",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "94ed54667e794b7f1d0cbe587af197a1a711997d318dcc318b2b72a159af8c06",
+    "report_sha256": "d02282f8d51e801d5ee76fdc5607727bd229d1ff97fc7ff067e01aad5430c45b",
+    "evidence": [
+      {
+        "path": "outputs/register-codex-native/regression.txt",
+        "sha256": "0dfe80c4a048c0d2bbe63f850d695b14bab9f38181793a3c7f920006fc3bff6a"
+      },
+      {
+        "path": "runs/register-codex-native/evidence/discovery.json",
+        "sha256": "6f191b5d8e9bfb66b57211ba6f2a229e6bfd5f6977dc8e4a4431d6618541d6b4"
+      },
+      {
+        "path": "runs/register-codex-native/evidence/native-check.json",
+        "sha256": "beb9eb904d45229f376e21f89f8ab84df7e9f3e5f78f112eb17664436702df2f"
+      },
+      {
+        "path": "runs/register-codex-native/evidence/sync-behavior.json",
+        "sha256": "fd0e6248edfc37b8ef77ad69ffd500858600689dd031542fb1842dc24e6d47b9"
+      }
+    ]
+  }
+}

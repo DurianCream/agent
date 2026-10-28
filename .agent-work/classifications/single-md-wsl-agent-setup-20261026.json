@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "single-md-wsl-agent-setup-20261026",
+  "source": {
+    "record_sha256": "3604c86a11838d978dc9f71684e57c8eb2ccc02760f024371cc6b5a3de8b2f9f",
+    "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: The objective packages the current modular framework and WSL.md identifies the same Windows/WSL multi checkout. [source: runs/single-md-wsl-agent-setup-20261026/result.json; objective; work; limitations]",
+    "service: The package contains the framework registry, eight roles, three skills, policies, schemas and runtime. [source: runs/single-md-wsl-agent-setup-20261026/result.json; objective; work; limitations]",
+    "environment: Validation restores the package into a fresh WSL temporary path and runs 29 contract tests; no production service change is reported. [source: runs/single-md-wsl-agent-setup-20261026/result.json; objective; work; limitations]",
+    "issue: Build and validate a self-contained single-Markdown WSL setup package. [source: runs/single-md-wsl-agent-setup-20261026/result.json; objective; work; limitations]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "wsl-single-file-setup"
+  }
+}

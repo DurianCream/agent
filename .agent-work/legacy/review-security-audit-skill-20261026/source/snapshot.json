@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0.0",
+  "module": "oss-rnd",
+  "created_at": "2026-10-26T13:07:33+09:00",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "107825cb1d8deb4db30bf8d6788444cd53cc0fa59800a6912c28a41668fe8a80"
+    },
+    {
+      "path": "modules/oss-rnd/instructions.md",
+      "sha256": "5df73f75856e5bbcfa52eb4b4acc725c7ed8ba2e557ca8db33bfdbdc8f561ce4"
+    },
+    {
+      "path": "modules/oss-rnd/module.json",
+      "sha256": "451c82bb8ef6bdbf4ef1082a006399fe7c449595df4e10986fe4a7fb3c245a3b"
+    },
+    {
+      "path": "registry.json",
+      "sha256": "d89f7d0752f71158c7513e504134a1a8868c918629308903d8032c94aabea501"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "sha256": "b97a3d6c25657eb8d667ca5aaa95ae112abb5104535f28e6d470c309d11b948f"
+    },
+    {
+      "path": "shared/schemas/module.schema.json",
+      "sha256": "44ebd4c4fc298aacb507783e9e0be53be52331395b67f90d596532a1b078886b"
+    },
+    {
+      "path": "shared/schemas/policy.schema.json",
+      "sha256": "0263f5f357a736a518c5a85d7aa4bfb298705f8e09260510233f8e19f03bb669"
+    },
+    {
+      "path": "shared/schemas/registry.schema.json",
+      "sha256": "83b5e0a282d9ecf9ee69ea6aad91e3e7159a516033ad6f9ff04446a7120eeb7f"
+    },
+    {
+      "path": "shared/schemas/result.schema.json",
+      "sha256": "aa5e443f384b5bd164a902ae5460550f20d8214ebcd78712dbba8cf0271ae074"
+    },
+    {
+      "path": "shared/skills/oss-research/SKILL.md",
+      "sha256": "69212f734288dc0d2b19b960c115f813ebecc89b593e5a9b0547d34449e5d314"
+    },
+    {
+      "path": "shared/skills/skills.json",
+      "sha256": "54659728d272d947a1df339e9e8cf534aa32ba4616da35e9ed483cf89cba5afe"
+    },
+    {
+      "path": "shared/skills/submit-result/SKILL.md",
+      "sha256": "970c3eba14f81c1d49fbd54ad1d6b8f1042f75b445522e755a6981789d032e58"
+    }
+  ],
+  "task_spec": {
+    "module": {
+      "id": "oss-rnd",
+      "version": "0.1.0"
+    },
+    "objective": "Cloudflare security-audit 스킬의 설계, 안전성, 실행 요건과 도입 적합성을 고정 소스로 검토한다",
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "description": "소스 버전과 주요 워크플로 및 안전 경계를 확인한다",
+        "required": true
+      },
+      {
+        "id": "criterion-2",
+        "description": "검증 코드와 테스트를 조사하고 재현 결과 또는 미실행 이유를 기록한다",
+        "required": true
+      },
+      {
+        "id": "criterion-3",
+        "description": "현재 저장소와의 통합 요건 및 도입 판단을 근거와 한계와 함께 보고한다",
+        "required": true
+      }
+    ]
+  },
+  "versions": {
+    "modules": [
+      {
+        "id": "oss-rnd",
+        "version": "0.1.0"
+      }
+    ],
+    "skills": [
+      [
+        "oss-research",
+        "1.0.0"
+      ],
+      [
+        "submit-result",
+        "1.0.0"
+      ]
+    ],
+    "policies": [
+      [
+        "common",
+        "1.0.0"
+      ]
+    ]
+  }
+}

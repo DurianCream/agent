@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "wsl-agent-compatibility-20261026",
+  "module": {
+    "id": "infrastructure",
+    "version": "0.1.0"
+  },
+  "created_at": "2026-10-26T13:25:59+09:00",
+  "objective": "현재 모듈형 에이전트 구성을 Ubuntu WSL2에서 검증하고 기존 프로젝트를 재사용하는 실행 경로를 준비한다",
+  "acceptance_criteria": [
+    {
+      "id": "criterion-1",
+      "description": "Ubuntu WSL2에서 등록된 역할과 공통 자산이 doctor 검사를 통과한다",
+      "required": true,
+      "verification_ids": [
+        "wsl-doctor"
+      ]
+    },
+    {
+      "id": "criterion-2",
+      "description": "Ubuntu WSL2에서 기존 계약 테스트가 통과한다",
+      "required": true,
+      "verification_ids": [
+        "wsl-contract-tests"
+      ]
+    },
+    {
+      "id": "criterion-3",
+      "description": "프로젝트 지침과 실제 에이전트 실행의 경계 및 시작 절차를 기록한다",
+      "required": true,
+      "verification_ids": [
+        "launch-preparation"
+      ]
+    }
+  ],
+  "status": "partial",
+  "summary": "현재 프로젝트의 역할 8개·스킬 3개와 계약 테스트 29개를 Ubuntu WSL2에서 검증했다. 기존 프로젝트를 재사용하는 실행 도우미와 안내서를 준비했다. Linux용 Codex가 현재 PATH에 없어 실제 에이전트 시작은 미실행이다. 추가로 Cloudflare 검증기 테스트는 Linux 임시 파일시스템 사용 시 65개 모두 통과했다.",
+  "work": [
+    "registry 및 infrastructure 역할 지침, 공통 정책과 기존 runtime의 경로·의존성 구성을 확인했다.",
+    "공식 OpenAI Docs에서 WSL 및 AGENTS.md 적용 방식을 확인했다.",
+    "Ubuntu WSL2와 Linux Python 3.12.3·Node v22.23.2로 doctor·list와 계약 테스트를 실행했다.",
+    "기존 폴더에서 검사·테스트·시작을 지원하는 Bash 스크립트를 작성하고 구문·check·누락된 Codex 종료를 확인했다.",
+    "이전 보안 감사 스킬 테스트의 Windows 결과와 WSL Linux 파일시스템 결과를 비교했다.",
+    "전역 설정·인증·역할 정의·기존 제출 결과를 변경하지 않고 별도 안내서와 증거를 작성했다."
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/wsl-agent-compatibility-20261026/WSL.md",
+      "description": "WSL 적용 가능 범위, 검증 결과, 시작 절차와 호스트 연결 한계",
+      "sha256": "33aeebbd2f2285607e0ef30f5f90dd353794c823ad83428659a46a5e16b7f225"
+    },
+    {
+      "path": "outputs/wsl-agent-compatibility-20261026/wsl-project.sh",
+      "description": "프로젝트 루트에서 WSL check/test/start를 수행하는 실행 도우미",
+      "sha256": "18e1221d84a90f23a3ca6d1f1d67382c5fa12f878d8a3fec5cfa04b7d45dbd52"
+    },
+    {
+      "path": "outputs/wsl-agent-compatibility-20261026/verification-summary.json",
+      "description": "환경·검사·테스트·미실행 항목의 기계 판독 요약",
+      "sha256": "6dc0c9617ddf72cb82ac110a376b50501cf8c6299c391b39ffab6d2b5eef4e94"
+    }
+  ],
+  "verification": [
+    {
+      "id": "wsl-doctor",
+      "name": "WSL 역할·스킬 등록 검사",
+      "method": "Ubuntu WSL2 Linux Python으로 doctor 및 list 실행",
+      "outcome": "passed",
+      "evidence": [
+        "runs/wsl-agent-compatibility-20261026/evidence/environment.txt",
+        "runs/wsl-agent-compatibility-20261026/evidence/doctor-and-list.txt"
+      ],
+      "notes": "8개 역할과 3개 스킬 확인. runtime 0.1.0, result contract 1.0.0."
+    },
+    {
+      "id": "wsl-contract-tests",
+      "name": "WSL 기존 계약 테스트",
+      "method": "python3 -m unittest discover -s runtime/tests -v",
+      "outcome": "passed",
+      "evidence": [
+        "runs/wsl-agent-compatibility-20261026/evidence/project-tests-excerpts.txt",
+        "outputs/wsl-agent-compatibility-20261026/verification-summary.json"
+      ],
+      "notes": "29/29 통과, 130.503초. 스트림의 일부 출력 및 도구에서 확인한 최종 요약을 보존했다."
+    },
+    {
+      "id": "launch-preparation",
+      "name": "실행 도우미와 지침 연결 준비",
+      "method": "bash -n 및 check 실행, start의 Codex 누락 종료 코드 2 확인, 공식 문서와 프로젝트 정의의 경계 대조",
+      "outcome": "passed",
+      "evidence": [
+        "runs/wsl-agent-compatibility-20261026/evidence/script-guard.txt",
+        "outputs/wsl-agent-compatibility-20261026/wsl-project.sh",
+        "outputs/wsl-agent-compatibility-20261026/WSL.md",
+        "outputs/wsl-agent-compatibility-20261026/verification-summary.json"
+      ],
+      "notes": "설치·로그인 없이 현재 루트의 지침을 재사용하는 절차를 작성했다. 실제 LLM 실행 확인과 구분한다."
+    },
+    {
+      "id": "cloudflare-linux-tests",
+      "name": "Cloudflare 검증기의 WSL 비교 실행",
+      "method": "고정 커밋 원본 두 Node 테스트를 WSL Linux Node로 실행, FIFO 실패 확인 후 TMPDIR=/tmp로 재검증",
+      "outcome": "passed",
+      "evidence": [
+        "runs/wsl-agent-compatibility-20261026/evidence/cloudflare-mounted-temp.txt",
+        "runs/wsl-agent-compatibility-20261026/evidence/cloudflare-linux-temp.txt",
+        "outputs/wsl-agent-compatibility-20261026/verification-summary.json"
+      ],
+      "notes": "Windows mount 임시 경로는 63 통과·FIFO 생성 실패 2. Linux 임시 파일시스템은 65 통과, 실패·skip 0. 전체 감사 안전성 검증이 아니다."
+    },
+    {
+      "id": "live-agent",
+      "name": "Linux Codex 실제 작업 시작",
+      "method": "미실행",
+      "outcome": "not_run",
+      "evidence": [],
+      "notes": "현재 일반·로그인 WSL PATH에서 codex를 찾지 못했다. 설치·인증·호스트 전환은 수행하지 않았다."
+    },
+    {
+      "id": "full-isolation",
+      "name": "전체 감사의 OS 격리 요건",
+      "method": "미실행",
+      "outcome": "not_run",
+      "evidence": [],
+      "notes": "현재 작업은 프로젝트 호환성 검증과 시작 준비다. 하위 에이전트 권한 격리·네트워크 차단·증거 승격은 검증하지 않았다."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Official OpenAI documentation: WSL",
+      "url": "https://learn.chatgpt.com/docs/windows/wsl",
+      "accessed_at": "2026-10-26T13:25:59+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Official OpenAI documentation: AGENTS.md",
+      "url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+      "accessed_at": "2026-10-26T13:25:59+09:00",
+      "claim_kind": "fact"
+    },
+    {
+      "title": "Cloudflare 보안 감사 스킬의 고정 소스",
+      "url": "https://github.com/cloudflare/security-audit-skill/tree/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+      "accessed_at": "2026-10-26T13:25:59+09:00",
+      "claim_kind": "fact"
+    }
+  ],
+  "limitations": [
+    "프로젝트 구성의 Linux 호환성 및 시작 준비를 확인했으며 실제 Codex 작업은 미실행이므로 상태는 partial이다.",
+    "현재 WSL PATH에 Linux codex 명령이 없다. 다른 경로의 미탐색 설치 여부까지 단정하지 않는다.",
+    "현재 Windows 채팅의 실행 호스트를 WSL로 전환하지 않았다.",
+    "현재 /mnt/c 경로에서 검증했다. 별도 Linux home 작업 사본을 만들거나 성능 비교하지 않았다.",
+    "전체 감사의 OS 격리 요건과 실제 다중 에이전트 실행은 검증하지 않았다."
+  ],
+  "next_actions": [
+    "WSL에서 실제 에이전트로 작업하려면 Linux용 Codex 실행 파일을 준비하고 WSL 환경에서 로그인·실행한다.",
+    "준비 후 실행 도우미 start를 사용해 현재 프로젝트 루트에서 작업을 시작한다.",
+    "WSL을 주 작업 환경으로 정할 경우 Linux 파일시스템 작업 사본과 Windows 원본 중 어느 것을 작업 원본으로 사용할지 정한다."
+  ]
+}

@@ -27,6 +27,19 @@
         "environment": "development",
         "issue": "scoped-work-memory"
       }
+    },
+    "classify-legacy-memory": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-28T14:50:31+09:00",
+      "summary": "미분류 기록 10건을 검토해 8건을 확정 분류하고 SoftEther 2건은 프로젝트·환경 미확인으로 별도 보류했다. 원본은 모두 보존했다.",
+      "path": "tasks/classify-legacy-memory/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "legacy-memory-classification"
+      }
     }
   }
 }

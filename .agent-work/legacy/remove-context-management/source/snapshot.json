@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "module": "policy-manager",
+  "created_at": "2026-10-28T12:43:41+09:00",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "210cae92d13217c568e0531900c104840b417021d5e143bc35f20e5097cdb3c3"
+    },
+    {
+      "path": "core/policy-manager/instructions.md",
+      "sha256": "9a97e406098013e31539ef38c9ce2cc1a63a918629a8c23b0655a6d23fe44c55"
+    },
+    {
+      "path": "core/policy-manager/module.json",
+      "sha256": "112e19e604a456a9ba40fcc2e09f9eecf23c4cb47b7c3857ee04c57273f3fb64"
+    },
+    {
+      "path": "registry.json",
+      "sha256": "d89f7d0752f71158c7513e504134a1a8868c918629308903d8032c94aabea501"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "sha256": "b97a3d6c25657eb8d667ca5aaa95ae112abb5104535f28e6d470c309d11b948f"
+    },
+    {
+      "path": "shared/schemas/module.schema.json",
+      "sha256": "44ebd4c4fc298aacb507783e9e0be53be52331395b67f90d596532a1b078886b"
+    },
+    {
+      "path": "shared/schemas/policy.schema.json",
+      "sha256": "0263f5f357a736a518c5a85d7aa4bfb298705f8e09260510233f8e19f03bb669"
+    },
+    {
+      "path": "shared/schemas/registry.schema.json",
+      "sha256": "83b5e0a282d9ecf9ee69ea6aad91e3e7159a516033ad6f9ff04446a7120eeb7f"
+    },
+    {
+      "path": "shared/schemas/result.schema.json",
+      "sha256": "aa5e443f384b5bd164a902ae5460550f20d8214ebcd78712dbba8cf0271ae074"
+    },
+    {
+      "path": "shared/skills/maintain-module/SKILL.md",
+      "sha256": "7cc7725f317a459b0027bc42c0c6d8a78e3d9a9b2b887610c65cb4d41b53417e"
+    },
+    {
+      "path": "shared/skills/skills.json",
+      "sha256": "54659728d272d947a1df339e9e8cf534aa32ba4616da35e9ed483cf89cba5afe"
+    },
+    {
+      "path": "shared/skills/submit-result/SKILL.md",
+      "sha256": "970c3eba14f81c1d49fbd54ad1d6b8f1042f75b445522e755a6981789d032e58"
+    }
+  ],
+  "task_spec": {
+    "module": {
+      "id": "policy-manager",
+      "version": "0.1.0"
+    },
+    "objective": "Disable project context_management feature",
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Feature disabled in source and generated settings while other settings and hooks are preserved",
+        "required": true
+      }
+    ]
+  },
+  "versions": {
+    "modules": [
+      {
+        "id": "policy-manager",
+        "version": "0.1.0"
+      }
+    ],
+    "skills": [
+      [
+        "maintain-module",
+        "1.0.0"
+      ],
+      [
+        "submit-result",
+        "1.0.0"
+      ]
+    ],
+    "policies": [
+      [
+        "common",
+        "1.0.0"
+      ]
+    ]
+  }
+}

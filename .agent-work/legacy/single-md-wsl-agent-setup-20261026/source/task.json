@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "single-md-wsl-agent-setup-20261026",
+  "module": {
+    "id": "skill-manager",
+    "version": "0.1.0"
+  },
+  "objective": "현재 모듈형 에이전트 구성을 단일 Markdown만으로 WSL Codex가 복원·검증할 수 있는 자체 포함 설정 문서를 만든다",
+  "created_at": "2026-10-26T13:54:53+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "현재 8개 역할·3개 스킬과 공통 정책·스키마·CLI 원본을 파일 해시와 함께 MD 하나에 포함한다",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "MD만 입력으로 사용한 새 WSL 경로 복원과 doctor·기존 29개 계약 테스트가 통과한다",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "해시 변조·기존 파일 충돌·재실행을 검사하고 설정 범위와 한계를 문서에 설명한다",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "25d6664661ec9c06e51b096b4b1dade621b69e55965bbd86df8944b8d8d84b4a",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "fe7c52c1c6696db6557f07c8764ce9b1e481d9293556b3f12b7699f0f0b27bbe",
+    "report_sha256": "91353749ec383375920805553d23e2a1c859f5432a301f636df540dd766ad582",
+    "evidence": [
+      {
+        "path": "outputs/single-md-wsl-agent-setup-20261026/WSL_CODEX_AGENT_SETUP.md",
+        "sha256": "717b1ea93e2c1ad39a4c295bb884a1c1de4353180de1a5eb689a3ab5c387774f"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/conflict-preserved.txt",
+        "sha256": "01e60f3e95bcb26b39e65a39c9850305f831c0162b33f3a0ca5d424aabe16e7a"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/fresh-install.txt",
+        "sha256": "9fbfe3c1c3d89a2426013d399de2ea69bdff6b12a76d768f6ba3be82b8fdbfca"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/payload-manifest.json",
+        "sha256": "7fe4fe0742eabc45c8557d2a0f6c28c40f68a919f9273ad66efda2c919097250"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/release-metadata.json",
+        "sha256": "8909dd738a6fec43b5106a5cb2e041f596acd3dddc2fb52c5c9e8999aa327d9b"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/restored-contract-tests.txt",
+        "sha256": "341d479387951e344f3379eada936667ffff9867b72ef4ae27366464aac44a32"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/restored-doctor.txt",
+        "sha256": "18addbc7ba304876822e1759fb4339c09c451a530fa6ea3e8f551370f27385e2"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/restored-list.txt",
+        "sha256": "1068b12d80bbfadf0edf950c89baf1ab6efa3fc400f3d8869f358a79d9c75349"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/restored-submit.txt",
+        "sha256": "151fc47d7a1e0e71eda3a630e57ea4715ffb47957c42dbcbdb8cf032f8ff1852"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/restored-validate.txt",
+        "sha256": "20798a1f062af864ec7a603ea320068efe8a921adb91a8d03f1fc2eacf0f05a7"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/same-target-rerun.txt",
+        "sha256": "d2d3d2ec4a963d80499a2806ff40e9ff3edfa3a37d6a8bb1093af5ae06535d28"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/symlink-target-rejected.txt",
+        "sha256": "e21469ece1b21b2c16c2a38b3ba64eb9bfd870bc563cb384e08d8f6a32b3ad05"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/tampered-payload-rejected.txt",
+        "sha256": "6c2a6932a5850255e1a3e98bedd6fb433b618efa049aa284f7a3e059d577f891"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/traversal-rejected.txt",
+        "sha256": "c41693f124386f10b36c199179af5a07c7b7a402d93e30340da853147eaea80f"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/verification-summary.json",
+        "sha256": "8a75dc9ce8ff4e9f77b43794403f82c3058b58c0cdebe16c01b19563bb9a3090"
+      },
+      {
+        "path": "runs/single-md-wsl-agent-setup-20261026/evidence/verify-only.txt",
+        "sha256": "919dffbee0204acb73ba55c811b94bff3dab0bd858772dde110a165b2fe3964e"
+      }
+    ]
+  }
+}

@@ -76,6 +76,8 @@ def track(task_id, paths, root=a.ROOT):
         a.require(value['phase'] == 'begun', 'Cannot change a publishing/completed manifest')
         for name in paths:
             a.relative(path, name)
+            a.require(not name.startswith(('.agent-work/legacy/', '.agent-work/classifications/')),
+                      'Use approve-memory for validated historical publication')
             lowered = name.lower()
             parts = lowered.split('/')
             a.require(not any(part.startswith('.env') or part in ('.aws', '.ssh', 'credentials', 'id_rsa', 'id_ed25519') for part in parts)
@@ -104,6 +106,8 @@ def finish(task_id, root=a.ROOT):
         result, task, _ = a.validate_result(task_id, root)
         a.require(task['state'] == 'submitted' and result['status'] == 'completed',
                   'Only a submitted completed task can publish automatically')
+        import legacy_memory
+        legacy_memory.validate_publication(path, value)
         head = r.git(path, 'rev-parse', 'HEAD')
         if value['phase'] == 'pushed':
             a.require(head == value['commit'], 'HEAD changed after publication')

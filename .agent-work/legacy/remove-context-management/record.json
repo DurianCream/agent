@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "remove-context-management",
+  "saved_at": "2026-10-28T12:43:41+09:00",
+  "imported_at": "2026-10-28T14:37:40+09:00",
+  "source_kind": "legacy-import",
+  "task_state": "submitted",
+  "git": null,
+  "source_validation": "Pinned snapshot, result schema and task identity verified; referenced artifacts and evidence are historical and were not reverified.",
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "remove-context-management",
+    "module": {
+      "id": "policy-manager",
+      "version": "0.1.0"
+    },
+    "created_at": "2026-10-28T12:43:41+09:00",
+    "objective": "Disable project context_management feature",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Feature disabled in source and generated settings while other settings and hooks are preserved",
+        "required": true,
+        "verification_ids": [
+          "settings",
+          "independent-review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "multi 프로젝트의 context_management 기능 비활성화 완료.",
+    "work": [
+      "runtime/codex-settings.toml에서 context_management=true를 false로 변경하여 기능을 명시적으로 비활성화했다.",
+      "runtime/sync_codex.py --write로 생성 설정을 동기화하고 --check로 확인했다.",
+      "모델, 컨텍스트 한도, PostToolUse 훅 해시가 유지됨을 확인했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/remove-context-management/settings-change.json",
+        "description": "프로젝트 설정 변경 기록",
+        "sha256": "09f10265d87843e7614291f62f76a5560209eabd84224cdd9d6efe16f5111472"
+      }
+    ],
+    "verification": [
+      {
+        "id": "settings",
+        "name": "설정 및 동기화 검증",
+        "method": "TOML 파싱 및 sync --check, 훅 SHA-256 대조",
+        "outcome": "passed",
+        "evidence": [
+          "runs/remove-context-management/evidence/settings.json"
+        ],
+        "notes": "원본과 생성 설정 모두 false. 모델과 한도 유지. 훅 해시 동일."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 설정 범위 검토",
+        "method": "원본·생성 TOML 독립 파싱 및 모델·한도·훅 SHA-256 대조",
+        "outcome": "passed",
+        "evidence": [
+          "runs/remove-context-management/evidence/independent-review.json"
+        ],
+        "notes": "source/generated false. Astra/1000000/900000 및 PostToolUse 훅 해시 유지. 초기 변경 기록과 idempotent 재실행 기록을 구분."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "이미 실행 중인 세션의 도구 구성이 즉시 변경되는지는 검증하지 않았다.",
+      "기존 PostToolUse 훅은 유지된다. new_context 도구가 제공되지 않으면 체크포인트 Markdown만 남기고 문맥 전환은 수행하지 않는 기존 fallback 규칙을 따른다."
+    ],
+    "next_actions": [
+      "별도 evaluator 검토 후 제출한다."
+    ]
+  },
+  "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109",
+  "source_hashes": {
+    "task.json": "f6ebb7e4dd26fc8b006d2e8ca272cd284ed049b3dac7009ec53de417581620e3",
+    "result.json": "0dbe4cfeededc21a6c1ceb9f1db7994f9e9b1c312ac4a4e931adb2ee290570a9",
+    "snapshot.json": "51a48abf1ac8b629cb7f8a96685eeeb21e789a1091043ec9d7439c15733bdcd9",
+    "result.md": "7247619455d1680a5dc69e1af9678b71e169bc564ea2eaf3b3afb030a2cf288a"
+  },
+  "notice": "Original task/result bytes are preserved. Evidence references are historical; no new verification is claimed."
+}

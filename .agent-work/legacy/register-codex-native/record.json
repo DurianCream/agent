@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "register-codex-native",
+  "saved_at": "2026-10-27T09:04:47+09:00",
+  "imported_at": "2026-10-28T14:37:40+09:00",
+  "source_kind": "legacy-import",
+  "task_state": "submitted",
+  "git": null,
+  "source_validation": "Pinned snapshot, result schema and task identity verified; referenced artifacts and evidence are historical and were not reverified.",
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "register-codex-native",
+    "module": {
+      "id": "skill-manager",
+      "version": "0.1.0"
+    },
+    "created_at": "2026-10-27T09:04:47+09:00",
+    "objective": "multi 프로젝트의 역할·스킬을 Codex 네이티브 서브 에이전트와 자동 탐색 스킬로 연결한다.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "커스텀 역할 8개와 공통 스킬 3개가 실제 Codex 프롬프트에서 탐색된다.",
+        "required": true,
+        "verification_ids": [
+          "native-discovery"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "연결 일치 검사와 기존 29개 동작 테스트를 통과한다.",
+        "required": true,
+        "verification_ids": [
+          "native-regression"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "전역 설정·모델·권한·MCP와 미승인 외부 스킬을 변경하지 않는다.",
+        "required": true,
+        "verification_ids": [
+          "scope-check"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "누락됐던 Codex 네이티브 역할 8개와 자동 탐색 스킬 3개를 multi 프로젝트에 등록했고 실제 Codex 로딩을 확인했다.",
+    "work": [
+      "기존 지침 기반 구조와 별개로 .codex/config.toml 및 .codex/agents/*.toml을 작성했다.",
+      ".agents/skills의 세 연결 스킬이 shared/skills 원본을 참조하도록 했다.",
+      "프로젝트 시작 지침과 관리 스킬에 실제 등록 경로와 연결 갱신 절차를 반영했다.",
+      "모델 호출 없는 codex debug prompt-input에서 8개 역할과 3개 프로젝트 스킬, 시작 지침을 확인했다.",
+      "연결 갱신·수동 변경 보호·등록 해제 감지를 확인하고 기존 29개 테스트를 통과했다.",
+      "전역 설정 해시를 보존하고 모델·권한·MCP를 덮어쓰지 않았다. 외부 security-audit 스킬은 설치하지 않았다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/native-codex/SETUP.md",
+        "description": "실제 Codex 등록 위치와 최신 사용 안내",
+        "sha256": "99348aa8e65fe6e9a794bae293cd4bd63b9d3fdc4087dac5d47e295bcb9e71fc"
+      },
+      {
+        "path": "outputs/register-codex-native/discovery.json",
+        "description": "실제 Codex 역할·스킬 탐색과 전역 설정 보존 증거",
+        "sha256": "6f191b5d8e9bfb66b57211ba6f2a229e6bfd5f6977dc8e4a4431d6618541d6b4"
+      },
+      {
+        "path": "outputs/register-codex-native/multi-native.zip",
+        "description": "네이티브 등록 파일을 포함한 최신 51개 파일 패키지",
+        "sha256": "cf3f070c33646519b2312090c2e517a9bc04a27ae1eaed80192f44b9e893be7f"
+      }
+    ],
+    "verification": [
+      {
+        "id": "native-discovery",
+        "name": "실제 Codex 역할·스킬 탐색",
+        "method": "codex debug prompt-input",
+        "outcome": "passed",
+        "evidence": [
+          "runs/register-codex-native/evidence/discovery.json"
+        ],
+        "notes": "실제 선택 가능한 역할 목록에 8개, 프로젝트 스킬 목록에 3개가 표시됨. 모델 턴이나 서브 에이전트는 실행하지 않음."
+      },
+      {
+        "id": "native-regression",
+        "name": "연결·보호 기능과 기존 회귀 검증",
+        "method": "sync_codex.py --check, agentctl.py doctor, 연결 갱신 보호 검사, unittest discover",
+        "outcome": "passed",
+        "evidence": [
+          "runs/register-codex-native/evidence/native-check.json",
+          "runs/register-codex-native/evidence/sync-behavior.json",
+          "outputs/register-codex-native/regression.txt"
+        ],
+        "notes": "연결 누락·차이 없음, 갱신·수동 변경 보호·등록 해제 감지 통과, 기존 테스트 29개 통과"
+      },
+      {
+        "id": "scope-check",
+        "name": "전역 설정과 상속 범위 보존",
+        "method": "전후 전역 파일 해시·생성 프로필 필드 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/register-codex-native/evidence/discovery.json"
+        ],
+        "notes": "프로젝트 범위만 등록. 부모 모델·권한·MCP 상속. 미승인 외부 스킬 설치 없음"
+      }
+    ],
+    "sources": [
+      {
+        "title": "OpenAI: Custom subagents",
+        "url": "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+        "accessed_at": "2026-10-27T09:04:47+09:00",
+        "claim_kind": "fact"
+      },
+      {
+        "title": "OpenAI: Skill discovery",
+        "url": "https://learn.chatgpt.com/docs/build-skills",
+        "accessed_at": "2026-10-27T09:04:47+09:00",
+        "claim_kind": "fact"
+      }
+    ],
+    "limitations": [
+      "실제 Codex 등록·탐색까지 확인했으며, 역할별 모델 업무 수행과 독립 평가의 행동 테스트는 실행하지 않았다.",
+      "기존 열린 세션의 도구 목록은 갱신되지 않을 수 있으므로 multi에서 새 로컬 세션을 시작한다.",
+      "등록은 실제 역할 선택을 가능하게 한다. 모든 역할을 항상 실행하는 고정 스케줄러나 별도 OS 권한 격리를 추가한 것은 아니다."
+    ],
+    "next_actions": [
+      "multi에서 새 로컬 세션을 시작해 등록된 역할과 스킬을 사용한다."
+    ]
+  },
+  "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109",
+  "source_hashes": {
+    "task.json": "a7ea2fd69ef8ee3a755da445f4f037927c1cb5252f20a2f174fca3361515760c",
+    "result.json": "94ed54667e794b7f1d0cbe587af197a1a711997d318dcc318b2b72a159af8c06",
+    "snapshot.json": "9812b8eb7f666e173b405ce88a4b6f3ae2fe43cb4a80c3b5f93cd60f5d1d9f16",
+    "result.md": "d02282f8d51e801d5ee76fdc5607727bd229d1ff97fc7ff067e01aad5430c45b"
+  },
+  "notice": "Original task/result bytes are preserved. Evidence references are historical; no new verification is claimed."
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "repository-memory",
+  "source": {
+    "record_sha256": "4ff86faa17b5d2acd7f0f721094d7f279b9cd947f6a0b89e505bec764f7d8dcb",
+    "spec_sha256": "57b532a43ac9fbc55c67f58ee2606e53379dea8c5b62c2d985b61e328aa47d35"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: The record source_root and repository_id identify multi. [source: .agent-work/tasks/repository-memory/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "service: The work implements repoctl and agentctl durable-work-record integration. [source: .agent-work/tasks/repository-memory/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "environment: The work changes and tests local framework code and verifies fresh-clone recovery before publishing the framework repository. [source: .agent-work/tasks/repository-memory/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "issue: Implement repository-bound durable work records and restore them across chats. [source: .agent-work/tasks/repository-memory/record.json; result.objective; result.work; result.limitations; repository_id; source_root]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-memory"
+  }
+}

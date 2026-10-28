@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "automatic-workflow",
+  "source": {
+    "record_sha256": "904e3ffbf538830adb5e68b512cd726923a3c05e19bda0a9e5f033a89fd200e2",
+    "spec_sha256": "b52c894d887dda4ca15fdae64331b4ed2fb405a2a80d102d464edfae4f33065c"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: The record source_root and repository_id identify multi. [source: .agent-work/tasks/automatic-workflow/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "service: The work adds startup/begin/track/finish to the agent framework. [source: .agent-work/tasks/automatic-workflow/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "environment: The result tests the local framework and temporary bare Git remotes, then enables publication for the multi source repository. [source: .agent-work/tasks/automatic-workflow/record.json; result.objective; result.work; result.limitations; repository_id; source_root]",
+    "issue: Automate memory loading and task completion publication. [source: .agent-work/tasks/automatic-workflow/record.json; result.objective; result.work; result.limitations; repository_id; source_root]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "automatic-workflow"
+  }
+}

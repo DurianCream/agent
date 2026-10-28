@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "wsl-agent-compatibility-20261026",
+  "module": {
+    "id": "infrastructure",
+    "version": "0.1.0"
+  },
+  "objective": "현재 모듈형 에이전트 구성을 Ubuntu WSL2에서 검증하고 기존 프로젝트를 재사용하는 실행 경로를 준비한다",
+  "created_at": "2026-10-26T13:25:59+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "Ubuntu WSL2에서 등록된 역할과 공통 자산이 doctor 검사를 통과한다",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "Ubuntu WSL2에서 기존 계약 테스트가 통과한다",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "프로젝트 지침과 실제 에이전트 실행의 경계 및 시작 절차를 기록한다",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "1816afc79bbe5b5bc0c235a8c8605cca489e214d4cb1b9b85ed2b7ad6eaa0105",
+  "result_status": "partial",
+  "submission": {
+    "result_sha256": "3d3af3f554151d105141617e2f1fa6c45513524ae2873514c51404eef5b9fe83",
+    "report_sha256": "930ad00c3c60e6bc600c7e5d0dbbd3f94b76c486cd84c0f9c894c002cae3e794",
+    "evidence": [
+      {
+        "path": "outputs/wsl-agent-compatibility-20261026/WSL.md",
+        "sha256": "33aeebbd2f2285607e0ef30f5f90dd353794c823ad83428659a46a5e16b7f225"
+      },
+      {
+        "path": "outputs/wsl-agent-compatibility-20261026/verification-summary.json",
+        "sha256": "6dc0c9617ddf72cb82ac110a376b50501cf8c6299c391b39ffab6d2b5eef4e94"
+      },
+      {
+        "path": "outputs/wsl-agent-compatibility-20261026/wsl-project.sh",
+        "sha256": "18e1221d84a90f23a3ca6d1f1d67382c5fa12f878d8a3fec5cfa04b7d45dbd52"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/cloudflare-linux-temp.txt",
+        "sha256": "ca45f5ee18f186e7711be86a3a71fb0d17379d7423737cb670b53109bed2707d"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/cloudflare-mounted-temp.txt",
+        "sha256": "f551cc2d45ecf024b9bcc0671e19be6a31e59cc45e590f646fa4bbeb67282988"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/doctor-and-list.txt",
+        "sha256": "38eaf6b894d687384effbf51647239e338af299b7cd9c3070403b59665dcf836"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/environment.txt",
+        "sha256": "d28939b3d3e19959b9f32b39bc4774878221f0314228dbed860a718969427039"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/project-tests-excerpts.txt",
+        "sha256": "d7778ddc50f286c634fff765a82e8c238606033a7f2e9d0f1c389596878f995b"
+      },
+      {
+        "path": "runs/wsl-agent-compatibility-20261026/evidence/script-guard.txt",
+        "sha256": "0d23cf09b8ad81b0932e7925e08fce02ddd966d406cc940725cdc5c9f8549e66"
+      }
+    ]
+  }
+}

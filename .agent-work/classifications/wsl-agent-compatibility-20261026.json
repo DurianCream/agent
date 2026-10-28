@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "wsl-agent-compatibility-20261026",
+  "source": {
+    "record_sha256": "a3b289075ed39a8fbdffcdf0267b1fed562b5c4c32359f48d0f94f3e4f08d39b",
+    "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: outputs/wsl-agent-compatibility-20261026/WSL.md explicitly gives C:/Users/dhyun/Documents/ChatGPT/multi and its /mnt/c equivalent. [source: runs/wsl-agent-compatibility-20261026/result.json; objective; work; limitations]",
+    "service: The objective and checks concern the modular agent framework and its WSL launcher. [source: runs/wsl-agent-compatibility-20261026/result.json; objective; work; limitations]",
+    "environment: Ubuntu WSL2 compatibility tests run on the local checkout and temporary filesystem; actual Codex launch is explicitly not run. [source: runs/wsl-agent-compatibility-20261026/result.json; objective; work; limitations]",
+    "issue: Validate WSL compatibility and prepare the project launch workflow. [source: runs/wsl-agent-compatibility-20261026/result.json; objective; work; limitations]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "wsl-compatibility"
+  }
+}

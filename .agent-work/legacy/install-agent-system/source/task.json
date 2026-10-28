@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "install-agent-system",
+  "module": {
+    "id": "skill-manager",
+    "version": "0.1.0"
+  },
+  "objective": "multi 프로젝트에 모듈형 에이전트 설정과 공통 결과물 규격을 설치한다.",
+  "created_at": "2026-10-26T10:53:52+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "36개 시스템 파일을 설치하고 기존 Git 메타데이터를 보존한다.",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "등록된 역할·스킬·정책·결과 스키마의 진단 검사를 통과한다.",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "설치된 프로젝트의 29개 동작 테스트를 통과한다.",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "c7c940748f652ef193de1771bea79ba4352ea143b84a450a39d2bf113d9e694a",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "ad6e5179cb3484dc963732dba72262b6815118d106118fb8d885a0f1fd6cf70c",
+    "report_sha256": "596166d40a6228c867fa21d462ea15162abfc2a5e9381dc3bb9bac080fb8685a",
+    "evidence": [
+      {
+        "path": "outputs/install-agent-system/installed-files.json",
+        "sha256": "a87620f81cc761e5df0adc988332d17d37414d51ecdfaf29d0240c92b5b25d88"
+      },
+      {
+        "path": "outputs/install-agent-system/test-results.txt",
+        "sha256": "6b9728f2a20719b8837f8d4bd2bcac61e2415593e922028b0511ed7b7fa72eae"
+      },
+      {
+        "path": "runs/install-agent-system/evidence/doctor.json",
+        "sha256": "7b2f755ba288a630797c6084c7390450b6aafc97640ea8195fc6fd9ebe76511a"
+      }
+    ]
+  }
+}

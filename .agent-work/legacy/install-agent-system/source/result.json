@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "install-agent-system",
+  "module": {
+    "id": "skill-manager",
+    "version": "0.1.0"
+  },
+  "created_at": "2026-10-26T10:53:52+09:00",
+  "objective": "multi 프로젝트에 모듈형 에이전트 설정과 공통 결과물 규격을 설치한다.",
+  "acceptance_criteria": [
+    {
+      "id": "criterion-1",
+      "description": "36개 시스템 파일을 설치하고 기존 Git 메타데이터를 보존한다.",
+      "required": true,
+      "verification_ids": [
+        "install-check"
+      ]
+    },
+    {
+      "id": "criterion-2",
+      "description": "등록된 역할·스킬·정책·결과 스키마의 진단 검사를 통과한다.",
+      "required": true,
+      "verification_ids": [
+        "doctor-check"
+      ]
+    },
+    {
+      "id": "criterion-3",
+      "description": "설치된 프로젝트의 29개 동작 테스트를 통과한다.",
+      "required": true,
+      "verification_ids": [
+        "test-check"
+      ]
+    }
+  ],
+  "status": "completed",
+  "summary": "multi 프로젝트 루트에 관리 역할 5개, 업무 모듈 3개, 공통 스킬 3개와 결과물 제출 체계를 설치했다.",
+  "work": [
+    "검증된 패키지의 36개 파일을 기존 파일 덮어쓰기 없이 설치했다.",
+    "AGENTS.md를 진입점으로 core/modules/shared/runtime/evals/runs/outputs 구조를 연결했다.",
+    "설치 전후 Git 메타데이터 해시가 같음을 확인했다.",
+    "설치된 프로젝트에서 doctor와 29개 동작 테스트를 실행했다.",
+    "multi 내부의 별도 작업으로 설치 결과를 고정 7개 항목 양식으로 생성·제출했다."
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/SETUP.md",
+      "description": "multi 프로젝트 사용 안내",
+      "sha256": "6bff445edc2af5c38d0736231dd14a9b520dfd9cedaa6a1144c3aa49284e3f17"
+    },
+    {
+      "path": "outputs/install-agent-system/installed-files.json",
+      "description": "설치 파일·해시·Git 보존 확인",
+      "sha256": "a87620f81cc761e5df0adc988332d17d37414d51ecdfaf29d0240c92b5b25d88"
+    },
+    {
+      "path": "outputs/install-agent-system/test-results.txt",
+      "description": "multi에서 실행한 29개 테스트 결과",
+      "sha256": "6b9728f2a20719b8837f8d4bd2bcac61e2415593e922028b0511ed7b7fa72eae"
+    }
+  ],
+  "verification": [
+    {
+      "id": "install-check",
+      "name": "설치 파일과 Git 보존",
+      "method": "패키지·설치 파일 SHA-256 및 설치 전후 .git 비교",
+      "outcome": "passed",
+      "evidence": [
+        "outputs/install-agent-system/installed-files.json"
+      ],
+      "notes": "36개 파일 일치, .git 변경 없음"
+    },
+    {
+      "id": "doctor-check",
+      "name": "모듈·스킬·계약 진단",
+      "method": "python runtime/agentctl.py doctor",
+      "outcome": "passed",
+      "evidence": [
+        "runs/install-agent-system/evidence/doctor.json"
+      ],
+      "notes": "8개 모듈·3개 스킬 확인"
+    },
+    {
+      "id": "test-check",
+      "name": "프로젝트 동작 검증",
+      "method": "python -X utf8 -m unittest discover -s runtime/tests -v",
+      "outcome": "passed",
+      "evidence": [
+        "outputs/install-agent-system/test-results.txt"
+      ],
+      "notes": "29개 테스트 통과"
+    }
+  ],
+  "sources": [],
+  "limitations": [
+    "실제 에이전트 호출·자동 위임과 OS·도구 권한 격리는 실행 호스트가 담당한다.",
+    "모듈은 experimental이며 전문 업무의 행동 평가는 별도로 수행한다.",
+    "공식 스킬 quick_validate는 PyYAML 부재로 실행하지 못했고 내장 형식·참조 검사를 적용했다."
+  ],
+  "next_actions": []
+}

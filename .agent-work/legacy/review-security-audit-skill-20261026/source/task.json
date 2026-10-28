@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "review-security-audit-skill-20261026",
+  "module": {
+    "id": "oss-rnd",
+    "version": "0.1.0"
+  },
+  "objective": "Cloudflare security-audit 스킬의 설계, 안전성, 실행 요건과 도입 적합성을 고정 소스로 검토한다",
+  "created_at": "2026-10-26T13:07:33+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "소스 버전과 주요 워크플로 및 안전 경계를 확인한다",
+      "required": true
+    },
+    {
+      "id": "criterion-2",
+      "description": "검증 코드와 테스트를 조사하고 재현 결과 또는 미실행 이유를 기록한다",
+      "required": true
+    },
+    {
+      "id": "criterion-3",
+      "description": "현재 저장소와의 통합 요건 및 도입 판단을 근거와 한계와 함께 보고한다",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "4814e9f238a7d31eb19b6243dbca33426ec9a2f47ab6a6d2764de7ed24442bd8",
+  "result_status": "partial",
+  "submission": {
+    "result_sha256": "dc7d036101ae0cb738bddb83aa242911cc9fcab1711c4a7ca0c66742e770cb90",
+    "report_sha256": "27957b9df590fea761c8b8b794e30142043f37e80c3658e6b400269d1f35f665",
+    "evidence": [
+      {
+        "path": "outputs/review-security-audit-skill-20261026/REVIEW.md",
+        "sha256": "97dd2e4f5c1e85e6c05abb2de9473efbae710b7feb391565d490ee29de3f02cf"
+      },
+      {
+        "path": "outputs/review-security-audit-skill-20261026/verification-summary.json",
+        "sha256": "5e5a6cb34fdcb700df0b9cac3d7545dccb7d4daded6d6106c2e85b9584b1623d"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/coverage-smoke.txt",
+        "sha256": "72577a86783e56762d0baf7a62fbad4f67de991e14bbdf7b99dbd9c849861f00"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/execution-summary.json",
+        "sha256": "d5b0f80cf093d87dde1646d636101e1eb9c820e8c6ba0d3193fbd71c93fff08d"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/findings-smoke.txt",
+        "sha256": "c728b3eebf84236be192b75e6b71c7db70796424bf2486a31ffbda2e48e2b77f"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/platform.txt",
+        "sha256": "ffb54d846d99bff0771e0bc6763ee2b120d90ec9c200467d2b747306608f7d42"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/review-checklist.md",
+        "sha256": "ed7f5ead6addd6c8037595545a527730cbc585a90d3760fa1f5990687ab9c383"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/source-integrity.json",
+        "sha256": "fd8c88dd3b4834c15098457584c3c38f2ca4f721d8a9152fea641e38985262fb"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/source-manifest.json",
+        "sha256": "b220ffc4f9e6c135c5a09dfc681faaa37841f510b82f080c749c4dedf1b8e8d3"
+      },
+      {
+        "path": "runs/review-security-audit-skill-20261026/evidence/upstream-tests.txt",
+        "sha256": "006b13d53f4708dac2482b5b8d5e32d6f87f5844cef17cadc24f2d248974199f"
+      }
+    ]
+  }
+}

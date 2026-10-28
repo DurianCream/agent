@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "remove-context-management",
+  "module": {
+    "id": "policy-manager",
+    "version": "0.1.0"
+  },
+  "objective": "Disable project context_management feature",
+  "created_at": "2026-10-28T12:43:41+09:00",
+  "state": "submitted",
+  "runtime_version": "0.1.0",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "description": "Feature disabled in source and generated settings while other settings and hooks are preserved",
+      "required": true
+    }
+  ],
+  "snapshot_sha256": "51a48abf1ac8b629cb7f8a96685eeeb21e789a1091043ec9d7439c15733bdcd9",
+  "result_status": "completed",
+  "submission": {
+    "result_sha256": "0dbe4cfeededc21a6c1ceb9f1db7994f9e9b1c312ac4a4e931adb2ee290570a9",
+    "report_sha256": "7247619455d1680a5dc69e1af9678b71e169bc564ea2eaf3b3afb030a2cf288a",
+    "evidence": [
+      {
+        "path": "runs/remove-context-management/evidence/independent-review.json",
+        "sha256": "64698c9f7c4ff0536d695c94c5be412ace380fc7182298da7b99521c9180edb4"
+      },
+      {
+        "path": "runs/remove-context-management/evidence/settings.json",
+        "sha256": "08433b39dbb1379cc2dbe745c212c4eadeaf4abf32be4542a446f5e8e5b2c8c7"
+      }
+    ]
+  }
+}

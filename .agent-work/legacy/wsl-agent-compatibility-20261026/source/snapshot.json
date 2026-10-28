@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "module": "infrastructure",
+  "created_at": "2026-10-26T13:25:59+09:00",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "107825cb1d8deb4db30bf8d6788444cd53cc0fa59800a6912c28a41668fe8a80"
+    },
+    {
+      "path": "modules/infrastructure/instructions.md",
+      "sha256": "baf3e2d9da1479c115086c1eb503fc91dd820ea9f351b5e69eef0344f3b0a88f"
+    },
+    {
+      "path": "modules/infrastructure/module.json",
+      "sha256": "5ecb338b90ae65f053740ff8e7b4cdfc70542710c4afbf9e17aa66f0350a1ed2"
+    },
+    {
+      "path": "registry.json",
+      "sha256": "d89f7d0752f71158c7513e504134a1a8868c918629308903d8032c94aabea501"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "sha256": "b97a3d6c25657eb8d667ca5aaa95ae112abb5104535f28e6d470c309d11b948f"
+    },
+    {
+      "path": "shared/schemas/module.schema.json",
+      "sha256": "44ebd4c4fc298aacb507783e9e0be53be52331395b67f90d596532a1b078886b"
+    },
+    {
+      "path": "shared/schemas/policy.schema.json",
+      "sha256": "0263f5f357a736a518c5a85d7aa4bfb298705f8e09260510233f8e19f03bb669"
+    },
+    {
+      "path": "shared/schemas/registry.schema.json",
+      "sha256": "83b5e0a282d9ecf9ee69ea6aad91e3e7159a516033ad6f9ff04446a7120eeb7f"
+    },
+    {
+      "path": "shared/schemas/result.schema.json",
+      "sha256": "aa5e443f384b5bd164a902ae5460550f20d8214ebcd78712dbba8cf0271ae074"
+    },
+    {
+      "path": "shared/skills/skills.json",
+      "sha256": "54659728d272d947a1df339e9e8cf534aa32ba4616da35e9ed483cf89cba5afe"
+    },
+    {
+      "path": "shared/skills/submit-result/SKILL.md",
+      "sha256": "970c3eba14f81c1d49fbd54ad1d6b8f1042f75b445522e755a6981789d032e58"
+    }
+  ],
+  "task_spec": {
+    "module": {
+      "id": "infrastructure",
+      "version": "0.1.0"
+    },
+    "objective": "현재 모듈형 에이전트 구성을 Ubuntu WSL2에서 검증하고 기존 프로젝트를 재사용하는 실행 경로를 준비한다",
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Ubuntu WSL2에서 등록된 역할과 공통 자산이 doctor 검사를 통과한다",
+        "required": true
+      },
+      {
+        "id": "criterion-2",
+        "description": "Ubuntu WSL2에서 기존 계약 테스트가 통과한다",
+        "required": true
+      },
+      {
+        "id": "criterion-3",
+        "description": "프로젝트 지침과 실제 에이전트 실행의 경계 및 시작 절차를 기록한다",
+        "required": true
+      }
+    ]
+  },
+  "versions": {
+    "modules": [
+      {
+        "id": "infrastructure",
+        "version": "0.1.0"
+      }
+    ],
+    "skills": [
+      [
+        "submit-result",
+        "1.0.0"
+      ]
+    ],
+    "policies": [
+      [
+        "common",
+        "1.0.0"
+      ]
+    ]
+  }
+}

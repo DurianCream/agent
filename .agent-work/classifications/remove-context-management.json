@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "remove-context-management",
+  "source": {
+    "record_sha256": "2126ceca79eb324080c076179e8ec92c7bc6529c6ae799b3d7445a8a1fb8c064",
+    "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: The summary explicitly names multi. [source: runs/remove-context-management/result.json; objective; work; limitations]",
+    "service: Changes affect runtime/codex-settings.toml and generated Codex project configuration. [source: runs/remove-context-management/result.json; objective; work; limitations]",
+    "environment: The work changes a project-local runtime feature and checks configuration synchronization; no external service deployment is described. [source: runs/remove-context-management/result.json; objective; work; limitations]",
+    "issue: Disable the context_management feature while retaining other configuration. [source: runs/remove-context-management/result.json; objective; work; limitations]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "context-management-removal"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "register-codex-native",
+  "source": {
+    "record_sha256": "806a34d601dc2cba8e367d23cc6548d13bea341456dad6105b385bfe54668ca6",
+    "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109"
+  },
+  "status": "confirmed",
+  "rationale": "Development is a normalized label for local framework implementation/setup or compatibility evaluation; it does not label any external production infrastructure. Original reports remain historical observations and do not override current AGENTS.md or publication policy.",
+  "evidence": [
+    "project: The objective explicitly names multi project role and skill registration. [source: runs/register-codex-native/result.json; objective; work; limitations]",
+    "service: The work creates .codex profiles and .agents skill adapters for the agent framework. [source: runs/register-codex-native/result.json; objective; work; limitations]",
+    "environment: The result describes local Codex discovery and adapter regression checks while preserving global configuration. [source: runs/register-codex-native/result.json; objective; work; limitations]",
+    "issue: Register framework roles and skills with native Codex discovery. [source: runs/register-codex-native/result.json; objective; work; limitations]"
+  ],
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "native-agent-registration"
+  }
+}

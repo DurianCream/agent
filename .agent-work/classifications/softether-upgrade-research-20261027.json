@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "softether-upgrade-research-20261027",
+  "source": {
+    "record_sha256": "3e280dc0e9cea5f48040dcd0359407b5742413bce1573ba129240b6180a4e1c9",
+    "spec_sha256": "c4f52afb4f49199d0f4a3ef83806178fd8217a0d0fe4a6917cdc569c38e38109"
+  },
+  "status": "needs-review",
+  "rationale": "Do not infer production from operational wording. Do not use placeholder Hub, node, account or path names as infrastructure identity. Do not auto-load until the missing project and environment are explicitly resolved.",
+  "evidence": [
+    "project: The result names Linux/Windows/RADIUS technology but no customer, organization or named infrastructure project. Storage in multi is not proof of a target infrastructure project. [source: runs/softether-upgrade-research-20261027/result.json; objective; work; limitations]",
+    "service: The objective and report explicitly concern SoftEther VPN Server and Windows Client with existing RADIUS. [source: runs/softether-upgrade-research-20261027/result.json; objective; work; limitations]",
+    "environment: The result explicitly states that production-server access, deployment and actual upgrade/connectivity tests were not performed. Current build, OS, topology and target inventory are unconfirmed; an operational runbook does not identify a production instance. [source: runs/softether-upgrade-research-20261027/result.json; objective; work; limitations]",
+    "issue: Both records concern maintaining RADIUS while upgrading SoftEther and designing or documenting NAT/client audit logging. Research and runbook are distinct tasks under the same proposed issue family. [source: runs/softether-upgrade-research-20261027/result.json; objective; work; limitations]"
+  ],
+  "proposed_scope": {
+    "service": "softether",
+    "issue": "softether-upgrade-audit"
+  },
+  "unknown_fields": [
+    "project",
+    "environment"
+  ]
+}
