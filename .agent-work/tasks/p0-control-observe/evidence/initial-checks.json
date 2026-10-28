@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "id": "test_codex_settings",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 9,
+      "log_sha256": "4b203cd1f014d8f3f92b8d854592895a5d9ee123f3f7543db418b7dc587d04c0"
+    },
+    {
+      "id": "test_context_checkpoint",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 29,
+      "log_sha256": "0f08460a63588107efe52ef9e3be3aa0e781b2ea1320a1111a09f1af469272d1"
+    },
+    {
+      "id": "test_contract",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 29,
+      "log_sha256": "926c86cfc35ddf62dc434bf74ba8006e9c63e840fff3345c54ca95eebd8b7f4b"
+    },
+    {
+      "id": "test_control_contracts",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 39,
+      "log_sha256": "874bb03fc3300068e721684b1f960272978fa380ff10db172bb05184e8c17f04"
+    },
+    {
+      "id": "test_control_policy",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 36,
+      "log_sha256": "e402c1c4a53957b03f6b601d9d5e0b24d91dd485e19298d90492c8aeb1571782"
+    },
+    {
+      "id": "test_controlctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 10,
+      "log_sha256": "aad136797e4376f6213581a9db9b7035839fe3cc602cb10a0f8e25d667485f5d"
+    },
+    {
+      "id": "test_legacy_memory",
+      "outcome": "failed",
+      "exit_code": 1,
+      "test_count": 8,
+      "log_sha256": "b07f7555b0bfee589eabff81d020e1a07119d7a7d93ddcb16155166b791391ea"
+    },
+    {
+      "id": "test_repo_automation",
+      "outcome": "failed",
+      "exit_code": 1,
+      "test_count": 6,
+      "log_sha256": "6fe10caea3266fb18cef1fb5c3261f6c59f5a6fc2c23f57163d0005f93bacd5d"
+    },
+    {
+      "id": "test_repoctl",
+      "outcome": "failed",
+      "exit_code": 1,
+      "test_count": 7,
+      "log_sha256": "df68620ec05d11290691d1b40d8a7911e59e2d9cf627e36ace43b017ba1815f8"
+    },
+    {
+      "id": "test_work_scope",
+      "outcome": "failed",
+      "exit_code": 1,
+      "test_count": 9,
+      "log_sha256": "110e6108f4943ecb45624af709878e2c778f8dc7a181ac2c5267013bb80b6ecf"
+    }
+  ],
+  "note": "Actual saved unittest summaries recovered after harness reporting decode failure.",
+  "log_hash_semantics": "SHA256 of stored initial failure log bytes, or unchanged passing log bytes."
+}

@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "task_id": "p0-control-observe",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-control-contracts-observe"
+  },
+  "baseline_commit": "3b557bef3d5ba1029e1cddf95e80dd0cd1b22889",
+  "status": "p0_contracts_and_observe_implemented_not_execution_enforcement",
+  "source_hashes": {
+    "README.md": "3ee851a112a53d5ebe1130e4b6e63ae5ff7a0bd43b54b6b5fea7a5be5dd34011",
+    "docs/P0-실행통제-사용안내.md": "b5390f67a779d025c4e8983961476cd17e89c06442853686c11cc0b11975bb17",
+    "runtime/control-requirements.txt": "ddf340da15d847ce461fb76390a7333837ef803ed5b0fd81aa65f2795f0b40ca",
+    "runtime/control_contracts.py": "382fe5f4032767e46d36f554fcdab68eccf1acf633786008b3ca84a3e6a2a174",
+    "runtime/control_policy.py": "5d8fb8c640592ba75d39b4fb9cef2f039905c2e376be40e52b899b1159420afe",
+    "runtime/controlctl.py": "7c128c4bb9353854beed9c0853046d74f102b225820c9afc7469199b315cc794",
+    "runtime/tests/fixtures/control-contracts/action-request.json": "7d27e8a71c5b82d62b564ca3c39a6d2c26f935cbe4b5fdd538a9a7027e9d498b",
+    "runtime/tests/fixtures/control-contracts/all-envelopes.json": "3b6fa344c6c5ff4f41c9d69de6b3f2f4158b10c87a4dbbbea2d397b3678fd996",
+    "runtime/tests/fixtures/control-contracts/unicode-vector.json": "50d21c711f86f886186560fdaee98091fcb11ad6c66e336fb7c3c08451f2cf4a",
+    "runtime/tests/fixtures/control-observe/context.json": "44664f3a93049bc7509977edfb0256557f747e1d3dd1c5dbab17b1766e0a1cd2",
+    "runtime/tests/fixtures/control-observe/request.json": "e59e1027bfc41dda7f233849ca5063cee469e99047dda0a372c16a190772a17c",
+    "runtime/tests/test_control_contracts.py": "19d24cf92e84f306e7bcd5ca441072aa2c9edf4ddb762436e98f5a26e8f1bbdc",
+    "runtime/tests/test_control_policy.py": "ba5960bb2579c90fa45d136aa11180c15ac527a60c735e67458fa9914b718d69",
+    "runtime/tests/test_controlctl.py": "6c6a655a9584fd7c170799f226f058e0713fbb5c35bf2ddb621ae36ebc965910",
+    "shared/policies/execution-controls.observe.json": "19ef32624f100975265d6801f742c476ca149609e802f039dca3ce36b3069faa",
+    "shared/schemas/control-envelope.schema.json": "575f6acb2a014413ba75339b306785def8513ddf4e73e9890c249c4e5778f806",
+    "shared/schemas/control-observation.schema.json": "92f743c79199eebdc39f502a54071c09005cb2444e1acd2f678d08949fb7f3ba",
+    "shared/schemas/control-observe-policy.schema.json": "cdecfedacff2ce624ca54136d58c9a461fde9552a191acbfdec1a235a769ffa7"
+  },
+  "files": {
+    ".agent-work/tasks/p0-control-observe/implementation.en.md": "4a5d34698568cbc76b664cb881919bd45e7682c5c243c7eb8f8b848281ceea00",
+    ".agent-work/tasks/p0-control-observe/summary.ko.md": "b5390f67a779d025c4e8983961476cd17e89c06442853686c11cc0b11975bb17",
+    ".agent-work/tasks/p0-control-observe/dependencies.json": "80020689d603b303929fac5ba9117f542b8b822604e2eb19585e6cdd83363278",
+    ".agent-work/tasks/p0-control-observe/evidence/checks.json": "057dc83f438a84e6ecf88f2799696c79fe72f5c3ea2f1cfdccffc1726ccf8fce",
+    ".agent-work/tasks/p0-control-observe/evidence/independent-review.json": "b1b04dbac2607f504780a98d68ac46791c6b0b2ad0d7c001b4e87e47d1a0753f",
+    ".agent-work/tasks/p0-control-observe/evidence/contracts-author.json": "2e384874d2088020456af8fa03f03cc9470ae1c891667496636ade4bb20acdb7",
+    ".agent-work/tasks/p0-control-observe/evidence/policy-author.json": "4e785bdf35bad9ec01d6f39497956ffbb8c0db1d01a55996da40e8d323e6eb27",
+    ".agent-work/tasks/p0-control-observe/evidence/main-notes.json": "899d253e769caf8f809bcb369511307046ad6b18613efda90f956298f02b0600",
+    ".agent-work/tasks/p0-control-observe/evidence/initial-checks.json": "8e9cb3a6f6cf25ee12b4655a095c3cf3c85843d6535266e6eba3f0c0ddd49fcf"
+  },
+  "note": "Submitted result is authoritative; task-owned copies preserve ignored output/evidence. Do not edit this submitted record; start a scoped follow-up."
+}

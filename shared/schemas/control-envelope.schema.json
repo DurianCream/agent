@@ -1,0 +1,1472 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:multi:ax-controls:0.1.0",
+  "title": "P0 structural control envelope contracts 0.1.0",
+  "description": "P0 promotes the six draft envelope shapes unchanged. Validation checks shape, canonical digest, and selected internal semantics only; authenticity remains not_verified and executable is always false. No cryptographic authority, execution, or enrollment is provided.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._:-][a-z0-9]+)*$",
+      "maxLength": 128
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "nonce": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{32,64}$"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project",
+        "service",
+        "environment",
+        "issue"
+      ],
+      "properties": {
+        "project": {
+          "$ref": "#/$defs/identifier"
+        },
+        "service": {
+          "$ref": "#/$defs/identifier"
+        },
+        "environment": {
+          "$ref": "#/$defs/identifier"
+        },
+        "issue": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_id",
+        "host_id",
+        "session_id",
+        "role"
+      ],
+      "properties": {
+        "subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "host_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "session_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "role": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "versioned_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "digest",
+        "media_type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "key_id",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "Ed25519"
+        },
+        "key_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]{86}==$"
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeout_seconds",
+        "max_attempts",
+        "max_bytes",
+        "max_cost_microunits",
+        "max_actions"
+      ],
+      "properties": {
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1073741824
+        },
+        "max_cost_microunits": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "max_actions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))[^\\\\:\\u0000]+$"
+    },
+    "preimage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "inspect_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paths"
+      ],
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relative_path"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        }
+      }
+    },
+    "patch_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "patch_artifact_id",
+        "preimages"
+      ],
+      "properties": {
+        "patch_artifact_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "preimages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preimage"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        }
+      }
+    },
+    "publish_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "remote",
+        "remote_url",
+        "branch",
+        "commit",
+        "owned_manifest_digest"
+      ],
+      "properties": {
+        "remote": {
+          "const": "origin"
+        },
+        "remote_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://[^/?#@]+/[^?#@]+$"
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "owned_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "infrastructure_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id",
+        "operation",
+        "resource_id",
+        "desired_state_artifact_id",
+        "expected_state_digest"
+      ],
+      "properties": {
+        "target_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "operation": {
+          "enum": [
+            "config.change",
+            "config.rollback"
+          ]
+        },
+        "resource_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "desired_state_artifact_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "expected_state_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "export_parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "destination_id",
+        "artifact_id",
+        "data_classification"
+      ],
+      "properties": {
+        "destination_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "data_classification": {
+          "enum": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        }
+      }
+    },
+    "action_request_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "task_id",
+        "repository_id",
+        "scope",
+        "requester",
+        "adapter",
+        "parameters",
+        "artifacts",
+        "policy_ref",
+        "issued_at",
+        "expires_at",
+        "nonce",
+        "idempotency_key",
+        "budget"
+      ],
+      "properties": {
+        "request_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "task_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "repository_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "requester": {
+          "$ref": "#/$defs/identity"
+        },
+        "adapter": {
+          "enum": [
+            "workspace.inspect",
+            "workspace.apply_patch",
+            "repo.publish",
+            "infrastructure.change",
+            "external.export"
+          ]
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "nonce": {
+          "$ref": "#/$defs/nonce"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/uuid"
+        },
+        "budget": {
+          "$ref": "#/$defs/budget"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "adapter": {
+              "const": "workspace.inspect"
+            },
+            "parameters": {
+              "$ref": "#/$defs/inspect_parameters"
+            }
+          }
+        },
+        {
+          "properties": {
+            "adapter": {
+              "const": "workspace.apply_patch"
+            },
+            "parameters": {
+              "$ref": "#/$defs/patch_parameters"
+            }
+          }
+        },
+        {
+          "properties": {
+            "adapter": {
+              "const": "repo.publish"
+            },
+            "parameters": {
+              "$ref": "#/$defs/publish_parameters"
+            }
+          }
+        },
+        {
+          "properties": {
+            "adapter": {
+              "const": "infrastructure.change"
+            },
+            "parameters": {
+              "$ref": "#/$defs/infrastructure_parameters"
+            }
+          }
+        },
+        {
+          "properties": {
+            "adapter": {
+              "const": "external.export"
+            },
+            "parameters": {
+              "$ref": "#/$defs/export_parameters"
+            }
+          }
+        }
+      ]
+    },
+    "policy_decision_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_id",
+        "request_digest",
+        "scope",
+        "policy_ref",
+        "mode",
+        "decision",
+        "risk",
+        "reason_codes",
+        "required_approval",
+        "revocation_epoch",
+        "issued_at",
+        "expires_at",
+        "review_target_digest",
+        "approval_digests"
+      ],
+      "properties": {
+        "decision_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "request_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "mode": {
+          "enum": [
+            "observe",
+            "enforce"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "require_review"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "required_approval": {
+          "enum": [
+            "none",
+            "human_action",
+            "standing_authorization"
+          ]
+        },
+        "revocation_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "review_target_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_digests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/digest"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "const": "require_review"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "required_approval": {
+                "enum": [
+                  "human_action",
+                  "standing_authorization"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "const": "deny"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "required_approval": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "deny",
+                  "require_review"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "review_target_digest": {
+                "type": "null"
+              },
+              "approval_digests": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "const": "allow"
+              },
+              "required_approval": {
+                "enum": [
+                  "human_action",
+                  "standing_authorization"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "review_target_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "approval_digests": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/digest"
+                },
+                "minItems": 1,
+                "maxItems": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "decision": {
+                "const": "allow"
+              },
+              "required_approval": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "review_target_digest": {
+                "type": "null"
+              },
+              "approval_digests": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "action_approval_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_id",
+        "request_digest",
+        "decision_digest",
+        "scope",
+        "policy_ref",
+        "artifact_set_digest",
+        "approver",
+        "kind",
+        "standing_grant_id",
+        "nonce",
+        "revocation_epoch",
+        "issued_at",
+        "expires_at"
+      ],
+      "properties": {
+        "approval_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "request_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "decision_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "artifact_set_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "approver": {
+          "$ref": "#/$defs/identity"
+        },
+        "kind": {
+          "enum": [
+            "human_action",
+            "standing_authorization"
+          ]
+        },
+        "standing_grant_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nonce": {
+          "$ref": "#/$defs/nonce"
+        },
+        "revocation_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "standing_authorization"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "standing_grant_id": {
+                "$ref": "#/$defs/identifier"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "human_action"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "standing_grant_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution_receipt_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_id",
+        "request_digest",
+        "decision_digest",
+        "approval_digests",
+        "task_id",
+        "scope",
+        "policy_ref",
+        "adapter_ref",
+        "executor",
+        "status",
+        "effects",
+        "readback_status",
+        "before_state_digest",
+        "after_state_digest",
+        "evidence",
+        "revocation_epoch",
+        "started_at",
+        "finished_at",
+        "reason_codes"
+      ],
+      "properties": {
+        "execution_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "request_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "decision_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "approval_digests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/digest"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "task_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "adapter_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "executor": {
+          "$ref": "#/$defs/identity"
+        },
+        "status": {
+          "enum": [
+            "blocked",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "effects": {
+          "enum": [
+            "none",
+            "applied",
+            "partial",
+            "unknown"
+          ]
+        },
+        "readback_status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_run",
+            "unknown"
+          ]
+        },
+        "before_state_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_state_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "revocation_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "started_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "finished_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "readback_status": {
+                "const": "passed"
+              },
+              "effects": {
+                "enum": [
+                  "none",
+                  "applied"
+                ]
+              },
+              "after_state_digest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "required": [
+              "after_state_digest"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effects": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "outcome",
+        "evidence_digest"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "failed",
+            "inconclusive",
+            "not_run"
+          ]
+        },
+        "evidence_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "numerator",
+        "denominator",
+        "unit"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "numerator": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "unit": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "evaluation_attestation_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attestation_id",
+        "run_id",
+        "task_id",
+        "scope",
+        "producer",
+        "issuer",
+        "author_subject_id",
+        "author_session_id",
+        "artifact_set_digest",
+        "suite_ref",
+        "model_ref",
+        "prompt_ref",
+        "toolset_ref",
+        "policy_ref",
+        "verdict",
+        "checks",
+        "metrics",
+        "evidence",
+        "issued_at",
+        "expires_at"
+      ],
+      "properties": {
+        "attestation_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "run_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "task_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "producer": {
+          "enum": [
+            "trusted_test_runner",
+            "independent_evaluator"
+          ]
+        },
+        "issuer": {
+          "$ref": "#/$defs/identity"
+        },
+        "author_subject_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "author_session_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "artifact_set_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "suite_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "model_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "prompt_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "toolset_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "verdict": {
+          "enum": [
+            "passed",
+            "failed",
+            "inconclusive"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/check"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/metric"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "checks": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/check"
+                    },
+                    {
+                      "properties": {
+                        "outcome": {
+                          "const": "passed"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "task_control_manifest_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "repository_id",
+        "scope",
+        "mode",
+        "stage",
+        "assurance",
+        "policy_ref",
+        "schema_ref",
+        "adapter_set_ref",
+        "evaluation_profile_ref",
+        "standing_grant_ids",
+        "baseline_commit",
+        "enrollment_id",
+        "enrolled_at",
+        "revocation_epoch"
+      ],
+      "properties": {
+        "task_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "repository_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "mode": {
+          "enum": [
+            "observe",
+            "enforce"
+          ]
+        },
+        "stage": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "assurance": {
+          "enum": [
+            "wrapper_only",
+            "isolated_executor"
+          ]
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "schema_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "adapter_set_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "evaluation_profile_ref": {
+          "$ref": "#/$defs/versioned_ref"
+        },
+        "standing_grant_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "baseline_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "enrollment_id": {
+          "$ref": "#/$defs/uuid"
+        },
+        "enrolled_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "revocation_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "P0"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mode": {
+                "const": "observe"
+              },
+              "assurance": {
+                "const": "wrapper_only"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "P2",
+                  "P3"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "mode": {
+                "const": "enforce"
+              },
+              "assurance": {
+                "const": "isolated_executor"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "action_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "action_request"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/action_request_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/signature"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "policy_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "policy_decision"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/policy_decision_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      }
+    },
+    "action_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "action_approval"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/action_approval_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      }
+    },
+    "execution_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "execution_receipt"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/execution_receipt_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      }
+    },
+    "evaluation_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "evaluation_attestation"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/evaluation_attestation_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      }
+    },
+    "task_control_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_type",
+        "schema_version",
+        "payload",
+        "digest",
+        "signature"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "task_control_manifest"
+        },
+        "schema_version": {
+          "const": "0.1.0"
+        },
+        "payload": {
+          "$ref": "#/$defs/task_control_manifest_payload"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/action_request"
+    },
+    {
+      "$ref": "#/$defs/policy_decision"
+    },
+    {
+      "$ref": "#/$defs/action_approval"
+    },
+    {
+      "$ref": "#/$defs/execution_receipt"
+    },
+    {
+      "$ref": "#/$defs/evaluation_attestation"
+    },
+    {
+      "$ref": "#/$defs/task_control_manifest"
+    }
+  ]
+}

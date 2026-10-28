@@ -1,0 +1,8 @@
+{
+  "outcome": "passed",
+  "artifacts": 3,
+  "bounded_evidence": 6,
+  "byte_identical": true,
+  "source_hashes_verified": 18,
+  "raw_execution_logs_published": false
+}

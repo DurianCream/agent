@@ -1,0 +1,119 @@
+{
+  "task_id": "p0-control-observe",
+  "role": "coding",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-control-contracts-observe"
+  },
+  "baseline_commit": "3b557be",
+  "ownership": [
+    "runtime/control_contracts.py",
+    "runtime/control-requirements.txt",
+    "shared/schemas/control-envelope.schema.json",
+    "runtime/tests/test_control_contracts.py",
+    "runtime/tests/fixtures/control-contracts/action-request.json",
+    "runtime/tests/fixtures/control-contracts/unicode-vector.json",
+    "runtime/tests/fixtures/control-contracts/all-envelopes.json"
+  ],
+  "decisions": [
+    "Promoted prior six-envelope shape unchanged as version0.1.0; only title/description metadata changed.",
+    "P0 validates bounded strict JSON, full maintained RFC8785 digest, local Draft202012 shape and selected internal semantics.",
+    "All authoritative-looking signed envelopes remain authenticity=not_verified and executable=false. No signature verification, authority grant, execution, or enrollment.",
+    "Policy worker consumes action_request only and owns cross-context exact binding/current-time policy checks.",
+    "Semantic tightening rejects artifact ordering/link mismatch, inverted time intervals, impossible request timeout, malformed publication targets, and declared reviewer conflicts; these are structural consistency checks, not authenticated claims.",
+    "Optional dependencies pinned; missing packages produce safe actionable error with no auto-install.",
+    "R1 remediation: explicitly registered offline date-time/uri/uuid assertions; optional jsonschema format discovery is not relied upon.",
+    "Unknown schema-used format and missing validator dependency fail closed; URI uses pinned RFC3986 validator.",
+    "P0 datetime profile requires calendar-valid uppercase UTC Z timestamps with at most six fractional digits; compact ISO, offsets, impossible dates, leap seconds, and precision-truncating input are rejected.",
+    "Schema traversal checks actual and locally referenced subschemas, not unreferenced annotation payloads.",
+    "R2 remediation: local reference targets receive full meta-validation; UnknownType/UndefinedTypeCheck normalize safely and exception chains are suppressed."
+  ],
+  "api": {
+    "ControlContractError": "code and safe_message attributes; no raw input values in errors",
+    "load_json": "bytes or str -> bounded JSON",
+    "read_json": "explicit bounded file read -> JSON",
+    "canonical_digest": "full-value RFC8785 sha256-prefixed digest",
+    "envelope_digest": "hash only record_type/schema_version/payload",
+    "validate_schema_data": "data, optional local schema dict -> defensive-copy data",
+    "validate_envelope": "envelope -> metadata including defensive-copy envelope, authenticity not_verified, executable false"
+  },
+  "dependencies": {
+    "rfc8785": "0.1.4",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "attrs": "26.1.0",
+    "jsonschema-specifications": "2025.9.1",
+    "rpds-py": "2026.9.1",
+    "typing-extensions": "4.16.0",
+    "rfc3339-validator": "0.1.4",
+    "rfc3986-validator": "0.1.1",
+    "six": "1.17.0"
+  },
+  "verification": {
+    "unit_tests": {
+      "outcome": "passed",
+      "tests_run": 39,
+      "failures": 0,
+      "errors": 0,
+      "command": "bundled Python3.12 fresh process + task vendor; unittest discover runtime/tests test_control_contracts.py",
+      "output": "test_all_six_draft_record_types_remain_structurally_compatible (test_control_contracts.ControlContractTests.test_all_six_draft_record_types_remain_structurally_compatible) ... ok\ntest_artifact_ids_unique_and_ordered (test_control_contracts.ControlContractTests.test_artifact_ids_unique_and_ordered) ... ok\ntest_branch_is_not_option_or_invalid_ref (test_control_contracts.ControlContractTests.test_branch_is_not_option_or_invalid_ref) ... ok\ntest_canonical_paths_and_unique_order (test_control_contracts.ControlContractTests.test_canonical_paths_and_unique_order) ... ok\ntest_cyclic_and_non_json_direct_values (test_control_contracts.ControlContractTests.test_cyclic_and_non_json_direct_values) ... ok\ntest_declared_evaluator_identity_conflict_is_rejected_not_authenticated (test_control_contracts.ControlContractTests.test_declared_evaluator_identity_conflict_is_rejected_not_authenticated) ... ok\ntest_depth_and_node_limits (test_control_contracts.ControlContractTests.test_depth_and_node_limits) ... ok\ntest_digest_detects_payload_mutation (test_control_contracts.ControlContractTests.test_digest_detects_payload_mutation) ... ok\ntest_duplicate_attestation_cases_rejected (test_control_contracts.ControlContractTests.test_duplicate_attestation_cases_rejected) ... ok\ntest_duplicate_json_keys_rejected_without_value_leak (test_control_contracts.ControlContractTests.test_duplicate_json_keys_rejected_without_value_leak) ... ok\ntest_envelope_digest_excludes_signature_and_digest (test_control_contracts.ControlContractTests.test_envelope_digest_excludes_signature_and_digest) ... ok\ntest_every_timestamp_field_has_guaranteed_format_assertions (test_control_contracts.ControlContractTests.test_every_timestamp_field_has_guaranteed_format_assertions) ... ok\ntest_external_refs_never_retrieve (test_control_contracts.ControlContractTests.test_external_refs_never_retrieve) ... ok\ntest_format_checker_rejects_malformed_uuid (test_control_contracts.ControlContractTests.test_format_checker_rejects_malformed_uuid) ... ok\ntest_formats_work_without_optional_jsonschema_auto_registration (test_control_contracts.ControlContractTests.test_formats_work_without_optional_jsonschema_auto_registration) ... ok\ntest_invalid_json_is_safe (test_control_contracts.ControlContractTests.test_invalid_json_is_safe) ... ok\ntest_invalid_utf8_and_lone_surrogates (test_control_contracts.ControlContractTests.test_invalid_utf8_and_lone_surrogates) ... ok\ntest_malformed_schema_fails_safely (test_control_contracts.ControlContractTests.test_malformed_schema_fails_safely) ... ok\ntest_missing_dependency_has_actionable_safe_message (test_control_contracts.ControlContractTests.test_missing_dependency_has_actionable_safe_message) ... ok\ntest_missing_explicit_format_dependency_is_not_silent (test_control_contracts.ControlContractTests.test_missing_explicit_format_dependency_is_not_silent) ... ok\ntest_nonfinite_and_float_json_tokens_rejected (test_control_contracts.ControlContractTests.test_nonfinite_and_float_json_tokens_rejected) ... ok\ntest_parameters_must_reference_bound_artifacts (test_control_contracts.ControlContractTests.test_parameters_must_reference_bound_artifacts) ... ok\ntest_read_is_bounded_and_read_errors_are_safe (test_control_contracts.ControlContractTests.test_read_is_bounded_and_read_errors_are_safe) ... ok\ntest_receipt_time_order (test_control_contracts.ControlContractTests.test_receipt_time_order) ... ok\ntest_referenced_extension_subschema_is_meta_validated_safely (test_control_contracts.ControlContractTests.test_referenced_extension_subschema_is_meta_validated_safely) ... ok\ntest_referenced_external_ref_and_dialect_cannot_hide_in_annotations (test_control_contracts.ControlContractTests.test_referenced_external_ref_and_dialect_cannot_hide_in_annotations) ... ok\ntest_request_budget_schema_limits (test_control_contracts.ControlContractTests.test_request_budget_schema_limits) ... ok\ntest_rfc8785_utf16_property_order_known_bytes (test_control_contracts.ControlContractTests.test_rfc8785_utf16_property_order_known_bytes) ... ok\ntest_safe_integer_boundaries (test_control_contracts.ControlContractTests.test_safe_integer_boundaries) ... ok\ntest_scope_fields_must_be_exact_shape (test_control_contracts.ControlContractTests.test_scope_fields_must_be_exact_shape) ... ok\ntest_signed_shape_is_not_signature_authentication (test_control_contracts.ControlContractTests.test_signed_shape_is_not_signature_authentication) ... ok\ntest_size_limit_for_raw_and_direct_object (test_control_contracts.ControlContractTests.test_size_limit_for_raw_and_direct_object) ... ok\ntest_success_requires_postcondition_and_digest (test_control_contracts.ControlContractTests.test_success_requires_postcondition_and_digest) ... ok\ntest_supplied_local_schema_dictionary_works (test_control_contracts.ControlContractTests.test_supplied_local_schema_dictionary_works) ... ok\ntest_timestamp_order_and_budget_validity (test_control_contracts.ControlContractTests.test_timestamp_order_and_budget_validity) ... ok\ntest_unicode_is_not_normalized (test_control_contracts.ControlContractTests.test_unicode_is_not_normalized) ... ok\ntest_unknown_field_version_and_adapter_parameter_mismatch (test_control_contracts.ControlContractTests.test_unknown_field_version_and_adapter_parameter_mismatch) ... ok\ntest_unsupported_schema_formats_fail_closed (test_control_contracts.ControlContractTests.test_unsupported_schema_formats_fail_closed) ... ok\ntest_valid_request_is_structural_only_and_defensive_copy (test_control_contracts.ControlContractTests.test_valid_request_is_structural_only_and_defensive_copy) ... ok\n\n----------------------------------------------------------------------\nRan 39 tests in 7.603s\n\nOK\n"
+    },
+    "schema_compatibility": {
+      "outcome": "passed",
+      "draft_shape_preserved": true
+    },
+    "protected_execution": "not_run: deliberately absent in P0",
+    "cryptographic_authentication": "not_run: deliberately absent in P0",
+    "pre_review_unit_tests": {
+      "outcome": "passed",
+      "tests_run": 33,
+      "failures": 0,
+      "errors": 0,
+      "command": "bundled Python3.12 with PYTHONPATH=work/p0-control-observe/vendor; unittest discover runtime/tests test_control_contracts.py",
+      "output": "test_all_six_draft_record_types_remain_structurally_compatible (test_control_contracts.ControlContractTests.test_all_six_draft_record_types_remain_structurally_compatible) ... ok\ntest_artifact_ids_unique_and_ordered (test_control_contracts.ControlContractTests.test_artifact_ids_unique_and_ordered) ... ok\ntest_branch_is_not_option_or_invalid_ref (test_control_contracts.ControlContractTests.test_branch_is_not_option_or_invalid_ref) ... ok\ntest_canonical_paths_and_unique_order (test_control_contracts.ControlContractTests.test_canonical_paths_and_unique_order) ... ok\ntest_cyclic_and_non_json_direct_values (test_control_contracts.ControlContractTests.test_cyclic_and_non_json_direct_values) ... ok\ntest_declared_evaluator_identity_conflict_is_rejected_not_authenticated (test_control_contracts.ControlContractTests.test_declared_evaluator_identity_conflict_is_rejected_not_authenticated) ... ok\ntest_depth_and_node_limits (test_control_contracts.ControlContractTests.test_depth_and_node_limits) ... ok\ntest_digest_detects_payload_mutation (test_control_contracts.ControlContractTests.test_digest_detects_payload_mutation) ... ok\ntest_duplicate_attestation_cases_rejected (test_control_contracts.ControlContractTests.test_duplicate_attestation_cases_rejected) ... ok\ntest_duplicate_json_keys_rejected_without_value_leak (test_control_contracts.ControlContractTests.test_duplicate_json_keys_rejected_without_value_leak) ... ok\ntest_envelope_digest_excludes_signature_and_digest (test_control_contracts.ControlContractTests.test_envelope_digest_excludes_signature_and_digest) ... ok\ntest_external_refs_never_retrieve (test_control_contracts.ControlContractTests.test_external_refs_never_retrieve) ... ok\ntest_format_checker_rejects_malformed_uuid (test_control_contracts.ControlContractTests.test_format_checker_rejects_malformed_uuid) ... ok\ntest_invalid_json_is_safe (test_control_contracts.ControlContractTests.test_invalid_json_is_safe) ... ok\ntest_invalid_utf8_and_lone_surrogates (test_control_contracts.ControlContractTests.test_invalid_utf8_and_lone_surrogates) ... ok\ntest_malformed_schema_fails_safely (test_control_contracts.ControlContractTests.test_malformed_schema_fails_safely) ... ok\ntest_missing_dependency_has_actionable_safe_message (test_control_contracts.ControlContractTests.test_missing_dependency_has_actionable_safe_message) ... ok\ntest_nonfinite_and_float_json_tokens_rejected (test_control_contracts.ControlContractTests.test_nonfinite_and_float_json_tokens_rejected) ... ok\ntest_parameters_must_reference_bound_artifacts (test_control_contracts.ControlContractTests.test_parameters_must_reference_bound_artifacts) ... ok\ntest_read_is_bounded_and_read_errors_are_safe (test_control_contracts.ControlContractTests.test_read_is_bounded_and_read_errors_are_safe) ... ok\ntest_receipt_time_order (test_control_contracts.ControlContractTests.test_receipt_time_order) ... ok\ntest_request_budget_schema_limits (test_control_contracts.ControlContractTests.test_request_budget_schema_limits) ... ok\ntest_rfc8785_utf16_property_order_known_bytes (test_control_contracts.ControlContractTests.test_rfc8785_utf16_property_order_known_bytes) ... ok\ntest_safe_integer_boundaries (test_control_contracts.ControlContractTests.test_safe_integer_boundaries) ... ok\ntest_scope_fields_must_be_exact_shape (test_control_contracts.ControlContractTests.test_scope_fields_must_be_exact_shape) ... ok\ntest_signed_shape_is_not_signature_authentication (test_control_contracts.ControlContractTests.test_signed_shape_is_not_signature_authentication) ... ok\ntest_size_limit_for_raw_and_direct_object (test_control_contracts.ControlContractTests.test_size_limit_for_raw_and_direct_object) ... ok\ntest_success_requires_postcondition_and_digest (test_control_contracts.ControlContractTests.test_success_requires_postcondition_and_digest) ... ok\ntest_supplied_local_schema_dictionary_works (test_control_contracts.ControlContractTests.test_supplied_local_schema_dictionary_works) ... ok\ntest_timestamp_order_and_budget_validity (test_control_contracts.ControlContractTests.test_timestamp_order_and_budget_validity) ... ok\ntest_unicode_is_not_normalized (test_control_contracts.ControlContractTests.test_unicode_is_not_normalized) ... ok\ntest_unknown_field_version_and_adapter_parameter_mismatch (test_control_contracts.ControlContractTests.test_unknown_field_version_and_adapter_parameter_mismatch) ... ok\ntest_valid_request_is_structural_only_and_defensive_copy (test_control_contracts.ControlContractTests.test_valid_request_is_structural_only_and_defensive_copy) ... ok\n\n----------------------------------------------------------------------\nRan 33 tests in 1.876s\n\nOK\n"
+    },
+    "review_r1": {
+      "outcome": "passed",
+      "coverage": [
+        "Every timestamp field across all six record types rejects a secret-marker malformed value.",
+        "Required formats work with jsonschema auto-registration forcibly emptied.",
+        "Malformed calendar values, compact ISO, excessive fraction precision, bad URI and percent escapes reject with safe errors.",
+        "Missing explicit format dependency and unknown schema-used formats fail closed."
+      ],
+      "cryptographic_authentication": "not_run: still deliberately absent"
+    },
+    "review_r1_unit_tests": {
+      "outcome": "passed",
+      "tests_run": 37,
+      "failures": 0,
+      "errors": 0,
+      "command": "bundled Python3.12 fresh process with task vendor; unittest discover runtime/tests test_control_contracts.py",
+      "output": "test_all_six_draft_record_types_remain_structurally_compatible (test_control_contracts.ControlContractTests.test_all_six_draft_record_types_remain_structurally_compatible) ... ok\ntest_artifact_ids_unique_and_ordered (test_control_contracts.ControlContractTests.test_artifact_ids_unique_and_ordered) ... ok\ntest_branch_is_not_option_or_invalid_ref (test_control_contracts.ControlContractTests.test_branch_is_not_option_or_invalid_ref) ... ok\ntest_canonical_paths_and_unique_order (test_control_contracts.ControlContractTests.test_canonical_paths_and_unique_order) ... ok\ntest_cyclic_and_non_json_direct_values (test_control_contracts.ControlContractTests.test_cyclic_and_non_json_direct_values) ... ok\ntest_declared_evaluator_identity_conflict_is_rejected_not_authenticated (test_control_contracts.ControlContractTests.test_declared_evaluator_identity_conflict_is_rejected_not_authenticated) ... ok\ntest_depth_and_node_limits (test_control_contracts.ControlContractTests.test_depth_and_node_limits) ... ok\ntest_digest_detects_payload_mutation (test_control_contracts.ControlContractTests.test_digest_detects_payload_mutation) ... ok\ntest_duplicate_attestation_cases_rejected (test_control_contracts.ControlContractTests.test_duplicate_attestation_cases_rejected) ... ok\ntest_duplicate_json_keys_rejected_without_value_leak (test_control_contracts.ControlContractTests.test_duplicate_json_keys_rejected_without_value_leak) ... ok\ntest_envelope_digest_excludes_signature_and_digest (test_control_contracts.ControlContractTests.test_envelope_digest_excludes_signature_and_digest) ... ok\ntest_every_timestamp_field_has_guaranteed_format_assertions (test_control_contracts.ControlContractTests.test_every_timestamp_field_has_guaranteed_format_assertions) ... ok\ntest_external_refs_never_retrieve (test_control_contracts.ControlContractTests.test_external_refs_never_retrieve) ... ok\ntest_format_checker_rejects_malformed_uuid (test_control_contracts.ControlContractTests.test_format_checker_rejects_malformed_uuid) ... ok\ntest_formats_work_without_optional_jsonschema_auto_registration (test_control_contracts.ControlContractTests.test_formats_work_without_optional_jsonschema_auto_registration) ... ok\ntest_invalid_json_is_safe (test_control_contracts.ControlContractTests.test_invalid_json_is_safe) ... ok\ntest_invalid_utf8_and_lone_surrogates (test_control_contracts.ControlContractTests.test_invalid_utf8_and_lone_surrogates) ... ok\ntest_malformed_schema_fails_safely (test_control_contracts.ControlContractTests.test_malformed_schema_fails_safely) ... ok\ntest_missing_dependency_has_actionable_safe_message (test_control_contracts.ControlContractTests.test_missing_dependency_has_actionable_safe_message) ... ok\ntest_missing_explicit_format_dependency_is_not_silent (test_control_contracts.ControlContractTests.test_missing_explicit_format_dependency_is_not_silent) ... ok\ntest_nonfinite_and_float_json_tokens_rejected (test_control_contracts.ControlContractTests.test_nonfinite_and_float_json_tokens_rejected) ... ok\ntest_parameters_must_reference_bound_artifacts (test_control_contracts.ControlContractTests.test_parameters_must_reference_bound_artifacts) ... ok\ntest_read_is_bounded_and_read_errors_are_safe (test_control_contracts.ControlContractTests.test_read_is_bounded_and_read_errors_are_safe) ... ok\ntest_receipt_time_order (test_control_contracts.ControlContractTests.test_receipt_time_order) ... ok\ntest_request_budget_schema_limits (test_control_contracts.ControlContractTests.test_request_budget_schema_limits) ... ok\ntest_rfc8785_utf16_property_order_known_bytes (test_control_contracts.ControlContractTests.test_rfc8785_utf16_property_order_known_bytes) ... ok\ntest_safe_integer_boundaries (test_control_contracts.ControlContractTests.test_safe_integer_boundaries) ... ok\ntest_scope_fields_must_be_exact_shape (test_control_contracts.ControlContractTests.test_scope_fields_must_be_exact_shape) ... ok\ntest_signed_shape_is_not_signature_authentication (test_control_contracts.ControlContractTests.test_signed_shape_is_not_signature_authentication) ... ok\ntest_size_limit_for_raw_and_direct_object (test_control_contracts.ControlContractTests.test_size_limit_for_raw_and_direct_object) ... ok\ntest_success_requires_postcondition_and_digest (test_control_contracts.ControlContractTests.test_success_requires_postcondition_and_digest) ... ok\ntest_supplied_local_schema_dictionary_works (test_control_contracts.ControlContractTests.test_supplied_local_schema_dictionary_works) ... ok\ntest_timestamp_order_and_budget_validity (test_control_contracts.ControlContractTests.test_timestamp_order_and_budget_validity) ... ok\ntest_unicode_is_not_normalized (test_control_contracts.ControlContractTests.test_unicode_is_not_normalized) ... ok\ntest_unknown_field_version_and_adapter_parameter_mismatch (test_control_contracts.ControlContractTests.test_unknown_field_version_and_adapter_parameter_mismatch) ... ok\ntest_unsupported_schema_formats_fail_closed (test_control_contracts.ControlContractTests.test_unsupported_schema_formats_fail_closed) ... ok\ntest_valid_request_is_structural_only_and_defensive_copy (test_control_contracts.ControlContractTests.test_valid_request_is_structural_only_and_defensive_copy) ... ok\n\n----------------------------------------------------------------------\nRan 37 tests in 2.621s\n\nOK\n"
+    },
+    "review_r2": {
+      "outcome": "passed",
+      "coverage": [
+        "Every resolved schema node is meta-validated, including extension/annotation targets reached by local refs.",
+        "Invalid referenced type normalizes to schema_invalid; safe formatted traceback does not include private marker.",
+        "Hidden external refs and different nested dialects reject before data validation."
+      ],
+      "changes": "No schema shape or authority changes; parser/validator error handling tightened."
+    }
+  },
+  "file_sha256": {
+    "runtime/control_contracts.py": "382fe5f4032767e46d36f554fcdab68eccf1acf633786008b3ca84a3e6a2a174",
+    "runtime/control-requirements.txt": "ddf340da15d847ce461fb76390a7333837ef803ed5b0fd81aa65f2795f0b40ca",
+    "shared/schemas/control-envelope.schema.json": "575f6acb2a014413ba75339b306785def8513ddf4e73e9890c249c4e5778f806",
+    "runtime/tests/test_control_contracts.py": "19d24cf92e84f306e7bcd5ca441072aa2c9edf4ddb762436e98f5a26e8f1bbdc",
+    "runtime/tests/fixtures/control-contracts/action-request.json": "7d27e8a71c5b82d62b564ca3c39a6d2c26f935cbe4b5fdd538a9a7027e9d498b",
+    "runtime/tests/fixtures/control-contracts/unicode-vector.json": "50d21c711f86f886186560fdaee98091fcb11ad6c66e336fb7c3c08451f2cf4a",
+    "runtime/tests/fixtures/control-contracts/all-envelopes.json": "3b6fa344c6c5ff4f41c9d69de6b3f2f4158b10c87a4dbbbea2d397b3678fd996"
+  },
+  "remaining": [
+    "Parent integration/full regressions and independent evaluator review.",
+    "Parent documentation, result submission and publication.",
+    "Future execution/authentication/host-isolation stages are outside this task."
+  ]
+}

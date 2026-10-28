@@ -1,0 +1,37 @@
+{
+  "role": "orchestrator",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-control-contracts-observe"
+  },
+  "decisions": [
+    "Implement only P0 contract validation and observe policy assessment; do not issue authority or effects.",
+    "Keep existing result1.0, roles, old runtime logic and historical snapshots unchanged.",
+    "Use pinned RFC8785, Draft202012 and explicit offline format validators.",
+    "Preserve exact task-owned publication and independently review all source changes."
+  ],
+  "work": [
+    "Coordinated contract and policy/CLI authors",
+    "Wrote Korean usage guide and English implementation record",
+    "Installed test-only dependencies in work/ and verified all10 package pins",
+    "Ran all10 unittest modules and CLI smoke checks",
+    "Integrated R1 required-format coverage, R2 referenced-schema error redaction and R3 dependency diagnostics"
+  ],
+  "verification": {
+    "new_tests": 85,
+    "all_tests": 182,
+    "strategy": "module-isolated processes",
+    "independent_new_tests": 85,
+    "environment_retries": "Initial sandbox TEMP failures corrected with task-local TEMP; local bare Git push fixture tests passed unchanged after approved escalation. Initial logs retained locally."
+  },
+  "limitations": [
+    "Observation inputs are declared simulations, not authenticated authorization.",
+    "No executor, signature authentication, enrollment ledger, content scanner or production isolation."
+  ],
+  "remaining": [
+    "Submit and publish current exact manifest",
+    "Next task must separately define trusted enrollment/authority and execution integration"
+  ]
+}

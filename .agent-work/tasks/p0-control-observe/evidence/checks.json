@@ -1,0 +1,139 @@
+{
+  "outcome": "passed",
+  "strategy": "Each unittest module runs in a separate process; this avoids cross-module global-state interference.",
+  "checks": [
+    {
+      "id": "test_codex_settings",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 9,
+      "log_sha256": "4b203cd1f014d8f3f92b8d854592895a5d9ee123f3f7543db418b7dc587d04c0"
+    },
+    {
+      "id": "test_context_checkpoint",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 29,
+      "log_sha256": "0f08460a63588107efe52ef9e3be3aa0e781b2ea1320a1111a09f1af469272d1"
+    },
+    {
+      "id": "test_contract",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 29,
+      "log_sha256": "926c86cfc35ddf62dc434bf74ba8006e9c63e840fff3345c54ca95eebd8b7f4b"
+    },
+    {
+      "id": "test_control_contracts",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 39,
+      "log_sha256": "874bb03fc3300068e721684b1f960272978fa380ff10db172bb05184e8c17f04"
+    },
+    {
+      "id": "test_control_policy",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 36,
+      "log_sha256": "e402c1c4a53957b03f6b601d9d5e0b24d91dd485e19298d90492c8aeb1571782"
+    },
+    {
+      "id": "test_controlctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 10,
+      "log_sha256": "aad136797e4376f6213581a9db9b7035839fe3cc602cb10a0f8e25d667485f5d"
+    },
+    {
+      "id": "test_legacy_memory",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 8,
+      "log_sha256": "1ed4e416be3be8ca1d28e2f8d4f3c1111174b2ac7170779c73613dca91248b5f"
+    },
+    {
+      "id": "test_repo_automation",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 6,
+      "log_sha256": "133430c9bd93ef64405bfc926bddd137dbc1d37dbe860395b59148329f2aaa97"
+    },
+    {
+      "id": "test_repoctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 7,
+      "log_sha256": "0b12f97c790efdbf2b5042c76ad63d03160e125cc4f319629f0d41098e0b1b74"
+    },
+    {
+      "id": "test_work_scope",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": 9,
+      "log_sha256": "ed406f423288b336d546074b6f99ad4f2dfc5abfc6eb94f8bd842f849ab6afdf"
+    },
+    {
+      "id": "doctor",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": null,
+      "log_sha256": "a5918b6d6f5f7583f62d54c7d90038cfa672cc69084c4d6af6fb9b905e23f87e"
+    },
+    {
+      "id": "sync-check",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": null,
+      "log_sha256": "beb9eb904d45229f376e21f89f8ab84df7e9f3e5f78f112eb17664436702df2f"
+    },
+    {
+      "id": "cli-validate",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": null,
+      "log_sha256": "cfc65a759da765a99a88b68eb0fed7c250144ac75423edd4d849f989fac1e76e"
+    },
+    {
+      "id": "cli-observe",
+      "outcome": "passed",
+      "exit_code": 0,
+      "test_count": null,
+      "log_sha256": "2bde785db5355071aeb60f5d51aab1ead6383dd1de70c98489575e4be979545b"
+    },
+    {
+      "id": "compatibility",
+      "outcome": "passed",
+      "detail": "Existing result1.0 and prior scoped design records unchanged."
+    }
+  ],
+  "test_total": 182,
+  "source_hashes": {
+    "README.md": "3ee851a112a53d5ebe1130e4b6e63ae5ff7a0bd43b54b6b5fea7a5be5dd34011",
+    "docs/P0-\uc2e4\ud589\ud1b5\uc81c-\uc0ac\uc6a9\uc548\ub0b4.md": "b5390f67a779d025c4e8983961476cd17e89c06442853686c11cc0b11975bb17",
+    "runtime/control-requirements.txt": "ddf340da15d847ce461fb76390a7333837ef803ed5b0fd81aa65f2795f0b40ca",
+    "runtime/control_contracts.py": "382fe5f4032767e46d36f554fcdab68eccf1acf633786008b3ca84a3e6a2a174",
+    "runtime/control_policy.py": "5d8fb8c640592ba75d39b4fb9cef2f039905c2e376be40e52b899b1159420afe",
+    "runtime/controlctl.py": "7c128c4bb9353854beed9c0853046d74f102b225820c9afc7469199b315cc794",
+    "runtime/tests/fixtures/control-contracts/action-request.json": "7d27e8a71c5b82d62b564ca3c39a6d2c26f935cbe4b5fdd538a9a7027e9d498b",
+    "runtime/tests/fixtures/control-contracts/all-envelopes.json": "3b6fa344c6c5ff4f41c9d69de6b3f2f4158b10c87a4dbbbea2d397b3678fd996",
+    "runtime/tests/fixtures/control-contracts/unicode-vector.json": "50d21c711f86f886186560fdaee98091fcb11ad6c66e336fb7c3c08451f2cf4a",
+    "runtime/tests/fixtures/control-observe/context.json": "44664f3a93049bc7509977edfb0256557f747e1d3dd1c5dbab17b1766e0a1cd2",
+    "runtime/tests/fixtures/control-observe/request.json": "e59e1027bfc41dda7f233849ca5063cee469e99047dda0a372c16a190772a17c",
+    "runtime/tests/test_control_contracts.py": "19d24cf92e84f306e7bcd5ca441072aa2c9edf4ddb762436e98f5a26e8f1bbdc",
+    "runtime/tests/test_control_policy.py": "ba5960bb2579c90fa45d136aa11180c15ac527a60c735e67458fa9914b718d69",
+    "runtime/tests/test_controlctl.py": "6c6a655a9584fd7c170799f226f058e0713fbb5c35bf2ddb621ae36ebc965910",
+    "shared/policies/execution-controls.observe.json": "19ef32624f100975265d6801f742c476ca149609e802f039dca3ce36b3069faa",
+    "shared/schemas/control-envelope.schema.json": "575f6acb2a014413ba75339b306785def8513ddf4e73e9890c249c4e5778f806",
+    "shared/schemas/control-observation.schema.json": "92f743c79199eebdc39f502a54071c09005cb2444e1acd2f678d08949fb7f3ba",
+    "shared/schemas/control-observe-policy.schema.json": "cdecfedacff2ce624ca54136d58c9a461fde9552a191acbfdec1a235a769ffa7"
+  },
+  "focused_rerun": [
+    "test_legacy_memory.py",
+    "test_repo_automation.py"
+  ],
+  "environment_note": "Initial four legacy modules failed Windows sandbox system TEMP setup. Workspace-local TEMP/TMP resolved two; local bare Git push setup in the remaining two passed unchanged after approved escalation. Initial logs were retained. Test/product logic was not changed for these environment retries. The reporting helper UTF-8 decode issue was fixed without rerunning already-passed modules.",
+  "limits": [
+    "Tests exercise P0 parsing and declared-context observations, not execution authority, signature authenticity or production isolation."
+  ],
+  "log_hash_semantics": "SHA256 of the stored file bytes, including actual newline bytes."
+}

@@ -1,0 +1,12 @@
+# P0 optional dependency set. Install explicitly in the selected Python environment.
+# No runtime auto-installation; Python 3.12 is the verified workspace interpreter.
+attrs==26.1.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+referencing==0.37.0
+rfc8785==0.1.4
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rpds-py==2026.9.1
+six==1.17.0
+typing-extensions==4.16.0

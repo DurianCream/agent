@@ -66,6 +66,19 @@
         "environment": "development",
         "issue": "governance-verification-role-definition"
       }
+    },
+    "p0-control-observe": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-28T17:13:29+09:00",
+      "summary": "P0 계약 검증기와 관찰 모드 정책 판정기·CLI를 구현했다. 새로운 기능85개와 기존 기능을 포함한182개 테스트 및 독립 검토를 통과했으며 모든 관찰 결과는 실행 권한이 없다.",
+      "path": "tasks/p0-control-observe/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-control-contracts-observe"
+      }
     }
   }
 }

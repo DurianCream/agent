@@ -1,0 +1,70 @@
+{
+  "role": "coding",
+  "task_id": "p0-control-observe",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-control-contracts-observe"
+  },
+  "outcome": "passed",
+  "tests_run": 46,
+  "decisions": [
+    "Observe only; no executor, grant issuance or action side effects.",
+    "Policy and context are declared simulation inputs, not authenticated authority.",
+    "Policy profile ID development-observe and version0.1.0 only; canonical policy hash binds request.",
+    "CLI output is minimal fixed labels and digests; input data and exception details never echoed.",
+    "Default policy only development inspect/patch/publication; all decisions executable=false."
+  ],
+  "cli": [
+    "validate --input",
+    "observe --input --context [--policy]"
+  ],
+  "exit_codes": {
+    "0": "Valid validation or valid observation, including deny and require_review.",
+    "2": "Invalid arguments, malformed/unavailable inputs, invalid policy/context/request or internal failure."
+  },
+  "files": {
+    "runtime/control_policy.py": "5d8fb8c640592ba75d39b4fb9cef2f039905c2e376be40e52b899b1159420afe",
+    "runtime/controlctl.py": "7c128c4bb9353854beed9c0853046d74f102b225820c9afc7469199b315cc794",
+    "shared/policies/execution-controls.observe.json": "19ef32624f100975265d6801f742c476ca149609e802f039dca3ce36b3069faa",
+    "shared/schemas/control-observe-policy.schema.json": "cdecfedacff2ce624ca54136d58c9a461fde9552a191acbfdec1a235a769ffa7",
+    "shared/schemas/control-observation.schema.json": "92f743c79199eebdc39f502a54071c09005cb2444e1acd2f678d08949fb7f3ba",
+    "runtime/tests/test_control_policy.py": "ba5960bb2579c90fa45d136aa11180c15ac527a60c735e67458fa9914b718d69",
+    "runtime/tests/test_controlctl.py": "6c6a655a9584fd7c170799f226f058e0713fbb5c35bf2ddb621ae36ebc965910",
+    "runtime/tests/fixtures/control-observe/context.json": "44664f3a93049bc7509977edfb0256557f747e1d3dd1c5dbab17b1766e0a1cd2",
+    "runtime/tests/fixtures/control-observe/request.json": "e59e1027bfc41dda7f233849ca5063cee469e99047dda0a372c16a190772a17c"
+  },
+  "limitations": [
+    "No signature authenticity or host identity verification.",
+    "No artifact-content inspection, secret scanner, request execution or production enforcement.",
+    "Fixed-time fixtures expire outside their test clock."
+  ],
+  "remaining": [
+    "Parent integration regression and independent review",
+    "Parent task submission and publication"
+  ],
+  "remediation": [
+    "R1: guaranteed format checks supplied by contract layer, plus defensive safe UTC parsing in observer.",
+    "Malformed context timestamp/URI and invalid clock cannot echo raw values.",
+    "Stronger no-target-read regression and CLI help warning: zero exit is never execution permission.",
+    "R3: lazy dependency_missing/dependency_incompatible codes are allowlisted to fixed dependency_unavailable with static install guidance, no raw diagnostics or automatic installation."
+  ],
+  "verification_runs": [
+    {
+      "suite": "test_control_policy.py + test_controlctl.py",
+      "tests": 45,
+      "result": "passed"
+    },
+    {
+      "suite": "test_controlctl.py after no-read test/help refinement",
+      "tests": 9,
+      "result": "passed"
+    },
+    {
+      "suite": "test_controlctl.py after R3 lazy-dependency diagnostic fix",
+      "tests": 10,
+      "result": "passed"
+    }
+  ]
+}

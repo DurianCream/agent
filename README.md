@@ -5,6 +5,7 @@
 에이전트 지침은 영어, 사용자 보고서는 한국어로 작성합니다. 작업 대상 저장소별로 .agent-work/에 작업 명세를 남겨 새 채팅에서 다시 읽을 수 있습니다.
 
 - [설치 및 작업 기록 사용 안내](docs/작업기록-사용안내.md)
+- [P0 계약 검증과 관찰 모드 사용 안내](docs/P0-실행통제-사용안내.md)
 - 에이전트 시작 규칙: AGENTS.md
 - 역할 목록: registry.json
 - 작업 기록: [.agent-work/INDEX.md](.agent-work/INDEX.md)

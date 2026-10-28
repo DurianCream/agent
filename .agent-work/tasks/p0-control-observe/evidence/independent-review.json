@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "p0-control-observe",
+  "reviewer": "/root/review_saved_work",
+  "role": "evaluator",
+  "role_version": "0.2.0",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-control-contracts-observe"
+  },
+  "baseline_commit": "3b557bef3d5ba1029e1cddf95e80dd0cd1b22889",
+  "objective": "Independently review and test the strict P0 contract validator and non-executing declared-context policy observer, including malformed input, authority confusion, offline references, error redaction and compatibility.",
+  "outcome": "passed",
+  "assessment": "accepted",
+  "reviewed_files": {
+    "README.md": "3ee851a112a53d5ebe1130e4b6e63ae5ff7a0bd43b54b6b5fea7a5be5dd34011",
+    "docs/P0-\uc2e4\ud589\ud1b5\uc81c-\uc0ac\uc6a9\uc548\ub0b4.md": "b5390f67a779d025c4e8983961476cd17e89c06442853686c11cc0b11975bb17",
+    "runtime/control-requirements.txt": "ddf340da15d847ce461fb76390a7333837ef803ed5b0fd81aa65f2795f0b40ca",
+    "runtime/control_contracts.py": "382fe5f4032767e46d36f554fcdab68eccf1acf633786008b3ca84a3e6a2a174",
+    "runtime/control_policy.py": "5d8fb8c640592ba75d39b4fb9cef2f039905c2e376be40e52b899b1159420afe",
+    "runtime/controlctl.py": "7c128c4bb9353854beed9c0853046d74f102b225820c9afc7469199b315cc794",
+    "runtime/tests/fixtures/control-contracts/action-request.json": "7d27e8a71c5b82d62b564ca3c39a6d2c26f935cbe4b5fdd538a9a7027e9d498b",
+    "runtime/tests/fixtures/control-contracts/all-envelopes.json": "3b6fa344c6c5ff4f41c9d69de6b3f2f4158b10c87a4dbbbea2d397b3678fd996",
+    "runtime/tests/fixtures/control-contracts/unicode-vector.json": "50d21c711f86f886186560fdaee98091fcb11ad6c66e336fb7c3c08451f2cf4a",
+    "runtime/tests/fixtures/control-observe/context.json": "44664f3a93049bc7509977edfb0256557f747e1d3dd1c5dbab17b1766e0a1cd2",
+    "runtime/tests/fixtures/control-observe/request.json": "e59e1027bfc41dda7f233849ca5063cee469e99047dda0a372c16a190772a17c",
+    "runtime/tests/test_control_contracts.py": "19d24cf92e84f306e7bcd5ca441072aa2c9edf4ddb762436e98f5a26e8f1bbdc",
+    "runtime/tests/test_control_policy.py": "ba5960bb2579c90fa45d136aa11180c15ac527a60c735e67458fa9914b718d69",
+    "runtime/tests/test_controlctl.py": "6c6a655a9584fd7c170799f226f058e0713fbb5c35bf2ddb621ae36ebc965910",
+    "shared/policies/execution-controls.observe.json": "19ef32624f100975265d6801f742c476ca149609e802f039dca3ce36b3069faa",
+    "shared/schemas/control-envelope.schema.json": "575f6acb2a014413ba75339b306785def8513ddf4e73e9890c249c4e5778f806",
+    "shared/schemas/control-observation.schema.json": "92f743c79199eebdc39f502a54071c09005cb2444e1acd2f678d08949fb7f3ba",
+    "shared/schemas/control-observe-policy.schema.json": "cdecfedacff2ce624ca54136d58c9a461fde9552a191acbfdec1a235a769ffa7",
+    "outputs/p0-control-observe/implementation.en.md": "4a5d34698568cbc76b664cb881919bd45e7682c5c243c7eb8f8b848281ceea00",
+    "outputs/p0-control-observe/summary.ko.md": "b5390f67a779d025c4e8983961476cd17e89c06442853686c11cc0b11975bb17"
+  },
+  "criterion_checks": [
+    {
+      "criterion_id": "criterion-1",
+      "outcome": "passed",
+      "basis": "Read the parser, profile copier, local-reference traversal, explicit format checker, canonical digest implementation, envelope semantics and promoted schemas. Independently executed the new control suite and reproduced R1/R2 before and after correction. Duplicate keys, invalid UTF-8/surrogates, float/non-finite/unsafe-integer input, bounded depth/nodes/bytes, digest mismatch, UTC timestamp semantics and referenced subschema validity are checked. RFC8785 uses a pinned library and a UTF-16 ordering vector that differs from Python scalar sorting."
+    },
+    {
+      "criterion_id": "criterion-2",
+      "outcome": "passed",
+      "basis": "Read policy/context schemas and evaluator branches; independently exercised eight invalid lexical paths, exact context comparisons and an explicitly supplied production simulation. Scope/principal/environment/policy/budget/expiry and declared operation/artifact/publication bounds are checked. High risk remains require_review and every observation remains executable=false and authority_verified=false. Local context is declared simulation, not authenticated identity or a grant."
+    },
+    {
+      "criterion_id": "criterion-3",
+      "outcome": "passed",
+      "basis": "Inspected imports and control flow for action execution, network calls, artifact resolution and raw output. Actual tests cover blocked socket/subprocess calls, no target-file reads or changes, minimal CLI responses and sanitized argument/input errors. Contract validation explicitly reports authenticity=not_verified; signed-looking records and advisory proceed/accepted statements cannot grant execution authority. Only explicit input files and fixed schema assets are read."
+    },
+    {
+      "criterion_id": "criterion-4",
+      "outcome": "passed",
+      "basis": "Evaluator independently ran 85 new tests successfully. Independently inspected final main-session logs for all 10 modules: 182 unique tests passed, including the 85 new tests. Initial sandbox TEMP and local bare-Git fixture setup failures were retained and resolved through environment-only retries without changing product or test behavior. Findings R1-R3 are resolved and affected areas rechecked."
+    },
+    {
+      "criterion_id": "criterion-5",
+      "outcome": "passed",
+      "basis": "Read English implementation and Korean usage documentation, pinned dependencies, default policy, CLI semantics and future-work boundaries. Documentation identifies UTC uppercase-Z/microsecond limits, input bounds, optional explicit dependency installation, expired fixtures, non-authoritative allow observations and unchanged result1.0. This review covers the source/documents; final task submission, durable checkpoint and publication remain main-session lifecycle steps."
+    }
+  ],
+  "actual_checks": [
+    {
+      "id": "independent-new-control-suite",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "command": "Bundled Python 3.12 -B -m unittest discover -s runtime/tests -p test_control*.py; task-local PYTHONPATH=work/p0-control-observe/vendor plus runtime; bytecode disabled",
+      "test_count": 85,
+      "duration_seconds": 19.673,
+      "output_summary": "Ran 85 tests in 19.673s; OK",
+      "coverage": "39 contract tests, 36 policy tests and 10 CLI tests, including the corrected format/subschema/dependency diagnostics and controlled no-side-effect checks."
+    },
+    {
+      "id": "independent-malformed-paths",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "case_count": 8,
+      "method": "Resealed workspace.inspect requests containing parent traversal, nested traversal, repeated separators, Windows drive path, backslash, absolute path, dot segment and NUL; evaluated with the fixed test clock.",
+      "observed": "All returned deny/invalid_request with executable=false. This checks lexical declarations only, not filesystem or symlink containment."
+    },
+    {
+      "id": "independent-cyclic-local-ref",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "method": "Passed a cyclic local reference through validate_schema_data.",
+      "observed": "Returned stable ControlContractError schema_reference, without network retrieval."
+    },
+    {
+      "id": "independent-custom-production-observation",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "method": "Explicitly added production to the declared simulation policy, updated matching request/context/authorization scope and resealed policy/request digests.",
+      "observed": "require_review, executable=false and authority_verified=false. No production system was contacted."
+    },
+    {
+      "id": "independent-r1-r2-recheck",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "method": "Repeated the original malformed declared expiry and arbitrary-property referenced subschema reproductions after repair; inspected formatted exception tracebacks for a synthetic marker.",
+      "observed": "Malformed authorization expiry returns deny/invalid_context. Invalid referenced type returns schema_invalid; unsupported referenced format returns schema_format. No synthetic input marker appears in result or formatted exception traceback."
+    },
+    {
+      "id": "integration-regression-log-review",
+      "executor": "main session; logs independently inspected by evaluator",
+      "outcome": "passed",
+      "test_count": 182,
+      "module_counts": {
+        "test_codex_settings": 9,
+        "test_context_checkpoint": 29,
+        "test_contract": 29,
+        "test_control_contracts": 39,
+        "test_control_policy": 36,
+        "test_controlctl": 10,
+        "test_legacy_memory": 8,
+        "test_repo_automation": 6,
+        "test_repoctl": 7,
+        "test_work_scope": 9
+      },
+      "evidence": "runs/p0-control-observe/evidence/checks.json and the ten final test_*.txt logs",
+      "notes": "182 is the unique integrated suite count; do not add the evaluator's repeated 85 to claim 267 distinct tests. Each integrated module ran in a separate process."
+    },
+    {
+      "id": "compatibility-and-snapshot",
+      "executor": "evaluator",
+      "outcome": "passed",
+      "method": "agentctl.load_task verified the current task's 11 frozen files and coding0.1.3 binding. Git diff against the exact baseline confirmed no modifications to agentctl.py, repoctl.py, repo_automation.py, result.schema.json or the three evaluator/policy-manager/orchestrator instruction files.",
+      "observed": "Existing common result1.0, legacy runtime behavior and role guidance remain unchanged. New controls are an optional separate validation path."
+    },
+    {
+      "id": "doctor-sync-and-live-cli-log-review",
+      "executor": "main session; logs independently inspected by evaluator",
+      "outcome": "passed",
+      "evidence": [
+        "runs/p0-control-observe/evidence/doctor.txt",
+        "runs/p0-control-observe/evidence/sync-check.txt",
+        "runs/p0-control-observe/evidence/cli-validate.txt",
+        "runs/p0-control-observe/evidence/cli-observe.txt"
+      ],
+      "observed": "Doctor reports eight roles and result1.0; generated settings have no missing/changed outputs. CLI validation reports authenticity not_verified and executable false. The expired fixed-time observation fixture returns deny/request_expired, not a falsely asserted allow."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "major",
+      "status": "resolved",
+      "criterion_ids": [
+        "criterion-1",
+        "criterion-2",
+        "criterion-3"
+      ],
+      "files": [
+        "runtime/control_contracts.py",
+        "runtime/control_policy.py",
+        "runtime/control-requirements.txt"
+      ],
+      "finding": "The pinned environment lacked optional date-time and URI FormatChecker registrations. Schema validation silently skipped required formats. A malformed declared authorization expiry reached datetime.fromisoformat and raised an unbounded ValueError containing the synthetic input value.",
+      "reproduction": "Set context.authorization.expires_at to a synthetic invalid string ending in Z and evaluate a valid fixture at its fixed clock. Original result was a raw ValueError; FormatChecker listed no date-time or URI checks.",
+      "required_remedy": "Guarantee offline required format checks and fail closed on unavailable formats; validate all timestamp-bearing envelope fields; sanitize timestamp failures in the observer.",
+      "resolution": "Explicit date-time/URI/UUID checkers and pinned rfc3339/rfc3986 dependencies replace optional discovery. UTC precision is bounded and documented, unsupported formats fail closed, resolved schema nodes are checked, and observer timestamp failures become safe deny observations. Author regressions and independent reproduction passed."
+    },
+    {
+      "id": "R2",
+      "severity": "major",
+      "status": "resolved",
+      "criterion_ids": [
+        "criterion-1",
+        "criterion-3"
+      ],
+      "files": [
+        "runtime/control_contracts.py"
+      ],
+      "finding": "Root schema meta-validation did not validate a local reference target stored under an arbitrary extension property. An invalid type there raised jsonschema.UnknownType and exposed the instance in its exception text.",
+      "reproduction": "Use a Draft202012 root with extension={type:not-a-real-type}, $ref=#/extension and synthetic marker data. The original exception lacked a stable code and contained the data.",
+      "required_remedy": "Traverse and meta-validate every resolved schema target, reject hidden external/dialect/format changes and normalize schema runtime exceptions without a leaking exception chain.",
+      "resolution": "All actual/resolved subschemas are meta-validated; reference traversal is cycle-aware; UnknownType and UndefinedTypeCheck are normalized; safe errors suppress chained raw exceptions. Independent invalid-type and unsupported-format reproductions now return schema_invalid/schema_format without the marker."
+    },
+    {
+      "id": "R3",
+      "severity": "minor",
+      "status": "resolved",
+      "criterion_ids": [
+        "criterion-5"
+      ],
+      "files": [
+        "runtime/controlctl.py"
+      ],
+      "finding": "A missing lazily imported dependency was reported as invalid_input, hiding the actionable setup diagnostic promised by the implementation documentation.",
+      "reproduction": "Mock only the rfc8785 import as missing and validate a valid fixture; original CLI returned invalid_input.",
+      "required_remedy": "Allowlist dependency-specific errors to a fixed safe dependency code and static installation hint without echoing exceptions or paths.",
+      "resolution": "CLI maps dependency_missing/dependency_incompatible to dependency_unavailable with a static pinned-requirements hint. A real lazy-import regression was added and passed in the evaluator's 85-test run. No automatic installation is performed."
+    },
+    {
+      "id": "R4",
+      "severity": "minor",
+      "status": "resolved",
+      "criterion_ids": [
+        "criterion-4"
+      ],
+      "files": [
+        "runs/p0-control-observe/evidence/checks.json"
+      ],
+      "finding": "The integration helper initially hashed LF-normalized command output while stored Windows logs contained CRLF; all14 recorded log digests differed from stored bytes.",
+      "required_remedy": "Define log hash semantics and hash the actual stored bytes; preserve original failed logs.",
+      "resolution": "Main session recomputed hashes from stored files and documented byte semantics. Evaluator independently confirmed all14 final log hashes and all18 source hashes now match actual bytes. No source or test change required."
+    }
+  ],
+  "blocking_findings": [],
+  "environment_observations": [
+    "Initial full-suite legacy modules failed before product assertions because the sandbox system TEMP denied fixture creation/cleanup. Original logs remain initial-test_*.txt.",
+    "Workspace-local TEMP/TMP resolved repoctl and work-scope tests. The remaining legacy-memory/publication tests then failed local bare-Git push during fixture setup; those local-temp-*.txt logs were retained.",
+    "The main session reran the same unchanged legacy-memory and automation tests with approved escalation; their final logs pass. This is test-environment setup, not evidence that P0 bypasses host restrictions or provides production protection."
+  ],
+  "not_run": [
+    {
+      "check": "Cryptographic signature authentication, issuer trust and replay consumption",
+      "reason": "Intentionally absent from P0; structural signature fields remain unauthenticated."
+    },
+    {
+      "check": "Protected execution, grant issuance, credential isolation, actual target/symlink containment and stop/recovery",
+      "reason": "No executor or trusted ledger exists in this task; path checks are lexical and target metadata is declared."
+    },
+    {
+      "check": "Production security, sensitive-content DLP, operational continuous monitoring and legal compliance",
+      "reason": "Outside this task; no actual artifact contents or protected systems are inspected."
+    }
+  ],
+  "remaining_limits": [
+    "An allow observation is simulated advice only. Editable local context/policy and supplied digests do not prove real authority, identity, resource state or evidence truth.",
+    "Validation bounds bytes, nodes and depth. This review does not establish a worst-case wall-clock bound for arbitrary caller-supplied schemas or regex/combinator complexity; fixed CLI schema assets are used in the tested path.",
+    "Tests used bundled Python3.12 on Windows with task-local pinned dependencies. Other supported Python/OS combinations were not executed by this reviewer.",
+    "No source controls were installed beyond P0 parsing and observation. Future execution services must independently enforce authority and must not turn these observations into grants.",
+    "The main session owns final result validation, submission, durable record publication and remote confirmation."
+  ],
+  "reviewer_changes": [
+    "Created only runs/p0-control-observe/evidence/independent-review.json; source/test fixes were made by their authors. No legacy snapshot or unrelated task was edited."
+  ],
+  "further_delegation": "not_run: prohibited by assignment",
+  "integration_evidence_hashes_verified": true
+}
