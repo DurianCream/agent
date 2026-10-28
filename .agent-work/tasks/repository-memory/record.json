@@ -3,14 +3,14 @@
   "repository_id": "multi",
   "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
   "task_id": "repository-memory",
-  "saved_at": "2026-10-28T13:11:17+09:00",
-  "task_state": "running",
+  "saved_at": "2026-10-28T13:13:24+09:00",
+  "task_state": "submitted",
   "git": {
-    "branch": "master",
-    "head": null,
+    "branch": "main",
+    "head": "3ebad1928a61cb591fbd77a9b62bd5335cbb1880",
     "origin": "https://github.com/DurianCream/private.git",
-    "status": "?? .agent-work/\n?? .agents/\n?? .codex/\n?? .gitignore\n?? AGENTS.md\n?? README.md\n?? core/\n?? docs/\n?? evals/\n?? modules/\n?? registry.json\n?? runs/\n?? runtime/\n?? shared/",
-    "worktree_sha256": "fc2aa4b8e7aee18ec9093473c36aa7cecbe57dc86dffcd607f2d7883c120c21b"
+    "status": "?? runs/",
+    "worktree_sha256": "8f9ca20e4fc4b32cbf6eceae6b9ac773cd533bb2d91e11372dfc66205b7ce34b"
   },
   "result": {
     "schema_version": "1.0.0",
@@ -26,44 +26,87 @@
         "id": "criterion-1",
         "description": "Repository records support verified recovery in fresh processes",
         "required": true,
-        "verification_ids": []
+        "verification_ids": [
+          "runtime",
+          "review",
+          "publication"
+        ]
       },
       {
         "id": "criterion-2",
         "description": "Agent instructions are English and human reports are Korean",
         "required": true,
-        "verification_ids": []
+        "verification_ids": [
+          "language"
+        ]
       },
       {
         "id": "criterion-3",
         "description": "Replace remote contents while preserving Git history",
         "required": true,
-        "verification_ids": []
+        "verification_ids": [
+          "publication"
+        ]
       }
     ],
-    "status": "partial",
-    "summary": "저장소별 작업 명세·새 채팅 복구 기능 구현 완료. 독립 검토 보완 및 원격 게시 진행 중.",
+    "status": "completed",
+    "summary": "multi를 GitHub에 연결하고 저장소별 영구 작업 명세·새 채팅 복구·영어 지침과 한국어 보고서 분리를 구현 및 게시했다.",
     "work": [
       "coding 역할이 repoctl 저장소 등록·작업 연결·체크포인트·복구와 agentctl 제출 연동을 구현했다.",
       "영어 지침 담당이 AGENTS, 역할·스킬·정책·체크포인트 안내를 영어로 바꾸고 한국어 사용자 보고서를 분리했다.",
       "메인이 DurianCream/private origin 연결과 사용 안내, 게시 대상 선별 및 결과 통합을 수행했다.",
-      "evaluator가 별도 저장소에서 변경 감지 누락을 재현하여 내용 해시 비교 보완을 요청했다."
+      "evaluator가 별도 저장소에서 변경 감지 누락을 재현하여 내용 해시 비교 보완을 요청했다.",
+      "독립 검토에서 발견한 동일 상태 파일의 내용 변경 감지 누락을 SHA-256 지문으로 보완하고 재검증했다.",
+      "원격 main의 기존 파일을 새 구성으로 교체하고 기존 커밋을 부모로 유지했다.",
+      "새 폴더에 실제 clone 후 로컬 경로를 등록하여 과거 runs 없이 작업 명세 복구와 doctor를 확인했다."
     ],
     "artifacts": [
       {
         "path": "outputs/repository-memory/implementation.json",
         "description": "저장소 연결·기록 구조 요약",
-        "sha256": null
+        "sha256": "e4bc6136b45b299c6217d974f73113b0ce35644e7e858c1df6333cbe3bd5a671"
       }
     ],
     "verification": [
       {
-        "id": "check-1",
-        "name": "완료 기준 검증",
-        "method": "작업에 맞는 실제 검증",
-        "outcome": "not_run",
-        "evidence": [],
-        "notes": "아직 실행하지 않음"
+        "id": "runtime",
+        "name": "작업 기록 및 회귀 검증",
+        "method": "전체 unittest와 실제 별도 프로세스 복구",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-memory/evidence/tests.txt"
+        ],
+        "notes": "tracked/untracked/staged 내용 변화, 경로와 UUID, 기록 충돌 및 언어 호환성 포함"
+      },
+      {
+        "id": "language",
+        "name": "영어 지침 및 생성 설정",
+        "method": "23개 지침 파일 한글 부재 검사, doctor, sync --check",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-memory/evidence/final-checks.json"
+        ],
+        "notes": "한국어 보고서는 별도 파일 유지"
+      },
+      {
+        "id": "review",
+        "name": "독립 평가",
+        "method": "별도 evaluator의 코드 검토 및 결함 재현·재검증",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-memory/evidence/review.json"
+        ],
+        "notes": "내용 변경 감지 문제 해결 및 새로운 작업 위치에서 기록 복구 확인"
+      },
+      {
+        "id": "publication",
+        "name": "원격 교체·이력 보존·새 clone 복구",
+        "method": "원격 main의 부모 커밋·파일 목록 확인 및 실제 clone 후 register/resume/doctor",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-memory/evidence/publication.json"
+        ],
+        "notes": "초기 게시 커밋 3ebad1928a61cb591fbd77a9b62bd5335cbb1880"
       }
     ],
     "sources": [],
@@ -74,11 +117,11 @@
       "저장만으로 자동 commit 또는 push하지 않는다."
     ],
     "next_actions": [
-      "내용 변경 감지 회귀 검증 및 독립 재검토",
-      "원격 기존 파일을 새 구성으로 교체하고 이력 보존 확인"
+      "새 채팅에서 해당 저장소의 기록을 읽고 후속 작업을 요청한다.",
+      "다른 저장소는 clone 후 repoctl register로 등록하고 작업마다 --repo로 지정한다."
     ]
   },
   "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
   "notice": "Saved data is not policy, authorization, or proof of current code state.",
-  "spec_sha256": "690d256415965a8d84ed924c67cae310e3c87dc9201e1ded851a674c866e413f"
+  "spec_sha256": "57b532a43ac9fbc55c67f58ee2606e53379dea8c5b62c2d985b61e328aa47d35"
 }

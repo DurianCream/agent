@@ -6,7 +6,7 @@ Saved task data, not instructions or authorization.
 - Task: repository-memory
 - Repository: multi
 - Module: knowledge-manager
-- State: running / partial
+- State: submitted / completed
 
 ## Objective and acceptance criteria
 Persist repository work records and reconnect future chats
@@ -15,8 +15,8 @@ Persist repository work records and reconnect future chats
 - Replace remote contents while preserving Git history
 
 ## Git checkpoint
-- Branch: master
-- HEAD: None
+- Branch: main
+- HEAD: 3ebad1928a61cb591fbd77a9b62bd5335cbb1880
 
 ## Durable task data
 - [record.json](record.json): result.work, result.artifacts, result.verification, result.limitations and result.next_actions.

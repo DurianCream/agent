@@ -1,0 +1,126 @@
+{
+  "tests": "..........................................................................\n----------------------------------------------------------------------\nRan 74 tests in 20.629s\n\nOK",
+  "checks": {
+    "checks": [
+      {
+        "name": "doctor",
+        "exit_code": 0,
+        "evidence": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runs\\repository-memory\\evidence\\doctor.txt"
+      },
+      {
+        "name": "sync-write",
+        "exit_code": 0,
+        "evidence": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runs\\repository-memory\\evidence\\sync-write.txt"
+      },
+      {
+        "name": "sync-check",
+        "exit_code": 0,
+        "evidence": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runs\\repository-memory\\evidence\\sync-check.txt"
+      },
+      {
+        "name": "tests",
+        "exit_code": 0,
+        "evidence": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runs\\repository-memory\\evidence\\tests.txt"
+      }
+    ],
+    "english_instruction_files": 23,
+    "nonenglish": []
+  },
+  "publication": {
+    "published_commit": "3ebad1928a61cb591fbd77a9b62bd5335cbb1880",
+    "parent": "78281b078a5ba54ca1da41955167653cf844334e",
+    "history_preserved": true,
+    "old_layout_removed": true,
+    "file_count": 63,
+    "fresh_clone_recovery": true,
+    "clone_path": "C:\\Users\\dhyun\\Documents\\Codex\\2026-10-26\\ski-2\\work\\repository-memory\\fresh-clone",
+    "recovered_objective": "Persist repository work records and reconnect future chats",
+    "local_origin": "https://github.com/DurianCream/private.git",
+    "local_branch": "main"
+  },
+  "review": {
+    "schema_version": "1.0.0",
+    "reviewer": "/root/checkpoint_review",
+    "role": "evaluator",
+    "task_id": "repository-memory",
+    "outcome": "passed",
+    "reviewed_files": {
+      "runtime/repoctl.py": "60a8b7543fad08751e73585445f06e67f42487db3519f04688c8d57d9282c898",
+      "runtime/agentctl.py": "bfd799ad32f5895380b2518668ab896253996798cc3cfba36fefc127aeeb3109",
+      "runtime/tests/test_repoctl.py": "7887da2c0b06d5edd4677579de144b22515f3b7c7c387b1d36d120353a192965"
+    },
+    "scope": [
+      "Repository identity/path binding",
+      "Durable checkpoint and resume semantics",
+      "Task collision and path safety",
+      "Fresh checkout registration/recovery without original runs",
+      "Changed Git content detection",
+      "Agent-facing English / Korean user report separation (focused code and guide review)"
+    ],
+    "findings": [
+      {
+        "id": "R1",
+        "priority": "P2",
+        "status": "resolved",
+        "title": "Same-status content edits were not detected",
+        "before": "Changing an already untracked/modified file could leave git_changed=false because porcelain status was unchanged.",
+        "fix": "SHA-256 fingerprint over tracked and nonignored untracked content, with names/type/deletion/link markers; self-written .agent-work excluded. Index object IDs and modes are included to detect staged-only changes with unchanged worktree and porcelain status.",
+        "verification": "Independent original repro changed from after_content_change=false to true; 7 repository-memory tests passed."
+      }
+    ],
+    "verification": [
+      {
+        "id": "independent-content-change",
+        "outcome": "passed",
+        "before": {
+          "before": false,
+          "after_content_change": false,
+          "old_status": "?? .agent-work/\n?? untracked.txt",
+          "new_status": "?? .agent-work/\n?? untracked.txt"
+        },
+        "after": {
+          "before": false,
+          "after_content_change": true,
+          "old_status": "?? .agent-work/\n?? untracked.txt",
+          "new_status": "?? .agent-work/\n?? untracked.txt"
+        }
+      },
+      {
+        "id": "independent-targeted-tests",
+        "outcome": "passed",
+        "test_count": 7,
+        "duration_seconds": 15.592,
+        "command": "Bundled Python unittest loader: test_repoctl, isolated temp root in approved workspace",
+        "output": ".......\r\n----------------------------------------------------------------------\r\nRan 7 tests in 15.592s\r\n\r\nOK\r\n"
+      },
+      {
+        "id": "fresh-checkout-relocation",
+        "outcome": "passed",
+        "method": "Copy Git-portable .agent-work records to a separate initialized checkout; register using a fresh local registry without old runs; load saved task; create separate bound follow-up",
+        "observed": {
+          "restored_objective": "Remember task",
+          "original_run_absent": true,
+          "old_record_preserved": true,
+          "followup_separate": true
+        }
+      },
+      {
+        "id": "actual-git-clone",
+        "outcome": "not_run",
+        "reason": "Local git clone was blocked by sandbox Git sh.exe NtCreateDirectoryObject access denial. Relocation and new-process resume were verified; no actual clone success is claimed."
+      }
+    ],
+    "limitations": [
+      "Review does not certify future agent compliance or host-enforced isolation.",
+      "Historical artifacts/evidence paths are not copied by repoctl; the guide requires re-verifying missing evidence in a new checkout.",
+      "Fingerprint covers root repository Git-visible files; it does not certify nested submodule directory contents as unchanged.",
+      "Remote publication and GitHub commit ancestry are handled by the main session and were not performed by this evaluator."
+    ],
+    "notes": [
+      "No author product files were changed by evaluator.",
+      "No further blocking defect was found in the reviewed scope.",
+      "Existing run/task collision checks and immutable historical records are preserved; fresh checkout continuation uses a new task ID.",
+      "Final staged-only delta independently reviewed; latest 7-test regression suite rerun passed."
+    ]
+  }
+}
