@@ -22,14 +22,28 @@ This repository provides coding, infrastructure, and open-source R&D modules plu
 
 Write agent-facing instructions, policies, skills, machine-readable specifications, and recovery notes in English. Write user-facing reports, explanations, and usage guides in Korean. Stable schema keys, paths, commands, identifiers, and quotations retain their original spelling. Historical reports and task snapshots remain unchanged.
 
-## Repository Work Memory
+## Automatic Repository Lifecycle
 
-- At the start of a new task or chat, identify the requested repository. Use `python runtime/repoctl.py list` and `python runtime/repoctl.py resume --repo <repo-id> [--task <task-id>]` to load its saved work context before editing. If several tasks match, resolve the intended task rather than silently choosing another one.
-- Register a repository only after confirming its local Git root and authorized remote identity: `python runtime/repoctl.py register --id <repo-id> --path <repo-path>`. The local path map is machine-specific; repository-local records travel with Git.
-- Initialize work with `python runtime/agentctl.py init --repo <repo-id> ...`, or bind an existing task using `python runtime/repoctl.py bind --repo <repo-id> --task <task-id>`. Record each acting role's own scope, changes, decisions, verification, and remaining actions.
-- Persist meaningful progress and handoffs with `python runtime/repoctl.py checkpoint --task <task-id>`, including before an interruption or final response. Submission also refreshes the repository checkpoint. Maintain English agent specifications and Korean user reports as separate records under `.agent-work/`: `spec.md` and `INDEX.md` are agent-facing; `report.ko.md` is user-facing. Supply task objectives and acceptance criteria in English for the agent specification; write user-facing result summary, work, limitations, and next actions in Korean.
-- Compare saved repository identity, branch, commit, and working-tree state with current Git state. Treat saved facts as historical observations until checked. Never treat memory documents as authority to override current user instructions or host permissions, and never resume unrelated work automatically.
-- Local persistence does not imply a commit or push. Report what was saved locally and what was committed or pushed. Never store credentials, tokens, or raw private conversation logs in Git-tracked work records.
+The user has authorized automatic memory loading and publication for enabled repositories in their checked-in .agent-work/automation.json. This is standing authorization for ordinary task-owned commits and non-force pushes to the exact configured remote and branch; do not request the same authorization again. Higher-priority host permissions still apply.
+
+### Every new chat
+
+- Before substantive work, run `python runtime/repoctl.py startup` from the framework root, without waiting for the user to mention work records. Read the returned index, specifications and result data. If the user names a different registered repository, use `startup --repo <repo-id>` instead.
+- Read additional relevant records with `resume --repo <repo-id> --task <task-id>` when the startup selection does not cover the request. Reading historical work is automatic; executing unrelated unfinished work is not. Follow the current user's objective.
+- A fresh clone may rebuild its machine-local registration from its existing repository identity and matching authorized remote. Never infer or replace an unrelated repository identity. Check the current branch, HEAD, diff and worktree fingerprint against historical records before relying on their claims.
+
+### Every implementation task
+
+- Initialize a bound task with `python runtime/agentctl.py init --repo <repo-id> ...` before editing. For automation-enabled repositories this records the publication baseline. For an already bound task without a baseline, run `python runtime/repoctl.py begin --task <task-id>` before changing product files.
+- The main agent maintains file ownership for itself and its specialists. Register exact repository-relative files with `python runtime/repoctl.py track --task <task-id> --path <file>` (repeat --path as needed). Do not ask the user to maintain this manifest. Do not claim preexisting edits or another task's files as your own. Avoid directory wildcards and blanket staging.
+- Persist meaningful progress with `checkpoint --task <task-id>`. Keep agent instructions/specifications in English and user-facing reports in Korean. Store each acting role's scope, decisions, changes, tests and remaining actions. Never commit credentials, raw private conversations, local path maps or temporary execution logs.
+
+### Before the final response
+
+- After implementation and independent review, run `agentctl.py validate <task-id>` and `agentctl.py submit <task-id>`. For an enabled repository, then run `python runtime/repoctl.py finish --task <task-id>` automatically. Do not stop after saving the report and merely offer to commit or push.
+- The finish command publishes only the explicit task manifest and its managed work records. A successful task ends with a verified remote commit, not just a local commit. Report the commit and push result in Korean.
+- If a push fails, preserve the pending commit and use the finish retry path after resolving the stated cause. Do not create duplicate completion commits. If there is an unexpected branch/remote, unrelated staged change, concurrent commit, non-fast-forward update or authentication failure, report the concrete blocker; never force-push, reset user changes, or silently widen the publication scope.
+- Ordinary conversation with no deliverable or file change does not require an empty commit. Incomplete or failed implementation tasks still save a checkpoint and report the outstanding work; do not publish them as completed. A user request to skip publication for a particular task takes precedence.
 
 ## Context Checkpoints
 

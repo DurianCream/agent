@@ -7,6 +7,13 @@
       "saved_at": "2026-10-28T13:13:24+09:00",
       "summary": "multi를 GitHub에 연결하고 저장소별 영구 작업 명세·새 채팅 복구·영어 지침과 한국어 보고서 분리를 구현 및 게시했다.",
       "path": "tasks/repository-memory/spec.md"
+    },
+    "automatic-workflow": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-28T13:38:58+09:00",
+      "summary": "새 채팅의 작업 기록 자동 읽기와 완료 작업의 명세 저장·커밋·푸시 기본 절차를 구현했다.",
+      "path": "tasks/automatic-workflow/spec.md"
     }
   }
 }

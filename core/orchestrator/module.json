@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "orchestrator",
   "name": "Orchestrator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Interpret requests, select modules, coordinate dependencies, and integrate results.",
@@ -45,14 +45,14 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "path": "shared/skills/submit-result/SKILL.md"
     }
   ],
   "policies": [
     {
       "id": "common",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "path": "shared/policies/common.json"
     }
   ],

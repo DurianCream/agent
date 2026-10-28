@@ -45,3 +45,7 @@ Before working, read `registry.json` and this role's `module.json`, then only th
 Follow the repository work-memory lifecycle in `AGENTS.md`: load the selected repository's saved task context before changes, and persist your own scope, decisions, changes, verification, and remaining actions before handoff. Write agent-facing instructions and specifications in English; user-facing reports and explanations in Korean.
 
 This file defines a role. Actual agent creation and tool permissions are provided and enforced by the host.
+
+## Automatic Startup and Completion
+
+At every new chat, run repoctl startup before substantive work and read the saved repository context without a user reminder. Establish a bound task publication baseline before edits and track exact paths owned by the main agent and specialists. After independent review and completed submission, invoke repoctl finish automatically for enabled repositories. Confirm the remote commit or report the concrete publication failure; never merely offer to commit or push. Follow the exact lifecycle and user standing authorization in AGENTS.md.

@@ -10,3 +10,5 @@
 - 작업 기록: [.agent-work/INDEX.md](.agent-work/INDEX.md)
 
 Python 3.11 이상과 Git이 필요합니다. 처음 clone한 뒤 python runtime/sync_codex.py --write와 python runtime/agentctl.py doctor를 실행하세요. 모델·호스트 기능과 훅 지원은 실행 환경에 따라 달라집니다.
+
+새 채팅은 저장된 작업 기록을 먼저 읽습니다. 완료된 작업은 명세·한국어 보고서를 저장한 뒤, 이번 작업의 파일만 자동 커밋하고 승인된 origin/main에 푸시합니다. 별도로 기록 읽기나 푸시를 요청할 필요가 없습니다. 충돌이나 인증 문제는 원인을 보고하며 강제 푸시하지 않습니다.

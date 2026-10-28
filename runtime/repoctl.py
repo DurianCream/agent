@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repository-bound work records. No network, commit, push, or model execution."""
+"""Repository-bound work records with explicit opt-in task publication."""
 from __future__ import annotations
 
 import argparse
@@ -133,6 +133,10 @@ def bind(repo_id, task_id, root=ROOT):
         a.require(not file.exists() or a.read_json(file) == value,
                   'Task is already bound to a different repository')
         a.write_json(file, value)
+    automation_file = a.relative(path, '.agent-work/automation.json')
+    if automation_file.exists() and a.read_json(automation_file).get('enabled') is True:
+        import repo_automation
+        repo_automation.begin(task_id, root)
     return checkpoint(task_id, root)
 
 
@@ -236,9 +240,18 @@ def main(argv=None):
     p = sub.add_parser('bind'); p.add_argument('--repo', required=True); p.add_argument('--task', required=True)
     p = sub.add_parser('checkpoint'); p.add_argument('--task', required=True)
     p = sub.add_parser('resume'); p.add_argument('--repo', required=True); p.add_argument('--task')
+    p = sub.add_parser('startup'); p.add_argument('--repo'); p.add_argument('--task')
+    for name in ('begin', 'finish'):
+        p = sub.add_parser(name); p.add_argument('--task', required=True)
+    p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
     args = cli.parse_args(argv)
     try:
-        if args.command == 'register': value = register(args.id, args.path)
+        if args.command in ('startup', 'begin', 'track', 'finish'):
+            import repo_automation
+            if args.command == 'startup': value = repo_automation.startup(args.repo, args.task)
+            elif args.command == 'track': value = repo_automation.track(args.task, args.path)
+            else: value = getattr(repo_automation, args.command)(args.task)
+        elif args.command == 'register': value = register(args.id, args.path)
         elif args.command == 'list': value = registry(ROOT)
         elif args.command == 'bind': value = bind(args.repo, args.task)
         elif args.command == 'checkpoint': value = checkpoint(args.task)

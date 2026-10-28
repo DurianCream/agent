@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "automatic-workflow",
+  "saved_at": "2026-10-28T13:38:58+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "9b62de06849bd096c82188b2a719feac1cadbee6",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M AGENTS.md\n M README.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n M \"docs/\\354\\236\\221\\354\\227\\205\\352\\270\\260\\353\\241\\235-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M modules/coding/module.json\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/native-map.json\n M runtime/repoctl.py\n M shared/policies/common.json\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n?? .agent-work/automation.json\n?? .agent-work/tasks/automatic-workflow/\n?? runtime/repo_automation.py\n?? runtime/tests/test_repo_automation.py",
+    "worktree_sha256": "4fe4f08c1d9d44ed09ca02ed28b1da072a6a138b265fbad4fc4c722b2948c548"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "automatic-workflow",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.1"
+    },
+    "created_at": "2026-10-28T13:28:38+09:00",
+    "objective": "Automatically load repository memory and publish completed work",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Startup reads saved work without a user reminder",
+        "required": true,
+        "verification_ids": [
+          "startup",
+          "configuration"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Completed work is saved committed and pushed to the authorized remote",
+        "required": true,
+        "verification_ids": [
+          "runtime",
+          "configuration",
+          "review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Unrelated changes and remote conflicts are protected",
+        "required": true,
+        "verification_ids": [
+          "runtime",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "새 채팅의 작업 기록 자동 읽기와 완료 작업의 명세 저장·커밋·푸시 기본 절차를 구현했다.",
+    "work": [
+      "coding 담당이 startup/begin/track/finish와 작업별 기준점·파일 명세·푸시 재시도를 구현했다.",
+      "메인이 AGENTS·조율자·제출 스킬과 정책을 갱신하고 영어 지침·한국어 안내 및 호환 버전 참조를 동기화했다.",
+      "별도 evaluator가 자동 게시 범위·변경 충돌·기록 복구와 푸시 재시도를 독립 검토했다.",
+      "startup 명령으로 사용자 재요청 없이 이전 저장소 기록이 로딩되는 것을 확인하고 전체 회귀 검사를 수행했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/automatic-workflow/setup.json",
+        "description": "자동 시작·게시 적용 설정",
+        "sha256": "f7f605844391615326b89846151e348df1d5f6cc8218b602eb023fb7d4f0223f"
+      }
+    ],
+    "verification": [
+      {
+        "id": "runtime",
+        "name": "자동 복구·게시 및 전체 회귀",
+        "method": "전체 80개 unittest; 로컬 bare 원격 실제 commit/push·새 clone 자동 등록·재시도 포함",
+        "outcome": "passed",
+        "evidence": [
+          "runs/automatic-workflow/evidence/tests.txt"
+        ],
+        "notes": "관련 없는 변경, remote ahead, 다른 로컬 commit, 공유 인덱스 충돌도 검증"
+      },
+      {
+        "id": "startup",
+        "name": "실제 저장 기록 자동 로딩",
+        "method": "별도 프로세스에서 repoctl startup 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/automatic-workflow/evidence/startup.txt"
+        ],
+        "notes": "multi의 현재 작업 및 repository-memory 기록 로드"
+      },
+      {
+        "id": "configuration",
+        "name": "영어 지침·계약·생성 설정",
+        "method": "doctor, sync --check 및 지침 언어 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/automatic-workflow/evidence/checks.json"
+        ],
+        "notes": "자동 게시 정책 대상 origin/main과 지침 반영"
+      },
+      {
+        "id": "review",
+        "name": "독립 평가",
+        "method": "별도 evaluator 코드 검토와 게시 테스트",
+        "outcome": "passed",
+        "evidence": [
+          "runs/automatic-workflow/evidence/review.json"
+        ],
+        "notes": "자동 게시 전 독립 평가"
+      }
+    ],
+    "sources": [
+      {
+        "title": "Official OpenAI AGENTS.md documentation",
+        "url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+        "accessed_at": "2026-10-28T13:38:51.945700+09:00",
+        "claim_kind": "fact"
+      }
+    ],
+    "limitations": [
+      "자동 시작과 종료는 프로젝트 AGENTS 지침을 읽은 에이전트가 실행한다. 앱이 닫혀 있는 동안 도는 백그라운드 서비스는 아니다.",
+      "원격 충돌·인증 실패·무관한 변경이 감지되면 게시를 중단하고 원인을 보고한다. 강제 푸시는 하지 않는다.",
+      "게시 자동화는 현재 명시적으로 승인된 DurianCream/private origin/main에 적용한다."
+    ],
+    "next_actions": [
+      "새 multi 채팅에서는 일반 작업 요청만 하면 기록 읽기부터 완료 게시까지 기본 절차를 따른다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "spec_sha256": "b52c894d887dda4ca15fdae64331b4ed2fb405a2a80d102d464edfae4f33065c"
+}
