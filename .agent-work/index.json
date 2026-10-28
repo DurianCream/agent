@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "tasks": {
+    "repository-memory": {
+      "status": "partial",
+      "state": "running",
+      "saved_at": "2026-10-28T13:11:17+09:00",
+      "summary": "저장소별 작업 명세·새 채팅 복구 기능 구현 완료. 독립 검토 보완 및 원격 게시 진행 중.",
+      "path": "tasks/repository-memory/spec.md"
+    }
+  }
+}

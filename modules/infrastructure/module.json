@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "id": "infrastructure",
+  "name": "Infrastructure",
+  "version": "0.1.1",
+  "kind": "domain",
+  "lifecycle": "experimental",
+  "description": "Work on IaC, cloud, runtime, deployment, and operations foundations.",
+  "instructions": "modules/infrastructure/instructions.md",
+  "capabilities": [
+    "design-infrastructure",
+    "implement-iac",
+    "review-plan"
+  ],
+  "triggers": [
+    "Requests about infrastructure, cloud configuration, deployment, or operations"
+  ],
+  "input_fields": [
+    "objective",
+    "acceptance_criteria",
+    "project_context",
+    "authorized_scope"
+  ],
+  "tools": [
+    "filesystem",
+    "shell"
+  ],
+  "scope": {
+    "read": [
+      "core/",
+      "modules/",
+      "shared/",
+      "runtime/",
+      "evals/",
+      "runs/",
+      "outputs/"
+    ],
+    "write": [
+      "modules/infrastructure/",
+      "work/",
+      "runs/",
+      "outputs/"
+    ]
+  },
+  "dependencies": [],
+  "skills": [
+    {
+      "id": "submit-result",
+      "version": "1.0.1",
+      "path": "shared/skills/submit-result/SKILL.md"
+    }
+  ],
+  "policies": [
+    {
+      "id": "common",
+      "version": "1.0.1",
+      "path": "shared/policies/common.json"
+    }
+  ],
+  "result_contract": {
+    "version": "1.0.0",
+    "path": "shared/schemas/result.schema.json"
+  }
+}

@@ -1,0 +1,9 @@
+model = "gpt-6-astra"
+# Project context settings consumed by runtime/sync_codex.py.
+# These are client limits; the active model and service must support the window.
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+
+# Keep native context-management disabled for this project.
+[features]
+context_management = false

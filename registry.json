@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "modules": [
+    {
+      "id": "orchestrator",
+      "path": "core/orchestrator/module.json",
+      "enabled": true
+    },
+    {
+      "id": "skill-manager",
+      "path": "core/skill-manager/module.json",
+      "enabled": true
+    },
+    {
+      "id": "policy-manager",
+      "path": "core/policy-manager/module.json",
+      "enabled": true
+    },
+    {
+      "id": "knowledge-manager",
+      "path": "core/knowledge-manager/module.json",
+      "enabled": true
+    },
+    {
+      "id": "evaluator",
+      "path": "core/evaluator/module.json",
+      "enabled": true
+    },
+    {
+      "id": "coding",
+      "path": "modules/coding/module.json",
+      "enabled": true
+    },
+    {
+      "id": "infrastructure",
+      "path": "modules/infrastructure/module.json",
+      "enabled": true
+    },
+    {
+      "id": "oss-rnd",
+      "path": "modules/oss-rnd/module.json",
+      "enabled": true
+    }
+  ]
+}

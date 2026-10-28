@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "id": "oss-rnd",
+  "name": "Open-source R&D",
+  "version": "0.1.1",
+  "kind": "domain",
+  "lifecycle": "experimental",
+  "description": "Analyze repositories, reproduce experiments, benchmark, and assess adoption.",
+  "instructions": "modules/oss-rnd/instructions.md",
+  "capabilities": [
+    "analyze-repository",
+    "run-experiment",
+    "benchmark",
+    "recommend-adoption"
+  ],
+  "triggers": [
+    "Requests to research, compare, reproduce, or assess open-source projects"
+  ],
+  "input_fields": [
+    "objective",
+    "acceptance_criteria",
+    "project_context",
+    "authorized_scope"
+  ],
+  "tools": [
+    "filesystem",
+    "shell",
+    "web-read"
+  ],
+  "scope": {
+    "read": [
+      "core/",
+      "modules/",
+      "shared/",
+      "runtime/",
+      "evals/",
+      "runs/",
+      "outputs/"
+    ],
+    "write": [
+      "modules/oss-rnd/",
+      "work/",
+      "runs/",
+      "outputs/"
+    ]
+  },
+  "dependencies": [],
+  "skills": [
+    {
+      "id": "submit-result",
+      "version": "1.0.1",
+      "path": "shared/skills/submit-result/SKILL.md"
+    },
+    {
+      "id": "oss-research",
+      "version": "1.0.1",
+      "path": "shared/skills/oss-research/SKILL.md"
+    }
+  ],
+  "policies": [
+    {
+      "id": "common",
+      "version": "1.0.1",
+      "path": "shared/policies/common.json"
+    }
+  ],
+  "result_contract": {
+    "version": "1.0.0",
+    "path": "shared/schemas/result.schema.json"
+  }
+}

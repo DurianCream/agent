@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "repository-memory",
+  "saved_at": "2026-10-28T13:11:17+09:00",
+  "task_state": "running",
+  "git": {
+    "branch": "master",
+    "head": null,
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "?? .agent-work/\n?? .agents/\n?? .codex/\n?? .gitignore\n?? AGENTS.md\n?? README.md\n?? core/\n?? docs/\n?? evals/\n?? modules/\n?? registry.json\n?? runs/\n?? runtime/\n?? shared/",
+    "worktree_sha256": "fc2aa4b8e7aee18ec9093473c36aa7cecbe57dc86dffcd607f2d7883c120c21b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "repository-memory",
+    "module": {
+      "id": "knowledge-manager",
+      "version": "0.1.0"
+    },
+    "created_at": "2026-10-28T13:00:52+09:00",
+    "objective": "Persist repository work records and reconnect future chats",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Repository records support verified recovery in fresh processes",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-2",
+        "description": "Agent instructions are English and human reports are Korean",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-3",
+        "description": "Replace remote contents while preserving Git history",
+        "required": true,
+        "verification_ids": []
+      }
+    ],
+    "status": "partial",
+    "summary": "저장소별 작업 명세·새 채팅 복구 기능 구현 완료. 독립 검토 보완 및 원격 게시 진행 중.",
+    "work": [
+      "coding 역할이 repoctl 저장소 등록·작업 연결·체크포인트·복구와 agentctl 제출 연동을 구현했다.",
+      "영어 지침 담당이 AGENTS, 역할·스킬·정책·체크포인트 안내를 영어로 바꾸고 한국어 사용자 보고서를 분리했다.",
+      "메인이 DurianCream/private origin 연결과 사용 안내, 게시 대상 선별 및 결과 통합을 수행했다.",
+      "evaluator가 별도 저장소에서 변경 감지 누락을 재현하여 내용 해시 비교 보완을 요청했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/repository-memory/implementation.json",
+        "description": "저장소 연결·기록 구조 요약",
+        "sha256": null
+      }
+    ],
+    "verification": [
+      {
+        "id": "check-1",
+        "name": "완료 기준 검증",
+        "method": "작업에 맞는 실제 검증",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "아직 실행하지 않음"
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "문서 읽기는 프로젝트 지침에 따른 에이전트 동작이며 호스트 강제 기능이 아니다.",
+      "중간 checkpoint 이전의 미저장 대화는 복구하지 않는다.",
+      "다른 컴퓨터에서는 저장소를 등록하고 기존 명세를 읽어 새 후속 작업을 생성한다.",
+      "저장만으로 자동 commit 또는 push하지 않는다."
+    ],
+    "next_actions": [
+      "내용 변경 감지 회귀 검증 및 독립 재검토",
+      "원격 기존 파일을 새 구성으로 교체하고 이력 보존 확인"
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "spec_sha256": "690d256415965a8d84ed924c67cae310e3c87dc9201e1ded851a674c866e413f"
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "id": "knowledge-manager",
+  "name": "Knowledge Manager",
+  "version": "0.1.1",
+  "kind": "system",
+  "lifecycle": "experimental",
+  "description": "Maintain sourced knowledge, design decisions, and project context.",
+  "instructions": "core/knowledge-manager/instructions.md",
+  "capabilities": [
+    "curate-knowledge",
+    "track-provenance"
+  ],
+  "triggers": [
+    "Requests to store or organize project knowledge, design decisions, or research findings"
+  ],
+  "input_fields": [
+    "objective",
+    "acceptance_criteria",
+    "project_context",
+    "authorized_scope"
+  ],
+  "tools": [
+    "filesystem",
+    "shell"
+  ],
+  "scope": {
+    "read": [
+      "core/",
+      "modules/",
+      "shared/",
+      "runtime/",
+      "evals/",
+      "runs/",
+      "outputs/"
+    ],
+    "write": [
+      "shared/knowledge/",
+      "runs/",
+      "outputs/"
+    ]
+  },
+  "dependencies": [],
+  "skills": [
+    {
+      "id": "submit-result",
+      "version": "1.0.1",
+      "path": "shared/skills/submit-result/SKILL.md"
+    }
+  ],
+  "policies": [
+    {
+      "id": "common",
+      "version": "1.0.1",
+      "path": "shared/policies/common.json"
+    }
+  ],
+  "result_contract": {
+    "version": "1.0.0",
+    "path": "shared/schemas/result.schema.json"
+  }
+}

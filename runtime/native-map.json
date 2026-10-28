@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "agents": [
+    "orchestrator",
+    "skill-manager",
+    "policy-manager",
+    "knowledge-manager",
+    "evaluator",
+    "coding",
+    "infrastructure",
+    "oss-rnd"
+  ],
+  "skills": [
+    "submit-result",
+    "maintain-module",
+    "oss-research"
+  ],
+  "files": {
+    ".codex/agents/orchestrator.toml": "1510dbe1e1fc374bea91baa995894b07031f48537da49f8a84868020564026af",
+    ".codex/agents/skill-manager.toml": "f5fbe1a7d51b3d8c6bb8fabf0c5326da2eb9e2659647bc12c407e6dac7811650",
+    ".codex/agents/policy-manager.toml": "bf181819cb675f8d7dc2922c9fb62fcf6c454e7d1189388ee306e1a34ef36470",
+    ".codex/agents/knowledge-manager.toml": "f61f5ad733e353d1a1893719900943203b831c7477c0d8a0973ee9dec4af5fad",
+    ".codex/agents/evaluator.toml": "e06b29de79cd8f95f2444a95d4e0860d45dcabe1f0e1966a72ef48ce56b14c75",
+    ".codex/agents/coding.toml": "9cba0950475349ed3762579d97e98c6cd65f90fc8bf3e4f11b55a0745ad6eddb",
+    ".codex/agents/infrastructure.toml": "decec781fe1c59083a189fa1e3139a11fe4330a1e398b4740d886e8e5f67587a",
+    ".codex/agents/oss-rnd.toml": "bc25aaf9b2e10fb0d1fa525a42d31345473bc4e5dd7726b9ee201d6231c4f15c",
+    ".codex/config.toml": "f75d701f8641d90e6c0dcb5521d94fdd2c09d71300de87e7c3b5faa6ac25fb8a",
+    ".agents/skills/submit-result/SKILL.md": "0e433d232b0a029a153301c480425bc22c1990cb0ce66227ded23b1d4cbd790e",
+    ".agents/skills/maintain-module/SKILL.md": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba",
+    ".agents/skills/oss-research/SKILL.md": "70631655a19faf031345f7b8b3520190322d6ebeccbc3a0d80d41ba3edff72b5",
+    ".codex/hooks.json": "ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4"
+  }
+}

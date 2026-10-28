@@ -1,4 +1,0 @@
-interface:
-  display_name: "서버 장애 진단"
-  short_description: "Linux·Windows 서버 로그와 지표로 장애 원인과 다음 점검을 좁힙니다"
-  default_prompt: "$infra-server-triage 스킬로 이 서버 증상을 분석하고, 근거와 다음 점검을 한국어 Markdown 보고서로 정리해줘."
