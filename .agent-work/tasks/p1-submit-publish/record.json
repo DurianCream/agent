@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p1-submit-publish",
+  "saved_at": "2026-10-29T13:53:12+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "c65bc0587efae45deeabddeb6e29f1da4c17b308",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .codex/agents/evaluator.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M README.md\n M core/evaluator/instructions.md\n M core/evaluator/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/instructions.md\n M core/policy-manager/module.json\n M runtime/agentctl.py\n M runtime/native-map.json\n M runtime/repo_automation.py\n M runtime/repoctl.py\n?? .agent-work/gates.json\n?? .agent-work/tasks/p1-submit-publish/\n?? \"docs/P1-\\354\\240\\234\\354\\266\\234-\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n?? runtime/control_gate.py\n?? runtime/tests/test_control_gate.py\n?? runtime/tests/test_control_gate_integration.py",
+    "worktree_sha256": "bd8ad79f45fcd17d09cb385bdd8be92576645ca0a8f9fb2a0b42c8ac7d5ba26b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p1-submit-publish",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.5"
+    },
+    "created_at": "2026-10-29T13:14:24+09:00",
+    "objective": "Implement and apply P1 cooperating submission and publication gates with tests and independent review",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Selected new tasks enforce candidate-bound submission and publication checks without silently downgrading controls",
+        "required": true,
+        "verification_ids": [
+          "regression",
+          "independent",
+          "installed",
+          "saved"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Failures and stale or missing evidence block affected lifecycle actions with recoverable state",
+        "required": true,
+        "verification_ids": [
+          "regression",
+          "independent",
+          "installed",
+          "saved"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Legacy tasks and P0 observations remain compatible and assurance limits are explicit",
+        "required": true,
+        "verification_ids": [
+          "regression",
+          "independent",
+          "installed",
+          "saved"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Tests and independent review pass, specifications are saved and exact task files are pushed",
+        "required": true,
+        "verification_ids": [
+          "regression",
+          "independent",
+          "installed",
+          "saved"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "선정된 신규 작업에 P1 제출·게시 검사를 연결하고 활성 설정·역할 지침을 적용했다. 후보 파일·시험·독립 검토·최종 결과의 일치와 실제 커밋 검사를 구현했다.",
+    "work": [
+      "계약·정책 관찰을 유지하면서 새 작업의 로컬 등록과 제출·게시 차단 검사를 추가했다.",
+      "시험 실행 전후 후보 내용, 시험 로그, 독립 검토, 산출물과 결과를 연결하고 변경·누락 시 차단한다.",
+      "실제 커밋·부모·변경 경로·원격 대상 검사를 게시 전에 실행하며 실패한 커밋을 재시도에 보존한다.",
+      "거버넌스·오케스트레이터·검증 지침을 갱신하고 Codex 생성 설정을 동기화했다.",
+      "독립 평가자의 결함 지적을 수정하고 회귀 및 영향 범위 재검증을 완료했다.",
+      "작업 명세·사용 안내·코드 및 증거 해시를 현재 작업의 영구 기록에 저장했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p1-submit-publish/implementation.en.md",
+        "description": "P1 구현·적용·검증 명세",
+        "sha256": "bc3239a1bf2553f5ce803421c6081425352c6cc4b5ebdd29b35aaa39399ff621"
+      },
+      {
+        "path": "outputs/p1-submit-publish/사용안내.md",
+        "description": "P1 제출·게시 검사 한국어 사용 안내",
+        "sha256": "8a4aaf1ab25d4dca5e50f6a3e0fd852fccf561738d921f58831c199103a21b13"
+      }
+    ],
+    "verification": [
+      {
+        "id": "regression",
+        "name": "전체 회귀·통합 테스트",
+        "method": "297개 테스트와 doctor·생성 설정 일치 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-submit-publish/evidence/checks.json"
+        ],
+        "notes": "초기 실패와 수정 후 검증을 구분하며 테스트 로그는 로컬 보존한다."
+      },
+      {
+        "id": "independent",
+        "name": "독립 평가",
+        "method": "구현하지 않은 evaluator가 코드·실행 증거·오류 경로를 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-submit-publish/evidence/independent-review.json"
+        ],
+        "notes": "검토한 소스 해시를 제출 전 재확인한다."
+      },
+      {
+        "id": "installed",
+        "name": "새 작업 대상 검사 설치",
+        "method": "활성 선택 설정과 신규 등록·제출·게시 연결 및 레거시 호환성 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-submit-publish/evidence/installation-check.json",
+          "runs/p1-submit-publish/evidence/integration-author.json",
+          "runs/p1-submit-publish/evidence/engine-author.json"
+        ],
+        "notes": "구현 작업은 설치 전에 시작했으므로 소급 등록하지 않는다. 실제 신규 작업의 종단 실행은 별도 적용 작업에서 이어간다."
+      },
+      {
+        "id": "saved",
+        "name": "작업 명세·검증 근거 보존",
+        "method": "명세·안내·영구 근거 사본과 해시 manifest 저장",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-submit-publish/evidence/implementation-manifest.json",
+          "runs/p1-submit-publish/evidence/governance-design.json"
+        ],
+        "notes": "과거 제출 기록과 result1.0 계약을 보존한다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "로컬 CLI를 따르는 경로의 검사이며 직접 Git·구버전 도구·동일 사용자에 의한 원장 전체 변조를 차단하는 보안 경계는 아니다.",
+      "시험은 후보 코드를 로컬에서 실행한다. 로그·평가자 신원은 서명된 신뢰 증명이나 호스트 인증이 아니다.",
+      "등록된 작업의 gates.json은 고정된다. 향후 설정 변경에는 별도 마이그레이션 절차가 필요하며 현재 버전은 이를 제공하지 않는다.",
+      "새 작업부터 적용하며 기존 작업과 과거 기록은 소급하여 강제 통제된 작업으로 표시하지 않는다.",
+      "실제 신규 작업의 차단·시험·독립 평가·제출·게시 실행 증거는 뒤따르는 p1-gate-activation 작업에 별도로 보존한다."
+    ],
+    "next_actions": [
+      "이 구현의 소유 파일만 승인된 origin/main에 게시한다.",
+      "새 p1-gate-activation 작업에서 검사 누락 차단과 검증 후 실제 제출·게시를 완료한다.",
+      "후속 단계에서 호스트·자격증명 격리와 보호된 게시 경계를 구현한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-80bdd54d40f246dbb8c1f50b178015e9",
+    "snapshot_digest": "sha256:6e2267fd66548903ef282266eed9ef5fefa7ea6bcbad9ff8f33c88f67ecd5eb9",
+    "status": "review_pending",
+    "task_id": "p1-submit-publish",
+    "mode": "observe"
+  },
+  "spec_sha256": "4ec40df6dbf4b0384d7a9e021a56c04afd39a0cb2c01b6e574a8e52386c8e216"
+}

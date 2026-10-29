@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "p1-submit-publish",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "baseline_commit": "c65bc0587efae45deeabddeb6e29f1da4c17b308",
+  "source_hashes": {
+    ".agent-work/gates.json": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985",
+    ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+    ".codex/agents/orchestrator.toml": "ebcdfc4f73d57e3409b694f18a446896b610306c2fc3f8cfab32253fa9ee8940",
+    ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+    "README.md": "114e704e0aa552cdb278d9e15a4bc3790c15e19e7d4ea5cff24c01d5498b261a",
+    "core/evaluator/instructions.md": "22aa3f6bd8d78651d9daad11096f8315b793d164a9aca77f42b76e54133e8c42",
+    "core/evaluator/module.json": "627c4ac843242440e692c27288679feb7196d04cb43c76acf2e08a8a8f460b1f",
+    "core/orchestrator/instructions.md": "879001080b0b41ed87da0d2c57f4f0c365f5470b9f1d4e3b85845b9d62a5d22f",
+    "core/orchestrator/module.json": "e07825da8c37cfbec80a86f9b19a84f636417741fda048a8d0b19e0057ba5f88",
+    "core/policy-manager/instructions.md": "271048a62f2a23b99f52480b088fd80696638735c70070f4878c175cf58ac3d4",
+    "core/policy-manager/module.json": "fbff36bb694f5e93baa7c5177405bc5c1cef5a9b4e279831a7ecde211204f206",
+    "docs/P1-제출-게시-검사-사용안내.md": "8a4aaf1ab25d4dca5e50f6a3e0fd852fccf561738d921f58831c199103a21b13",
+    "runtime/agentctl.py": "3c67bc4aebcdfa671c17fb274b999d13129f7d146a3f9c32719210a057e4b673",
+    "runtime/control_gate.py": "2b2a88a4244a8340f134cfa9a215ea0d5a8e0b858acb48202d75c6ec1e79503b",
+    "runtime/native-map.json": "4e1d62d749550845673044ee7478aae82e2d7d462395050a53c37254094a22bb",
+    "runtime/repo_automation.py": "f2f0d58c4069caa093a273b3c902b0e9f6a56bf307268c211cb477b376fdc767",
+    "runtime/repoctl.py": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e",
+    "runtime/tests/test_control_gate.py": "a101f0bd56edf8b3d21dca02341986ddf7fb447301c47a273823575d8952041a",
+    "runtime/tests/test_control_gate_integration.py": "6b736e0ae485b18e605d1afbdfe2eaee34e63c794add00f565fd3aaf97ba5a47"
+  },
+  "archive_hashes": {
+    ".agent-work/tasks/p1-submit-publish/implementation.en.md": "bc3239a1bf2553f5ce803421c6081425352c6cc4b5ebdd29b35aaa39399ff621",
+    ".agent-work/tasks/p1-submit-publish/사용안내.md": "8a4aaf1ab25d4dca5e50f6a3e0fd852fccf561738d921f58831c199103a21b13",
+    ".agent-work/tasks/p1-submit-publish/evidence/checks.json": "8bd0f8b9cc4284369b5c826b85086dca878e50b84d8d0f73b3440f8031eed82a",
+    ".agent-work/tasks/p1-submit-publish/evidence/independent-review.json": "9348629fde51f769f350392545d9bf920844f8190a999ca7a6dba9dac29d6726",
+    ".agent-work/tasks/p1-submit-publish/evidence/engine-author.json": "433c1e86c5c1327ee1e3823cd51e18cc61c64cf7f286571cf4006f07b46f5814",
+    ".agent-work/tasks/p1-submit-publish/evidence/integration-author.json": "bed2927898db57e5aff68126bc790fbbdff4ee2692a7a1531dee666fbb895441",
+    ".agent-work/tasks/p1-submit-publish/evidence/governance-design.json": "a6223cd39d4a1adcdb238c63a4823c28258371b89a06984204e6ec075315964d",
+    ".agent-work/tasks/p1-submit-publish/evidence/installation-check.json": "c5fcc0dd3c048efe2433457cd255069b81527dd45565177afe174c0880e3ed0b",
+    ".agent-work/tasks/p1-submit-publish/evidence/main-notes.json": "940ae82ee144519183bc40ad90787473aaab4a721ef3af32b815f7e929c8ad1d"
+  },
+  "boundary": "P1 local cooperating CLI; implementation installation followed by a separate real activation task"
+}

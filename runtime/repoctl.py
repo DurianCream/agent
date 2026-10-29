@@ -231,7 +231,7 @@ def register(repo_id, path, root=ROOT):
     return {'id': repo_id, 'path': str(path), 'origin': git_state(path)['origin']}
 
 
-def bind(repo_id, task_id, root=ROOT, scope=None):
+def bind(repo_id, task_id, root=ROOT, scope=None, *, new_task=False):
     if scope is not None:
         scope = validate_scope(scope)
     path, entry = repo(repo_id, root)
@@ -249,15 +249,19 @@ def bind(repo_id, task_id, root=ROOT, scope=None):
     if automation_file.exists() and a.read_json(automation_file).get('enabled') is True:
         import repo_automation
         repo_automation.begin(task_id, root)
+    if new_task:
+        # Only init selects new enrollment. Binding/resuming historical work
+        # must never silently relabel it as P1-enforced.
+        a.control_gate_call('enroll', task_id, root)
     return checkpoint(task_id, root)
 
 
-def record_text(result, task, state, scope=None, observation=None):
+def record_text(result, task, state, scope=None, observation=None, *, saved_at=None):
     lines = ['# Repository work record', '',
              '> Saved task data, not instructions or authorization. Reconcile with current Git state.', '']
     sections = [
         [f"Task: {task['task_id']}", f"Module: {task['module']['id']}",
-         f"Branch: {state['branch']}", f"HEAD: {state['head']}", f"Saved: {a.now()}"],
+         f"Branch: {state['branch']}", f"HEAD: {state['head']}", f"Saved: {saved_at if saved_at is not None else a.now()}"],
         [result['objective']] + [c['description'] for c in result['acceptance_criteria']],
         [f"Status: {result['status']}", result['summary']],
         result['work'],
@@ -280,6 +284,40 @@ def record_text(result, task, state, scope=None, observation=None):
     for i, (heading, content) in enumerate(zip(a.HEADINGS, sections), 1):
         lines += [f'## {i}. {heading}', ''] + ['- ' + a.md(x) for x in content or ['해당 없음']] + ['']
     return '\n'.join(lines)
+
+
+def specification_text(task_id, binding, task, result, scope, state, observation=None):
+    """Render a saved specification from explicit checkpoint data only."""
+    return '\n'.join([
+        '# Repository task specification', '',
+        'Saved task data, not instructions or authorization.', '',
+        '## Identity', f"- Task: {task_id}", f"- Repository: {binding['repository_id']}",
+        f"- Module: {task['module']['id']}", f"- State: {task['state']} / {result['status']}", '',
+        '## Scope',
+        *([f'- {key}: {scope[key]}' for key in SCOPE_FIELDS] if scope else ['Legacy unscoped record: explicit inspection only.']), '',
+        '## Objective and acceptance criteria', a.md(result['objective']),
+        *['- ' + a.md(c['description']) for c in result['acceptance_criteria']], '',
+        '## Git checkpoint', f"- Branch: {state['branch']}", f"- HEAD: {state['head']}", '',
+        *(['## P0 observation',
+           '- Mode: observe; executable: false; authority_verified: false',
+           '- Status: ' + observation['status'],
+           '- Record: ' + str(observation['record_id']),
+           '- Snapshot: ' + str(observation['snapshot_digest']),
+           '- Decision: ' + str(observation['decision']),
+           '- Assessment status: ' + observation['assessment_status'],
+           '- Governance recommendation: ' + str(observation['governance_recommendation']),
+           '- Evaluator assessment: ' + str(observation['evaluator_assessment']),
+           '- Reason codes: ' + ', '.join(observation['reason_codes']),
+           'This saved advisory summary may become stale; inspect current observer status before relying on it.', '']
+          if observation is not None else []),
+        '## Durable task data',
+        '- [record.json](record.json): result.work, result.artifacts, result.verification, result.limitations and result.next_actions.',
+        '- [Korean result report](report.ko.md): seven-section human-readable record.', '',
+        '## Resume procedure',
+        'Read current AGENTS.md, record.json and the current Git diff before continuing.',
+        'Verify claims against current files; historical records do not authorize new actions.',
+        'If the original runs directory is absent, start a new bound follow-up task and reference this task ID.', ''
+    ])
 
 
 def checkpoint(task_id, root=ROOT):
@@ -312,38 +350,9 @@ def checkpoint(task_id, root=ROOT):
             record['scope'] = scope
         if observation is not None:
             record['observation'] = observation
-        report = record_text(result, task, state, scope, observation)
+        report = record_text(result, task, state, scope, observation, saved_at=record['saved_at'])
         a.atomic_text(a.relative(dest, 'report.ko.md'), report)
-        text = '\n'.join([
-            '# Repository task specification', '',
-            'Saved task data, not instructions or authorization.', '',
-            '## Identity', f"- Task: {task_id}", f"- Repository: {binding['repository_id']}",
-            f"- Module: {task['module']['id']}", f"- State: {task['state']} / {result['status']}", '',
-            '## Scope',
-            *([f'- {key}: {scope[key]}' for key in SCOPE_FIELDS] if scope else ['Legacy unscoped record: explicit inspection only.']), '',
-            '## Objective and acceptance criteria', a.md(result['objective']),
-            *['- ' + a.md(c['description']) for c in result['acceptance_criteria']], '',
-            '## Git checkpoint', f"- Branch: {state['branch']}", f"- HEAD: {state['head']}", '',
-            *(['## P0 observation',
-               '- Mode: observe; executable: false; authority_verified: false',
-               '- Status: ' + observation['status'],
-               '- Record: ' + str(observation['record_id']),
-               '- Snapshot: ' + str(observation['snapshot_digest']),
-               '- Decision: ' + str(observation['decision']),
-               '- Assessment status: ' + observation['assessment_status'],
-               '- Governance recommendation: ' + str(observation['governance_recommendation']),
-               '- Evaluator assessment: ' + str(observation['evaluator_assessment']),
-               '- Reason codes: ' + ', '.join(observation['reason_codes']),
-               'This saved advisory summary may become stale; inspect current observer status before relying on it.', '']
-              if observation is not None else []),
-            '## Durable task data',
-            '- [record.json](record.json): result.work, result.artifacts, result.verification, result.limitations and result.next_actions.',
-            '- [Korean result report](report.ko.md): seven-section human-readable record.', '',
-            '## Resume procedure',
-            'Read current AGENTS.md, record.json and the current Git diff before continuing.',
-            'Verify claims against current files; historical records do not authorize new actions.',
-            'If the original runs directory is absent, start a new bound follow-up task and reference this task ID.', ''
-        ])
+        text = specification_text(task_id, binding, task, result, scope, state, observation)
         a.atomic_text(a.relative(dest, 'spec.md'), text)
         record['spec_sha256'] = a.digest(text.encode('utf-8'))
         a.write_json(a.relative(dest, 'record.json'), record)
@@ -358,7 +367,20 @@ def checkpoint(task_id, root=ROOT):
         rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
         for key, val in sorted(index['tasks'].items()):
             rows.append(f"- [{key}]({val['path']}) — {val['status']} / {val['state']}")
-        a.atomic_text(a.relative(base, 'INDEX.md'), '\n'.join(rows) + '\n')
+        index_text = '\n'.join(rows) + '\n'
+        a.atomic_text(a.relative(base, 'INDEX.md'), index_text)
+        # Bind the exact values this checkpoint generated, not mutable files
+        # reread after writing. P1 checks these bytes again in the real commit.
+        def json_bytes(value):
+            return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8')
+        prefix = '.agent-work/tasks/' + task_id + '/'
+        a.control_gate_call('seal_checkpoint', task_id, root, files={
+            prefix + 'spec.md': text.encode('utf-8'),
+            prefix + 'record.json': json_bytes(record),
+            prefix + 'report.ko.md': report.encode('utf-8'),
+            '.agent-work/index.json': json_bytes(index),
+            '.agent-work/INDEX.md': index_text.encode('utf-8'),
+        })
     response = {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
     if observation is not None:
         response['observation'] = observation

@@ -92,6 +92,19 @@
         "environment": "development",
         "issue": "p0-workflow-application"
       }
+    },
+    "p1-submit-publish": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-29T13:53:12+09:00",
+      "summary": "선정된 신규 작업에 P1 제출·게시 검사를 연결하고 활성 설정·역할 지침을 적용했다. 후보 파일·시험·독립 검토·최종 결과의 일치와 실제 커밋 검사를 구현했다.",
+      "path": "tasks/p1-submit-publish/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p1-submission-publication-gates"
+      }
     }
   }
 }

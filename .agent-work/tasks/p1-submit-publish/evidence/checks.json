@@ -1,0 +1,164 @@
+{
+  "outcome": "passed",
+  "test_total": 297,
+  "checks": [
+    {
+      "id": "test_codex_settings",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 9,
+      "log_sha256": "972a19930f67630230854346895331f5ff3351894781e00ecc588de8404738aa"
+    },
+    {
+      "id": "test_context_checkpoint",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 29,
+      "log_sha256": "2ef96d355d2c46e6482172263095a73100eea066680b0ce58e5382be47361ae5"
+    },
+    {
+      "id": "test_contract",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 29,
+      "log_sha256": "e5ab3e257dd7f0240921534cf63d0c10024d047028b7d01c588ef6d326cdb1b4"
+    },
+    {
+      "id": "test_control_contracts",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 39,
+      "log_sha256": "81fc2b2d5c39f76ca82d299870f30e80e22cc314a795b68bbc0f61a17911a253"
+    },
+    {
+      "id": "test_control_integration",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 28,
+      "log_sha256": "03a8f933f708d32c8578feee68546025e721f837bfc927b0ab0fd13ba33f1fee"
+    },
+    {
+      "id": "test_control_policy",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 36,
+      "log_sha256": "915da80c5c242fb4cee6eb648efce24a4143ad9d7143a4ec611e694a97ad4a57"
+    },
+    {
+      "id": "test_control_workflow",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 35,
+      "log_sha256": "898796d12386ae01c03e7c0439a95296868041b20867010888840a3f30ec9306"
+    },
+    {
+      "id": "test_controlctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 10,
+      "log_sha256": "06c646825b77e85acef533509af68b4be93114636a3e6160284c718376fc5db7"
+    },
+    {
+      "id": "test_legacy_memory",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 8,
+      "log_sha256": "67c6c63d8653f287c360cd2fc204607107e99a22d2c50c32d5a80b950da7eddb"
+    },
+    {
+      "id": "test_work_scope",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 9,
+      "log_sha256": "464179df18334e59f6dacaf11b37f315bf770316704b4955cda57ed3667e5e5f"
+    },
+    {
+      "id": "test_repo_automation",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 6,
+      "log_sha256": "e72082a5d94455ecca8d3ce5f19d088d021cee6fe2cfbaeb78b37d94ea07d66e"
+    },
+    {
+      "id": "test_repoctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 7,
+      "log_sha256": "e8f7091ede5feb64c2d04de2892abfd7c0eadb87dbae3b5ff947c39c5ef01df7"
+    },
+    {
+      "id": "doctor",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 0,
+      "log_sha256": "a5918b6d6f5f7583f62d54c7d90038cfa672cc69084c4d6af6fb9b905e23f87e"
+    },
+    {
+      "id": "sync-check",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 0,
+      "log_sha256": "beb9eb904d45229f376e21f89f8ab84df7e9f3e5f78f112eb17664436702df2f"
+    },
+    {
+      "id": "test_control_gate",
+      "outcome": "passed",
+      "tests": 39,
+      "logs": [
+        {
+          "path": "runs/p1-submit-publish/evidence/engine-tests-final2.log",
+          "sha256": "ac3b6efb0628cebe2e3fbf23bac4f2b6673e18bed380185d8972ce7c68588de6",
+          "executed_tests": 36
+        },
+        {
+          "path": "runs/p1-submit-publish/evidence/engine-affected-final.log",
+          "sha256": "6ada2b64dcbba8faae697837e0e38a1cb123b40a9b01d82457476c3225a98216",
+          "executed_tests": 6
+        },
+        {
+          "path": "runs/p1-submit-publish/evidence/engine-partial-final.log",
+          "sha256": "a2767abad8ebc584a714dc69e3aa4f82829233d8f56cc08c925eb99f9c562676",
+          "executed_tests": 1
+        }
+      ],
+      "strategy": "Full module plus affected final fixes; unique test names checked against current source, repeated executions not double-counted."
+    },
+    {
+      "id": "test_control_gate_integration",
+      "outcome": "passed",
+      "tests": 13,
+      "logs": [
+        {
+          "path": "runs/p1-submit-publish/evidence/integration-tests-final.log",
+          "sha256": "cb12e6a2a01f5111ed3dfb978131e68d4b901cd987548f2e6dd7156218041388",
+          "executed_tests": 13
+        }
+      ],
+      "strategy": "Full module plus affected final fixes; unique test names checked against current source, repeated executions not double-counted."
+    }
+  ],
+  "source_hashes": {
+    ".agent-work/gates.json": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985",
+    ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+    ".codex/agents/orchestrator.toml": "ebcdfc4f73d57e3409b694f18a446896b610306c2fc3f8cfab32253fa9ee8940",
+    ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+    "README.md": "114e704e0aa552cdb278d9e15a4bc3790c15e19e7d4ea5cff24c01d5498b261a",
+    "core/evaluator/instructions.md": "22aa3f6bd8d78651d9daad11096f8315b793d164a9aca77f42b76e54133e8c42",
+    "core/evaluator/module.json": "627c4ac843242440e692c27288679feb7196d04cb43c76acf2e08a8a8f460b1f",
+    "core/orchestrator/instructions.md": "879001080b0b41ed87da0d2c57f4f0c365f5470b9f1d4e3b85845b9d62a5d22f",
+    "core/orchestrator/module.json": "e07825da8c37cfbec80a86f9b19a84f636417741fda048a8d0b19e0057ba5f88",
+    "core/policy-manager/instructions.md": "271048a62f2a23b99f52480b088fd80696638735c70070f4878c175cf58ac3d4",
+    "core/policy-manager/module.json": "fbff36bb694f5e93baa7c5177405bc5c1cef5a9b4e279831a7ecde211204f206",
+    "docs/P1-\uc81c\ucd9c-\uac8c\uc2dc-\uac80\uc0ac-\uc0ac\uc6a9\uc548\ub0b4.md": "8a4aaf1ab25d4dca5e50f6a3e0fd852fccf561738d921f58831c199103a21b13",
+    "runtime/agentctl.py": "3c67bc4aebcdfa671c17fb274b999d13129f7d146a3f9c32719210a057e4b673",
+    "runtime/control_gate.py": "2b2a88a4244a8340f134cfa9a215ea0d5a8e0b858acb48202d75c6ec1e79503b",
+    "runtime/native-map.json": "4e1d62d749550845673044ee7478aae82e2d7d462395050a53c37254094a22bb",
+    "runtime/repo_automation.py": "f2f0d58c4069caa093a273b3c902b0e9f6a56bf307268c211cb477b376fdc767",
+    "runtime/repoctl.py": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e",
+    "runtime/tests/test_control_gate.py": "a101f0bd56edf8b3d21dca02341986ddf7fb447301c47a273823575d8952041a",
+    "runtime/tests/test_control_gate_integration.py": "6b736e0ae485b18e605d1afbdfe2eaee34e63c794add00f565fd3aaf97ba5a47"
+  },
+  "strategy": "One fresh process per module, guarded workspace TEMP. Context-hook tests use the configured bundled interpreter; controls use the existing project environment.",
+  "focused_rerun": "Affected modules and final engine fixes; see per-check logs and author evidence.",
+  "independent_probes": "Seven distinct evaluator adversarial/regression probes reported separately; not added to suite count."
+}

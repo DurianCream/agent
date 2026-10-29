@@ -1,0 +1,29 @@
+{
+  "role": "orchestrator",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "work": [
+    "Two coding specialists implemented engine and lifecycle integration",
+    "Governance specialist defined G01-G10 and updated three role sources",
+    "Independent evaluator reviewed the final candidate",
+    "Enabled selected new-task profile and synchronized generated adapters"
+  ],
+  "decisions": [
+    "Keep pre-installation task legacy",
+    "Seal exact normalized result, evidence and candidate",
+    "Use a separate new task for live end-to-end activation",
+    "Preserve existing exact standing publication authorization"
+  ],
+  "verification": {
+    "tests": 297,
+    "independent_review": "accepted"
+  },
+  "remaining": [
+    "Publish exact implementation files",
+    "Run real selected activation task, including missing-evidence rejection and final gated push"
+  ]
+}

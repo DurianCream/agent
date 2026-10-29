@@ -372,6 +372,44 @@ def init_task(module, task_id, objective, criteria, root=ROOT):
     return {"task_id": task_id, "state": "queued", "run": str(run), "output": str(output)}
 
 
+def control_gate_call(action, task_id, root=ROOT, **kwargs):
+    """Load optional P1 checks without making legacy framework copies depend on them.
+
+    Local enrollment is a cooperative CLI boundary, not host authentication.
+    Missing code must never turn an enrolled task back into a legacy task.
+    """
+    root = Path(root).resolve()
+    identifier(task_id)
+    run = relative(root, f"runs/{task_id}")
+    task_file = relative(run, "task.json", file=True)
+    task = read_json(task_file)
+    signals = [run / "controls.json", root / "runs/control-enrollments" / (task_id + ".json")]
+    enrolled = "control_enrollment" in task or any(p.exists() or p.is_symlink() for p in signals)
+    configured = action == "enroll" and ((root / ".agent-work/gates.json").exists()
+                                        or (root / ".agent-work/gates.json").is_symlink())
+    def retain_pending():
+        if configured:
+            current = read_json(task_file)
+            if "control_enrollment" not in current:
+                current["control_enrollment"] = "pending"
+                write_json(task_file, current)
+    try:
+        import control_gate
+    except Exception as error:
+        retain_pending()
+        require(not enrolled and not configured, "P1 gate module unavailable; selected task is blocked")
+        return None
+    try:
+        return getattr(control_gate, action)(task_id, root=root, **kwargs)
+    except ContractError:
+        retain_pending()
+        raise
+    except Exception as error:
+        retain_pending()
+        # Gate failures are blocking; do not expose arbitrary child exception text.
+        raise ContractError("P1 gate check failed: " + type(error).__name__) from error
+
+
 def load_task(task_id, root=ROOT):
     identifier(task_id)
     root = Path(root).resolve()
@@ -390,6 +428,7 @@ def load_task(task_id, root=ROOT):
         paths.add(item["path"])
         file = relative(run, "snapshot/files/" + item["path"], file=True)
         require(digest(file.read_bytes()) == item["sha256"], f"Snapshot file changed: {item['path']}")
+    control_gate_call("check_enrollment", task_id, root)
     return run, task, snapshot
 
 
@@ -473,6 +512,7 @@ def validate_result(task_id, root=ROOT, value=None):
         for evidence in receipt["evidence"]:
             file = relative(root, evidence["path"], file=True)
             require(digest(file.read_bytes()) == evidence["sha256"], "Submitted evidence was changed")
+    control_gate_call("check_submission", task_id, root, result=result)
     return result, task, snapshot
 
 
@@ -548,6 +588,7 @@ def submit(task_id, root=ROOT):
             artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
         # Revalidate sealed content before any published write.
         validate_result(task_id, root, result)
+        control_gate_call("check_submission", task_id, root, result=result, persist=True)
         text = report_text(result, task, snapshot, root)
         output = relative(root, f"outputs/{task_id}")
         require(output.is_dir(), "Task output directory is missing")
@@ -640,7 +681,7 @@ def main(argv=None):
                 require(not any(getattr(args, key) for key in ("project", "service", "environment", "issue")), "Scope requires --repo")
             data = init_task(args.module, args.task, args.objective, args.criterion)
             if args.repo:
-                data["repository"] = repoctl.bind(args.repo, args.task, scope=scope)
+                data["repository"] = repoctl.bind(args.repo, args.task, scope=scope, new_task=True)
         elif args.command == "transition":
             data = transition(args.task, args.state)
         elif args.command == "register":

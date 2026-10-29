@@ -42,7 +42,7 @@ Keep `policy-manager` as the governance role and `evaluator` as the independent 
 - The specialist produces the candidate and evidence. An evaluator who did not author that candidate returns `accepted`, `rework`, or `inconclusive`, with per-criterion outcomes and actionable findings. These labels are separate from the common result status and do not create an execution grant.
 - Resolve disagreement using the cited requirement, evidence, and accountable authority; do not use majority voting or treat one agent's favorable answer as permission to bypass another unresolved material finding. Stop only the affected consequential action while authorized, non-sensitive diagnostics can continue.
 - Bind both assessments to their reviewed scope, candidate, policy, and evidence references. Changed targets, scope, material artifacts, policy, or evidence invalidate affected conclusions and trigger focused reassessment.
-- Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; the proposed execution authorization, trusted test attestations and non-bypassable enforcement require later implementation.
+- Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; selected new tasks additionally use the P1 cooperating lifecycle gate described below. Trusted execution authorization, trusted signed test attestations and non-bypassable enforcement require later implementation.
 - In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
 
 ## Applied P0 observation workflow
@@ -60,6 +60,20 @@ If scope, target, owned content, policy or freshness changes, refresh observatio
 If a cached record is invalid after a known implementation change or corruption, inspect the failure first. Use `python runtime/control_integration.py observe --task <task-id> --refresh` only to create a new observation from current valid inputs; preserve the prior record and supersession trace, and obtain new applicable assessments. Refresh is not an approval override or a way to reuse an invalid verdict.
 
 Keep review evidence as immutable task-owned snapshots. A later publication observation must not overwrite the evidence sealed at submission or imply a prior workspace assessment authorized the new commit. Publish only explicit task-owned bounded records, not raw inputs, prompts, credentials or machine-local interpreter maps.
+
+## P1 cooperating submission and publication gates
+
+Select P1 only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate profile. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
+
+Before submission, assemble the exact candidate, mandatory check evidence and an independent evaluator's assessment. The gate must validate their content bindings and applicable profile. Missing, malformed, failed, inconclusive, rework, mismatched or materially stale evidence blocks the selected lifecycle action. Fix the cause and reassess affected content; do not delete enrollment, disable the selected gate or copy an old favorable verdict to finish.
+
+Use `python runtime/control_gate.py candidate --task <task-id>` to inspect the current review subject. Run each configured suite with `python runtime/control_gate.py run-tests --task <task-id> --suite <suite-id>`. Ask the independent evaluator to register its own assessment, then inspect `python runtime/control_gate.py status --task <task-id>` before the ordinary validate, submit and finish commands. Settle product documentation before testing and review. These test runs capture local execution evidence; they do not provide an isolated trusted runner.
+
+Keep the reviewed candidate boundary explicit. Generated reports and lifecycle records must follow the gate's documented deterministic sealing rules; they cannot become an unreviewed arbitrary-content exception. P0 observation freshness and P1 review validity are separate: an expired P0 observation is not current authority, while P1 review validity depends on its own pinned content and policy checks.
+
+Before publication, require the cooperating finish path to compare the real commit, parent, exact changed-path set, committed content and authorized destination with the sealed submission. Preserve a pending commit after failure and retry the same bounded publication after resolving the cause. Exact standing publication authorization does not require another human prompt.
+
+Report actual gate results separately from role recommendations and host permission decisions. These local checks use local records and declared identities. They do not authenticate reviewers, establish a protected trust store, verify signed trusted-runner attestations, isolate tools, intercept direct Git commands or certify regulatory compliance. Older clients and same-user modification remain outside the claimed enforcement boundary.
 
 ## Host Boundaries and Results
 

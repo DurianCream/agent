@@ -1,0 +1,57 @@
+{
+  "task_id": "p1-submit-publish",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "role": "coding",
+  "agent": "/root/p1_integration",
+  "changes": [
+    "New init-only enrollment after bound baseline; existing bind does not enroll historical tasks.",
+    "Optional module loader preserves legacy copies and blocks enrolled tasks if code missing. Configured initialization failure leaves pending marker.",
+    "load_task checks enrollment integrity; validate_result verifies submission evidence; submit persists normalized seal before publishing output.",
+    "finish gates actual created/retried commit before push and retains committed retry state.",
+    "Extracted pure specification_text rendering and explicit saved_at report rendering for canonical commit inspection.",
+    "Any failed configured enrollment retains pending marker; no silent legacy fallback after parse/path/import failure.",
+    "Checkpoint seals all five exact generated in-memory byte strings under the record lock; a post-write tamper regression proves mutable files are not reread as seal input."
+  ],
+  "tests": [
+    {
+      "suite": "test_control_gate_integration",
+      "passed": 13,
+      "evidence": "runs/p1-submit-publish/evidence/integration-tests-final.log"
+    },
+    {
+      "suite": "test_repo_automation",
+      "passed": 6,
+      "evidence": "runs/p1-submit-publish/evidence/integration-legacy-publication.log",
+      "notes": "Passed before the later pure renderer extraction; parent full regression covers final aggregate revision."
+    }
+  ],
+  "prior_attempt": {
+    "evidence": "runs/p1-submit-publish/evidence/integration-tests.log",
+    "outcome": "blocked_by_host_sandbox",
+    "detail": "All nine initial cases stopped in fixture setup local bare Git push; rerun with bounded local-fixture authorization passed."
+  },
+  "source_hashes": {
+    "runtime/agentctl.py": "3c67bc4aebcdfa671c17fb274b999d13129f7d146a3f9c32719210a057e4b673",
+    "runtime/repoctl.py": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e",
+    "runtime/repo_automation.py": "f2f0d58c4069caa093a273b3c902b0e9f6a56bf307268c211cb477b376fdc767",
+    "runtime/tests/test_control_gate_integration.py": "6b736e0ae485b18e605d1afbdfe2eaee34e63c794add00f565fd3aaf97ba5a47"
+  },
+  "log_hashes": {
+    "runs/p1-submit-publish/evidence/integration-tests-final.log": "cb12e6a2a01f5111ed3dfb978131e68d4b901cd987548f2e6dd7156218041388",
+    "runs/p1-submit-publish/evidence/integration-legacy-publication.log": "04e7db632bebadc585264779ed5ee86729918d46ce61c760d9015c0a41577045"
+  },
+  "limitations": [
+    "Integration gate verdicts are mocked to test exact hook ordering; real engine semantic tests are owned by p1_engine.",
+    "Local cooperative CLI checks do not authenticate identities or prevent direct Git/old CLI bypass."
+  ],
+  "remaining": [
+    "Independent evaluator review",
+    "Parent full regression run and actual selected activation task"
+  ]
+}

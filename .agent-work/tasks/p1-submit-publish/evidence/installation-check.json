@@ -1,0 +1,54 @@
+{
+  "outcome": "passed",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "profile": {
+    "schema_version": "0.1.0",
+    "enabled": true,
+    "repository_id": "multi",
+    "selector": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development"
+    },
+    "required_suites": [
+      {
+        "id": "p1-regression",
+        "argv": [
+          "@project-python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "runtime/tests",
+          "-p",
+          "test_control_gate*.py",
+          "-v"
+        ]
+      }
+    ],
+    "timeout_seconds": 600,
+    "policy": {
+      "submission": "allow",
+      "publication": "allow"
+    },
+    "author": {
+      "subject": "orchestrator",
+      "session": "root"
+    }
+  },
+  "installed_hooks": [
+    "new bound init enrollment",
+    "load enrollment consistency",
+    "validate completed evidence",
+    "submit seal before output",
+    "real commit check before push"
+  ],
+  "implementation_task_mode": "legacy initialized before P1 installation",
+  "actual_activation": "Separate p1-gate-activation task will execute the newly installed new-task gates after this implementation publication.",
+  "assurance": "local-cooperating-cli; no host authentication, signed trust, remote protection or isolation"
+}

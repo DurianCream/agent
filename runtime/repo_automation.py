@@ -161,6 +161,11 @@ def finish(task_id, root=a.ROOT):
                       'Unexpected commit parent; push stopped')
             value.update(phase='committed', commit=commit)
             a.write_json(file, value)
+        # P1 checks the real created/retried commit before any remote effect.
+        # A failure preserves phase=committed, so a retry cannot make a duplicate
+        # completion commit. P0 remains separate advisory observation.
+        gate = a.control_gate_call('check_publication', task_id, root,
+                                  commit=value['commit'], publication=value)
         # A real created/retried commit is available here. This is observation,
         # not an authorization gate: existing publication checks remain in force.
         # The child only acquires its own observations lock, never this lock.
@@ -172,7 +177,8 @@ def finish(task_id, root=a.ROOT):
         a.require(remote_head(path, settings) == value['commit'], 'Remote confirmation failed')
         value.update(phase='pushed', pushed_at=a.now())
         a.write_json(file, value)
-        return {**value, 'observation': observation} if observation is not None else value
+        response = {**value, 'observation': observation} if observation is not None else value
+        return {**response, 'gate': gate} if gate is not None else response
 
 
 def startup(repo_id=None, task_id=None, root=a.ROOT, cwd=None, scope=None):

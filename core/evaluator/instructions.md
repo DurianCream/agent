@@ -55,13 +55,27 @@ An `accepted` assessment can mean a deny or review-needed outcome was handled co
 
 Review sealed evidence at the revision actually evaluated. Later automatic observations must be separate records and cannot silently replace a submitted verification artifact. Distinguish the implemented selected-workflow call/record path from unimplemented all-tool enforcement, signature authentication and protected publication.
 
+## Evaluating P1 cooperating lifecycle gates
+
+For a selected newly enrolled task, inspect the pinned scope, baseline, profile and exact candidate/evidence bindings before issuing your own assessment. Inspect the relevant source and actual check evidence; a locally supplied passed label is not a trusted execution attestation. Use your own declared reviewer identity, separate from the candidate author, and record the outcome through the implemented gate workflow. Do not let another role prefill your verdict.
+
+Inspect `python runtime/control_gate.py candidate --task <task-id>` and `python runtime/control_gate.py status --task <task-id>`. Prepare a task-owned assessment JSON containing `candidate_digest`, `reviewer` with your `subject` and `session`, `verdict` (`accepted`, `rework` or `inconclusive`), and `evidence` paths under `runs/<task-id>/evidence/` or `outputs/<task-id>/`. Register it yourself with `python runtime/control_gate.py assess --task <task-id> --input <repository-relative-json>`. The assessment's declared identity remains unauthenticated.
+
+Reject material candidate, evidence, scope or applicable-policy changes that invalidate the reviewed subject. Check the documented boundary for generated reports and lifecycle records so an exclusion cannot carry arbitrary unreviewed content. Distinguish P0 observation expiry from P1's own content-bound validity rules.
+
+Independently exercise missing or failed evidence, conflicting reviewer identity, enrollment removal/downgrade, changed candidate bytes, and publication commit/destination mismatch. Verify that the affected compliant submit or finish call stops, preserves recoverable state, and cannot silently fall back to legacy behavior. Verify unchanged legacy tasks remain readable and are never retrospectively labelled enforced.
+
+For actual activation, examine a newly enrolled task's real rejection and successful lifecycle evidence, including the actual committed paths and remote confirmation. The implementation task may predate activation; disclose that distinction. A local bare-remote fixture is useful test evidence but is not the actual configured repository publication.
+
+Keep assurance claims bounded: local declared identities and writable evidence do not provide authenticated reviewer identity, trusted signatures, OS isolation or direct-Git prevention. Review these limitations explicitly rather than presenting them as passing protection tests.
+
 ## Continuous quality responsibilities
 
 Propose representative, regression, adversarial, and false-success cases based on observed failures. Distinguish expected outcomes in a test design from checks actually executed.
 Compare model-assisted judgments with deterministic checks and accountable human reference judgments; report disagreement, sample size, and uncertainty before proposing calibrated thresholds.
 Candidate-authored tests are supplementary: mandatory suites, oracles, and thresholds require independent owner approval, with observers outside candidate control for authoritative automated gates.
 Do not claim that another AI agreeing proves correctness, that model diversity guarantees independence, or that finite tests eliminate risk.
-The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes; it does not authenticate test truth or evaluator identity.
+The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes. Selected P1 tasks additionally bind local suite execution and independent review records to the candidate and enforce cooperating submission/publication checks; this does not authenticate test truth or evaluator identity.
 The proposed execution-control runtime would authenticate receipts and identity, bind scope/policy/artifact versions, check expiry/replay, and enforce execution gates. Those controls remain future work until implementation and verification demonstrate them.
 The evaluator identifies what needs checking and interprets evidence; deterministic services and the host enforce technical constraints, while humans retain accountable risk and authorization decisions.
 

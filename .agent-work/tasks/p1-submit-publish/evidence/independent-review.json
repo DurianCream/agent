@@ -1,0 +1,163 @@
+{
+  "task_id": "p1-submit-publish",
+  "scope": {
+    "repository_id": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-submission-publication-gates"
+  },
+  "role": "evaluator",
+  "reviewer": {
+    "subject": "independent-evaluator",
+    "session": "p1-review"
+  },
+  "assessment": "accepted",
+  "outcome": "passed",
+  "stage": "Final implementation acceptance. This does not claim the separately enrolled live activation task has completed.",
+  "reviewed_revision": {
+    "baseline_commit": "c65bc0587efae45deeabddeb6e29f1da4c17b308",
+    "candidate": "Uncommitted task-owned files bound by reviewed_files hashes"
+  },
+  "reviewed_files": {
+    ".agent-work/gates.json": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985",
+    ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+    ".codex/agents/orchestrator.toml": "ebcdfc4f73d57e3409b694f18a446896b610306c2fc3f8cfab32253fa9ee8940",
+    ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+    "README.md": "114e704e0aa552cdb278d9e15a4bc3790c15e19e7d4ea5cff24c01d5498b261a",
+    "core/evaluator/instructions.md": "22aa3f6bd8d78651d9daad11096f8315b793d164a9aca77f42b76e54133e8c42",
+    "core/evaluator/module.json": "627c4ac843242440e692c27288679feb7196d04cb43c76acf2e08a8a8f460b1f",
+    "core/orchestrator/instructions.md": "879001080b0b41ed87da0d2c57f4f0c365f5470b9f1d4e3b85845b9d62a5d22f",
+    "core/orchestrator/module.json": "e07825da8c37cfbec80a86f9b19a84f636417741fda048a8d0b19e0057ba5f88",
+    "core/policy-manager/instructions.md": "271048a62f2a23b99f52480b088fd80696638735c70070f4878c175cf58ac3d4",
+    "core/policy-manager/module.json": "fbff36bb694f5e93baa7c5177405bc5c1cef5a9b4e279831a7ecde211204f206",
+    "docs/P1-제출-게시-검사-사용안내.md": "8a4aaf1ab25d4dca5e50f6a3e0fd852fccf561738d921f58831c199103a21b13",
+    "runtime/agentctl.py": "3c67bc4aebcdfa671c17fb274b999d13129f7d146a3f9c32719210a057e4b673",
+    "runtime/control_gate.py": "2b2a88a4244a8340f134cfa9a215ea0d5a8e0b858acb48202d75c6ec1e79503b",
+    "runtime/native-map.json": "4e1d62d749550845673044ee7478aae82e2d7d462395050a53c37254094a22bb",
+    "runtime/repo_automation.py": "f2f0d58c4069caa093a273b3c902b0e9f6a56bf307268c211cb477b376fdc767",
+    "runtime/repoctl.py": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e",
+    "runtime/tests/test_control_gate.py": "a101f0bd56edf8b3d21dca02341986ddf7fb447301c47a273823575d8952041a",
+    "runtime/tests/test_control_gate_integration.py": "6b736e0ae485b18e605d1afbdfe2eaee34e63c794add00f565fd3aaf97ba5a47",
+    "outputs/p1-submit-publish/implementation.en.md": "bc3239a1bf2553f5ce803421c6081425352c6cc4b5ebdd29b35aaa39399ff621"
+  },
+  "criterion_results": [
+    {
+      "criterion": "Selected new enrollment and fail-closed lifecycle checks",
+      "outcome": "passed",
+      "evidence": [
+        "checks.json",
+        "independent-probes-resolved.log"
+      ]
+    },
+    {
+      "criterion": "Exact candidate, local environment metadata, test, review, result and artifact binding",
+      "outcome": "passed",
+      "evidence": [
+        "checks.json",
+        "independent-probes-resolved.log"
+      ]
+    },
+    {
+      "criterion": "Generated records sealed from exact in-memory lifecycle outputs; real commit content compared before push",
+      "outcome": "passed",
+      "evidence": [
+        "independent-probes-resolved.log",
+        "checks.json"
+      ]
+    },
+    {
+      "criterion": "Failure recovery, pending commit reuse and incomplete reporting",
+      "outcome": "passed",
+      "evidence": [
+        "checks.json",
+        "independent-partial-resolved.log"
+      ]
+    },
+    {
+      "criterion": "Legacy/result1.0 compatibility, scoped enabled configuration and truthful documentation",
+      "outcome": "passed",
+      "evidence": [
+        "checks.json"
+      ],
+      "detail": "Historical task records and result schema have no tracked modifications; sources and generated role adapters examined."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R01",
+      "severity": "major",
+      "status": "resolved",
+      "description": "Selected initialization could fail before leaving an enrollment signal. Pending marker and generic configured-init failure handling now preserve blocking state; independent missing-baseline case passed."
+    },
+    {
+      "id": "R02",
+      "severity": "major",
+      "status": "resolved",
+      "description": "Ignored private local maps were incorrectly required in committed dependencies. Git-visible source selection now excludes them; local interpreter metadata fingerprints remain separate. Independent exclusion case passed."
+    },
+    {
+      "id": "R03",
+      "severity": "major",
+      "status": "resolved",
+      "description": "Both appended spec text and unrendered generated JSON git.status payloads could pass committed-worktree equality checks. Canonical reconstruction plus exact in-memory checkpoint output receipt now rejects both independently reproduced cases with all required managed siblings present."
+    },
+    {
+      "id": "R04",
+      "severity": "major",
+      "status": "resolved",
+      "description": "The new checkpoint receipt callback required a completion seal after partial submission. It now skips noncompleted reports; real partial submission/checkpoint succeeds and publication remains rejected."
+    }
+  ],
+  "tests": {
+    "aggregate_regression": {
+      "outcome": "passed",
+      "count": 297,
+      "checks_sha256": "8bd0f8b9cc4284369b5c826b85086dca878e50b84d8d0f73b3440f8031eed82a",
+      "log_hashes_verified": true
+    },
+    "independent_final_probes": {
+      "outcome": "passed",
+      "distinct_cases": 7,
+      "runs": [
+        "6 tests passed in independent-probes-resolved.log",
+        "1 test passed in independent-partial-resolved.log"
+      ]
+    },
+    "initial_findings": {
+      "run": "34 tests: 29 author fixture cases independently rerun and 5 evaluator-authored cases; generated spec bypass reproduced",
+      "followup": "One focused run exposed obsolete two-path test setup after all-managed-path requirement; fixture updated to include all siblings, without relaxing content rejection. A separate all-sibling metadata payload reproduced the remaining R03 gap."
+    },
+    "method": "Actual evaluator unittest execution and real local Git object operations; the GateTests helper mocks the candidate child test process to exercise gate evidence semantics. Actual configured subprocess execution is reserved for the separate live activation task.",
+    "evidence_hashes": {
+      "independent-probes-initial.log": "96496709d6e0f943bae150ad243b78aa090ccc7c3b267d883fc9f78163580955",
+      "independent-probes-final.log": "fe009e6c0e769ddb5530076695f798a312ddb7514140e52f4c119a19640f2614",
+      "independent-metadata-probe.log": "6a2e5109343471d9952639c7a3b93a2f69d80435e81c1af9bc57812b8e6767b3",
+      "independent-probes-resolved.log": "794eb7e5e967d44371ea8d87a9aa5438225b0dfaaabe19e2a4bac403eece1341",
+      "independent-partial-resolved.log": "067b442195e0f0bde0214bae6a24ffa7ebcd83c1e58a376d7b1043d03c8e0e9c"
+    },
+    "probe_source_sha256": "8ef392519858db41197078161c9f3837544569849c26f9a3e5849c50d0448f20"
+  },
+  "governance_conditions": {
+    "G01-G07": "passed for implementation",
+    "G09-G10": "passed",
+    "G08": "Actual separately enrolled activation and remote publication remain pending; not claimed completed by this implementation review."
+  },
+  "pending_authorization": [],
+  "limitations": [
+    "Cooperating local CLI controls only. Same-user rewriting of enrollment, evidence or checkpoint receipts, old CLI and direct Git remain outside the boundary.",
+    "Reviewer identities are declared and test output is local untrusted candidate execution, not signed trusted attestations or regulatory certification.",
+    "Environment fingerprint covers local executable/configuration/distribution metadata, not every base interpreter or package implementation byte.",
+    "Gates profile is pinned for an enrolled task. Future authorized policy migration needs a separate procedure; none is supplied by this initial stage.",
+    "Implementation task predates P1 enrollment. Live selected activation must still demonstrate actual missing-evidence rejection, real configured suite, own evaluator assessment, gated submission/publication and remote confirmation."
+  ],
+  "re_review_triggers": [
+    "Any reviewed file hash changes",
+    "Candidate/profile/required suite or outcome changes",
+    "Material activation failure"
+  ],
+  "next_actions": [
+    "Publish the reviewed implementation through its existing legacy task lifecycle.",
+    "Run the separately enrolled activation task and obtain its own evaluator assessment before final user completion."
+  ]
+}
