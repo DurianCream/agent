@@ -1,0 +1,81 @@
+{
+  "role": "coding",
+  "task_id": "p0-workflow-apply",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "outcome": "passed",
+  "tests_run": 28,
+  "tests": [
+    "No-config compatibility and no subprocess",
+    "Exact repository/project/service/environment selection; issue remains current binding",
+    "Fixed repository-local interpreter/script and no authority claims",
+    "Missing environment and malformed profile visible",
+    "Bounded output, safe diagnostics, invalid child output and no raw values",
+    "Real isolated subprocess strips PYTHONPATH/PYTHONHOME and ignores injected modules",
+    "Timeout and output-limit process termination",
+    "Checkpoint/track launch after conflicting locks released",
+    "Prepush observer receives real newly created commit",
+    "Observation unavailable does not become authorization gate",
+    "Real observer subprocess: not-ready initial bind, observe after track, stale after mutation",
+    "Visible negative verdicts and accepted technical review of correct denial",
+    "Same-checkout rejection with matching identity but different path",
+    "Null/contradictory child summary bindings rejected",
+    "Durable observation linkage and no-config record/spec compatibility"
+  ],
+  "decisions": [
+    "Stdlib-only integration; P0 imports occur only in configured isolated child environment.",
+    "Profile is enabled for multi/agent-framework/development; no environment broadening or history search.",
+    "Observation output is advisory and never an execution grant.",
+    "Existing Git publication safeguards remain unchanged; observer failure is visible and non-gating.",
+    "Observer records are separate from sealed result evidence; no recursive checkpoint."
+  ],
+  "files": {
+    "runtime/control_integration.py": "2b0cec9e9c217c9eb8e0c5712e4512e3bf5aee956809d6366dec7ca1588b148b",
+    "runtime/repoctl.py": "cf3bfda0e6cb08bdad7420092af802088a4f344a003c76276c8fcd85942d87e9",
+    "runtime/repo_automation.py": "94f914ed102e26af0d4eb4a79384834bd7bf18f690d2ceb9436400c5e8721db9",
+    ".agent-work/observation.json": "a6bddd09d253b86cb2c06742f5567310ac7ad67616011750d632ffd6e76ec664",
+    "runtime/tests/test_control_integration.py": "a2b5e2d2baa4f656de955cec7583a610061582d48ccb73b36193ca2ff105edea"
+  },
+  "initial_environment_failure": "Sandbox blocked MSYS local fixture Git transport; fixture-only escalated rerun passed. Guarded Windows readonly cleanup added.",
+  "limitations": [
+    "No new P1 execution gate or authenticated policy/identity service.",
+    "POSIX local venv must use copies if its interpreter would otherwise resolve outside the repository.",
+    "Actual publication effect is exercised against a local bare fixture with a mocked observer; actual observer child integration is separately exercised for workspace/status."
+  ],
+  "remaining": [
+    "Parent final regression and independent evaluation",
+    "Parent real scoped publication and task submission"
+  ],
+  "remediation": [
+    "R2: summary exposes governance/evaluator verdicts; unresolved/rework cannot appear as observed complete success.",
+    "Same-checkout only: registered root must equal framework root; other checkout returns repository_mismatch before launch.",
+    "R4: observed/review_pending require nonnull record, snapshot and decision; impossible status/verdict/ok combinations are rejected.",
+    "Checkpoint invokes observer before record.lock and persists sanitized optional observation in record.json/spec and existing Korean verification section, without changing result1.0 or no-config records.",
+    "Timeout does not blindly remove shared observation locks; observation_locked is an explicit unavailable measurement reason and requires verified manual recovery.",
+    "Final input-bound review: task, repository and selector identifiers are capped at128 characters; invalid task IDs produce invalid-task before profile/task-file/child access.",
+    "Legacy compatibility: checkpoint/track/finish guard optional observer import by profile presence; no-config copied runtimes need no control_integration module.",
+    "Selected profile with missing optional module reports sanitized unavailable in durable record instead of raising or claiming success.",
+    "Explicit observe --refresh passes to fixed child only for observe; status/assess reject it; prior invalid bytes and reviews are not reused."
+  ],
+  "last_verification": {
+    "suite": "test_control_integration.py",
+    "tests": 28,
+    "outcome": "passed",
+    "focused_rechecks": [
+      {
+        "test": "actual observer refresh preserves corrupted prior bytes and creates a new unreviewed record",
+        "tests": 1,
+        "outcome": "passed"
+      },
+      {
+        "test": "test_repoctl.test_cli_init_and_submit_refresh_record using work-scoped temp",
+        "tests": 1,
+        "outcome": "passed"
+      }
+    ]
+  }
+}

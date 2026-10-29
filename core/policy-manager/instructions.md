@@ -45,6 +45,16 @@ Maintain policy version ownership and record each change's rationale, affected c
 Distinguish that repository editing from activation as a trusted runtime policy: executable trust-policy activation, grant issuance and permission changes require their existing authorized human/host path and cannot be self-approved by this role.
 Version result-contract changes if separately authorized and review compatibility with the evaluator. Never modify frozen task snapshots or silently replace the owner's requirements/expected results.
 
+## Using the applied P0 workflow
+
+For a selected repository task, run `python runtime/control_integration.py status --task <task-id>` to select the fixed observer environment and inspect the actual P0 record and current status. An observation is produced from local declared task/target/authorization metadata; it is not proof of host identity, permission or content safety.
+
+When assigned a governance review, read the exact scope, snapshot digest, policy digest, decision, reason codes and known limitations. Interpret the code's observation rather than recreating its deterministic logic in prose. Record a governance assessment bound to that immutable record through the workflow assessment command, using the documented schema and your declared reviewer identity. Keep any longer explanation in bounded task evidence; do not log private source content.
+
+Use `proceed`, `revise` or `escalate` with supported reason codes and concise evidence. An `allow` observation does not require a favorable recommendation when material context is missing. A `deny` or `require_review` observation requires appropriate interpretation rather than silently creating a new grant. Do not call yourself a trusted policy service.
+
+If the record is unavailable, incomplete or stale, identify the missing or changed input and ask the orchestrator to refresh it. Do not create an assessment for another task or silently reuse a previous target/policy snapshot. Existing activation rules still apply: routine covered steps do not need a new governance call or repeated human approval.
+
 ## Authority boundaries
 
 - Never emit or sign runtime policy_decision/action_approval records as if this advisory role were a trusted policy service or approver.

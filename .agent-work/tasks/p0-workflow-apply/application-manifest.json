@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "task_id": "p0-workflow-apply",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "baseline_commit": "8d7e1ebf4a3a2cbd56449bd2438560a4258af84b",
+  "status": "selected_p0_workflow_applied_not_p1_gate",
+  "source_hashes": {
+    ".agent-work/observation.json": "a6bddd09d253b86cb2c06742f5567310ac7ad67616011750d632ffd6e76ec664",
+    ".codex/agents/evaluator.toml": "40005591dd8eccb027e5d812e19c56d393d389539afe09cbfe36134b4407912c",
+    ".codex/agents/orchestrator.toml": "a2dcaee2f97adba5f4cc2f7eb66cf4050da1d3880820f016a91434e3b246b132",
+    ".codex/agents/policy-manager.toml": "0056b416468c249bfb5d54ccb2adcfada61145a85d2b374af5a4a856e342379d",
+    ".gitignore": "af9a727f02ffb0b958b1079f71e29edacdefd915f75b0ec940173d60f25b4baa",
+    "README.md": "1f3e9b99cfba980a1a95494faeefa99a9b33ac942483bc90584accf3a55bdda1",
+    "core/evaluator/instructions.md": "ddcc1019b8121ba0fc579a54d673e6d49a233a973d3caf39b60d34ff4bd76434",
+    "core/evaluator/module.json": "e93ba55047876dfe1e4a8c28f9474af887c2c0825182a3b1905625e7b25d835b",
+    "core/orchestrator/instructions.md": "0506935ff9152af25669fda820d9aa30c1aa0963476bc25196999b14f7f1c27e",
+    "core/orchestrator/module.json": "81884ed99871789f2a70ef63640d3ab875e3b2eb75cfe20be251fcd3ff5c2c9c",
+    "core/policy-manager/instructions.md": "61549ef90a506c264bd26524f930ae7e0bae939a43c0eb72ad1b1b4c0583be49",
+    "core/policy-manager/module.json": "94e622266c50bb47713b8afb494b3e39269d19b291f27e92d1295300abf13f0a",
+    "docs/P0-실행통제-사용안내.md": "a0937fe47878234374101bdeb133c9b4a4e12e8f23a61692ad62b82e3d7c9388",
+    "runtime/control_integration.py": "2b0cec9e9c217c9eb8e0c5712e4512e3bf5aee956809d6366dec7ca1588b148b",
+    "runtime/control_workflow.py": "1d548af4062dd9aa7e5185f3f81a00e3f474a207b3c199c4d26b6c9ce4774827",
+    "runtime/native-map.json": "0e97e3b8aba82b04b8fdf7a71519487a96ed89cb33036d812c58de109e3d88b8",
+    "runtime/repo_automation.py": "94f914ed102e26af0d4eb4a79384834bd7bf18f690d2ceb9436400c5e8721db9",
+    "runtime/repoctl.py": "cf3bfda0e6cb08bdad7420092af802088a4f344a003c76276c8fcd85942d87e9",
+    "runtime/tests/test_control_integration.py": "a2b5e2d2baa4f656de955cec7583a610061582d48ccb73b36193ca2ff105edea",
+    "runtime/tests/test_control_workflow.py": "b34b62006c7b3007187d536a4cd4562c684b45eac835780d9f50eee939835f62",
+    "shared/schemas/control-workflow.schema.json": "552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39"
+  },
+  "live_workspace_record": "obs-a828cb122665495fa909ac56ff6886f0",
+  "files": {
+    ".agent-work/tasks/p0-workflow-apply/application.en.md": "d8e559988faa842e00ef77db38b4a2cd4fe47f6ced01ccc199cc1fe7afe4870a",
+    ".agent-work/tasks/p0-workflow-apply/application.ko.md": "ff6212e076d9dddd5eb62c9b406b3e0d9bfe9b053a59c3ce2b7498986395c9b6",
+    ".agent-work/tasks/p0-workflow-apply/evidence/checks.json": "313cad81c30bf6a1146a102983903e2df284c8fec1c6e6f5f34b0f19e2d5be1e",
+    ".agent-work/tasks/p0-workflow-apply/evidence/independent-review.json": "fac2a4b652d62e121602011cdafd915e229882a641936feb03cce36e01317fc6",
+    ".agent-work/tasks/p0-workflow-apply/evidence/workflow-author.json": "f94be4059e06ba252975a7a1573ca3629fed505d8c50c536e415549ebac2cc89",
+    ".agent-work/tasks/p0-workflow-apply/evidence/integration-author.json": "88e901d7eb29cce047aafff3b6d4e79e4c544679c4dd0c63d3b0c2ee651c2cfb",
+    ".agent-work/tasks/p0-workflow-apply/evidence/governance-review.json": "e63819eeda342d21813cc44fd9d9a3f2f54de4aa1d51990a7bc4ff9060ef2326",
+    ".agent-work/tasks/p0-workflow-apply/evidence/application-check.json": "c7234bacb076e1ed9fb5069bda30a185d7c703ddd4e8739a4ed16e4db4533a37",
+    ".agent-work/tasks/p0-workflow-apply/evidence/main-notes.json": "555520ca6e18d122ae27482401e150d9dabbf8ce86d5ba1e6e0203c7523431f5",
+    ".agent-work/tasks/p0-workflow-apply/evidence/live-observation.json": "58133684331f33e8f5899004419afb11e8d8d693ed5dc63d6a4f8d61db721c6a",
+    ".agent-work/tasks/p0-workflow-apply/evidence/live-governance.json": "a10a1b29d177350000937a67297d640e6606534fcda1666e9a773c8587aef278",
+    ".agent-work/tasks/p0-workflow-apply/evidence/live-evaluator.json": "f5399ceed53f933590104d0e65bfaf6a5cbf057361b4b54f5fc5c1d56ea2f30c"
+  },
+  "note": "Submitted result indexes these bounded copies. Later publication observations remain separate local append-only data; no recursive completion commit."
+}

@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 .venv/
+.venv-controls/
 work/
 runs/*
 !runs/.gitkeep

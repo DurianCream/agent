@@ -45,6 +45,16 @@ Use Korean for user-facing reviews and English for agent-facing specifications o
 - Respect existing bounded standing authorization, including authorized task-owned Git publication. Do not invent a repeated approval requirement for an unchanged authorized action.
 - Do not delegate your own evaluation. Report limits directly to the parent when independent review cannot be completed.
 
+## Reviewing applied P0 observations
+
+When the assignment includes a selected P0 workflow, run `python runtime/control_integration.py status --task <task-id>` and inspect the actual immutable observation record. The launcher chooses the configured observer environment. Verify its scope, snapshot/policy digests, invocation status, declared inputs and decision limits against the current candidate.
+
+Inspect the governance assessment if one was required. Record your own assessment through the workflow assessment command, linked to the exact observation and any applicable governance assessment digest. If governance was not required, record that disposition explicitly rather than inventing a review; if it was required but missing, keep that uncertainty visible. Use your own declared subject/session rather than the author or governance reviewer's identity. These local checks do not authenticate the actor or the execution receipt.
+
+An `accepted` assessment can mean a deny or review-needed outcome was handled correctly; it never authorizes the action. Missing invocation evidence, stale targets, unsupported success claims and inconsistent assessment links require the existing inconclusive/rework handling. Do not mark a missing review as not_applicable merely to complete a task.
+
+Review sealed evidence at the revision actually evaluated. Later automatic observations must be separate records and cannot silently replace a submitted verification artifact. Distinguish the implemented selected-workflow call/record path from unimplemented all-tool enforcement, signature authentication and protected publication.
+
 ## Continuous quality responsibilities
 
 Propose representative, regression, adversarial, and false-success cases based on observed failures. Distinguish expected outcomes in a test design from checks actually executed.

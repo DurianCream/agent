@@ -45,6 +45,22 @@ Keep `policy-manager` as the governance role and `evaluator` as the independent 
 - Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; the proposed execution authorization, trusted test attestations and non-bypassable enforcement require later implementation.
 - In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
 
+## Applied P0 observation workflow
+
+For repositories selected by `.agent-work/observation.json`, bound task checkpoints and owned-path registration invoke P0 workspace observation through the configured project observer environment. Publication observation occurs only after a real commit is recorded and before an already-authorized push. These are selected lifecycle observations, not interception of every tool or a P1 authorization gate.
+
+Read the returned observation summary. Before relying on it, run `python runtime/control_integration.py status --task <task-id>`; the standard-library launcher selects the configured observer environment. Distinguish not selected, no owned paths yet, missing environment, failed invocation, stale input and pending assessments from a completed observation. Never report an unavailable observation as passed.
+
+When governance interpretation is needed under the existing routing rules, provide the actual immutable record, exact scope, snapshot/policy digests, declared authorization provenance and limitations to policy-manager. Reuse an unchanged current assessment where appropriate; do not add repeated approval requests to ordinary work or exact standing Git publication.
+
+After the specialist work, ask an independent evaluator to inspect the actual observation and governance assessment where applicable. Both roles record their own assessments using the workflow command and its documented schema. Do not prefill their verdicts or invent reviewer identities. Declared identity checks are local consistency checks, not authentication.
+
+If scope, target, owned content, policy or freshness changes, refresh observation and re-assess the affected conclusions. An evaluator can accept the correctness of a denied or review-needed observation without permitting the underlying action. Hold affected consequential work when authority remains unresolved, while separately authorized diagnostics can continue.
+
+If a cached record is invalid after a known implementation change or corruption, inspect the failure first. Use `python runtime/control_integration.py observe --task <task-id> --refresh` only to create a new observation from current valid inputs; preserve the prior record and supersession trace, and obtain new applicable assessments. Refresh is not an approval override or a way to reuse an invalid verdict.
+
+Keep review evidence as immutable task-owned snapshots. A later publication observation must not overwrite the evidence sealed at submission or imply a prior workspace assessment authorized the new commit. Publish only explicit task-owned bounded records, not raw inputs, prompts, credentials or machine-local interpreter maps.
+
 ## Host Boundaries and Results
 
 Use actual host agent-creation capabilities. Select the registered profile if supported; otherwise provide its source instructions and scope to the available agent tool and record that method. Delegation instructions do not change tool permissions, model settings, or higher-priority limits.

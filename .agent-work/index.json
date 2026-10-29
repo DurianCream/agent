@@ -79,6 +79,19 @@
         "environment": "development",
         "issue": "p0-control-contracts-observe"
       }
+    },
+    "p0-workflow-apply": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-29T10:51:03+09:00",
+      "summary": "P0 관찰을 현재 저장소의 선정된 작업 경로에 연결하고 실행 환경·역할 지침을 적용했다. 실제 작업에서 거버넌스 proceed와 독립 검증 accepted를 정확한 관찰 기록에 연결했다.",
+      "path": "tasks/p0-workflow-apply/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-workflow-application"
+      }
     }
   }
 }

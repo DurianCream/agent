@@ -1,0 +1,30 @@
+{
+  "role": "orchestrator",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "changes": [
+    "Applied local observer environment and enabled scoped profile",
+    "Updated and synchronized role handoff guidance",
+    "Integrated two coding authors and independent code review",
+    "Had actual policy-manager and evaluator personally record linked assessments"
+  ],
+  "decisions": [
+    "P0 observations do not become a P1 gate",
+    "Preserve invalid records and require explicit refresh",
+    "Bind publication content to Git objects, not raw worktree bytes",
+    "Keep missing/stale/unresolved states visible"
+  ],
+  "tests": {
+    "total": 245,
+    "strategy": "Module-isolated regression plus affected reruns; configured bundled interpreter for context hook."
+  },
+  "remaining": [
+    "Submit/publish task-owned source and bounded evidence",
+    "Verify real publication observation after finish",
+    "P1 enforcement remains a separate task"
+  ]
+}

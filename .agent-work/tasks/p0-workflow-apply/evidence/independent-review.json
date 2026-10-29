@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "p0-workflow-apply",
+  "reviewer": "/root/review_saved_work",
+  "role": "evaluator",
+  "review_authority": "Pre-change evaluator0.2.0 and the explicit parent assignment; proposed0.2.1 instructions reviewed as candidate guidance. Actual live assessment performed personally after review.",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "baseline_commit": "8d7e1ebf4a3a2cbd56449bd2438560a4258af84b",
+  "objective": "Independently verify selected P0 lifecycle observation, immutable record/assessment consistency, freshness, bounded subprocess behavior, accurate actual-commit metadata and actual role handoff without granting execution authority.",
+  "outcome": "passed",
+  "assessment": "accepted",
+  "reviewed_files": {
+    ".agent-work/observation.json": "a6bddd09d253b86cb2c06742f5567310ac7ad67616011750d632ffd6e76ec664",
+    ".codex/agents/evaluator.toml": "40005591dd8eccb027e5d812e19c56d393d389539afe09cbfe36134b4407912c",
+    ".codex/agents/orchestrator.toml": "a2dcaee2f97adba5f4cc2f7eb66cf4050da1d3880820f016a91434e3b246b132",
+    ".codex/agents/policy-manager.toml": "0056b416468c249bfb5d54ccb2adcfada61145a85d2b374af5a4a856e342379d",
+    ".gitignore": "af9a727f02ffb0b958b1079f71e29edacdefd915f75b0ec940173d60f25b4baa",
+    "README.md": "1f3e9b99cfba980a1a95494faeefa99a9b33ac942483bc90584accf3a55bdda1",
+    "core/evaluator/instructions.md": "ddcc1019b8121ba0fc579a54d673e6d49a233a973d3caf39b60d34ff4bd76434",
+    "core/evaluator/module.json": "e93ba55047876dfe1e4a8c28f9474af887c2c0825182a3b1905625e7b25d835b",
+    "core/orchestrator/instructions.md": "0506935ff9152af25669fda820d9aa30c1aa0963476bc25196999b14f7f1c27e",
+    "core/orchestrator/module.json": "81884ed99871789f2a70ef63640d3ab875e3b2eb75cfe20be251fcd3ff5c2c9c",
+    "core/policy-manager/instructions.md": "61549ef90a506c264bd26524f930ae7e0bae939a43c0eb72ad1b1b4c0583be49",
+    "core/policy-manager/module.json": "94e622266c50bb47713b8afb494b3e39269d19b291f27e92d1295300abf13f0a",
+    "docs/P0-\uc2e4\ud589\ud1b5\uc81c-\uc0ac\uc6a9\uc548\ub0b4.md": "a0937fe47878234374101bdeb133c9b4a4e12e8f23a61692ad62b82e3d7c9388",
+    "runtime/control_integration.py": "2b0cec9e9c217c9eb8e0c5712e4512e3bf5aee956809d6366dec7ca1588b148b",
+    "runtime/control_workflow.py": "1d548af4062dd9aa7e5185f3f81a00e3f474a207b3c199c4d26b6c9ce4774827",
+    "runtime/native-map.json": "0e97e3b8aba82b04b8fdf7a71519487a96ed89cb33036d812c58de109e3d88b8",
+    "runtime/repo_automation.py": "94f914ed102e26af0d4eb4a79384834bd7bf18f690d2ceb9436400c5e8721db9",
+    "runtime/repoctl.py": "cf3bfda0e6cb08bdad7420092af802088a4f344a003c76276c8fcd85942d87e9",
+    "runtime/tests/test_control_integration.py": "a2b5e2d2baa4f656de955cec7583a610061582d48ccb73b36193ca2ff105edea",
+    "runtime/tests/test_control_workflow.py": "b34b62006c7b3007187d536a4cd4562c684b45eac835780d9f50eee939835f62",
+    "shared/schemas/control-workflow.schema.json": "552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39",
+    "outputs/p0-workflow-apply/application.en.md": "d8e559988faa842e00ef77db38b4a2cd4fe47f6ced01ccc199cc1fe7afe4870a",
+    "outputs/p0-workflow-apply/application.ko.md": "ff6212e076d9dddd5eb62c9b406b3e0d9bfe9b053a59c3ce2b7498986395c9b6"
+  },
+  "criterion_checks": [
+    {
+      "criterion_id": "criterion-1",
+      "outcome": "passed",
+      "basis": "Scoped inputs derive from the current binding, exact registered checkout, owned path manifest and declared automation setting. Workspace uses working-tree inspection; publication uses immutable commit object metadata. Fixed local interpreter, isolated imports and exact ten dependency versions are checked. Live record confirms CPython3.12.14 virtual environment and exact current task scope."
+    },
+    {
+      "criterion_id": "criterion-2",
+      "outcome": "passed",
+      "basis": "Inspected checkpoint, track and pre-push hooks, shared optional-module guard, fixed command construction and no-recursion/lock boundaries. Existing publication checks remain; observation failure is visible but not an authorization gate. No-config copied runtimes retain behavior without requiring the optional module. Checkpoint persists the sanitized advisory summary in current task record/spec/report while preserving result1.0."
+    },
+    {
+      "criterion_id": "criterion-3",
+      "outcome": "passed",
+      "basis": "Full stored input/result reconstruction and P0 replay reject internally inconsistent resealed records. Scope/target/content/policy/code/schema/runtime/age changes invalidate prior status. Explicit governance/evaluator verdicts keep revise/escalate/rework/inconclusive pending. Declared identity separation and exact governance links are checked without claiming authentication. This evaluator personally read and assessed the fresh live record after governance."
+    },
+    {
+      "criterion_id": "criterion-4",
+      "outcome": "passed",
+      "basis": "Evaluator executed49 workflow/launcher cases on the first corrected revision, then9 affected recovery/publication cases on final code. Direct no-config/import and malformed-output reproductions were also performed. Independently inspected final logs for245 distinct tests across12 modules and verified their actual byte hashes. Failed initial logs remain visible; configured-runtime distinctions are recorded below."
+    },
+    {
+      "criterion_id": "criterion-5",
+      "outcome": "passed",
+      "basis": "Configured selection and local observer environment were exercised on the actual task. Verified23 current owned-file hashes, the actual observation, governance assessment and personally recorded evaluator assessment. English/Korean documentation states the actual automatic hooks, same-checkout/HTTPS limits, explicit refresh, lock recovery and absent enforcement. Final submit/commit/push remain the main session publication step; this review does not assert they already completed."
+    }
+  ],
+  "actual_checks": [
+    {
+      "id": "independent-initial-workflow-launcher",
+      "outcome": "passed",
+      "executor": "evaluator",
+      "tests": 49,
+      "duration_seconds": 65.961,
+      "detail": "27 workflow plus22 launcher tests before the later explicit-refresh/publication changes. This is not represented as a final full-source run."
+    },
+    {
+      "id": "independent-final-affected-recheck",
+      "outcome": "passed",
+      "executor": "evaluator",
+      "tests": 9,
+      "duration_seconds": 18.084,
+      "detail": "Four explicit-refresh cases, exact changed-set/parent/nonblob checks, Unicode/tab/deletion metadata, real Git assume-unchanged and CRLF/managed deletion cases, and launcher refresh routing."
+    },
+    {
+      "id": "independent-optional-module-guard",
+      "outcome": "passed",
+      "executor": "evaluator",
+      "detail": "With imports deliberately unavailable, no profile caused no observer import; a present profile produced sanitized observer_module_unavailable with executable=false/authority_verified=false."
+    },
+    {
+      "id": "publication-original-defect-reproduction",
+      "outcome": "passed",
+      "executor": "evaluator",
+      "detail": "Confirmed the original defect in a private temporary Git fixture: assume-unchanged hid a changed working file from git diff while committed/worktree SHA256 differed. Final metadata tests now bind actual commit OID/size without reading working content."
+    },
+    {
+      "id": "integration-regression-log-review",
+      "outcome": "passed",
+      "executor": "main session; actual logs independently inspected",
+      "tests": 245,
+      "module_counts": {
+        "test_codex_settings": 9,
+        "test_contract": 29,
+        "test_control_contracts": 39,
+        "test_control_policy": 36,
+        "test_controlctl": 10,
+        "test_context_checkpoint": 29,
+        "test_control_integration": 28,
+        "test_control_workflow": 35,
+        "test_legacy_memory": 8,
+        "test_repo_automation": 6,
+        "test_repoctl": 7,
+        "test_work_scope": 9
+      },
+      "detail": "245 is the distinct integrated test set. Do not add repeated evaluator runs to inflate this count. Affected modules reran after corrections; unchanged module results were retained."
+    },
+    {
+      "id": "source-and-log-integrity",
+      "outcome": "passed",
+      "executor": "evaluator",
+      "source_hashes_verified": 21,
+      "log_hashes_verified": 15,
+      "detail": "Current source hashes and final log SHA256 values match actual stored bytes."
+    },
+    {
+      "id": "frozen-task-and-generated-configuration",
+      "outcome": "passed",
+      "executor": "evaluator for snapshot; main logs inspected for doctor/sync",
+      "detail": "agentctl.load_task verified11 frozen files and original coding0.1.3 binding. Doctor reports8 roles/result1.0 and sync reports no missing/changed generated files. Historical compatibility result inspected; no old snapshots were edited by reviewer."
+    },
+    {
+      "id": "actual-live-handoff",
+      "outcome": "passed",
+      "executor": "evaluator personally",
+      "detail": "Ran current status through the configured launcher, read the observation and governance record, verified23 current workset hashes and exact links, authored the assessment input and invoked assess. Received observed/complete/proceed/accepted with all authority/execution flags false."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Resealed request/context could name another task while snapshot still named the selected task. Scope-only comparisons did not establish complete internal binding.",
+      "resolution": "Task-directory, task/repository/requester/phase/parameters/artifact/policy/time bindings are reconstructed from snapshot; recorded policy output is replayed. Coherent wrong-task and decision-forgery cases now reject."
+    },
+    {
+      "id": "R2",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Governance escalate and evaluator inconclusive produced observed/complete/ok=true without exposing verdicts.",
+      "resolution": "Explicit verdict fields and needs_followup keep unresolved negative reviews pending/ok=false. Accepted technical review of a correctly handled denial remains possible without action authority."
+    },
+    {
+      "id": "R3",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Freshness omitted relevant launcher/schema/dependency inputs and selected-root equality was not enforced.",
+      "resolution": "Implementation/schema/requirements/runtime identities enter the fingerprint; both launcher and worker reject a different registered checkout even with the same UUID. Tests cover schema/launcher drift and clone mismatch."
+    },
+    {
+      "id": "R4",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/control_integration.py",
+      "finding": "A success-shaped child summary with null record/snapshot/decision could be accepted.",
+      "resolution": "Observed/review_pending states require nonnull well-formed bindings and consistent status/ok/review verdict combinations. Malformed child output is rejected without raw echo."
+    },
+    {
+      "id": "R5",
+      "severity": "minor",
+      "status": "resolved",
+      "file": "runtime/control_integration.py",
+      "finding": "Oversized valid-looking identifiers were accepted and echoed in error metadata beyond the128-character contract.",
+      "resolution": "Identifier length is capped before filesystem/child access; task/repository/selector boundary tests verify bounded sanitized errors."
+    },
+    {
+      "id": "R6",
+      "severity": "minor",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Abrupt termination or contention could leave a persistent lock with only a generic failure and unclear safe recovery.",
+      "resolution": "observation_locked is explicit; no automatic deletion. Documented recovery requires confirmed process exit and exact unchanged lock identity; tests preserve all records and verify retry after simulated externally verified recovery."
+    },
+    {
+      "id": "R7",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/repoctl.py",
+      "found_by": "main-session legacy regression; independently rechecked",
+      "finding": "Unconditional optional-module import broke copied no-config legacy runtimes.",
+      "resolution": "All three hook sites use one profile-presence guard. No profile skips the import; configured missing module reports sanitized advisory unavailable. Legacy CLI and lifecycle tests pass."
+    },
+    {
+      "id": "R8",
+      "severity": "major",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Publication worktree hashes and git diff cleanliness could misrepresent committed contents under assume-unchanged or CRLF conversion.",
+      "resolution": "Publication binds the sole actual commit parent/base and exact full changed/staged set. NUL-delimited ls-tree metadata supplies mode/type/OID/size and explicit deletions, including managed files. content_basis distinguishes git-object-metadata from working-tree-bytes. No blob or working-file contents are read for publication metadata."
+    },
+    {
+      "id": "R9",
+      "severity": "minor",
+      "status": "resolved",
+      "file": "runtime/control_workflow.py",
+      "finding": "Intermediate/invalid cached records needed an explicit recoverable path without hiding corruption or carrying old reviews forward.",
+      "resolution": "observe --refresh preserves old bytes and bounded prior-ID/digest/validation references, reruns all normal prepare/policy/consistency checks, and creates an unreviewed record. Oversized prior data has no invented full digest; invalid index/linked paths are not repaired."
+    }
+  ],
+  "blocking_findings": [],
+  "live_assessment": {
+    "record_id": "obs-a828cb122665495fa909ac56ff6886f0",
+    "snapshot_digest": "sha256:de66d53e4b291e3406dbdd96ab2aeac9abcce1abfe1c1a2584a08da55d6ee818",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "created_at": "2026-10-29T01:33:57Z",
+    "expires_at": "2026-10-29T01:38:57Z",
+    "phase": "workspace",
+    "content_basis": "working-tree-bytes",
+    "workset_files_verified": 23,
+    "governance_assessment_id": "asm-dbd601531cfa4369aa4e1640c8ac52a4",
+    "governance_digest": "sha256:24d735629e51fb8d9749e7fda71c95b039bced6e51072eb8223cabe93b860907",
+    "governance_recommendation": "proceed",
+    "evaluator_assessment_id": "asm-b7f21cb618a34e7db12bdd96cdd882be",
+    "evaluator_digest": "sha256:abc277a044194e6f9a6e6154916800a6a33f02363cdbf64dd764cf3988f23318",
+    "evaluator_assessment": "accepted",
+    "reviewer": {
+      "subject_id": "review-saved-work",
+      "host_id": "local",
+      "session_id": "review-saved-work-p0-apply",
+      "role": "evaluator"
+    },
+    "assessment_input": "work/p0-workflow-apply/evaluator-assessment.json",
+    "result_status": "observed",
+    "assessment_status": "complete",
+    "executable": false,
+    "authority_verified": false,
+    "identity_authenticated": false,
+    "meaning": "Accepted for the inspected P0 implementation and workspace observation, not execution permission or approval of a later commit. This assessment is historical after its expiry or relevant snapshot change."
+  },
+  "environment_observations": [
+    "The initial no-config copied-runtime failure was a genuine compatibility defect and was fixed, not dismissed as environment noise.",
+    "The initial force-terminated context-lock case failed under the observer venv. The existing context suite passed under its actual configured bundled hook interpreter; the failed venv log remains retained. The venv scenario is not falsely reported as passed.",
+    "A bounded evaluator-owned sleep-only child diagnostic did not reproduce orphaning: launcher and Python worker PIDs differed but the worker terminated after launcher kill. No user process was touched and this did not establish a universal process-tree guarantee."
+  ],
+  "limitations": [
+    "This is selected lifecycle observation, not interception or enforcement of every agent tool call. Existing independently authorized publication can proceed when observation is unavailable.",
+    "Records are append-only through this API and self-consistency checked, but local writable files and declared reviewer identities are not authenticated audit evidence or grants.",
+    "Workspace fingerprints and checked path components do not provide an atomic filesystem snapshot or OS security boundary against a concurrent privileged writer.",
+    "Publication content identity is immutable Git object metadata; it does not scan blob content, authenticate permission, or imply the current worktree equals the committed bytes.",
+    "Actual same-checkout development selection and HTTPS publication metadata are the bounded rollout. Other environments/services/checkouts are not silently enabled.",
+    "Protected execution, trusted identity/signing, credential/network isolation, P1 gates, operational continuous AI assurance and legal compliance remain not_run/outside this P0 task.",
+    "Final result submission, task-owned commit/push and remote confirmation belong to the main session. A later publication observation is separate from the reviewed workspace record and must not inherit this assessment as authority."
+  ],
+  "reviewer_changes": [
+    "Only this review evidence and the explicitly assigned live evaluator assessment input were authored; no product source or frozen historical snapshot was edited."
+  ],
+  "further_delegation": "not_run: prohibited by assignment"
+}

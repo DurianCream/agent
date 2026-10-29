@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "policy-manager",
   "name": "Policy Manager",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Assess contextual governance requirements and policy conflicts, and propose testable controls without granting execution authority.",

@@ -1,0 +1,417 @@
+{
+  "record_type": "workflow_observation",
+  "schema_version": "0.1.0",
+  "record_id": "obs-a828cb122665495fa909ac56ff6886f0",
+  "task_id": "p0-workflow-apply",
+  "phase": "workspace",
+  "created_at": "2026-10-29T01:33:57Z",
+  "expires_at": "2026-10-29T01:38:57Z",
+  "snapshot": {
+    "task_id": "p0-workflow-apply",
+    "repository_id": "multi",
+    "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+    "scope": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development",
+      "issue": "p0-workflow-application"
+    },
+    "base_head": "8d7e1ebf4a3a2cbd56449bd2438560a4258af84b",
+    "phase": "workspace",
+    "commit": null,
+    "content_basis": "working-tree-bytes",
+    "owned_files": [
+      {
+        "path": ".agent-work/observation.json",
+        "state": "file",
+        "digest": "sha256:a6bddd09d253b86cb2c06742f5567310ac7ad67616011750d632ffd6e76ec664",
+        "size": 533
+      },
+      {
+        "path": ".codex/agents/evaluator.toml",
+        "state": "file",
+        "digest": "sha256:40005591dd8eccb027e5d812e19c56d393d389539afe09cbfe36134b4407912c",
+        "size": 10048
+      },
+      {
+        "path": ".codex/agents/orchestrator.toml",
+        "state": "file",
+        "digest": "sha256:a2dcaee2f97adba5f4cc2f7eb66cf4050da1d3880820f016a91434e3b246b132",
+        "size": 12024
+      },
+      {
+        "path": ".codex/agents/policy-manager.toml",
+        "state": "file",
+        "digest": "sha256:0056b416468c249bfb5d54ccb2adcfada61145a85d2b374af5a4a856e342379d",
+        "size": 9741
+      },
+      {
+        "path": ".gitignore",
+        "state": "file",
+        "digest": "sha256:af9a727f02ffb0b958b1079f71e29edacdefd915f75b0ec940173d60f25b4baa",
+        "size": 300
+      },
+      {
+        "path": "README.md",
+        "state": "file",
+        "digest": "sha256:1f3e9b99cfba980a1a95494faeefa99a9b33ac942483bc90584accf3a55bdda1",
+        "size": 2083
+      },
+      {
+        "path": "core/evaluator/instructions.md",
+        "state": "file",
+        "digest": "sha256:ddcc1019b8121ba0fc579a54d673e6d49a233a973d3caf39b60d34ff4bd76434",
+        "size": 9375
+      },
+      {
+        "path": "core/evaluator/module.json",
+        "state": "file",
+        "digest": "sha256:e93ba55047876dfe1e4a8c28f9474af887c2c0825182a3b1905625e7b25d835b",
+        "size": 1486
+      },
+      {
+        "path": "core/orchestrator/instructions.md",
+        "state": "file",
+        "digest": "sha256:0506935ff9152af25669fda820d9aa30c1aa0963476bc25196999b14f7f1c27e",
+        "size": 11352
+      },
+      {
+        "path": "core/orchestrator/module.json",
+        "state": "file",
+        "digest": "sha256:81884ed99871789f2a70ef63640d3ab875e3b2eb75cfe20be251fcd3ff5c2c9c",
+        "size": 1441
+      },
+      {
+        "path": "core/policy-manager/instructions.md",
+        "state": "file",
+        "digest": "sha256:61549ef90a506c264bd26524f930ae7e0bae939a43c0eb72ad1b1b4c0583be49",
+        "size": 9017
+      },
+      {
+        "path": "core/policy-manager/module.json",
+        "state": "file",
+        "digest": "sha256:94e622266c50bb47713b8afb494b3e39269d19b291f27e92d1295300abf13f0a",
+        "size": 1806
+      },
+      {
+        "path": "docs/P0-실행통제-사용안내.md",
+        "state": "file",
+        "digest": "sha256:a0937fe47878234374101bdeb133c9b4a4e12e8f23a61692ad62b82e3d7c9388",
+        "size": 10092
+      },
+      {
+        "path": "outputs/p0-workflow-apply/application.en.md",
+        "state": "file",
+        "digest": "sha256:d8e559988faa842e00ef77db38b4a2cd4fe47f6ced01ccc199cc1fe7afe4870a",
+        "size": 8629
+      },
+      {
+        "path": "outputs/p0-workflow-apply/application.ko.md",
+        "state": "file",
+        "digest": "sha256:ff6212e076d9dddd5eb62c9b406b3e0d9bfe9b053a59c3ce2b7498986395c9b6",
+        "size": 7036
+      },
+      {
+        "path": "runtime/control_integration.py",
+        "state": "file",
+        "digest": "sha256:2b0cec9e9c217c9eb8e0c5712e4512e3bf5aee956809d6366dec7ca1588b148b",
+        "size": 17872
+      },
+      {
+        "path": "runtime/control_workflow.py",
+        "state": "file",
+        "digest": "sha256:1d548af4062dd9aa7e5185f3f81a00e3f474a207b3c199c4d26b6c9ce4774827",
+        "size": 40199
+      },
+      {
+        "path": "runtime/native-map.json",
+        "state": "file",
+        "digest": "sha256:0e97e3b8aba82b04b8fdf7a71519487a96ed89cb33036d812c58de109e3d88b8",
+        "size": 1717
+      },
+      {
+        "path": "runtime/repo_automation.py",
+        "state": "file",
+        "digest": "sha256:94f914ed102e26af0d4eb4a79384834bd7bf18f690d2ceb9436400c5e8721db9",
+        "size": 12322
+      },
+      {
+        "path": "runtime/repoctl.py",
+        "state": "file",
+        "digest": "sha256:cf3bfda0e6cb08bdad7420092af802088a4f344a003c76276c8fcd85942d87e9",
+        "size": 24114
+      },
+      {
+        "path": "runtime/tests/test_control_integration.py",
+        "state": "file",
+        "digest": "sha256:a2b5e2d2baa4f656de955cec7583a610061582d48ccb73b36193ca2ff105edea",
+        "size": 27366
+      },
+      {
+        "path": "runtime/tests/test_control_workflow.py",
+        "state": "file",
+        "digest": "sha256:b34b62006c7b3007187d536a4cd4562c684b45eac835780d9f50eee939835f62",
+        "size": 33726
+      },
+      {
+        "path": "shared/schemas/control-workflow.schema.json",
+        "state": "file",
+        "digest": "sha256:552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39",
+        "size": 19015
+      }
+    ],
+    "target": {
+      "branch": "main",
+      "fetch_url": "https://github.com/DurianCream/private.git",
+      "push_url": "https://github.com/DurianCream/private.git"
+    },
+    "declared_target": {
+      "data_classification": "internal",
+      "risk_level": "low",
+      "reversible": true
+    },
+    "authorization_setting": {
+      "schema_version": "1.0.0",
+      "enabled": true,
+      "remote": "origin",
+      "expected_url": "https://github.com/DurianCream/private.git",
+      "branch": "main"
+    },
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "policy_ref": {
+      "id": "development-observe",
+      "version": "0.1.0",
+      "digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f"
+    },
+    "requester": {
+      "subject_id": "module-coding",
+      "host_id": "declared-local-host",
+      "session_id": "p0-workflow-apply",
+      "role": "coding"
+    },
+    "lifetime_seconds": 300,
+    "request_budget": {
+      "timeout_seconds": 30,
+      "max_attempts": 1,
+      "max_bytes": 271294,
+      "max_cost_microunits": 0,
+      "max_actions": 1
+    },
+    "profile_digest": "sha256:99ddf1b9df79922a7a243164dfdd1dd039a8a94311a05d5efe82fec258deb97d",
+    "implementation_digest": "sha256:59d9d255397a89dd3eac12e8cd303fc1017d38ee03594ef30abf17d6966fff7b",
+    "runtime_identity": {
+      "implementation": "cpython",
+      "python_version": "3.12.14",
+      "virtual_environment": true,
+      "dependencies": {
+        "attrs": "26.1.0",
+        "jsonschema": "4.26.0",
+        "jsonschema-specifications": "2025.9.1",
+        "referencing": "0.37.0",
+        "rfc8785": "0.1.4",
+        "rfc3339-validator": "0.1.4",
+        "rfc3986-validator": "0.1.1",
+        "rpds-py": "2026.9.1",
+        "six": "1.17.0",
+        "typing-extensions": "4.16.0"
+      }
+    }
+  },
+  "snapshot_digest": "sha256:de66d53e4b291e3406dbdd96ab2aeac9abcce1abfe1c1a2584a08da55d6ee818",
+  "request": {
+    "record_type": "action_request",
+    "schema_version": "0.1.0",
+    "payload": {
+      "request_id": "87de801b-08b9-4d59-8504-a031d8cc6f92",
+      "task_id": "p0-workflow-apply",
+      "repository_id": "multi",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-workflow-application"
+      },
+      "requester": {
+        "subject_id": "module-coding",
+        "host_id": "declared-local-host",
+        "session_id": "p0-workflow-apply",
+        "role": "coding"
+      },
+      "adapter": "workspace.inspect",
+      "parameters": {
+        "paths": [
+          ".agent-work/observation.json",
+          ".codex/agents/evaluator.toml",
+          ".codex/agents/orchestrator.toml",
+          ".codex/agents/policy-manager.toml",
+          ".gitignore",
+          "README.md",
+          "core/evaluator/instructions.md",
+          "core/evaluator/module.json",
+          "core/orchestrator/instructions.md",
+          "core/orchestrator/module.json",
+          "core/policy-manager/instructions.md",
+          "core/policy-manager/module.json",
+          "docs/P0-실행통제-사용안내.md",
+          "outputs/p0-workflow-apply/application.en.md",
+          "outputs/p0-workflow-apply/application.ko.md",
+          "runtime/control_integration.py",
+          "runtime/control_workflow.py",
+          "runtime/native-map.json",
+          "runtime/repo_automation.py",
+          "runtime/repoctl.py",
+          "runtime/tests/test_control_integration.py",
+          "runtime/tests/test_control_workflow.py",
+          "shared/schemas/control-workflow.schema.json"
+        ]
+      },
+      "artifacts": [],
+      "policy_ref": {
+        "id": "development-observe",
+        "version": "0.1.0",
+        "digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f"
+      },
+      "issued_at": "2026-10-29T01:33:57Z",
+      "expires_at": "2026-10-29T01:38:57Z",
+      "nonce": "08044655671148ac8915b432795eb24b",
+      "idempotency_key": "59c0acf2-6d00-4446-ba41-106a94008750",
+      "budget": {
+        "timeout_seconds": 30,
+        "max_attempts": 1,
+        "max_bytes": 271294,
+        "max_cost_microunits": 0,
+        "max_actions": 1
+      }
+    },
+    "signature": null,
+    "digest": "sha256:ee6ffc3657824c4a7a7309a832976947252693d6994cf717839ea7dae97819c6"
+  },
+  "context": {
+    "document_type": "observe_context",
+    "schema_version": "0.1.0",
+    "repository_id": "multi",
+    "task_id": "p0-workflow-apply",
+    "scope": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development",
+      "issue": "p0-workflow-application"
+    },
+    "requester": {
+      "subject_id": "module-coding",
+      "host_id": "declared-local-host",
+      "session_id": "p0-workflow-apply",
+      "role": "coding"
+    },
+    "target": {
+      "id": "repository-multi",
+      "environment": "development",
+      "data_classification": "internal",
+      "risk_level": "low",
+      "reversible": true,
+      "allowed_operations": [],
+      "resource_ids": []
+    },
+    "authorization": {
+      "kind": "task",
+      "repository_id": "multi",
+      "task_id": "p0-workflow-apply",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-workflow-application"
+      },
+      "subject_id": "module-coding",
+      "target_id": "repository-multi",
+      "adapters": [
+        "workspace.inspect"
+      ],
+      "paths": [
+        ".agent-work/observation.json",
+        ".codex/agents/evaluator.toml",
+        ".codex/agents/orchestrator.toml",
+        ".codex/agents/policy-manager.toml",
+        ".gitignore",
+        "README.md",
+        "core/evaluator/instructions.md",
+        "core/evaluator/module.json",
+        "core/orchestrator/instructions.md",
+        "core/orchestrator/module.json",
+        "core/policy-manager/instructions.md",
+        "core/policy-manager/module.json",
+        "docs/P0-실행통제-사용안내.md",
+        "outputs/p0-workflow-apply/application.en.md",
+        "outputs/p0-workflow-apply/application.ko.md",
+        "runtime/control_integration.py",
+        "runtime/control_workflow.py",
+        "runtime/native-map.json",
+        "runtime/repo_automation.py",
+        "runtime/repoctl.py",
+        "runtime/tests/test_control_integration.py",
+        "runtime/tests/test_control_workflow.py",
+        "shared/schemas/control-workflow.schema.json"
+      ],
+      "artifact_digests": [],
+      "publication": null,
+      "expires_at": null
+    }
+  },
+  "policy": {
+    "document_type": "observe_policy",
+    "schema_version": "0.1.0",
+    "id": "development-observe",
+    "version": "0.1.0",
+    "mode": "observe",
+    "allowed_environments": [
+      "development"
+    ],
+    "enabled_adapters": [
+      "workspace.inspect",
+      "workspace.apply_patch",
+      "repo.publish"
+    ],
+    "max_request_lifetime_seconds": 300,
+    "budget_limits": {
+      "timeout_seconds": 60,
+      "max_attempts": 1,
+      "max_bytes": 1048576,
+      "max_cost_microunits": 0,
+      "max_actions": 1
+    }
+  },
+  "result": {
+    "record_type": "policy_observation",
+    "schema_version": "0.1.0",
+    "mode": "observe",
+    "decision": "allow",
+    "risk": "low",
+    "reason_codes": [
+      "within_declared_bounds"
+    ],
+    "observed_at": "2026-10-29T01:33:57Z",
+    "request_digest": "sha256:ee6ffc3657824c4a7a7309a832976947252693d6994cf717839ea7dae97819c6",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "context_digest": "sha256:c1f540429cd47b650a65d0028a31604be322596c25795eef4adcd72bd2baeba2",
+    "executable": false,
+    "authority_verified": false,
+    "content_checks": "not_performed",
+    "signature_verification": "not_performed"
+  },
+  "provenance": {
+    "invocation": "control_policy.evaluate_action",
+    "meaning": "owned-workset-inspection",
+    "authorization_source": "declared-task-binding-and-owned-paths",
+    "identity_authenticated": false,
+    "input_contents_stored": false
+  },
+  "executable": false,
+  "authority_verified": false,
+  "digest": "sha256:1b3fb1eea5a757ceb9d77a7ca6f38cfc0cb7180f071302eb499cd61b1f295234",
+  "supersession": {
+    "explicit_refresh": true,
+    "previous_record_id": "obs-04d846d20fd8408595b2a9349c6f610c",
+    "previous_file_digest": "sha256:1eeebbca7f967b33a9d821905e48b0a06acf0df1cd09fb4174aec29fe70e1bf2",
+    "previous_validation": "stale"
+  }
+}

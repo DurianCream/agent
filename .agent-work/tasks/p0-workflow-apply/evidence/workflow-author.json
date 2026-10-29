@@ -1,0 +1,121 @@
+{
+  "task_id": "p0-workflow-apply",
+  "role": "coding",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "baseline_commit": "8d7e1eb",
+  "files_changed": [
+    "runtime/control_workflow.py",
+    "shared/schemas/control-workflow.schema.json",
+    "runtime/tests/test_control_workflow.py"
+  ],
+  "decisions": [
+    "Actual existing P0 evaluate_action is invoked with scoped bound task and measured owned-file metadata; no target actions.",
+    "Workspace observes owned workset inspection, not patch execution. Publication requires actual recorded commit and staged paths verified by fixed local Git reads.",
+    "Only dedicated observations lock/index is used; no checkpoint/publication recursion.",
+    "Immutable records/assessment files and mutable index are separate from submitted evidence. Same-snapshot cache expires explicitly.",
+    "Generated current-task records and evidence are excluded from workset to avoid self-invalidation; unchanged own commit does not stale workspace HEAD.",
+    "Reviews are declared not authenticated. Evaluator may accept correct deny; routine bounded allow can explicitly declare governance_not_required.",
+    "No raw contents/diffs/prompts/credentials, external network, signing, grant issuance or protected execution.",
+    "Non-HTTPS Git locations are hashed in workspace metadata and unsupported for publication observations; no fake URL.",
+    "R1: stored typed policy and deterministic input reconstruction bind every request/context semantic field to measured snapshot and time; stored result is replayed for consistency, not authenticated.",
+    "R2: linked assessments are distinct from resolved readiness; explicit verdict fields show revise/escalate/rework/inconclusive without a success-shaped result.",
+    "P0 deployment constrained to exact registered framework checkout; no external-clone assumption from UUID alone.",
+    "Cache does not skip integrity/semantic replay; unchanged observation record IDs remain stable until snapshot or expiry changes.",
+    "Timeout or unknown owner leaves an explicit observation_locked/not_ready state. Recovery is externally verified manual removal of only the exact lock; engine has no automatic lock deletion or process killing.",
+    "Explicit observe --refresh provides narrow immutable recovery from malformed/legacy cached records; optional supersession metadata preserves compatibility with valid existing observations.",
+    "Publication now binds the full immutable committed-object metadata manifest with an explicit content_basis, never raw worktree bytes or git-diff cleanliness. Workspace continues to use byte fingerprints and generated-record exclusions."
+  ],
+  "verification": {
+    "unit_tests": {
+      "outcome": "passed",
+      "tests_run": 26,
+      "failures": 0,
+      "errors": 0,
+      "method": "Dedicated .venv-controls Python3.12; real P0 evaluation/replay with isolated fixture data and fixed local Git reads.",
+      "output": "test_age_is_explicit_and_refresh_preserves_old_record (test_control_workflow.WorkflowTests.test_age_is_explicit_and_refresh_preserves_old_record) ... ok\ntest_assessments_link_exact_record_and_remain_advisory (test_control_workflow.WorkflowTests.test_assessments_link_exact_record_and_remain_advisory) ... ok\ntest_content_scope_target_and_policy_changes_are_stale (test_control_workflow.WorkflowTests.test_content_scope_target_and_policy_changes_are_stale) ... ok\ntest_corrupt_record_is_error_not_success (test_control_workflow.WorkflowTests.test_corrupt_record_is_error_not_success) ... ok\ntest_deny_and_require_review_are_real_observations (test_control_workflow.WorkflowTests.test_deny_and_require_review_are_real_observations) ... ok\ntest_escalate_inconclusive_and_rework_are_not_success_shaped (test_control_workflow.WorkflowTests.test_escalate_inconclusive_and_rework_are_not_success_shaped) ... ok\ntest_evaluator_accepts_correct_deny_without_permission (test_control_workflow.WorkflowTests.test_evaluator_accepts_correct_deny_without_permission) ... ok\ntest_governance_not_required_must_be_explicit_and_bounded (test_control_workflow.WorkflowTests.test_governance_not_required_must_be_explicit_and_bounded) ... ok\ntest_identity_conflict_and_forged_or_stale_references_rejected (test_control_workflow.WorkflowTests.test_identity_conflict_and_forged_or_stale_references_rejected) ... ok\ntest_limits_are_not_silently_truncated (test_control_workflow.WorkflowTests.test_limits_are_not_silently_truncated) ... ok\ntest_malicious_ids_and_paths_do_not_escape (test_control_workflow.WorkflowTests.test_malicious_ids_and_paths_do_not_escape) ... ok\ntest_missing_empty_and_unknown_scope_are_explicit (test_control_workflow.WorkflowTests.test_missing_empty_and_unknown_scope_are_explicit) ... ok\ntest_missing_file_marker_and_new_file_invalidate_cache (test_control_workflow.WorkflowTests.test_missing_file_marker_and_new_file_invalidate_cache) ... ok\ntest_missing_standing_authority_yields_deny_without_new_grant (test_control_workflow.WorkflowTests.test_missing_standing_authority_yields_deny_without_new_grant) ... ok\ntest_oversized_companion_record_is_explicitly_not_ready (test_control_workflow.WorkflowTests.test_oversized_companion_record_is_explicitly_not_ready) ... ok\ntest_own_commit_and_managed_records_do_not_self_invalidate (test_control_workflow.WorkflowTests.test_own_commit_and_managed_records_do_not_self_invalidate) ... ok\ntest_policy_exception_persists_safe_error_without_rewriting_task (test_control_workflow.WorkflowTests.test_policy_exception_persists_safe_error_without_rewriting_task) ... ok\ntest_production_is_not_inferred_or_enabled (test_control_workflow.WorkflowTests.test_production_is_not_inferred_or_enabled) ... ok\ntest_publication_cannot_reuse_workspace_assessment (test_control_workflow.WorkflowTests.test_publication_cannot_reuse_workspace_assessment) ... ok\ntest_publication_requires_actual_recorded_commit (test_control_workflow.WorkflowTests.test_publication_requires_actual_recorded_commit) ... ok\ntest_publication_uses_actual_staged_set_not_uncommitted_intended_outputs (test_control_workflow.WorkflowTests.test_publication_uses_actual_staged_set_not_uncommitted_intended_outputs) ... ok\ntest_real_policy_invocation_and_unchanged_cache (test_control_workflow.WorkflowTests.test_real_policy_invocation_and_unchanged_cache) ... ok\ntest_resealed_cross_task_context_and_decision_forgery_rejected (test_control_workflow.WorkflowTests.test_resealed_cross_task_context_and_decision_forgery_rejected) ... ok\ntest_same_uuid_different_checkout_is_rejected (test_control_workflow.WorkflowTests.test_same_uuid_different_checkout_is_rejected) ... ok\ntest_schema_launcher_and_dependency_identity_are_freshness_inputs (test_control_workflow.WorkflowTests.test_schema_launcher_and_dependency_identity_are_freshness_inputs) ... ok\ntest_symlink_and_sensitive_paths_are_not_read (test_control_workflow.WorkflowTests.test_symlink_and_sensitive_paths_are_not_read) ... ok\n\n----------------------------------------------------------------------\nRan 26 tests in 60.071s\n\nOK\n"
+    },
+    "initial_run": {
+      "outcome": "failed",
+      "reason": "All19 test setups lacked AGENTS.md required by agentctl snapshot initialization; fixture corrected without changing runtime expectations."
+    },
+    "actual_task_observation": {
+      "outcome": "passed",
+      "record_id": "obs-44069a86d263491b9ba8ed1d5bd56b9e",
+      "decision": "allow",
+      "meaning": "Development intermediate snapshot; later source changes make it stale, not final acceptance."
+    },
+    "protected_execution": "not_run: outside P0/no authority",
+    "authenticated_identity": "not_run: declared reviewer IDs only",
+    "before_review_unit_tests": {
+      "outcome": "passed",
+      "tests_run": 21,
+      "failures": 0,
+      "errors": 0,
+      "method": "Dedicated .venv-controls Python3.12; real P0 policy calls with isolated fixture files and fixed mocked local Git metadata.",
+      "output": "test_age_is_explicit_and_refresh_preserves_old_record (test_control_workflow.WorkflowTests.test_age_is_explicit_and_refresh_preserves_old_record) ... ok\ntest_assessments_link_exact_record_and_remain_advisory (test_control_workflow.WorkflowTests.test_assessments_link_exact_record_and_remain_advisory) ... ok\ntest_content_scope_target_and_policy_changes_are_stale (test_control_workflow.WorkflowTests.test_content_scope_target_and_policy_changes_are_stale) ... ok\ntest_corrupt_record_is_error_not_success (test_control_workflow.WorkflowTests.test_corrupt_record_is_error_not_success) ... ok\ntest_deny_and_require_review_are_real_observations (test_control_workflow.WorkflowTests.test_deny_and_require_review_are_real_observations) ... ok\ntest_evaluator_accepts_correct_deny_without_permission (test_control_workflow.WorkflowTests.test_evaluator_accepts_correct_deny_without_permission) ... ok\ntest_governance_not_required_must_be_explicit_and_bounded (test_control_workflow.WorkflowTests.test_governance_not_required_must_be_explicit_and_bounded) ... ok\ntest_identity_conflict_and_forged_or_stale_references_rejected (test_control_workflow.WorkflowTests.test_identity_conflict_and_forged_or_stale_references_rejected) ... ok\ntest_limits_are_not_silently_truncated (test_control_workflow.WorkflowTests.test_limits_are_not_silently_truncated) ... ok\ntest_malicious_ids_and_paths_do_not_escape (test_control_workflow.WorkflowTests.test_malicious_ids_and_paths_do_not_escape) ... ok\ntest_missing_empty_and_unknown_scope_are_explicit (test_control_workflow.WorkflowTests.test_missing_empty_and_unknown_scope_are_explicit) ... ok\ntest_missing_file_marker_and_new_file_invalidate_cache (test_control_workflow.WorkflowTests.test_missing_file_marker_and_new_file_invalidate_cache) ... ok\ntest_missing_standing_authority_yields_deny_without_new_grant (test_control_workflow.WorkflowTests.test_missing_standing_authority_yields_deny_without_new_grant) ... ok\ntest_own_commit_and_managed_records_do_not_self_invalidate (test_control_workflow.WorkflowTests.test_own_commit_and_managed_records_do_not_self_invalidate) ... ok\ntest_policy_exception_persists_safe_error_without_rewriting_task (test_control_workflow.WorkflowTests.test_policy_exception_persists_safe_error_without_rewriting_task) ... ok\ntest_production_is_not_inferred_or_enabled (test_control_workflow.WorkflowTests.test_production_is_not_inferred_or_enabled) ... ok\ntest_publication_cannot_reuse_workspace_assessment (test_control_workflow.WorkflowTests.test_publication_cannot_reuse_workspace_assessment) ... ok\ntest_publication_requires_actual_recorded_commit (test_control_workflow.WorkflowTests.test_publication_requires_actual_recorded_commit) ... ok\ntest_publication_uses_actual_staged_set_not_uncommitted_intended_outputs (test_control_workflow.WorkflowTests.test_publication_uses_actual_staged_set_not_uncommitted_intended_outputs) ... ok\ntest_real_policy_invocation_and_unchanged_cache (test_control_workflow.WorkflowTests.test_real_policy_invocation_and_unchanged_cache) ... ok\ntest_symlink_and_sensitive_paths_are_not_read (test_control_workflow.WorkflowTests.test_symlink_and_sensitive_paths_are_not_read) ... ok\n\n----------------------------------------------------------------------\nRan 21 tests in 36.244s\n\nOK\n"
+    },
+    "review_remediation": {
+      "outcome": "passed",
+      "cases": [
+        "R1 resealed cross-task/context and decision forgery rejection by full reconstructed meaning and actual P0 replay.",
+        "R2 explicit governance/evaluator verdicts; unresolved remains review_pending/needs_followup/ok=false while accepted-deny remains visible.",
+        "Freshness includes launcher, all P0 schemas, requirements, declared profile, actual Python/package identity.",
+        "Same UUID in another checkout rejected; current deployment is same framework/repository root only.",
+        "Oversized records are explicit not_ready/workset_limit; no truncation."
+      ]
+    },
+    "lock_recovery": {
+      "outcome": "passed",
+      "tests_run": 3,
+      "output": "test_lock_is_preserved_and_external_verified_recovery_allows_retry (test_control_workflow.WorkflowTests.test_lock_is_preserved_and_external_verified_recovery_allows_retry) ... ok\ntest_policy_exception_persists_safe_error_without_rewriting_task (test_control_workflow.WorkflowTests.test_policy_exception_persists_safe_error_without_rewriting_task) ... ok\ntest_assessments_link_exact_record_and_remain_advisory (test_control_workflow.WorkflowTests.test_assessments_link_exact_record_and_remain_advisory) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 5.311s\n\nOK\n",
+      "procedure": "Never auto-delete locks. Operator verifies known child exit and OS PID absence (no os.kill on Windows), exact task-owned path and unchanged contents before manual removal; uncertain/live/reused PID stays locked. Immutable records are preserved."
+    },
+    "explicit_refresh": {
+      "outcome": "passed",
+      "tests_run": 7,
+      "output": "test_explicit_refresh_does_not_repair_symlink_or_invalid_index (test_control_workflow.WorkflowTests.test_explicit_refresh_does_not_repair_symlink_or_invalid_index) ... ok\ntest_explicit_refresh_handles_malformed_bytes_and_calls_real_policy (test_control_workflow.WorkflowTests.test_explicit_refresh_handles_malformed_bytes_and_calls_real_policy) ... ok\ntest_explicit_refresh_of_valid_record_starts_new_unreviewed_snapshot (test_control_workflow.WorkflowTests.test_explicit_refresh_of_valid_record_starts_new_unreviewed_snapshot) ... ok\ntest_explicit_refresh_recovers_legacy_record_without_reusing_reviews (test_control_workflow.WorkflowTests.test_explicit_refresh_recovers_legacy_record_without_reusing_reviews) ... ok\ntest_real_policy_invocation_and_unchanged_cache (test_control_workflow.WorkflowTests.test_real_policy_invocation_and_unchanged_cache) ... ok\ntest_age_is_explicit_and_refresh_preserves_old_record (test_control_workflow.WorkflowTests.test_age_is_explicit_and_refresh_preserves_old_record) ... ok\ntest_corrupt_record_is_error_not_success (test_control_workflow.WorkflowTests.test_corrupt_record_is_error_not_success) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 14.769s\n\nOK\n",
+      "semantics": "Explicit refresh appends newly measured unreviewed observation plus bounded prior ID/hash/validation trace. Default status/observe preserve invalid prior pointer; no prior record/evaluation is rewritten or reused. Unsafe path/index remains an error."
+    },
+    "publication_object_metadata": {
+      "outcome": "passed",
+      "tests_run": 11,
+      "output": "test_committed_metadata_includes_managed_deleted_and_tab_unicode_paths (test_control_workflow.WorkflowTests.test_committed_metadata_includes_managed_deleted_and_tab_unicode_paths) ... ok\ntest_publication_cannot_reuse_workspace_assessment (test_control_workflow.WorkflowTests.test_publication_cannot_reuse_workspace_assessment) ... ok\ntest_publication_changed_set_base_and_non_blob_are_checked (test_control_workflow.WorkflowTests.test_publication_changed_set_base_and_non_blob_are_checked) ... ok\ntest_publication_requires_actual_recorded_commit (test_control_workflow.WorkflowTests.test_publication_requires_actual_recorded_commit) ... ok\ntest_publication_uses_actual_staged_set_not_uncommitted_intended_outputs (test_control_workflow.WorkflowTests.test_publication_uses_actual_staged_set_not_uncommitted_intended_outputs) ... ok\ntest_real_git_assume_unchanged_cannot_substitute_worktree_bytes (test_control_workflow.WorkflowTests.test_real_git_assume_unchanged_cannot_substitute_worktree_bytes) ... ok\ntest_real_git_crlf_deletion_and_managed_files_use_commit_metadata (test_control_workflow.WorkflowTests.test_real_git_crlf_deletion_and_managed_files_use_commit_metadata) ... ok\ntest_real_policy_invocation_and_unchanged_cache (test_control_workflow.WorkflowTests.test_real_policy_invocation_and_unchanged_cache) ... ok\ntest_content_scope_target_and_policy_changes_are_stale (test_control_workflow.WorkflowTests.test_content_scope_target_and_policy_changes_are_stale) ... ok\ntest_missing_file_marker_and_new_file_invalidate_cache (test_control_workflow.WorkflowTests.test_missing_file_marker_and_new_file_invalidate_cache) ... ok\ntest_missing_standing_authority_yields_deny_without_new_grant (test_control_workflow.WorkflowTests.test_missing_standing_authority_yields_deny_without_new_grant) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 24.555s\n\nOK\n",
+      "basis": "Publication includes every actual staged/changed path, verified sole parent/base, NUL literal Git blob metadata and explicit deletions. No working-file reads, diff-clean shortcut, or blob-content reads. Workspace fingerprint behavior unchanged.",
+      "real_git_cases": [
+        "Assume-unchanged hides two LF worktree bytes from git diff, but observation binds committed one LF Git object and declared size.",
+        "CRLF worktree normalized blob size; actual deletion and managed Unicode/bracket filename represented by immutable commit metadata."
+      ],
+      "fixture_cleanup": "Initial assertions passed; two Windows Git read-only-object teardown failures fixed with bounded, verified fixture-only readonly-file cleanup."
+    },
+    "publication_object_metadata_initial": {
+      "outcome": "failed",
+      "tests_run": 11,
+      "output": "test_committed_metadata_includes_managed_deleted_and_tab_unicode_paths (test_control_workflow.WorkflowTests.test_committed_metadata_includes_managed_deleted_and_tab_unicode_paths) ... ok\ntest_publication_cannot_reuse_workspace_assessment (test_control_workflow.WorkflowTests.test_publication_cannot_reuse_workspace_assessment) ... ok\ntest_publication_changed_set_base_and_non_blob_are_checked (test_control_workflow.WorkflowTests.test_publication_changed_set_base_and_non_blob_are_checked) ... ok\ntest_publication_requires_actual_recorded_commit (test_control_workflow.WorkflowTests.test_publication_requires_actual_recorded_commit) ... ok\ntest_publication_uses_actual_staged_set_not_uncommitted_intended_outputs (test_control_workflow.WorkflowTests.test_publication_uses_actual_staged_set_not_uncommitted_intended_outputs) ... ok\ntest_real_git_assume_unchanged_cannot_substitute_worktree_bytes (test_control_workflow.WorkflowTests.test_real_git_assume_unchanged_cannot_substitute_worktree_bytes) ... ERROR\ntest_real_git_crlf_deletion_and_managed_files_use_commit_metadata (test_control_workflow.WorkflowTests.test_real_git_crlf_deletion_and_managed_files_use_commit_metadata) ... ERROR\ntest_real_policy_invocation_and_unchanged_cache (test_control_workflow.WorkflowTests.test_real_policy_invocation_and_unchanged_cache) ... ok\ntest_content_scope_target_and_policy_changes_are_stale (test_control_workflow.WorkflowTests.test_content_scope_target_and_policy_changes_are_stale) ... ok\ntest_missing_file_marker_and_new_file_invalidate_cache (test_control_workflow.WorkflowTests.test_missing_file_marker_and_new_file_invalidate_cache) ... ok\ntest_missing_standing_authority_yields_deny_without_new_grant (test_control_workflow.WorkflowTests.test_missing_standing_authority_yields_deny_without_new_grant) ... ok\n\n======================================================================\nERROR: test_real_git_assume_unchanged_cannot_substitute_worktree_bytes (test_control_workflow.WorkflowTests.test_real_git_assume_unchanged_cannot_substitute_worktree_bytes)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runtime\\tests\\test_control_workflow.py\", line 67, in cleanup\n    shutil.rmtree(self.root)\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 781, in rmtree\n    return _rmtree_unsafe(path, onexc)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 635, in _rmtree_unsafe\n    onexc(os.unlink, fullname, err)\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 633, in _rmtree_unsafe\n    os.unlink(fullname)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\Users\\\\dhyun\\\\Documents\\\\ChatGPT\\\\multi\\\\work\\\\workflow-test-pu82vhir\\\\.git\\\\objects\\\\1c\\\\3855dcfe5fba044765b5cadcfb54968f7d41ec'\n\n======================================================================\nERROR: test_real_git_crlf_deletion_and_managed_files_use_commit_metadata (test_control_workflow.WorkflowTests.test_real_git_crlf_deletion_and_managed_files_use_commit_metadata)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\runtime\\tests\\test_control_workflow.py\", line 67, in cleanup\n    shutil.rmtree(self.root)\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 781, in rmtree\n    return _rmtree_unsafe(path, onexc)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 635, in _rmtree_unsafe\n    onexc(os.unlink, fullname, err)\n  File \"C:\\Users\\dhyun\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\shutil.py\", line 633, in _rmtree_unsafe\n    os.unlink(fullname)\nPermissionError: [WinError 5] \uc561\uc138\uc2a4\uac00 \uac70\ubd80\ub418\uc5c8\uc2b5\ub2c8\ub2e4: 'C:\\\\Users\\\\dhyun\\\\Documents\\\\ChatGPT\\\\multi\\\\work\\\\workflow-test-4zen3u0f\\\\.git\\\\objects\\\\05\\\\c319264387a6c782f10c5e27e602ee36f98d0f'\n\n----------------------------------------------------------------------\nRan 11 tests in 24.300s\n\nFAILED (errors=2)\n",
+      "basis": "Publication uses full actual staged/changed path set, including managed records, sole verified commit parent/base, NUL local Git object metadata, explicit deletions. No blob reads or working-tree-byte substitution. Workspace byte fingerprints unchanged.",
+      "real_git_cases": [
+        "Committed one LF, assume-unchanged then worktree two LF; observation still binds committed object ID/size without opening product file.",
+        "CRLF working file normalizes to LF blob size, actual deletion represented explicitly, managed task report included."
+      ]
+    },
+    "publication_unicode_real_git": {
+      "outcome": "passed",
+      "tests_run": 1,
+      "output": "test_real_git_crlf_deletion_and_managed_files_use_commit_metadata (test_control_workflow.WorkflowTests.test_real_git_crlf_deletion_and_managed_files_use_commit_metadata) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 2.352s\n\nOK\n",
+      "path_case": "Managed Korean/bracket filename in the real Git fixture, plus CRLF and deletion; explicit literal pathspec and NUL metadata."
+    }
+  },
+  "file_sha256": {
+    "runtime/control_workflow.py": "1d548af4062dd9aa7e5185f3f81a00e3f474a207b3c199c4d26b6c9ce4774827",
+    "shared/schemas/control-workflow.schema.json": "552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39",
+    "runtime/tests/test_control_workflow.py": "b34b62006c7b3007187d536a4cd4562c684b45eac835780d9f50eee939835f62"
+  },
+  "remaining": [
+    "Independent review and parent integration/live final role assessment.",
+    "Parent submits and publishes; no source result/old snapshots changed by this worker."
+  ]
+}

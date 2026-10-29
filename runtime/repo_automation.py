@@ -92,7 +92,9 @@ def track(task_id, paths, root=a.ROOT):
                 value['paths'].append(name)
         value['paths'].sort()
         a.write_json(file, value)
-    return value
+    # Refresh advisory workspace state after the ownership lock is released.
+    observation = r._optional_observation(task_id, root, phase='workspace')
+    return {**value, 'observation': observation} if observation is not None else value
 
 
 def finish(task_id, root=a.ROOT):
@@ -159,6 +161,10 @@ def finish(task_id, root=a.ROOT):
                       'Unexpected commit parent; push stopped')
             value.update(phase='committed', commit=commit)
             a.write_json(file, value)
+        # A real created/retried commit is available here. This is observation,
+        # not an authorization gate: existing publication checks remain in force.
+        # The child only acquires its own observations lock, never this lock.
+        observation = r._optional_observation(task_id, root, phase='publication', commit=value['commit'])
         remote = remote_head(path, settings)
         a.require(remote in (value['base_head'], value['commit']), 'Remote changed; refusing history rewrite')
         if remote != value['commit']:
@@ -166,7 +172,7 @@ def finish(task_id, root=a.ROOT):
         a.require(remote_head(path, settings) == value['commit'], 'Remote confirmation failed')
         value.update(phase='pushed', pushed_at=a.now())
         a.write_json(file, value)
-        return value
+        return {**value, 'observation': observation} if observation is not None else value
 
 
 def startup(repo_id=None, task_id=None, root=a.ROOT, cwd=None, scope=None):

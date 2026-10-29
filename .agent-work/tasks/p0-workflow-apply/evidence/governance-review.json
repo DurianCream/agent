@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "p0-workflow-apply",
+  "scope": {"project": "multi", "service": "agent-framework", "environment": "development", "issue": "p0-workflow-application"},
+  "role": "policy-manager",
+  "role_version": "0.2.1",
+  "reviewer": {"subject_id": "governance-policy", "host_id": "local", "session_id": "governance-policy-p0-apply", "role": "policy-manager"},
+  "identity_authenticated": false,
+  "assessment_state": "actual_cli_assessment_recorded",
+  "recommendation": "proceed",
+  "recommendation_scope": "Proceed with the selected development P0 observation and role-handoff application under its declared advisory limits. This does not authorize a patch, publication or production effect.",
+  "risk": {"level": "low", "status": "bounded_advisory_assessment", "rationale": "The reviewed phase only inspects the declared task-owned development workset and produces non-executable observations; target content classification and authority remain declared and unverified."},
+  "initial_status": {"record_id": "obs-7b464631273b441b984bea0cf34507d1", "snapshot_digest": "sha256:55588071862ee27f121242a12106d22c9dd5628bd234f31d09dcb9fa2e16a978", "status": "stale", "reason_codes": ["stale_snapshot"], "decision": "allow", "executable": false, "authority_verified": false},
+  "bounded_findings": [
+    "The selected profile applies only to repository multi / agent-framework / development; the exact issue comes from the current task binding.",
+    "Checkpoint/track observe the declared owned workset through workspace.inspect; this does not authorize a patch or intercept all writes.",
+    "Publication observation is specified for an actual commit before an existing authorized push; it is separate from workspace assessment and preserves baseline, destination, ownership, non-force and host checks.",
+    "P0 outcomes are advisory and errors are explicit; continuing an independently authorized legacy action is not a new blocking gate.",
+    "Internal data classification, low risk and reversibility are profile declarations, not content scanning or authenticated facts.",
+    "Local actor/reviewer labels are unauthenticated; distinct labels do not establish trusted service identity or OS isolation.",
+    "An allow observation has executable=false and authority_verified=false and cannot serve as a grant, legal certification or P1/P2 enforcement evidence."
+  ],
+  "conditions": [
+    "Assess only a fresh current record bound to the frozen candidate and exact policy digest.",
+    "Keep development-only selection, exact existing Git standing authorization and host restrictions unchanged.",
+    "Report observation failures, stale state, declared metadata and unauthenticated identity without overstating assurance.",
+    "Obtain independent evaluator assessment for the same exact observation and linked governance record."
+  ],
+  "unresolved_obligations": [
+    "Candidate content sensitivity is not automatically verified by this P0 feature.",
+    "Protected identity, execution gating, credential isolation and organization-specific regulatory applicability are outside this application scope."
+  ],
+  "sources": ["core/policy-manager/instructions.md", ".agent-work/observation.json", ".agent-work/automation.json", "shared/policies/execution-controls.observe.json", "outputs/p0-workflow-apply/application.en.md", "shared/schemas/control-workflow.schema.json"],
+  "actual_commands": ["python runtime/repoctl.py startup --repo multi --project multi --service agent-framework --environment development --issue p0-workflow-application", "python runtime/control_integration.py status --task p0-workflow-apply", "python runtime/control_integration.py observe --task p0-workflow-apply --refresh", "python runtime/control_integration.py assess --task p0-workflow-apply --record obs-a828cb122665495fa909ac56ff6886f0 --input work/p0-workflow-apply/governance-assessment.json"],
+  "reviewed_record": {
+    "record_id": "obs-a828cb122665495fa909ac56ff6886f0",
+    "phase": "workspace",
+    "created_at": "2026-10-29T01:33:57Z",
+    "snapshot_digest": "sha256:de66d53e4b291e3406dbdd96ab2aeac9abcce1abfe1c1a2584a08da55d6ee818",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "record_digest": "sha256:1b3fb1eea5a757ceb9d77a7ca6f38cfc0cb7180f071302eb499cd61b1f295234",
+    "decision": "allow",
+    "reason_codes": ["within_declared_bounds"],
+    "content_checks": "not_performed",
+    "signature_verification": "not_performed"
+  },
+  "cli_assessment": {
+    "outcome": "recorded",
+    "created_at": "2026-10-29T01:35:34Z",
+    "assessment_id": "asm-dbd601531cfa4369aa4e1640c8ac52a4",
+    "assessment_digest": "sha256:24d735629e51fb8d9749e7fda71c95b039bced6e51072eb8223cabe93b860907",
+    "assessment": "proceed",
+    "reason_codes": ["bounds_confirmed"],
+    "status_after_call": "review_pending",
+    "assessment_status": "governance_only",
+    "identity_authenticated": false,
+    "executable": false,
+    "authority_verified": false,
+    "notes": "The workflow accepted this exact snapshot/policy binding while fresh. Actual independent evaluation is still required; review_pending was not represented as completed. Two preliminary bounded record-display helpers used incorrect top-level key locations, were corrected to snapshot scope/policy keys, and made no record changes."
+  },
+  "review_triggers": ["Changed workset, profile, target, policy, observer implementation or runtime identity", "Observation expiry or a newer selected record", "Scope/data/authority expansion", "Any proposed P1 gate or P2 enforcement claim"],
+  "next_action": "Independent evaluator must review and assess the same fresh observation with the recorded governance digest. Publication observation is a separate actual-commit record and must not inherit this workspace recommendation as authority."
+}

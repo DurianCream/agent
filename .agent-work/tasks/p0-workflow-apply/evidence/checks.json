@@ -1,0 +1,155 @@
+{
+  "outcome": "passed",
+  "checks": [
+    {
+      "id": "test_codex_settings",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 9,
+      "log_sha256": "b43bfb77e8285dc2d0632d64844357fdc473329c47ba9b10b5939075f4a028a5"
+    },
+    {
+      "id": "test_contract",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 29,
+      "log_sha256": "82e11ab49549a4d214d093d6cdf6815000b0548af25e6122e92f94da549d8c91"
+    },
+    {
+      "id": "test_control_contracts",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 39,
+      "log_sha256": "d92904716e59904f015780432c2c3a919c249ded6ab098e2fcb0b97399fcfd29"
+    },
+    {
+      "id": "test_control_policy",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 36,
+      "log_sha256": "f0449f48d96379fa52f2efdb0685ba738508659e3501b266edb7f9e61d4095d9"
+    },
+    {
+      "id": "test_controlctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 10,
+      "log_sha256": "4359ad09481a7b9efe71ae68380f3e73b50cae7416205d20615678536e20beb3"
+    },
+    {
+      "id": "test_context_checkpoint",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 29,
+      "log_sha256": "5fcf14e6001a8f05788ff122584200da02523af2ddd42cf5b99d0f8821ab0972"
+    },
+    {
+      "id": "test_control_integration",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 28,
+      "log_sha256": "73e1954b996d7410acc4813c47cb20288fb85ec82c52f70efb4ec11c1cabb383"
+    },
+    {
+      "id": "test_control_workflow",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 35,
+      "log_sha256": "21ee5c02ac2e1ef10ff51a27fbc9678bf855641d872e51f0b81917950443038a"
+    },
+    {
+      "id": "test_legacy_memory",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 8,
+      "log_sha256": "56494dd8340d0d4f1b8765a7ab05df4c6bf63ee7a4644acf65c83b48e0bbe7f7"
+    },
+    {
+      "id": "test_repo_automation",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 6,
+      "log_sha256": "e27a889b7a7c3f3f62318e2891a38f8276fef27440f19f7e8128bc0d86ff6c19"
+    },
+    {
+      "id": "test_repoctl",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 7,
+      "log_sha256": "a128388ade6fd9c063f2934f95046c0b2c5b50c6aa2540c2e46ad93fad26826a"
+    },
+    {
+      "id": "test_work_scope",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 9,
+      "log_sha256": "a81e1c9df916c677b75a01b4c75e4e7c2c6ca2872982d604b963c3e0950eddd0"
+    },
+    {
+      "id": "doctor",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 0,
+      "log_sha256": "a5918b6d6f5f7583f62d54c7d90038cfa672cc69084c4d6af6fb9b905e23f87e"
+    },
+    {
+      "id": "sync-check",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 0,
+      "log_sha256": "beb9eb904d45229f376e21f89f8ab84df7e9f3e5f78f112eb17664436702df2f"
+    },
+    {
+      "id": "live-checkpoint",
+      "outcome": "passed",
+      "exit_code": 0,
+      "tests": 0,
+      "log_sha256": "2b6ac5eabca79c23508f8ddf844fb848a667fe8ba1ac24a817aa2fd798d859d2"
+    },
+    {
+      "id": "historical-compatibility",
+      "outcome": "passed",
+      "tests": 0,
+      "detail": "Prior submitted work and result1.0 unchanged."
+    }
+  ],
+  "test_total": 245,
+  "source_hashes": {
+    ".agent-work/observation.json": "a6bddd09d253b86cb2c06742f5567310ac7ad67616011750d632ffd6e76ec664",
+    ".codex/agents/evaluator.toml": "40005591dd8eccb027e5d812e19c56d393d389539afe09cbfe36134b4407912c",
+    ".codex/agents/orchestrator.toml": "a2dcaee2f97adba5f4cc2f7eb66cf4050da1d3880820f016a91434e3b246b132",
+    ".codex/agents/policy-manager.toml": "0056b416468c249bfb5d54ccb2adcfada61145a85d2b374af5a4a856e342379d",
+    ".gitignore": "af9a727f02ffb0b958b1079f71e29edacdefd915f75b0ec940173d60f25b4baa",
+    "README.md": "1f3e9b99cfba980a1a95494faeefa99a9b33ac942483bc90584accf3a55bdda1",
+    "core/evaluator/instructions.md": "ddcc1019b8121ba0fc579a54d673e6d49a233a973d3caf39b60d34ff4bd76434",
+    "core/evaluator/module.json": "e93ba55047876dfe1e4a8c28f9474af887c2c0825182a3b1905625e7b25d835b",
+    "core/orchestrator/instructions.md": "0506935ff9152af25669fda820d9aa30c1aa0963476bc25196999b14f7f1c27e",
+    "core/orchestrator/module.json": "81884ed99871789f2a70ef63640d3ab875e3b2eb75cfe20be251fcd3ff5c2c9c",
+    "core/policy-manager/instructions.md": "61549ef90a506c264bd26524f930ae7e0bae939a43c0eb72ad1b1b4c0583be49",
+    "core/policy-manager/module.json": "94e622266c50bb47713b8afb494b3e39269d19b291f27e92d1295300abf13f0a",
+    "docs/P0-\uc2e4\ud589\ud1b5\uc81c-\uc0ac\uc6a9\uc548\ub0b4.md": "a0937fe47878234374101bdeb133c9b4a4e12e8f23a61692ad62b82e3d7c9388",
+    "runtime/control_integration.py": "2b0cec9e9c217c9eb8e0c5712e4512e3bf5aee956809d6366dec7ca1588b148b",
+    "runtime/control_workflow.py": "1d548af4062dd9aa7e5185f3f81a00e3f474a207b3c199c4d26b6c9ce4774827",
+    "runtime/native-map.json": "0e97e3b8aba82b04b8fdf7a71519487a96ed89cb33036d812c58de109e3d88b8",
+    "runtime/repo_automation.py": "94f914ed102e26af0d4eb4a79384834bd7bf18f690d2ceb9436400c5e8721db9",
+    "runtime/repoctl.py": "cf3bfda0e6cb08bdad7420092af802088a4f344a003c76276c8fcd85942d87e9",
+    "runtime/tests/test_control_integration.py": "a2b5e2d2baa4f656de955cec7583a610061582d48ccb73b36193ca2ff105edea",
+    "runtime/tests/test_control_workflow.py": "b34b62006c7b3007187d536a4cd4562c684b45eac835780d9f50eee939835f62",
+    "shared/schemas/control-workflow.schema.json": "552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39"
+  },
+  "strategy": "Each unittest module in a fresh process with guarded workspace TEMP. P0 tests use the project observer environment; context-hook tests use the configured bundled interpreter. Local bare Git fixture tests run in the approved test environment.",
+  "focused_rerun": [
+    "test_context_checkpoint.py",
+    "test_control_workflow.py",
+    "test_control_integration.py",
+    "test_repoctl.py",
+    "test_repo_automation.py",
+    "test_legacy_memory.py",
+    "test_work_scope.py"
+  ],
+  "initial_failure_note": "Initial context forced-termination test failed under the venv redirector; the exact case passed under the configured bundled hook interpreter. Initial no-config copied-runtime test exposed an unconditional optional import and was fixed. Original failure logs retained.",
+  "limits": [
+    "Selected lifecycle observation and declared assessment consistency only; not authenticated execution or a P1 gate.",
+    "Live governance/evaluator assessments are captured separately after source freeze."
+  ]
+}

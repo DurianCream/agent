@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "evaluator",
   "name": "Evaluator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Independently assess correctness, evidence, regressions, and uncertainty without granting execution authority.",

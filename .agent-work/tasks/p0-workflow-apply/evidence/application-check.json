@@ -1,0 +1,104 @@
+{
+  "outcome": "passed",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-workflow-application"
+  },
+  "profile": {
+    "schema_version": "0.1.0",
+    "enabled": true,
+    "repository_id": "multi",
+    "selector": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development"
+    },
+    "interpreter": {
+      "windows": ".venv-controls/Scripts/python.exe",
+      "posix": ".venv-controls/bin/python"
+    },
+    "timeout_seconds": 30,
+    "max_age_seconds": 300,
+    "policy_path": "shared/policies/execution-controls.observe.json",
+    "target": {
+      "data_classification": "internal",
+      "risk_level": "low",
+      "reversible": true
+    }
+  },
+  "actual_result_at_assessment": {
+    "record_id": "obs-a828cb122665495fa909ac56ff6886f0",
+    "snapshot_digest": "sha256:de66d53e4b291e3406dbdd96ab2aeac9abcce1abfe1c1a2584a08da55d6ee818",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "created_at": "2026-10-29T01:33:57Z",
+    "expires_at": "2026-10-29T01:38:57Z",
+    "phase": "workspace",
+    "content_basis": "working-tree-bytes",
+    "workset_files_verified": 23,
+    "governance_assessment_id": "asm-dbd601531cfa4369aa4e1640c8ac52a4",
+    "governance_digest": "sha256:24d735629e51fb8d9749e7fda71c95b039bced6e51072eb8223cabe93b860907",
+    "governance_recommendation": "proceed",
+    "evaluator_assessment_id": "asm-b7f21cb618a34e7db12bdd96cdd882be",
+    "evaluator_digest": "sha256:abc277a044194e6f9a6e6154916800a6a33f02363cdbf64dd764cf3988f23318",
+    "evaluator_assessment": "accepted",
+    "reviewer": {
+      "subject_id": "review-saved-work",
+      "host_id": "local",
+      "session_id": "review-saved-work-p0-apply",
+      "role": "evaluator"
+    },
+    "assessment_input": "work/p0-workflow-apply/evaluator-assessment.json",
+    "result_status": "observed",
+    "assessment_status": "complete",
+    "executable": false,
+    "authority_verified": false,
+    "identity_authenticated": false,
+    "meaning": "Accepted for the inspected P0 implementation and workspace observation, not execution permission or approval of a later commit. This assessment is historical after its expiry or relevant snapshot change."
+  },
+  "current_status_at_packaging": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "mode": "observe",
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "stale_age"
+    ],
+    "record_id": "obs-a828cb122665495fa909ac56ff6886f0",
+    "snapshot_digest": "sha256:de66d53e4b291e3406dbdd96ab2aeac9abcce1abfe1c1a2584a08da55d6ee818",
+    "status": "stale",
+    "task_id": "p0-workflow-apply"
+  },
+  "live_records": {
+    "observation": {
+      "id": "obs-a828cb122665495fa909ac56ff6886f0",
+      "sha256": "58133684331f33e8f5899004419afb11e8d8d693ed5dc63d6a4f8d61db721c6a"
+    },
+    "governance": {
+      "id": "asm-dbd601531cfa4369aa4e1640c8ac52a4",
+      "sha256": "a10a1b29d177350000937a67297d640e6606534fcda1666e9a773c8587aef278"
+    },
+    "evaluator": {
+      "id": "asm-b7f21cb618a34e7db12bdd96cdd882be",
+      "sha256": "f5399ceed53f933590104d0e65bfaf6a5cbf057361b4b54f5fc5c1d56ea2f30c"
+    }
+  },
+  "hooks": [
+    "checkpoint before record lock",
+    "track after manifest lock",
+    "actual commit before authorized push"
+  ],
+  "environment": "Project-local .venv-controls, Python3.12.14, pinned10dependencies; no global installation.",
+  "limits": [
+    "Same-checkout selected development scope only.",
+    "Successful historical assessment is not relabelled as current after stale_age; actual recorded evidence is preserved.",
+    "Declared local identity, no authentication or execution permission.",
+    "Publication observation is appended after commit and stays separate from sealed workspace evidence."
+  ]
+}
