@@ -17,7 +17,13 @@ import repo_automation as auto
 import control_gate as g
 
 
-class GateTests(unittest.TestCase):
+class GateFixture:
+    def before_initial_commit(self):
+        pass
+
+    def after_initial_commit(self):
+        pass
+
     def setUp(self):
         source = Path(a.__file__).resolve().parents[1]
         fixture_base = source / 'work/gate-fixtures'
@@ -46,8 +52,10 @@ class GateTests(unittest.TestCase):
             'author': {'subject': 'author', 'session': 'author-session'}}
         a.write_json(self.root / g.CONFIG, self.profile)
         (self.root / 'product.txt').write_text('before\n')
+        self.before_initial_commit()
         r.git(self.root, 'add', '--', '.')
         r.git(self.root, 'commit', '-q', '-m', 'baseline')
+        self.after_initial_commit()
         a.init_task('coding', 'gate-task', 'Gate fixture', ['Verify gates'], self.root)
         r.bind('sample', 'gate-task', self.root, scope={**self.profile['selector'], 'issue': 'gate'})
         self.run = self.root / 'runs/gate-task'
@@ -95,6 +103,8 @@ class GateTests(unittest.TestCase):
         self.execute()
         self.review()
 
+
+class GateTests(GateFixture, unittest.TestCase):
     def test_valid_gate_and_readonly_validation(self):
         self.ready()
         self.assertEqual(g.check_submission('gate-task', self.root)['status'], 'passed')
@@ -380,6 +390,133 @@ class GateTests(unittest.TestCase):
         a.write_json(self.run / 'publication.json', publication)
         with self.assertRaisesRegex(a.ContractError, 'path set'):
             g.check_publication('gate-task', self.root, commit, publication)
+
+
+class MixedPublicationTests(GateFixture, unittest.TestCase):
+    def before_initial_commit(self):
+        (self.root / 'runtime/legacy.py').write_bytes(b'legacy = 1\r\n')
+        (self.root / 'runtime/normalized.py').write_bytes(b'normalized = 1\n')
+
+    def after_initial_commit(self):
+        r.git(self.root, 'config', 'core.autocrlf', 'true')
+        (self.root / 'runtime/normalized.py').write_bytes(b'normalized = 1\r\n')
+
+    def test_real_publication_accepts_mixed_stored_representations(self):
+        self.assertNotEqual(g._blob(self.root, 'runtime/legacy.py'), g._blob(self.root, 'runtime/legacy.py', 'HEAD'))
+        self.assertEqual(g._blob(self.root, 'runtime/normalized.py'), g._blob(self.root, 'runtime/normalized.py', 'HEAD'))
+        GateTests.test_actual_commit_with_canonical_generated_records(self)
+
+
+class DependencyRepresentationTests(unittest.TestCase):
+    def setUp(self):
+        source = Path(a.__file__).resolve().parents[1]
+        folder = source / 'work/gate-representation-fixtures'
+        folder.mkdir(parents=True, exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(dir=folder)
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        subprocess.run(['git', 'init', '-q', '-b', 'main', str(self.root)], check=True)
+        r.git(self.root, 'config', 'user.name', 'Fixture')
+        r.git(self.root, 'config', 'user.email', 'fixture@example.invalid')
+        r.git(self.root, 'config', 'core.autocrlf', 'false')
+        (self.root / 'runtime').mkdir()
+        (self.root / 'runtime/legacy.py').write_bytes(b'value = 1\r\n')
+        (self.root / 'runtime/normal.py').write_bytes(b'value = 2\n')
+        r.git(self.root, 'add', '--', 'runtime')
+        r.git(self.root, 'commit', '-q', '-m', 'Mixed stored bytes')
+        r.git(self.root, 'config', 'core.autocrlf', 'true')
+        (self.root / 'runtime/normal.py').write_bytes(b'value = 2\r\n')
+
+    def item(self, name='runtime/legacy.py'):
+        file = self.root / name
+        return {'path': name, 'sha256': a.digest(file.read_bytes()) if file.exists() else None,
+                'mode': g._blob(self.root, name).get('mode')}
+
+    def test_stored_crlf_exact_raw_fallback(self):
+        item = self.item()
+        self.assertNotEqual(g._blob(self.root, item['path']), g._blob(self.root, item['path'], 'HEAD'))
+        self.assertTrue(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_normal_lf_commit_crlf_worktree_uses_canonical_match(self):
+        item = self.item('runtime/normal.py')
+        raw = subprocess.check_output(['git', 'show', 'HEAD:runtime/normal.py'], cwd=self.root)
+        self.assertNotEqual(a.digest(raw), item['sha256'])
+        self.assertTrue(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_changed_content_is_rejected(self):
+        (self.root / 'runtime/legacy.py').write_bytes(b'value = 999\r\n')
+        self.assertFalse(g._dependency_matches(self.root, self.item(), 'HEAD'))
+
+    def test_changed_pinned_bytes_are_rejected(self):
+        item = self.item()
+        (self.root / item['path']).write_bytes(b'value = 1\n')
+        self.assertFalse(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_changed_mode_is_rejected(self):
+        item = self.item()
+        r.git(self.root, 'update-index', '--chmod=+x', '--', item['path'])
+        r.git(self.root, 'commit', '-q', '-m', 'Changed mode')
+        self.assertFalse(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_deleted_dependency_requires_committed_deletion(self):
+        file = self.root / 'runtime/legacy.py'
+        file.unlink()
+        item = self.item()
+        self.assertFalse(g._dependency_matches(self.root, item, 'HEAD'))
+        r.git(self.root, 'add', '--', item['path'])
+        r.git(self.root, 'commit', '-q', '-m', 'Delete dependency')
+        self.assertTrue(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_missing_mode_binding_is_rejected(self):
+        item = self.item(); item.pop('mode')
+        self.assertFalse(g._dependency_matches(self.root, item, 'HEAD'))
+
+    def test_non_regular_git_object_is_rejected(self):
+        item = self.item()
+        oid = r.git(self.root, 'rev-parse', 'HEAD:' + item['path'])
+        r.git(self.root, 'update-index', '--cacheinfo', '120000,' + oid + ',' + item['path'])
+        r.git(self.root, 'commit', '-q', '-m', 'Unsupported link object')
+        with self.assertRaises(a.ContractError):
+            g._dependency_matches(self.root, item, 'HEAD')
+
+    def test_reviewed_owned_historic_crlf_and_normal_content(self):
+        for name in ('runtime/legacy.py', 'runtime/normal.py'):
+            with self.subTest(name=name):
+                entry = g._reviewed_blob(self.root, name)
+                self.assertTrue(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+
+    def test_reviewed_changed_historic_crlf_commit(self):
+        name = 'runtime/legacy.py'
+        (self.root / name).write_bytes(b'value = 7\r\n')
+        entry = g._reviewed_blob(self.root, name)
+        r.git(self.root, 'add', '--', name)
+        r.git(self.root, 'commit', '-q', '-m', 'Changed historical CRLF')
+        self.assertNotEqual(entry['oid'], g._blob(self.root, name, 'HEAD')['oid'])
+        self.assertTrue(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+
+    def test_reviewed_owned_wrong_committed_bytes_rejected(self):
+        name = 'runtime/legacy.py'
+        entry = g._reviewed_blob(self.root, name)
+        original = (self.root / name).read_bytes()
+        (self.root / name).write_bytes(b'value = 999\r\n')
+        r.git(self.root, 'add', '--', name)
+        r.git(self.root, 'commit', '-q', '-m', 'Wrong committed bytes')
+        (self.root / name).write_bytes(original)
+        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+
+    def test_reviewed_owned_postreview_raw_change_rejected(self):
+        name = 'runtime/normal.py'
+        entry = g._reviewed_blob(self.root, name)
+        (self.root / name).write_bytes(b'value = 2\n')
+        self.assertEqual(entry['oid'], g._blob(self.root, name)['oid'])
+        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+
+    def test_reviewed_owned_mode_change_rejected(self):
+        name = 'runtime/legacy.py'
+        entry = g._reviewed_blob(self.root, name)
+        r.git(self.root, 'update-index', '--chmod=+x', '--', name)
+        r.git(self.root, 'commit', '-q', '-m', 'Changed reviewed mode')
+        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
 
 
 if __name__ == '__main__':

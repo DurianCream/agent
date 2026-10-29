@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p1-publication-repair",
+  "saved_at": "2026-10-29T14:40:44+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "01fbaaf717add7ecffc7a8b8d331163d90e16f79",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M runtime/control_gate.py\n M runtime/tests/test_control_gate.py\n?? .agent-work/tasks/p1-publication-repair/",
+    "worktree_sha256": "214892fb2fa8e65a945ef3591cb05392d077adf8f89b1b6c21e727579d9d9361"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p1-publication-repair",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.6"
+    },
+    "created_at": "2026-10-29T14:17:18+09:00",
+    "objective": "Repair mixed Git line-ending publication comparison without changing sealed prior tasks and verify actual gated publication",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Exact raw and valid canonical representations pass while changed content and modes fail",
+        "required": true,
+        "verification_ids": [
+          "diagnosis",
+          "focused",
+          "live",
+          "review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Prior blocked commit and submitted records remain preserved and recovery is documented",
+        "required": true,
+        "verification_ids": [
+          "diagnosis",
+          "focused",
+          "live",
+          "review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Focused tests and independent review pass and the repaired gate verifies real publication",
+        "required": true,
+        "verification_ids": [
+          "diagnosis",
+          "focused",
+          "live",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "실제 게시에서 발견한 CRLF 원본·Git 정규화 비교 오탐을 수정하고, 새 P1 등록 작업에서 시험과 독립 검토를 완료했다.",
+    "work": [
+      "의존 파일 82개의 시험 원본과 커밋을 대조해 내용 변경 없이 발생한 비교 오탐을 확인했다.",
+      "파일 종류·모드를 확인한 뒤 검토한 원본 SHA 또는 정확한 Git 정규화 일치로 판정하도록 수정했다.",
+      "이전 보류 커밋 7821707과 제출 증거를 보존하고 마지막 게시 01fbaaf에서 별도 작업을 시작했다.",
+      "이 새 작업의 실제 P1 필수 시험과 독립 검토를 완료하고 최종 결과·산출물·증거를 확정했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p1-publication-repair/recovery.en.md",
+        "description": "게시 비교 수정 및 복구 명세",
+        "sha256": "9e651b67d73b5c1ce2ac1d6df68873dff05c161d371f9cf8d949cdb0c934b870"
+      },
+      {
+        "path": "outputs/p1-publication-repair/recovery.ko.md",
+        "description": "P1 실제 게시 복구 안내",
+        "sha256": "7460fd63710338159cc6d2b11df5c1235af8da8d24925e5b091d9d1eac2f5e34"
+      }
+    ],
+    "verification": [
+      {
+        "id": "diagnosis",
+        "name": "실패 원인과 이전 증거 보존",
+        "method": "기존 봉인·커밋 원본 해시 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-publication-repair/evidence/diagnosis.json"
+        ],
+        "notes": "이전 게시 시도는 실패로 보존한다."
+      },
+      {
+        "id": "focused",
+        "name": "표현·변조 회귀 검사",
+        "method": "혼합 줄바꿈과 다른 내용·모드 거부 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-publication-repair/evidence/repair-author.json"
+        ],
+        "notes": "정확한 원본 일치와 Git 정규화 일치를 구분한다."
+      },
+      {
+        "id": "live",
+        "name": "실제 설정된 P1 시험",
+        "method": "새 작업의 실제 gate run-tests 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-publication-repair/evidence/suite-check.json"
+        ],
+        "notes": "로컬 후보 실행이며 신뢰된 격리 실행기는 아니다."
+      },
+      {
+        "id": "review",
+        "name": "독립 검토",
+        "method": "작성하지 않은 evaluator의 수정·실행 증거 검증",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-publication-repair/evidence/independent-review.json"
+        ],
+        "notes": "최종 평가 등록 뒤 봉인 대상은 수정하지 않는다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "이전 활성화 작업은 게시 실패 상태로 보존하며 새 복구 작업이 이를 대체한다.",
+      "커밋 후 게시 영수증·원격 확인 및 원래 체크아웃 반영은 별도 로컬 사후 기록에 남긴다.",
+      "로컬 CLI 검사이며 직접 Git 우회, 동일 사용자 전체 원장 변조, 호스트·자격증명 격리는 별도 범위다."
+    ],
+    "next_actions": [
+      "새 작업은 P1 필수 시험·독립 평가·제출·게시 경로를 사용한다.",
+      "게시 영수증과 원격 커밋을 확인하고 보류 브랜치를 유지한 채 원래 main에 검증된 커밋을 반영한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\work\\p1-gate-repair-repo",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-publication-representation-repair"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-97e60252fdca46b186dc8d33632578cc",
+    "snapshot_digest": "sha256:e4e1fe0acf536ca2002b6618f25dc4f5df9b993e95bb0a9ad2873c9bcf5d9db7",
+    "status": "review_pending",
+    "task_id": "p1-publication-repair",
+    "mode": "observe"
+  },
+  "spec_sha256": "74a448448e3658a03803f11517b0458f76289a40f0d0315bfef3e70427d798e4"
+}

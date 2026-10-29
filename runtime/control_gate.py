@@ -229,6 +229,62 @@ def _environment(root):
     return output
 
 
+def _reviewed_blob(root, name):
+    entry = _blob(root, name)
+    entry['raw_sha256'] = (a.digest(a.relative(root, name, file=True).read_bytes())
+                           if entry['state'] == 'file' else None)
+    return entry
+
+
+def _committed_raw_matches(root, committed, expected):
+    size = int(_git(root, 'cat-file', '-s', committed['oid']))
+    a.require(0 <= size <= MAX_BYTES, 'P1 committed object exceeds size limit')
+    process = subprocess.run(['git', 'cat-file', 'blob', committed['oid']], cwd=root,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+    a.require(process.returncode == 0 and len(process.stdout) == size,
+              'P1 committed object could not be read exactly')
+    return a.digest(process.stdout) == expected
+
+
+def _reviewed_blob_matches(root, item, commit):
+    # Recheck both raw bytes and Git representation; never accept a changed
+    # candidate just because one earlier representation still exists in Git.
+    if _reviewed_blob(root, item['path']) != item:
+        return False
+    committed = _blob(root, item['path'], commit)
+    if committed['state'] != item['state']:
+        return False
+    if item['state'] == 'deleted':
+        return item['raw_sha256'] is None
+    if committed['mode'] != item['mode']:
+        return False
+    return (committed['oid'] == item['oid'] or
+            _committed_raw_matches(root, committed, item['raw_sha256']))
+
+
+def _dependency_matches(root, item, commit):
+    """Match reviewed bytes or their Git-clean representation, preserving mode.
+
+    Existing CRLF blobs can remain in an index after autocrlf is enabled. Their
+    raw bytes were tested even though a new clean-filter pass yields another OID.
+    Do not rewrite the index or relax either the reviewed SHA or object checks.
+    """
+    current = _blob(root, item['path'])
+    committed = _blob(root, item['path'], commit)
+    if item['sha256'] is None:
+        return item.get('mode') is None and current['state'] == committed['state'] == 'deleted'
+    if current['state'] != 'file' or committed['state'] != 'file':
+        return False
+    if item.get('mode') not in ('100644', '100755') or current['mode'] != item['mode'] or committed['mode'] != item['mode']:
+        return False
+    source = a.relative(root, item['path'], file=True)
+    if a.digest(source.read_bytes()) != item['sha256']:
+        return False
+    if committed == current:
+        return True
+    return _committed_raw_matches(root, committed, item['sha256'])
+
+
 def candidate(task_id, root=a.ROOT):
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
@@ -243,19 +299,28 @@ def candidate(task_id, root=a.ROOT):
     product = sorted(name for name in paths if name not in _managed(task_id) and not _evidence_path(name, task_id))
     a.require(product, 'P1 candidate has no reviewed product files')
     dependencies = []
+    index_modes = {}
+    for row in filter(None, _git(root, 'ls-files', '--stage', '-z', raw=True).split('\0')):
+        metadata, name = row.split('\t', 1)
+        mode, _, stage = metadata.split()
+        a.require(stage == '0', 'P1 unresolved index conflict')
+        index_modes[name] = mode
+    native_modes = os.name != 'nt' and _git(root, 'config', '--get', 'core.filemode', optional=True) == 'true'
     source_names = set(filter(None, _git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z', raw=True).split('\0')))
     for name in sorted(source_names):
         if name.startswith(('runtime/', 'shared/', 'core/', 'modules/', '.codex/', '.agents/')) or name in ('registry.json', 'AGENTS.md', '.gitattributes', '.gitignore'):
             safe = a.relative(root, name)
             if not safe.exists():
-                dependencies.append({'path': name, 'sha256': None})
+                dependencies.append({'path': name, 'sha256': None, 'mode': None})
             else:
                 a.require(safe.is_file() and safe.stat().st_size <= MAX_BYTES, 'P1 dependency unsupported')
-                dependencies.append({'path': name, 'sha256': a.digest(safe.read_bytes())})
+                mode = ('100755' if safe.stat().st_mode & 0o111 else '100644') if native_modes else index_modes.get(name, '100644')
+                a.require(mode in ('100644', '100755'), 'P1 unsupported dependency mode')
+                dependencies.append({'path': name, 'sha256': a.digest(safe.read_bytes()), 'mode': mode})
     value = {'schema_version': VERSION, 'task_id': task_id, 'enrollment_digest': _hash(enrollment),
              'binding': enrollment['binding'], 'base_head': enrollment['base_head'],
              'environment': _environment(root),
-             'dependencies': dependencies, 'entries': [_blob(root, name) for name in product]}
+             'dependencies': dependencies, 'entries': [_reviewed_blob(root, name) for name in product]}
     return {'digest': _hash(value), 'candidate': value}
 
 
@@ -445,7 +510,7 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
         a.require(a.digest(a.relative(root, artifact['path'], file=True).read_bytes()) in reviewed_hashes,
                   'P1 artifact was not bound by review evidence')
     _, _, publication = _context(task_id, root)
-    record_entries = [_blob(root, name) for name in sorted(publication['paths']) if _evidence_path(name, task_id)]
+    record_entries = [_reviewed_blob(root, name) for name in sorted(publication['paths']) if _evidence_path(name, task_id)]
     for item in record_entries:
         a.require(item['state'] == 'file' and a.digest(a.relative(root, item['path'], file=True).read_bytes()) in reviewed_hashes,
                   'P1 archive is not an exact reviewed evidence copy')
@@ -562,15 +627,15 @@ def check_publication(task_id, root=a.ROOT, commit=None, publication=None):
               'P1 commit path set differs from submitted ownership')
     _check_generated(task_id, root, enrollment, actual)
     for item in seal['candidate']['candidate']['entries'] + seal['record_entries']:
-        a.require(_blob(root, item['path'], commit) == item, 'P1 commit content differs from submitted candidate')
+        a.require(_reviewed_blob_matches(root, item, commit), 'P1 commit content differs from submitted candidate')
     for item in seal['candidate']['candidate']['dependencies']:
-        a.require(_blob(root, item['path'], commit) == _blob(root, item['path']),
+        a.require(_dependency_matches(root, item, commit),
                   'P1 committed dependency differs from tested source')
     # Generated records are checked against current canonical lifecycle outputs,
     # separately from reviewed product files and sealed evidence archives.
     for name in actual:
         if name in _managed(task_id) or name == '.agent-work/automation.json':
-            a.require(_blob(root, name, commit) == _blob(root, name), 'P1 generated record differs from commit')
+            a.require(_reviewed_blob_matches(root, _reviewed_blob(root, name), commit), 'P1 generated record differs from commit')
     receipt = {'schema_version': VERSION, 'task_id': task_id, 'commit': commit,
                'seal_digest': _hash(seal), 'candidate_digest': seal['candidate']['digest'],
                'status': 'passed', 'assurance': 'local-cooperating-cli', 'checked_at': a.now()}

@@ -1,0 +1,104 @@
+{
+  "task_id": "p1-publication-repair",
+  "scope": {
+    "repository_id": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-publication-representation-repair"
+  },
+  "role": "evaluator",
+  "reviewer": {
+    "subject": "independent-evaluator",
+    "session": "p1-repair-review"
+  },
+  "assessment": "accepted",
+  "outcome": "passed",
+  "reviewed_files": {
+    "runtime/control_gate.py": "dc2dd53f2ae97e6260e28415c16e6479ae1d494b08f816d511a30dd4e95b244e",
+    "runtime/tests/test_control_gate.py": "ce48a6a047fb287092bcd37d4c6c5d563c2ba35d471d055cc182cba58c250197",
+    "outputs/p1-publication-repair/recovery.en.md": "9e651b67d73b5c1ce2ac1d6df68873dff05c161d371f9cf8d949cdb0c934b870",
+    ".agent-work/tasks/p1-publication-repair/recovery.en.md": "9e651b67d73b5c1ce2ac1d6df68873dff05c161d371f9cf8d949cdb0c934b870",
+    "outputs/p1-publication-repair/recovery.ko.md": "7460fd63710338159cc6d2b11df5c1235af8da8d24925e5b091d9d1eac2f5e34",
+    ".agent-work/tasks/p1-publication-repair/recovery.ko.md": "7460fd63710338159cc6d2b11df5c1235af8da8d24925e5b091d9d1eac2f5e34",
+    "runs/p1-publication-repair/evidence/diagnosis.json": "70e0671afc1d25ba80cf757ea637ef87c0988c99ebb249a3d619c12942f0a987",
+    "runs/p1-publication-repair/evidence/repair-author.json": "03a00b3407be0566bd0d5b6b731e0b9aac61c258b298f2e73bfa2cd88791b707",
+    "runs/p1-publication-repair/evidence/suite-check.json": "bf449feb5132c7b5def8360f70362e3203a3e64e8bc7b3c1659f45366d9402c5"
+  },
+  "candidate_digest": "5954f9ed6db7952ac02d9023f8cf11e1b12ee0145566ce1c19a26c8ee8401a0a",
+  "baseline_commit": "01fbaaf717add7ecffc7a8b8d331163d90e16f79",
+  "criterion_results": [
+    {
+      "criterion": "criterion-1",
+      "outcome": "passed",
+      "detail": "Pinned current raw bytes, path, state, object type and mode are checked before exact canonical-OID or exact committed-raw-SHA acceptance. Dependency, owned product/archive and checkpoint-bound generated paths retain their separate bindings. Wrong content, postreview raw changes, modes and unsupported object types are rejected."
+    },
+    {
+      "criterion": "criterion-2",
+      "outcome": "passed",
+      "detail": "Original pending commit and backup branch verified at 7821707; original submitted result, controls, submission seal and all 82 reviewed source raw hashes are unchanged. Recovery documentation uses a fresh enrolled task and does not reinterpret the old task as published."
+    },
+    {
+      "criterion": "criterion-3",
+      "outcome": "passed",
+      "detail": "Focused author tests, independent probes and actual mandatory suite passed for the current candidate. This is prepublication implementation/candidate acceptance; real repaired commit/push receipt remains a subsequent operation and is not claimed completed here."
+    }
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "REP01",
+      "description": "Historical committed CRLF bytes were incorrectly compared only with freshly normalized worktree OID. Exact reviewed raw equivalence now supplements canonical equivalence without skipping mode/type/content checks."
+    },
+    {
+      "id": "REP02",
+      "description": "The same defect affected existing owned CRLF products and archives. The genuine mixed-representation fixture was retained; pinned raw hashes and the same strict equivalence now cover these paths."
+    }
+  ],
+  "tests": {
+    "author_targeted": {
+      "count": 14,
+      "log": "runs/p1-publication-repair/evidence/repair-targeted-final.log",
+      "sha256": "8abe4fc9a8367c32146666f1c69198298057d77023cb0a70aeb7e24e0153b465"
+    },
+    "independent": {
+      "count": 4,
+      "log": "runs/p1-publication-repair/evidence/independent-representation-final.log",
+      "sha256": "87dc0ab6c783e0fb8692ebbd937bf609bf7ae580cda2bea8443e81cf798981f4",
+      "cases": [
+        "Mixed LF/CRLF raw match",
+        "Wrong pinned mode rejection",
+        "Changed content rejected against old and new hashes",
+        "Actual local commit/publication check with historical CRLF owned product and evidence archive"
+      ]
+    },
+    "actual_mandatory_suite": {
+      "count": 66,
+      "record": "runs/p1-publication-repair/gates/test-2a6267b96b7a44ec9e135ef9e26c2c7f.json",
+      "record_sha256": "0280493418f4dcde02c440a506d384acf34b1295305563f94824fe19bb3fc228",
+      "log": {
+        "path": "runs/p1-publication-repair/evidence/gate-test-80e91ec480c6419e89bbeea7fdc17965.log",
+        "sha256": "48fa76c749fd243a649e4a27cb26193aec77ea23d6d773f9d97ae2834dcd3a43"
+      },
+      "qualified_test_ids_verified": true
+    },
+    "scope": "Existing P1 regression and focused representation fixes; earlier unrelated 297-case baseline is historical, not falsely rerun in this clone."
+  },
+  "prior_attempt": {
+    "task_id": "p1-gate-activation",
+    "state": "submitted but publication blocked; unchanged",
+    "commit": "7821707aec089ccc7ef54699c1553bacacfc1299",
+    "branch": "codex/p1-activation-blocked"
+  },
+  "limitations": [
+    "The final common result must be inspected before the evaluator personally registers the new exact candidate/test/result-bound assessment.",
+    "Actual repaired gate publication and remote confirmation follow assessment and submission; this review does not assert those future effects have already happened.",
+    "The original submitted candidate format is not silently migrated; the fresh enrolled repair task has new raw/mode bindings.",
+    "Local cooperative checks, declared identities and writable receipts do not provide authenticated execution, OS isolation or direct-Git prevention."
+  ],
+  "next_actions": [
+    "Finalize result and bounded evidence copies without source/product changes.",
+    "Evaluator personally registers accepted assessment after inspecting the final result.",
+    "Validate, submit and publish with the repaired gate; verify real receipt and remote, then reconcile the original clean checkout while preserving its blocked branch."
+  ]
+}

@@ -105,6 +105,19 @@
         "environment": "development",
         "issue": "p1-submission-publication-gates"
       }
+    },
+    "p1-publication-repair": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-10-29T14:40:44+09:00",
+      "summary": "실제 게시에서 발견한 CRLF 원본·Git 정규화 비교 오탐을 수정하고, 새 P1 등록 작업에서 시험과 독립 검토를 완료했다.",
+      "path": "tasks/p1-publication-repair/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p1-publication-representation-repair"
+      }
     }
   }
 }

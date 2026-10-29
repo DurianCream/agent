@@ -1,0 +1,41 @@
+{
+  "task_id": "p1-publication-repair",
+  "scope": {
+    "repository_id": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-publication-representation-repair"
+  },
+  "role": "coding",
+  "author": "/root/p1_engine",
+  "outcome": "passed",
+  "targeted_test_total": 14,
+  "test_log": "runs/p1-publication-repair/evidence/repair-targeted-final.log",
+  "test_log_sha256": "8abe4fc9a8367c32146666f1c69198298057d77023cb0a70aeb7e24e0153b465",
+  "source_hashes": {
+    "runtime/control_gate.py": "dc2dd53f2ae97e6260e28415c16e6479ae1d494b08f816d511a30dd4e95b244e",
+    "runtime/tests/test_control_gate.py": "ce48a6a047fb287092bcd37d4c6c5d563c2ba35d471d055cc182cba58c250197"
+  },
+  "changes": [
+    "Dependency publication checks accept an exact reviewed raw blob or the existing Git-canonical object, retaining pinned SHA, regular object type, mode and deletion checks.",
+    "New dependency candidates pin file mode; no previous submitted candidate or enrollment is rewritten.",
+    "Owned product and archived evidence entries now pin raw SHA alongside canonical OID, and recheck the exact current tuple before accepting either committed representation.",
+    "Lifecycle-generated records keep their exact checkpoint/config byte bindings and use the same representation equivalence only after those checks.",
+    "No Git configuration, attributes, index normalization or bypass changes are used outside isolated test fixtures."
+  ],
+  "test_coverage": [
+    "Stored CRLF exact-raw fallback and stored LF with CRLF worktree canonical matching.",
+    "Changed source content, postreview raw bytes, missing mode, changed executable mode, deletion mismatch and unsupported symlink object rejection.",
+    "Unchanged and changed owned historical CRLF files, normal content, wrong committed bytes and mode changes.",
+    "Actual full submission/checkpoint/commit/publication pipeline with both historical CRLF dependencies and a historical CRLF owned product."
+  ],
+  "initial_failure": "The first nine-case run passed all eight dependency cases but exposed the same defect for the owned historical CRLF fixture. Parent authorized the product/archive extension; the original mixed fixture was retained and the final fourteen-case run passed.",
+  "limits": [
+    "These remain cooperating local CLI checks, not authenticated receipts or OS isolation.",
+    "The original blocked activation checkout and submitted records were not modified."
+  ],
+  "remaining_actions": [
+    "Parent runs the real configured full gate suite, independent evaluation, submission and publication from this repair checkout."
+  ]
+}
