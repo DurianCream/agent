@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"status\": \"fresh_final_source_case_prepared\", \"candidate_id\": \"167af104-31c5-4627-9cad-dc26ce66ca8a\", \"candidate_digest\": \"sha256:bb748cf66f1e228e04126720fb295f0687ec8abf03933503788ae1423c9f6fcd\", \"baseline\": \"fb8b48e52b419f7ecef296ad6e7cdb481d38ae2f\", \"services_started\": false, \"canary_path\": \"/var/lib/multi-p2/verification/synthetic-canary-167af104-31c5-4627-9cad-dc26ce66ca8a\", \"owner_canary_readable\": true, \"canary_sha256\": \"18865641ea4c734dabe09b20e2d0c3a0d7a6ddb02b65f3c10a1d2225bb75de18\"}\n",
+  "stderr": ""
+}

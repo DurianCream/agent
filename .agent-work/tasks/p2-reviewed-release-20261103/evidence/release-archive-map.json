@@ -1,0 +1,154 @@
+{
+  "task_id": "p2-reviewed-release-20261103",
+  "status": "exact_reviewed_public_evidence_archives",
+  "original_vm_test_task": "p2-host-isolation",
+  "candidate_digest": "9fd5d840f5f2278a2355da9f29b5262044feec63b703accf1e191f588118caa0",
+  "entries": [
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-normal-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-normal-20261103.json",
+      "sha256": "a101bf2246765a300102c2cf4758832002d72197c6eef428a6649cf362cab214"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-receipt-readback-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-receipt-readback-20261103.json",
+      "sha256": "2c96839fcd07d56ffcafb1a739ca7d8888934f0b6cfd2458e1edd46dd858b5e4"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-publication-retry-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-publication-retry-20261103.json",
+      "sha256": "7453878671c0cc5a7fbd7cc543f6cbca4a0ea5ae875475e3b93f29851dec1cb7"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-denial-receipt-readback-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-denial-receipt-readback-20261103.json",
+      "sha256": "217afb0eec1434bf1aa36fd4329a668ea2532a6f01f62db8e5b1a2b9f409b256"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-prepare-denial-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-prepare-denial-20261103.json",
+      "sha256": "014bc00d8335ea60ad04b817f50ac2ea192e74adbe3ed6a2680634f2bf6ac2a1"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-direct-git-canary-denied-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-direct-git-canary-denied-20261103.json",
+      "sha256": "e0d8018d49e08e131c4e6a81e5b471399ea571bcdd3b6751ed1b8d24051c0456"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-safety-publication-denied-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-safety-publication-denied-20261103.json",
+      "sha256": "07746425eb682e4832060c8ab3dbb4822fc6fef42a773ac29b47f5d79733e61b"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-lifetime-sigkill-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-lifetime-sigkill-20261103.json",
+      "sha256": "3233b1e2b7ccd5f591bfe79d89525deac35be5cf7beb4c9de28abc7a5905c0d3"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-test-state-restored-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-test-state-restored-20261103.json",
+      "sha256": "e0880500f3ca058ba431daec04ff47077eac1f10b6b08def3509c2c8f1c3c607"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-explicituser-probe-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-explicituser-probe-20261103.json",
+      "sha256": "30e11955bd7227cc59280bbc64ba3d64d4423868a9ab401a6d1aa07ae107a51a"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-delegated-probe-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-delegated-probe-20261103.json",
+      "sha256": "4cada563e424d170bd19db625838ab8835867db36b013f2c33e66ccfe28fb63a"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-adapter-review-final-delta-20261030.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-adapter-review-final-delta-20261030.json",
+      "sha256": "8d822515bcc8767ed1b6b657f98a93500146f4566c4b8b93e840ed59af620ea7"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-cgroup-fix-review-20261030.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-cgroup-fix-review-20261030.json",
+      "sha256": "286054727448f98e3d1866d9d38b110f8587ea287c146c83481bfb433304285c"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-mount-fix-review-20261030.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-mount-fix-review-20261030.json",
+      "sha256": "9f6d3b60d61d03daf749b0c7aff70bed08341b8b5f159643caddce062e704b80"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-bwrap-profile-review-20261030.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-bwrap-profile-review-20261030.json",
+      "sha256": "65bd104addddcda36553b63f5c346ab530fc2f0a9492216a1f82b98fdff362b5"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-handoff-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-handoff-20261103.json",
+      "sha256": "6e894a488ba16ebe64510eab535f037c1ee528f2e545d600de3476cbd86e4d49"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-milestone1-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/owner-milestone1-20261103.json",
+      "sha256": "f11c2b0e6023d886f99486be645f9075720ce8ab067defb3f5ae0689dd500df4"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-20261103.json",
+      "sha256": "f0fd816aeddb70a2e25632b76589a1aef67b8e34cbc83e8c4ccb0e1c8bc59291"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-authorized-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-authorized-20261103.json",
+      "sha256": "37d4707eeaa12421cd07347cbbb1c3a338bc55f0ef2c723e3c1cf06ecbd4f030"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-review-20261103.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-review-20261103.json",
+      "sha256": "746d7e77c47fbe35509358cabe0242d2ad9f364824262118e954bdd114e80674"
+    },
+    {
+      "source_ref": "outputs/p2-reviewed-release-20261103/prepare-bwrap-profile.py",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/artifacts/prepare-bwrap-profile.py",
+      "sha256": "f690188e084849605a9c2504158a31ea64b842c22a0331fd07dd9c8d4efea7ae"
+    },
+    {
+      "source_ref": "outputs/p2-reviewed-release-20261103/vm-acceptance-reproduction.en.md",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/artifacts/vm-acceptance-reproduction.en.md",
+      "sha256": "3109c69a2d81909efaed5e581c91d0fd3b58f7f5254253f983a292c6c29627db"
+    },
+    {
+      "source_ref": "outputs/p2-reviewed-release-20261103/VM-실행-검증-20261103.md",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/artifacts/VM-실행-검증-20261103.md",
+      "sha256": "d874f39400b92d9afc3cb8511d20bd2dcc91dd7e2b594b9fc0ff9caa5998a27e"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/release-provenance.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/release-provenance.json",
+      "sha256": "8f2e87cf4bfe2bfa02176b073c626bfc8d1fc6748b5443f1a89bf15a0c282422"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/release-packaging-checks.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/release-packaging-checks.json",
+      "sha256": "61817f040671966c96870e1c4555e3812701794666293051204a9aa55bb71e96"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/release-mandatory-p1.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/release-mandatory-p1.json",
+      "sha256": "ffef0b0e56c8159e933477fc9782b4db06e179e9473d26d717eaae537b215eec"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/release-mandatory-gate-receipt.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/release-mandatory-gate-receipt.json",
+      "sha256": "219e3e7c6ee7a3cc78ef3e93104a85e71e8dabf87b20c8859b1fb90f9ea2601f"
+    },
+    {
+      "source_ref": "runs/p2-reviewed-release-20261103/evidence/release-final-packaging.json",
+      "archive_ref": ".agent-work/tasks/p2-reviewed-release-20261103/evidence/release-final-packaging.json",
+      "sha256": "f0a009aefb2e52d64c926e23907f435a20d22b1445a02a9f0f68c1adeed55cce"
+    }
+  ],
+  "exclusions": [
+    "Raw temporary execution logs",
+    "Local connection maps and credentials",
+    "Old task trees and shared indexes"
+  ],
+  "self_reference": "This map is independently hash-bound by the review; it does not contain its own hash."
+}

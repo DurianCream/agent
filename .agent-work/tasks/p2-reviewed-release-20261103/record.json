@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p2-reviewed-release-20261103",
+  "saved_at": "2026-11-03T12:36:16+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "b0ad3079baa1d0bd10a8959fbd0aa1a0256e1f5c",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agent-work/repository.json\n M .codex/agents/infrastructure.toml\n M .codex/agents/orchestrator.toml\n M AGENTS.md\n M README.md\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M modules/infrastructure/instructions.md\n M modules/infrastructure/module.json\n M runtime/native-map.json\n?? .agent-work/tasks/p2-reviewed-release-20261103/\n?? \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n?? \"docs/\\354\\236\\221\\354\\227\\205-\\355\\214\\214\\354\\235\\264\\355\\224\\204\\353\\235\\274\\354\\235\\270.md\"\n?? modules/infrastructure/p2/\n?? runtime/p2_broker.py\n?? runtime/p2_contracts.py\n?? runtime/p2_executor.py\n?? runtime/p2_publisher.py\n?? runtime/p2_sandbox_gate.py\n?? runtime/p2_store.py\n?? runtime/p2_verifier.py\n?? runtime/tests/test_p2_broker.py\n?? runtime/tests/test_p2_contracts.py\n?? runtime/tests/test_p2_executor.py\n?? runtime/tests/test_p2_publisher.py\n?? runtime/tests/test_p2_store.py\n?? runtime/tests/test_p2_verifier.py\n?? shared/workflows/",
+    "worktree_sha256": "255068e04cf5238944c6314bbacd886b53d25c6a43dc2925034a5b315875f794"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p2-reviewed-release-20261103",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.6"
+    },
+    "created_at": "2026-11-03T11:37:00+09:00",
+    "objective": "Release independently reviewed frozen P2 artifacts and previously approved owner-led workflow sources with explicit provenance from preserved predecessor tasks",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Initialize on the verified authorized remote main baseline before materializing any candidate files and preserve predecessor history and pending commit",
+        "required": true,
+        "verification_ids": [
+          "provenance",
+          "vm-acceptance",
+          "required-p1",
+          "release-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Include only explicitly owned frozen P2 artifacts and approved owner-led workflow sources with provenance and no secrets private maps or unrelated task records",
+        "required": true,
+        "verification_ids": [
+          "provenance",
+          "vm-acceptance",
+          "required-p1",
+          "release-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Required tests and independent review cover the exact integrated release candidate and actual execution claims are supported by applicable evidence",
+        "required": true,
+        "verification_ids": [
+          "provenance",
+          "vm-acceptance",
+          "required-p1",
+          "release-review"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Validate submit and finish through configured publication gates with verified authorized non-force remote commit",
+        "required": true,
+        "verification_ids": [
+          "provenance",
+          "vm-acceptance",
+          "required-p1",
+          "release-review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "검증된 P2 수동 Linux VM 실행·로컬 보호 게시 경로와 담당자 책임형 workflow의 릴리스 준비 및 독립 검토를 완료했다. 실제 VM 시험 증거와 정확히 일치하는 제품 41개, 보관 증거 30개를 구성했다. 원격 Git 반영은 제출 후 정상 게시 절차에서 별도로 확인한다.",
+    "work": [
+      "인프라 담당자가 sandbox_setup_failed를 추적해 systemd255의 명시 User=root 조합에 의한 CAP_SETUID 제거를 재현하고 기본 root 서비스 실행으로 수정했다.",
+      "같은 담당자가 정상 검증·로컬 게시·동일키 재시도·직접 Git과 합성 자격증명 접근 차단·안전성 영수증 게시 거부·감독자 종료 정리를 실제 VM에서 확인했다.",
+      "독립 평가자가 소스와 실제 증거를 검토하고 VM의 설치 해시·보호 영수증·게시 ref·종료 상태를 읽기 전용으로 직접 확인했다.",
+      "원래 P2와 workflow의 기록·봉인·로컬 커밋은 보존했다. 별도 정상 원격 기준에서 새 릴리스 작업을 초기화하고 출처가 명시된 제품41개를 정확히 반영했다.",
+      "비밀정보 없는 최종 명세·프로필 준비 도구·구조화된 증거와 최종 검토 기록 30개를 저장소에 지속 보관하도록 등록했다. 임시 raw 로그·접속맵·개인키는 제외했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p2-reviewed-release-20261103/prepare-bwrap-profile.py",
+        "description": "한정된 전용 bwrap 프로필 준비 도구; 게시 보고서의 지속 보관 사본: [열기](evidence/artifacts/prepare-bwrap-profile.py)",
+        "sha256": "f690188e084849605a9c2504158a31ea64b842c22a0331fd07dd9c8d4efea7ae"
+      },
+      {
+        "path": "outputs/p2-reviewed-release-20261103/vm-acceptance-reproduction.en.md",
+        "description": "실제 적용 재현 명세; 게시 보고서의 지속 보관 사본: [열기](evidence/artifacts/vm-acceptance-reproduction.en.md)",
+        "sha256": "3109c69a2d81909efaed5e581c91d0fd3b58f7f5254253f983a292c6c29627db"
+      },
+      {
+        "path": "outputs/p2-reviewed-release-20261103/VM-실행-검증-20261103.md",
+        "description": "실제 시험 결과·횟수·한계; 게시 보고서의 지속 보관 사본: [열기](evidence/artifacts/VM-실행-검증-20261103.md)",
+        "sha256": "d874f39400b92d9afc3cb8511d20bd2dcc91dd7e2b594b9fc0ff9caa5998a27e"
+      }
+    ],
+    "verification": [
+      {
+        "id": "provenance",
+        "name": "정확한 소스 출처·보존 확인",
+        "method": "동결38개 P2와 기존승인workflow3개 및sanitized증거의 바이트 해시대조",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-reviewed-release-20261103/evidence/release-provenance.json",
+          "runs/p2-reviewed-release-20261103/evidence/release-packaging-checks.json",
+          "runs/p2-reviewed-release-20261103/evidence/release-archive-map.json"
+        ],
+        "notes": "원래작업의 실행ID와발급영수증을 변경하지 않고 출처로보존했다. 새릴리스에서 VM시험을 다시수행했다고 주장하지않는다."
+      },
+      {
+        "id": "vm-acceptance",
+        "name": "실제 수동 VM 실행·차단·게시·종료 검증",
+        "method": "원래p2-host-isolation 작업의 최종소스와 일치하는 실제시험증거 재사용",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-handoff-20261103.json",
+          "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-review-20261103.json"
+        ],
+        "notes": "실행기10회(진단실패6·정상2·safety1·예상SIGKILL1),게시기4회(게시2·동일키1·safety거부1),비교/접근probe5회. 종료후unitsinactive/static,worker0,namespace0. 외부게시·desktop전체격리 아님."
+      },
+      {
+        "id": "required-p1",
+        "name": "정확한 릴리스 후보 필수 회귀 검사",
+        "method": "clone 전용고정Python 및 승인환경/task TEMP에서 p1-regression 1회",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-reviewed-release-20261103/evidence/release-mandatory-p1.json",
+          "runs/p2-reviewed-release-20261103/evidence/release-mandatory-gate-receipt.json",
+          "runs/p2-reviewed-release-20261103/evidence/release-final-packaging.json"
+        ],
+        "notes": "66개 통과, 전체 실행 1회. 검사 로그 428.863초, 명령 전체 경과 442.693초. 보관 증거 추가 후 candidate는 동일하다. VM 시험 재실행은 0회다."
+      },
+      {
+        "id": "release-review",
+        "name": "새 릴리스 후보 독립 평가",
+        "method": "동일 소스·증거·보존본·필수검사 결과를 새candidate에 결합",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-reviewed-release-20261103/evidence/release-review.json"
+        ],
+        "notes": "새 candidate와 실제 검사·출처·보관본을 독립 검토해 accepted로 판정했다. 전체 P2의 자동 연결·외부 게시·desktop 격리 완료 판정은 아니다. 원격 게시 여부는 다음 finish 단계에서 확인한다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "완료범위는 검증된 수동 동일호스트 Linux VM 경로와 그 소스릴리스다. 전체P2 자동운용 완료가 아니다.",
+      "worker upload·privileged broker RPC·cross-host 인증·외부HTTPS/GitHub 게시어댑터·현재desktop 도구 전체격리는 미완료다. 프로젝트Git 소스푸시는 VM게시어댑터 시험과 별개다.",
+      "namespace 허용은 승인된 시험동안만 수행하고0으로복원했다. 새실행에는 적절한새요청·유효한영수증·운영자조건이 필요하다.",
+      "원본checkout과기존b85b78f 커밋은그대로보존하며, 게시기준을임의로수정하거나이전봉인을재발행하지않는다."
+    ],
+    "next_actions": [
+      "validate·submit·finish를 순서대로 수행하고 승인된 원격 main 커밋을 확인한다.",
+      "전체 P2 계획의 자동 연결·외부 게시·desktop 호스트 경계는 미완료 항목으로 유지한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\work\\p2-reviewed-release-20261103",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-host-credential-isolation"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-882c6b02bb93424bb89502b036b4d11b",
+    "snapshot_digest": "sha256:63d81965474051723736f4ddeeef94802828666b01b286d0b5da1c85fa0f6324",
+    "status": "review_pending",
+    "task_id": "p2-reviewed-release-20261103",
+    "mode": "observe"
+  },
+  "spec_sha256": "c409d93e2f5b7ef4ca167245602ef53ed72887342ef9c3c6d1e91504320cdf78"
+}

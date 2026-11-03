@@ -118,6 +118,19 @@
         "environment": "development",
         "issue": "p1-publication-representation-repair"
       }
+    },
+    "p2-reviewed-release-20261103": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-03T12:36:16+09:00",
+      "summary": "검증된 P2 수동 Linux VM 실행·로컬 보호 게시 경로와 담당자 책임형 workflow의 릴리스 준비 및 독립 검토를 완료했다. 실제 VM 시험 증거와 정확히 일치하는 제품 41개, 보관 증거 30개를 구성했다. 원격 Git 반영은 제출 후 정상 게시 절차에서 별도로 확인한다.",
+      "path": "tasks/p2-reviewed-release-20261103/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p2-host-credential-isolation"
+      }
     }
   }
 }

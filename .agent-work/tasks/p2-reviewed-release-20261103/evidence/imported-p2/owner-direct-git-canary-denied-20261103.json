@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"test\": \"host_worker_direct_git_and_canary_denial\", \"worker_uid\": 994, \"git_control_exit\": 0, \"git_write_exit\": 128, \"before_ref\": \"fb8b48e52b419f7ecef296ad6e7cdb481d38ae2f\", \"after_ref\": \"fb8b48e52b419f7ecef296ad6e7cdb481d38ae2f\", \"bypass_ref_absent\": true, \"worker_canary_read_exit\": 1, \"owner_canary_readable\": true, \"canary_sha256\": \"18865641ea4c734dabe09b20e2d0c3a0d7a6ddb02b65f3c10a1d2225bb75de18\", \"namespace_limit\": \"0\", \"external_publication\": false}\n",
+  "stderr": ""
+}

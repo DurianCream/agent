@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"test\": \"normal_candidate_temporary_userns_trial\", \"start_returncode\": 0, \"service\": {\"Result\": \"success\", \"ExecMainStatus\": \"0\", \"ActiveState\": \"inactive\", \"SubState\": \"dead\", \"InvocationID\": \"\"}, \"journal\": \"\", \"external_publication\": false, \"namespace_limit_before\": 0, \"namespace_limit_during\": 15334, \"namespace_limit_after\": 0, \"setup_diagnostics\": []}\n",
+  "stderr": ""
+}

@@ -1,0 +1,48 @@
+[Unit]
+Description=Multi P2 authenticated stage-only broker (verify and publish unavailable)
+After=local-fs.target
+
+[Service]
+Type=exec
+User=multi-p2-control
+Group=multi-p2-workers
+SupplementaryGroups=multi-p2-control
+ExecStart=/opt/multi-p2-python/bin/python3 -I -S -B /opt/multi-p2/runtime/p2_broker.py --config /etc/multi-p2/broker.json
+WorkingDirectory=/
+StateDirectory=multi-p2/broker
+StateDirectoryMode=0700
+RuntimeDirectory=multi-p2-control
+RuntimeDirectoryMode=0750
+UMask=0077
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+ProtectSystem=strict
+ProtectHome=yes
+ReadOnlyPaths=/opt/multi-p2 /etc/multi-p2
+ReadWritePaths=/var/lib/multi-p2/broker /run/multi-p2-control
+PrivateNetwork=yes
+RestrictAddressFamilies=AF_UNIX
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectProc=invisible
+ProcSubset=pid
+RestrictNamespaces=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+SystemCallFilter=~@mount @reboot @swap @raw-io @debug
+SystemCallArchitectures=native
+MemoryMax=256M
+TasksMax=64
+CPUQuota=100%
+LimitNOFILE=256
+LimitCORE=0
+KillMode=control-group
+TimeoutStopSec=10s
+Restart=no
+# No Install section: operator verification is required before manual start.

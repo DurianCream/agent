@@ -16,13 +16,13 @@
     "oss-research"
   ],
   "files": {
-    ".codex/agents/orchestrator.toml": "ebcdfc4f73d57e3409b694f18a446896b610306c2fc3f8cfab32253fa9ee8940",
+    ".codex/agents/orchestrator.toml": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
     ".codex/agents/skill-manager.toml": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979",
     ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
     ".codex/agents/knowledge-manager.toml": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74",
     ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
     ".codex/agents/coding.toml": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8",
-    ".codex/agents/infrastructure.toml": "34484d11c5b31d48748c5b795642b0b142550ece49f2091f811dff82cfe5fefb",
+    ".codex/agents/infrastructure.toml": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
     ".codex/agents/oss-rnd.toml": "85071be41230730a58338f8b182aac4258baf59c21dda8bf8ce0dd6d36529226",
     ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
     ".agents/skills/submit-result/SKILL.md": "942e321676735b5e494983312f526c2f131eb57ed69067cc87d35f07b154b5c4",

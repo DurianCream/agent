@@ -1,0 +1,51 @@
+{
+  "task_id": "p2-host-isolation",
+  "reviewer": "/root/p2_review",
+  "assessment": "accepted",
+  "outcome": "passed",
+  "scope": "Only delegated controller initialization delta and one-off inactive worker replacement helper; no remote actions",
+  "reviewed_files": {
+    "modules/infrastructure/p2/linux/worker_entry.py": "ef9a80f273dd2c2e78862e8583a9d1c838c12ca3aed58bf492849f384dca8cc3",
+    "modules/infrastructure/p2/linux/tests/test_linux_preparation.py": "671032edd21381950adcdf1c8936b032c65f62a86019dcaf505bff46825cf03e",
+    "work/p2-host-isolation/apply_vm_worker_delta.py": "08710c14eec4b47ff93d5b0d4211b7f242fca17f471fdb6073fefd2261b23dc8"
+  },
+  "criteria": [
+    {
+      "id": "diagnosed_failure_relevance",
+      "outcome": "passed",
+      "evidence": "vm-cgroup-diagnostic-20261030.json: supervisor subgroup present, cpu/memory/pids available, enabled controllers empty."
+    },
+    {
+      "id": "bounded_write_fail_closed",
+      "outcome": "passed",
+      "evidence": "Exact fixed supervisor membership; empty service-root procs; required availability; enables only cpu/memory/pids inside delegated service root, reads back before verify_job."
+    },
+    {
+      "id": "affected_mock_tests",
+      "outcome": "passed",
+      "evidence": "independent-cgroup-fix-tests-20261030.log:7/7; enable/no-op/wrong membership/nonempty root/missing controller/readback failure/write denied."
+    },
+    {
+      "id": "replacement_helper",
+      "outcome": "passed",
+      "evidence": "Reviewed exact old/new SHA, inactive-or-failed service requirement, root regular single-link target, exclusive backup/temp, atomic replacement with readback; no service start."
+    },
+    {
+      "id": "actual_vm_retry",
+      "outcome": "not_run",
+      "reason": "Parent owns retry; reviewer made no remote changes."
+    }
+  ],
+  "findings": [],
+  "conditions": [
+    "Existing protected root staging and /opt/multi-p2 ancestry remain trusted as verified by preceding installation.",
+    "No permissions granted by assessment; source hash changes invalidate affected review.",
+    "Successful mocked setup does not establish actual sandbox execution."
+  ],
+  "verification_audit": {
+    "purpose": "Required focused retest after actual VM failure and one-file repair",
+    "tests_run": 7,
+    "distinct_cases": 7,
+    "unchanged_full_suites_repeated": 0
+  }
+}

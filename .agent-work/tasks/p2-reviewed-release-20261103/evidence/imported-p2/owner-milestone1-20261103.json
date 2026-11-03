@@ -1,0 +1,56 @@
+{
+  "task_id": "p2-host-isolation",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-host-credential-isolation"
+  },
+  "owner": "infrastructure/p2_host",
+  "milestone": "one_normal_verified_execution",
+  "status": "passed_with_remaining_P2_acceptance",
+  "cause": "systemd255 explicit User=root with syscall filtering drops CAP_SETUID before the root supervisor starts; controlled comparison reproduced it.",
+  "fix": "Use system service default root without explicit User; retain Group=root, euid0 checks, NNP, namespaces, syscall filters, quotas and independent cleanup.",
+  "diagnostic": "Failed child setup writes exclusive0600 root-owned job diagnostic, nonblocking4096byte stderr with nonce redaction. Child exception type/errno/source line are preserved without exception values.",
+  "source_hashes": {
+    "runtime/p2_executor.py": "04fe2090185958bd702e0bcf4ccbdaf220fe9ddc0ed73a8721f55b1441efa8b1",
+    "runtime/tests/test_p2_executor.py": "457669a1d29ffb0f201dec700f6b325ac4645359e92bbe4bc9546902adae2ec1",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "cfb8a72b88795008ead269ce06041a73e11fac1f65d3a42fd30644cc86f5037a",
+    "modules/infrastructure/p2/linux/tests/test_linux_preparation.py": "4f8a4eea71eff8a34e3d2923b9335ab24361dc85500055c269ac560853bf8a12"
+  },
+  "tests": {
+    "normal_vm_invocations": 7,
+    "failed_diagnostic_invocations": 6,
+    "normal_verified": 1,
+    "trusted_uid_probe_invocations": 4,
+    "focused_local_cases_passed": 3,
+    "focused_local_commands": [
+      "python runtime/tests/test_p2_executor.py SetupDiagnosticTests -v",
+      "python modules/infrastructure/p2/linux/tests/test_linux_preparation.py UnitTests.test_units_have_bounded_no_privilege_network_profiles -v"
+    ],
+    "broad_suites": "not_run"
+  },
+  "evidence": [
+    "runs/p2-host-isolation/evidence/owner-normal-unit-uidfix-20261103.json",
+    "runs/p2-host-isolation/evidence/owner-receipt-protected-readback-20261103.json",
+    "runs/p2-host-isolation/evidence/owner-uid-drop-explicituser-probe-20261103.json",
+    "runs/p2-host-isolation/evidence/owner-uid-drop-delegated-probe-20261103.json"
+  ],
+  "receipt": "a9184ea1-1a8a-45b0-83f0-61694abd24bd",
+  "observed_worker_uid": 994,
+  "namespace_limit_before_after": 0,
+  "source_cleanup": "Temporary capability stage diagnostics removed after successful run; bounded setup stderr remains. Successful run used same behavior with additional failure-only diagnostics.",
+  "remaining": [
+    "actual local publication positive path",
+    "actual bypass/credential/network denial probes",
+    "actual supervisor lifetime/cleanup checks",
+    "final independent review",
+    "parent final deployment and publication"
+  ],
+  "limits": [
+    "No desktop tool isolation or external GitHub publication tested.",
+    "Namespace limit restored0 means runtime inactive until authorized test window.",
+    "Receipt TTL is600seconds; fresh verification needed after expiry."
+  ],
+  "recovery": "Previous exact installed sources/unit saved under root-only task-specific backups. Stop scoped service before restoration; daemon-reload for unit changes. Never change global AppArmor/NNP."
+}

@@ -32,6 +32,15 @@ Interpret requests, select modules, manage dependencies, and integrate results. 
 
 For example, evaluating whether AWS XDP can protect a 1 Gbps IDC link calls for infrastructure to inspect traffic paths, bottlenecks, and architecture; oss-rnd may verify supporting conditions and primary evidence. The evaluator checks assumptions, omissions, and evidence before integration.
 
+## On-demand test environments
+
+Apply this rule only when a concrete test requires a particular OS/version or a new isolated VM. This preference adds no VM, environment-input or approval step to ordinary tests that can run in the existing authorized local environment.
+
+- Define the concrete test purpose and acceptance conditions before requesting an environment. Do not request a VM or ISO merely to begin planning; request one only when the identified test needs it.
+- Specify the OS/distribution, edition where applicable, exact version/build, architecture, resources, required boot/security features, and network/credential boundaries. The user may supply a matching existing VM or installation ISO. Do not assume a fixed distribution, a convenient existing VM, or the latest release.
+- Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
+- Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access or weaker P2 controls. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
+
 ## Governance and verification handoff
 
 Keep `policy-manager` as the governance role and `evaluator` as the independent verification role. These role assessments are advisory evidence, not runtime authorization, authenticated execution receipts, or regulatory certification.

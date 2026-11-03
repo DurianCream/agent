@@ -1,0 +1,7 @@
+{
+  "reviewer": "/root/workflow_review",
+  "scope": "single read-only VM confirmation; no service start, remote write, sysctl change or new execution",
+  "returncode": 4294967295,
+  "observation": null,
+  "stderr": ""
+}

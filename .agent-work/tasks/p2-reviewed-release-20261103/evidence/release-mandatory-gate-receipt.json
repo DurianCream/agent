@@ -1,0 +1,18 @@
+{
+  "kind": "test",
+  "task_id": "p2-reviewed-release-20261103",
+  "candidate_digest": "9fd5d840f5f2278a2355da9f29b5262044feec63b703accf1e191f588118caa0",
+  "suite_id": "p1-regression",
+  "suite_digest": "e171934673cfd3c4b7485d619c33ad64e8c655a5b0d112ffb149abd675e8f4be",
+  "created_at": "2026-11-03T03:21:31.743581+00:00",
+  "outcome": "passed",
+  "tests_run": 66,
+  "exit_code": 0,
+  "reason": null,
+  "candidate_unchanged": true,
+  "evidence": {
+    "path": "runs/p2-reviewed-release-20261103/evidence/gate-test-c64425c2ce834bda8f77529388600459.log",
+    "sha256": "c48986cee91c0f5dc93821ac5fe4e31f93062c0b6770b235ae6dbca200ab87de"
+  },
+  "assurance": "local-executed-untrusted-candidate"
+}

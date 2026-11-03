@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"normal_candidate_restored\": \"bd5aa0bd-eccd-4ed3-bc27-f3d2d839af16\", \"services\": {\"multi-p2-executor.service\": \"ActiveState=inactive\\nUnitFileState=static\\n\", \"multi-p2-publisher.service\": \"ActiveState=inactive\\nUnitFileState=static\\n\"}, \"worker_processes\": 0, \"namespace_limit\": 0, \"roles\": {\"multi-p2-worker\": {\"uid\": 994, \"gid\": 987, \"groups\": [\"multi-p2-workers\"], \"shell\": \"/usr/sbin/nologin\", \"home\": \"/nonexistent\"}, \"multi-p2-publish\": {\"uid\": 990, \"gid\": 984, \"groups\": [\"multi-p2-publish\"], \"shell\": \"/usr/sbin/nologin\", \"home\": \"/nonexistent\"}}, \"no_service_started\": true, \"note\": \"Expired receipt never implies fresh publication authorization; start new verification when needed.\"}\n",
+  "stderr": ""
+}

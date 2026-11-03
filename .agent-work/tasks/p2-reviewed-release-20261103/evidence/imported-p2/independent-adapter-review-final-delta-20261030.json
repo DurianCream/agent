@@ -1,0 +1,131 @@
+{
+  "schema_version": "0.1.0",
+  "reviewer": {
+    "role": "evaluator",
+    "subject": "/root/p2_review",
+    "session": "20261030-adapter-preapply-final-delta",
+    "independent_of_principal_authors": true
+  },
+  "task_id": "p2-host-isolation",
+  "repository": "multi",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-host-credential-isolation"
+  },
+  "reviewed_revision": "b0ad3079baa1d0bd10a8959fbd0aa1a0256e1f5c plus listed uncommitted files",
+  "reviewed_files": {
+    "runtime/p2_executor.py": "ab93bc1a4b10a532c4894e5756ce37aefbcca6e92be54bc5d9c6d92164f2f50c",
+    "runtime/p2_sandbox_gate.py": "57cb73cb278efdb97d2110af19161eb74211da0a1f1cb3e057a0481f2af8f297",
+    "runtime/p2_verifier.py": "b6a0c0fe81f69a0b5d2c56a14bb25d4767ff2b680f231e4f34ff6a8db32f412a",
+    "runtime/p2_publisher.py": "99b74fe3e908f266a226e4b39999644bdb61a4e241c525616d8f5bc256ce5403",
+    "runtime/p2_broker.py": "f0b00c2a2b2a6652b4e2d0a0e9fc644c34ca4c60b9c1b29c536b03fcc9cf1a75",
+    "runtime/p2_store.py": "e95133aa9ccd624214f534d9cff8ee2914184cb8d3205bd80cb8fbc9ccea3980",
+    "runtime/tests/test_p2_executor.py": "12f3a14c3374e4f7dcc8e7ea83506af81bf231f8ff46f7d4922f5c4c085b8bdb",
+    "runtime/tests/test_p2_verifier.py": "0b15399693e91360385e7e82084c6fcddeab2d044c86493f345e2fd0cf39d2d0",
+    "runtime/tests/test_p2_publisher.py": "85271d34778ef7c78b5db6bccad454d08769b3485acd784ac54eeb9b2293bc6f",
+    "modules/infrastructure/p2/linux/rootfs_builder.py": "c2a47787ca20440996cc27cc8f4ca5745cf1f71b11a97056881234aff6faf0f3",
+    "modules/infrastructure/p2/linux/worker_entry.py": "d2efd8334ae03d6251ca484909865573ebf5ddc9cc5832f72e599eb548cd58ee",
+    "modules/infrastructure/p2/linux/publisher_entry.py": "17693548ee849c4c1664156fc2d056bcdb3c3aaf5ded877d7f2f74d35e7a1b9b",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "84c096cfbc197536209a14b1c98309b84bd59b68feababd6e16591e951a612bb",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "4d5ce3f1b8bd21e4907a03f777c2e320abe2bd9abdd2f76dc2e3dbcdae53edaa"
+  },
+  "assessment": "inconclusive",
+  "preparation_outcome": "passed",
+  "preparation_scope": "Source and trusted-fixture readiness for bounded operator-driven local-bare VM pilot only; no deployment or execution authorization.",
+  "authors": [
+    "/root/p2_host",
+    "/root/p2_runtime"
+  ],
+  "criteria": [
+    {
+      "id": "source_gate_and_privilege_boundaries",
+      "outcome": "passed",
+      "evidence": "Static review of exact nonce plus lifeline nondumpable PID1 gate, externally observed UID/GID/caps/namespaces/mounts/cgroup, dedicated systemd control-group lifetime and bounded aggregate resource controls. This is source reasoning, not actual VM proof."
+    },
+    {
+      "id": "seccomp_filter",
+      "outcome": "passed",
+      "evidence": "Independent 5 probes: BPF architecture/x32, all 256 socket domains for socket/socketpair, denied syscall branches and actual unprivileged Linux child EPERM for INET/INET6/VSOCK/NETLINK/PACKET, ptrace/process_vm/keyring/io_uring/pidfd_getfd. Unix socketpair succeeds. runs/p2-host-isolation/evidence/independent-adapter-probes-20261030.log"
+    },
+    {
+      "id": "executor_trusted_fixtures",
+      "outcome": "passed",
+      "evidence": "Independent rerun of 19 author executor/gate cases, included in 24-case probe log, WSL UID1000. Not PID1 namespace or production cgroup verification."
+    },
+    {
+      "id": "verifier_publisher_function",
+      "outcome": "passed",
+      "evidence": "Independent command wsl.exe --exec python3 -I -B /mnt/c/Users/dhyun/Documents/ChatGPT/multi/work/p2-host-isolation/run_linux_adapter_tests.py exited0, 34 tests passed, zero skips, WSL UID/GID1000. Tool chunk d6a8c9. Includes root-oracle semantics, false-pass refusal, fixture authority refusal, role mismatch, expiry after transfer, exact CAS tree, symref/no-deref races and idempotent recovery."
+    },
+    {
+      "id": "production_vm_isolation_lifetime_and_credentials",
+      "outcome": "not_run",
+      "reason": "Reviewer has not applied or executed on supplied VM. Parent owns remote actions. Actual observer access, UID maps, cgroup limits, host/network/credential denial and pre/post-grant supervisor death require retained external marker observation."
+    },
+    {
+      "id": "production_rpc_and_https_publication",
+      "outcome": "not_run",
+      "reason": "Production broker verify/publish remain adapter_unavailable; complete connected RPC is fixture-only. Production adapters are fixed operator-owned manual jobs. HTTPS CAS/credentials adapter unavailable."
+    }
+  ],
+  "findings": [],
+  "resolved_findings": [
+    "Replaced EOF-releasing bwrap block-fd with exact nonce/lifeline trusted gate.",
+    "Added aggregate CPU/memory/pids accounting and bounded retained job bytes.",
+    "Rejected non-Unix sockets, async socket bypass, debug and keyring syscalls.",
+    "Validated new runtime modules before privileged imports.",
+    "Fixed symbolic-ref dereference using exact no-deref CAS and refusal of initial symbolic target.",
+    "Rechecked receipt expiry after transfer before reference update.",
+    "Bound verifier worker/publisher identities to executor configuration; retained fixture versus production separation."
+  ],
+  "governance_conditions": [
+    "No principal implementation authored by reviewer; only independent probes/evidence written.",
+    "No new permission granted by this assessment.",
+    "Only root-controlled policy/oracles and fixed job files may select execution/publication.",
+    "No host fallback, no real credentials, no network publication, no existing user service/data replacement.",
+    "Parent must validate source hashes immediately before installation; changes invalidate affected conclusions."
+  ],
+  "pending_authorization": "No authorization decision made. Existing user scope and host controls govern parent-run bounded VM tests.",
+  "limitations": [
+    "Finite fixture tests do not prove security or compliance.",
+    "Seccomp actual test was unprivileged WSL child, not the supplied VM sandbox.",
+    "Rootfs builder source reviewed; no root image creation executed by reviewer.",
+    "Current Codex tool routes and GitHub connection are not migrated into the sandbox.",
+    "Publisher local-bare result does not establish entire P2 isolation."
+  ],
+  "rereview_triggers": [
+    "Any reviewed source hash, policy, unit, runtime dependency or VM environment change.",
+    "Actual VM results contradicting source assumptions.",
+    "New network publication or production authenticated worker adapter transport."
+  ],
+  "remaining_actions": [
+    "Collect parent-run VM acceptance and failure-injection evidence and review separately.",
+    "Keep broad task partial until actual required enforcement is demonstrated.",
+    "Main session integrates this evidence and checkpoints active task; do not mark task completed from preparation alone."
+  ],
+  "delta_review": {
+    "prior": "runs/p2-host-isolation/evidence/independent-adapter-preapply-review-20261030.json",
+    "changed_files": [
+      "runtime/p2_executor.py",
+      "runtime/p2_sandbox_gate.py",
+      "runtime/tests/test_p2_executor.py"
+    ],
+    "outcome": "passed",
+    "tests": 30,
+    "evidence": "runs/p2-host-isolation/evidence/independent-adapter-delta-probes-20261030.log",
+    "description": "Focused review: gate owns wall timeout and emits distinct bounded start/terminal nonce-bound messages; parent requires normal terminal match for success. Input depth bound and guard tests added. Other eleven reviewed hashes unchanged.",
+    "blocking_source_findings": [],
+    "test_scope": "Parent-only bounded pilot on provided personal Ubuntu VM: new P2 paths and dedicated identities only, reviewed bytes, synthetic canaries and trusted tiny candidate, manual fixed unit, root observed sandbox plus local bare repository. No credentials, external publication, existing personal files/services or all-agent migration.",
+    "required_actual_checks": [
+      "Positive oracle execution with actual UID/namespaces/cgroup observations",
+      "Candidate filesystem/network/credential/direct-ref denial with synthetic canaries",
+      "Supervisor death before and after grant with retained external output visibility",
+      "Root-issued receipt and separate-publisher local-bare CAS/readback"
+    ],
+    "unexecuted": "All actual VM checks remain not_run; this assessment grants no execution authorization."
+  },
+  "latest_delta_review": "runs/p2-host-isolation/evidence/independent-three-file-delta-review-20261030.json",
+  "supersedes_for_current_hashes": "runs/p2-host-isolation/evidence/independent-adapter-review-20261030.json"
+}

@@ -1,0 +1,48 @@
+{
+  "task_id": "p2-reviewed-release-20261103",
+  "doctor": {
+    "ok": true,
+    "command": "doctor",
+    "data": {
+      "modules": 8,
+      "skills": 3,
+      "result_contract": "1.0.0",
+      "runtime_version": "0.2.0",
+      "execution": "host",
+      "schema_validation": "repository-supported-keywords"
+    },
+    "errors": []
+  },
+  "sync_readonly": {
+    "ok": false,
+    "agents": [
+      "orchestrator",
+      "skill-manager",
+      "policy-manager",
+      "knowledge-manager",
+      "evaluator",
+      "coding",
+      "infrastructure",
+      "oss-rnd"
+    ],
+    "skills": [
+      "submit-result",
+      "maintain-module",
+      "oss-research"
+    ],
+    "missing": [
+      ".codex/hooks.json"
+    ],
+    "changed": []
+  },
+  "all_mapped_hashes_verified": true,
+  "mapped_files": 64,
+  "source_manifest_count": 41,
+  "candidate_digest": "9fd5d840f5f2278a2355da9f29b5262044feec63b703accf1e191f588118caa0",
+  "hook_status": "ignored clone-local hook absent; existing generated sources/profiles match; no regeneration/private path publication",
+  "candidate_read_attempts": 2,
+  "first_candidate_read_issue": "Caller UTF-8 decode rejected host cp949 CLI output; repeated candidate read only with PYTHONIOENCODING=utf-8, no test or source changes",
+  "vm_actions": 0,
+  "p2_tests_rerun": 0,
+  "mandatory_suite_executions": 0
+}

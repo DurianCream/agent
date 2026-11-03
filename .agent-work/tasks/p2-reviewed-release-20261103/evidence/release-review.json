@@ -1,0 +1,170 @@
+{
+  "task_id": "p2-reviewed-release-20261103",
+  "assessment": "accepted",
+  "reviewer": {
+    "subject": "evaluator-release-review",
+    "session": "root-workflow-review-release-20261103",
+    "identity_authenticated": false
+  },
+  "authors": [
+    "infrastructure/p2_host",
+    "skill-manager/workflow_owner"
+  ],
+  "scope": {
+    "repository_id": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-host-credential-isolation"
+  },
+  "base_revision": "b0ad3079baa1d0bd10a8959fbd0aa1a0256e1f5c",
+  "candidate_digest": "9fd5d840f5f2278a2355da9f29b5262044feec63b703accf1e191f588118caa0",
+  "assessment_scope": "Bounded exact-copy/provenance/evidence rebind of previously reviewed P2 manual same-host Linux pilot and three owner-led workflow documents; new release P1 test evidence inspected; publication remains pending.",
+  "product_hashes": {
+    ".codex/agents/infrastructure.toml": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
+    ".codex/agents/orchestrator.toml": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
+    "README.md": "f40240ef7b06ad96373d9a10dc18cbb7f192530563ff0b426253ed6cbda0ecf2",
+    "core/orchestrator/instructions.md": "8de7ef2e5dd9d93c8c6b434bcc2a9dc25a844165eee3504e8248aa940644535f",
+    "core/orchestrator/module.json": "db64342804ca14d56ff8dd9dae0044abc40f950b51f3402949533281b35ac735",
+    "modules/infrastructure/instructions.md": "f4965ebe5f54a30cd5b6a13c5aab97304ea5b91d34681ffdf3782131dc40a506",
+    "modules/infrastructure/module.json": "e180b580606f3f31ad7d8f61b03c0b890816c737d5250a128199478dc0cc36b2",
+    "runtime/native-map.json": "b32c3090c1bde6336baae94ce6772d70e5883cd7fe2c3ee6643dcfc12ed48d5a",
+    "docs/디렉터리-구조와-역할.md": "413489d4efc68e552374168164e0ad111411b7a55c633d5da70764e7c809f97b",
+    "modules/infrastructure/p2/HyperV-설치-안내.md": "497fac1dd78f2774b436263a9c4eba67f3fbd81654e4c2a85ad0a0706039cb22",
+    "modules/infrastructure/p2/New-P2VM.ps1": "a12ae8e6ac103a2abc70765f9ea9cc9ea8f5928e3f92f99f87ad7e38818b3cb0",
+    "modules/infrastructure/p2/P2VM.psm1": "f2a9902838e578bfe913f010f50a1b980f7f9315cbe8c138f2e8f0ddeb83edbd",
+    "modules/infrastructure/p2/deployment-contract.en.md": "88b4a761d35fede95a78759b24902616b46e2e0fd55b102d150f2fca248b763c",
+    "modules/infrastructure/p2/linux/README.ko.md": "d441bedd17fae5bb0da88b0df873c9e3c6f58d7f791428650ffdf75e6e49f167",
+    "modules/infrastructure/p2/linux/install.py": "667e1aa8f6ce06d5a6932623dc512e5965133489fb78fe838f6aedfbbc275014",
+    "modules/infrastructure/p2/linux/preflight.py": "9d71bd0e6e4a8f22368242a6505725145a65264ddd7a3237f498c19a75df6d1f",
+    "modules/infrastructure/p2/linux/publisher_entry.py": "17693548ee849c4c1664156fc2d056bcdb3c3aaf5ded877d7f2f74d35e7a1b9b",
+    "modules/infrastructure/p2/linux/rootfs_builder.py": "c2a47787ca20440996cc27cc8f4ca5745cf1f71b11a97056881234aff6faf0f3",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-control.service": "b3e309e2d9d005d2541ad3d3e7700a4afd3eb4fd7e52c4c415a617333ee9cac8",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "cfb8a72b88795008ead269ce06041a73e11fac1f65d3a42fd30644cc86f5037a",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "4d5ce3f1b8bd21e4907a03f777c2e320abe2bd9abdd2f76dc2e3dbcdae53edaa",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service": "16165d84518821fb0d428528831e7d00d7c9533ef23f9cc11bb8ca05d1bba4d4",
+    "modules/infrastructure/p2/linux/tests/test_linux_preparation.py": "4f8a4eea71eff8a34e3d2923b9335ab24361dc85500055c269ac560853bf8a12",
+    "modules/infrastructure/p2/linux/worker_entry.py": "2e8c29747c558216e53e9f40716164831a83e7b5824e77ba41df1a418b6309d6",
+    "modules/infrastructure/p2/tests/Test-P2VM.ps1": "36bb6ae4f59e7e4b0821bc2cf01037ea0127689396af7081f7a1336987f2bbf9",
+    "runtime/p2_broker.py": "f0b00c2a2b2a6652b4e2d0a0e9fc644c34ca4c60b9c1b29c536b03fcc9cf1a75",
+    "runtime/p2_contracts.py": "378af191e40f9c46a40c4ed7cb4804a368cb57850eabfc0e7e6c50307739b862",
+    "runtime/p2_executor.py": "04fe2090185958bd702e0bcf4ccbdaf220fe9ddc0ed73a8721f55b1441efa8b1",
+    "runtime/p2_publisher.py": "99b74fe3e908f266a226e4b39999644bdb61a4e241c525616d8f5bc256ce5403",
+    "runtime/p2_sandbox_gate.py": "57cb73cb278efdb97d2110af19161eb74211da0a1f1cb3e057a0481f2af8f297",
+    "runtime/p2_store.py": "e95133aa9ccd624214f534d9cff8ee2914184cb8d3205bd80cb8fbc9ccea3980",
+    "runtime/p2_verifier.py": "b6a0c0fe81f69a0b5d2c56a14bb25d4767ff2b680f231e4f34ff6a8db32f412a",
+    "runtime/tests/test_p2_broker.py": "bac65f79fe841eaecfafc687ec482a18204948f66a43a12fbcbf2504b10df2a7",
+    "runtime/tests/test_p2_contracts.py": "bcff3ce053a2ac4f645ce96a5645634e32df4d889361027b7592eb807a8f0404",
+    "runtime/tests/test_p2_executor.py": "457669a1d29ffb0f201dec700f6b325ac4645359e92bbe4bc9546902adae2ec1",
+    "runtime/tests/test_p2_publisher.py": "85271d34778ef7c78b5db6bccad454d08769b3485acd784ac54eeb9b2293bc6f",
+    "runtime/tests/test_p2_store.py": "91241e3c58ff37ec0c11cdb55c990bf4ae06faf2cf3a5a86099023f12d3b64b1",
+    "runtime/tests/test_p2_verifier.py": "0b15399693e91360385e7e82084c6fcddeab2d044c86493f345e2fd0cf39d2d0",
+    "AGENTS.md": "b5b6b665c4bcc74bd344741713a08598a6d44c34d6d63d9d55676762cd610fb0",
+    "docs/작업-파이프라인.md": "231877ae7276560568334e6da5ccee7beb10edddc4e9eed2711e126910f47a8a",
+    "shared/workflows/owner-led-delivery.md": "71e07a367b38c86f40f04a67735ae8afb83f5e33bb608c0f02b04f8eb53c08f7"
+  },
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "outcome": "passed",
+      "evidence": "New controls/task pin exact repo/four-field scope/base b0ad; current release HEAD remains b0ad, phase begun. Original primary HEAD remains b85 and mapped source/evidence bytes equal. Initialization order and predecessor record preservation also supported by packager provenance; not authenticated timestamps."
+    },
+    {
+      "id": "criterion-2",
+      "outcome": "passed",
+      "evidence": "All41 product entries match explicit manifest and current frozen originals. All64 provenance copies and28 archive pairs plus map itself match SHA256. No unrelated old task tree/shared index is in explicit ownership. Artifact3 paths are under outputs and already included among allowed review evidence. Bounded privacy scan and content inspection found no credential/access map/private conversation/raw execution transcript in archives."
+    },
+    {
+      "id": "criterion-3",
+      "outcome": "passed",
+      "evidence": "Candidate9fd5d840... matches new test receipt and current candidate. Actual log:66tests OK,428.863seconds test time;442.693seconds command elapsed. Receipt logSHA c48986cee91c0f5dc93821ac5fe4e31f93062c0b6770b235ae6dbca200ab87de independently matches. Existing VM acceptance and evaluator readback reused only at exact matching source/artifact hashes with original task IDs."
+    },
+    {
+      "id": "criterion-4.prepublication-readiness",
+      "outcome": "passed",
+      "evidence": "Pinned origin/main standing publication profile permits submission/publication; mandatory tests passed; independent review complete. Ordinary gate must still evaluate sealed result, archive exact-copy hashes and actual commit/destination."
+    },
+    {
+      "id": "criterion-4.remote-publication",
+      "outcome": "not_run",
+      "evidence": "Parent owns validate/submit/finish and verified remote commit after own new P1 assessment; no success claimed in advance."
+    }
+  ],
+  "findings": [],
+  "configuration_observations": [
+    {
+      "outcome": "failed",
+      "check": "clone full sync --check",
+      "reason": "Ignored clone-local .codex/hooks.json absent; no generated tracked source/profile differences. This review accepts source packaging, not activation of the local context hook. doctor passed; do not report the full sync as passed."
+    }
+  ],
+  "evidence_provenance": {
+    "source_task": "p2-host-isolation",
+    "prior_scoped_review_sha256": "746d7e77c47fbe35509358cabe0242d2ad9f364824262118e954bdd114e80674",
+    "owner_handoff_sha256": "6e894a488ba16ebe64510eab535f037c1ee528f2e545d600de3476cbd86e4d49",
+    "workflow_task": "owner-led-workflow",
+    "workflow_prior_source_commit": "b85b78f2747e75b8bca21093f9add4a229b5fa22",
+    "new_VM_execution_claim": false
+  },
+  "evidence_hashes": {
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-normal-20261103.json": "a101bf2246765a300102c2cf4758832002d72197c6eef428a6649cf362cab214",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-receipt-readback-20261103.json": "2c96839fcd07d56ffcafb1a739ca7d8888934f0b6cfd2458e1edd46dd858b5e4",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-publication-retry-20261103.json": "7453878671c0cc5a7fbd7cc543f6cbca4a0ea5ae875475e3b93f29851dec1cb7",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-denial-receipt-readback-20261103.json": "217afb0eec1434bf1aa36fd4329a668ea2532a6f01f62db8e5b1a2b9f409b256",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-prepare-denial-20261103.json": "014bc00d8335ea60ad04b817f50ac2ea192e74adbe3ed6a2680634f2bf6ac2a1",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-direct-git-canary-denied-20261103.json": "e0d8018d49e08e131c4e6a81e5b471399ea571bcdd3b6751ed1b8d24051c0456",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-safety-publication-denied-20261103.json": "07746425eb682e4832060c8ab3dbb4822fc6fef42a773ac29b47f5d79733e61b",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-lifetime-sigkill-20261103.json": "3233b1e2b7ccd5f591bfe79d89525deac35be5cf7beb4c9de28abc7a5905c0d3",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-test-state-restored-20261103.json": "e0880500f3ca058ba431daec04ff47077eac1f10b6b08def3509c2c8f1c3c607",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-explicituser-probe-20261103.json": "30e11955bd7227cc59280bbc64ba3d64d4423868a9ab401a6d1aa07ae107a51a",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-delegated-probe-20261103.json": "4cada563e424d170bd19db625838ab8835867db36b013f2c33e66ccfe28fb63a",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-adapter-review-final-delta-20261030.json": "8d822515bcc8767ed1b6b657f98a93500146f4566c4b8b93e840ed59af620ea7",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-cgroup-fix-review-20261030.json": "286054727448f98e3d1866d9d38b110f8587ea287c146c83481bfb433304285c",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-mount-fix-review-20261030.json": "9f6d3b60d61d03daf749b0c7aff70bed08341b8b5f159643caddce062e704b80",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-bwrap-profile-review-20261030.json": "65bd104addddcda36553b63f5c346ab530fc2f0a9492216a1f82b98fdff362b5",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-handoff-20261103.json": "6e894a488ba16ebe64510eab535f037c1ee528f2e545d600de3476cbd86e4d49",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-milestone1-20261103.json": "f11c2b0e6023d886f99486be645f9075720ce8ab067defb3f5ae0689dd500df4",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-20261103.json": "f0fd816aeddb70a2e25632b76589a1aef67b8e34cbc83e8c4ccb0e1c8bc59291",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-authorized-20261103.json": "37d4707eeaa12421cd07347cbbb1c3a338bc55f0ef2c723e3c1cf06ecbd4f030",
+    "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-review-20261103.json": "746d7e77c47fbe35509358cabe0242d2ad9f364824262118e954bdd114e80674",
+    "outputs/p2-reviewed-release-20261103/prepare-bwrap-profile.py": "f690188e084849605a9c2504158a31ea64b842c22a0331fd07dd9c8d4efea7ae",
+    "outputs/p2-reviewed-release-20261103/vm-acceptance-reproduction.en.md": "3109c69a2d81909efaed5e581c91d0fd3b58f7f5254253f983a292c6c29627db",
+    "outputs/p2-reviewed-release-20261103/VM-실행-검증-20261103.md": "d874f39400b92d9afc3cb8511d20bd2dcc91dd7e2b594b9fc0ff9caa5998a27e",
+    "runs/p2-reviewed-release-20261103/evidence/release-provenance.json": "8f2e87cf4bfe2bfa02176b073c626bfc8d1fc6748b5443f1a89bf15a0c282422",
+    "runs/p2-reviewed-release-20261103/evidence/release-packaging-checks.json": "61817f040671966c96870e1c4555e3812701794666293051204a9aa55bb71e96",
+    "runs/p2-reviewed-release-20261103/evidence/release-mandatory-p1.json": "ffef0b0e56c8159e933477fc9782b4db06e179e9473d26d717eaae537b215eec",
+    "runs/p2-reviewed-release-20261103/evidence/release-mandatory-gate-receipt.json": "219e3e7c6ee7a3cc78ef3e93104a85e71e8dabf87b20c8859b1fb90f9ea2601f",
+    "runs/p2-reviewed-release-20261103/evidence/release-final-packaging.json": "f0a009aefb2e52d64c926e23907f435a20d22b1445a02a9f0f68c1adeed55cce"
+  },
+  "archive_map_sha256": "0d47f6688232c5dbbc631133dcaf8ddf9571607f422415121d6859ee77f22ffe",
+  "governance_conditions": [
+    "Exact-copy source release only; advisory acceptance does not authorize new VM execution, broader credential access or external publication adapters.",
+    "Current expired VM receipts are historical evidence, not fresh runtime authority.",
+    "Generated result/lifecycle records remain content-bound by existing P1 submission; archived artifacts must remain exact reviewed copies.",
+    "No modification to original task snapshots/seals or primary pending commit.",
+    "Preserve full-P2 limits: worker upload, privileged RPC, cross-host auth, external HTTPS/GitHub adapters, real credential rotation and desktop tooling boundary incomplete."
+  ],
+  "pending_authorization": "No repeated permission request: existing exact origin/main non-force publication authority remains parent-owned; actual host controls apply.",
+  "limitations": [
+    "No new tests or VM accesses executed during rebind. Prior dynamic acceptance and read-only confirmation remain source-task evidence.",
+    "Local writable test evidence/declared identities do not establish signed execution attestations or authenticated reviewer identity.",
+    "No runtime claims inferred from instruction workflow configuration.",
+    "FullP2 remains inconclusive/incomplete; accepted refers scoped pilot plus release packaging only."
+  ],
+  "execution_counts": {
+    "reviewer_test_suite_runs": 0,
+    "reviewer_VM_calls": 0,
+    "release_required_suite_author_runs": 1,
+    "release_required_suite_cases": 66,
+    "source_product_hashes_checked": 41,
+    "provenance_file_hashes_checked": 64,
+    "archive_pairs_checked": 28,
+    "archive_self_map_checked": 1
+  },
+  "rereview_triggers": [
+    "Changed candidate bytes, scope, policy, mandatory suite evidence, final result or archive bytes.",
+    "Claims extending beyond existing manual same-host/local-bare VM acceptance."
+  ],
+  "summary_ko": "검토된 제품41개와 출처·보관 사본이 동일하며 새후보 필수66개검사 증거가 일치해 릴리스 준비 범위를 accepted로 판단한다. 기존 VM시험을 새실행으로 바꾸지 않았고 전체P2 한계도 유지했다. 실제 원격 게시 완료는 아직 not_run이다.",
+  "handoff": "Parent finalizes result status/review reference before evaluator registers own assessment. Assessment includes every archive map source and the map plus this review. Parent owns final lifecycle; do not alter old seals."
+}

@@ -7,6 +7,7 @@
 - [설치 및 작업 기록 사용 안내](docs/작업기록-사용안내.md)
 - [P0 계약 검증과 관찰 모드 사용 안내](docs/P0-실행통제-사용안내.md)
 - [P1 제출·게시 검사 사용 안내](docs/P1-제출-게시-검사-사용안내.md)
+- [디렉터리 구조와 에이전트 역할](docs/디렉터리-구조와-역할.md)
 - 에이전트 시작 규칙: AGENTS.md
 - 역할 목록: registry.json
 - 작업 기록: [.agent-work/INDEX.md](.agent-work/INDEX.md)

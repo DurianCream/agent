@@ -1,0 +1,50 @@
+{
+  "task_id": "p2-host-isolation",
+  "reviewer": "/root/p2_review",
+  "assessment": "accepted",
+  "outcome": "passed",
+  "scope": "Static review only of private mount propagation repair and existing replacement helper adaptation",
+  "reviewed_files": {
+    "modules/infrastructure/p2/linux/worker_entry.py": "2e8c29747c558216e53e9f40716164831a83e7b5824e77ba41df1a418b6309d6",
+    "modules/infrastructure/p2/linux/tests/test_linux_preparation.py": "b90fc709b15207726936130287bafdcd1ad8c426a374b174a04e23bae8def974",
+    "work/p2-host-isolation/apply_vm_mount_delta.py": "db4be77652516d606b4323f6c62f37702c989a3c47242f8c07cf7891c1a9530e"
+  },
+  "criteria": [
+    {
+      "id": "namespace_boundary_and_fail_closed",
+      "outcome": "passed",
+      "evidence": "Linux/root requirement and valid distinct self/PID1 mount namespace IDs checked before ctypes mount(NULL,/,NULL,MS_REC|MS_PRIVATE,NULL); failed syscall raises and stops before verification. Existing executor mountinfo readback retained."
+    },
+    {
+      "id": "author_targeted_evidence",
+      "outcome": "passed",
+      "evidence": "private-mount-author-20261030.json matches current hashes and reports5/5. Inspected test bodies: exact flags, host namespace rejection, malformed namespace, nonroot, syscall denial. Not independently rerun."
+    },
+    {
+      "id": "replacement_helper",
+      "outcome": "passed",
+      "evidence": "Uses previously applied worker hash as baseline; independent review hash check, inactive/failed state, exclusive backup/temp and atomic replace/readback retained."
+    },
+    {
+      "id": "independent_mock_rerun",
+      "outcome": "not_run",
+      "reason": "Explicit parent instruction to avoid duplicate5 mock rerun; actual regression will be parent VM retry."
+    },
+    {
+      "id": "actual_vm_regression",
+      "outcome": "not_run",
+      "reason": "Parent-only remote operation; reviewer made no VM change."
+    }
+  ],
+  "findings": [],
+  "conditions": [
+    "Only dedicated supervisor namespace; existing installation and staging protection assumptions unchanged.",
+    "Result is static repair readiness, not completed isolation validation."
+  ],
+  "verification_audit": {
+    "purpose": "Actual VM mount propagation failure repair",
+    "reviewer_tests_run": 0,
+    "author_cases_reviewed": 5,
+    "repeated_suites": 0
+  }
+}

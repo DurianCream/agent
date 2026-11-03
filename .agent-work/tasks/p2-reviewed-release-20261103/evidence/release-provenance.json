@@ -1,0 +1,593 @@
+{
+  "task_id": "p2-reviewed-release-20261103",
+  "scope": {
+    "repository_id": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-host-credential-isolation"
+  },
+  "source_owner": "infrastructure/p2_host",
+  "release_packager": "skill-manager/workflow_owner",
+  "source_handoff_sha256": "6e894a488ba16ebe64510eab535f037c1ee528f2e545d600de3476cbd86e4d49",
+  "scoped_review_sha256": "746d7e77c47fbe35509358cabe0242d2ad9f364824262118e954bdd114e80674",
+  "product_count": 41,
+  "imported_evidence_count": 20,
+  "artifact_count": 3,
+  "mapping": [
+    {
+      "kind": "product",
+      "destination_ref": ".codex/agents/infrastructure.toml",
+      "source_task": "p2-host-isolation",
+      "source_ref": ".codex/agents/infrastructure.toml",
+      "sha256": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": ".codex/agents/orchestrator.toml",
+      "source_task": "p2-host-isolation",
+      "source_ref": ".codex/agents/orchestrator.toml",
+      "sha256": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "README.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "README.md",
+      "sha256": "f40240ef7b06ad96373d9a10dc18cbb7f192530563ff0b426253ed6cbda0ecf2",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "core/orchestrator/instructions.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "core/orchestrator/instructions.md",
+      "sha256": "8de7ef2e5dd9d93c8c6b434bcc2a9dc25a844165eee3504e8248aa940644535f",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "core/orchestrator/module.json",
+      "source_task": "p2-host-isolation",
+      "source_ref": "core/orchestrator/module.json",
+      "sha256": "db64342804ca14d56ff8dd9dae0044abc40f950b51f3402949533281b35ac735",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/instructions.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/instructions.md",
+      "sha256": "f4965ebe5f54a30cd5b6a13c5aab97304ea5b91d34681ffdf3782131dc40a506",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/module.json",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/module.json",
+      "sha256": "e180b580606f3f31ad7d8f61b03c0b890816c737d5250a128199478dc0cc36b2",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/native-map.json",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/native-map.json",
+      "sha256": "b32c3090c1bde6336baae94ce6772d70e5883cd7fe2c3ee6643dcfc12ed48d5a",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "docs/디렉터리-구조와-역할.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "docs/디렉터리-구조와-역할.md",
+      "sha256": "413489d4efc68e552374168164e0ad111411b7a55c633d5da70764e7c809f97b",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/HyperV-설치-안내.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/HyperV-설치-안내.md",
+      "sha256": "497fac1dd78f2774b436263a9c4eba67f3fbd81654e4c2a85ad0a0706039cb22",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/New-P2VM.ps1",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/New-P2VM.ps1",
+      "sha256": "a12ae8e6ac103a2abc70765f9ea9cc9ea8f5928e3f92f99f87ad7e38818b3cb0",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/P2VM.psm1",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/P2VM.psm1",
+      "sha256": "f2a9902838e578bfe913f010f50a1b980f7f9315cbe8c138f2e8f0ddeb83edbd",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/deployment-contract.en.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/deployment-contract.en.md",
+      "sha256": "88b4a761d35fede95a78759b24902616b46e2e0fd55b102d150f2fca248b763c",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/README.ko.md",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/README.ko.md",
+      "sha256": "d441bedd17fae5bb0da88b0df873c9e3c6f58d7f791428650ffdf75e6e49f167",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/install.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/install.py",
+      "sha256": "667e1aa8f6ce06d5a6932623dc512e5965133489fb78fe838f6aedfbbc275014",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/preflight.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/preflight.py",
+      "sha256": "9d71bd0e6e4a8f22368242a6505725145a65264ddd7a3237f498c19a75df6d1f",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/publisher_entry.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/publisher_entry.py",
+      "sha256": "17693548ee849c4c1664156fc2d056bcdb3c3aaf5ded877d7f2f74d35e7a1b9b",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/rootfs_builder.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/rootfs_builder.py",
+      "sha256": "c2a47787ca20440996cc27cc8f4ca5745cf1f71b11a97056881234aff6faf0f3",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-control.service",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-control.service",
+      "sha256": "b3e309e2d9d005d2541ad3d3e7700a4afd3eb4fd7e52c4c415a617333ee9cac8",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service",
+      "sha256": "cfb8a72b88795008ead269ce06041a73e11fac1f65d3a42fd30644cc86f5037a",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service",
+      "sha256": "4d5ce3f1b8bd21e4907a03f777c2e320abe2bd9abdd2f76dc2e3dbcdae53edaa",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service",
+      "sha256": "16165d84518821fb0d428528831e7d00d7c9533ef23f9cc11bb8ca05d1bba4d4",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/tests/test_linux_preparation.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/tests/test_linux_preparation.py",
+      "sha256": "4f8a4eea71eff8a34e3d2923b9335ab24361dc85500055c269ac560853bf8a12",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/linux/worker_entry.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/linux/worker_entry.py",
+      "sha256": "2e8c29747c558216e53e9f40716164831a83e7b5824e77ba41df1a418b6309d6",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "modules/infrastructure/p2/tests/Test-P2VM.ps1",
+      "source_task": "p2-host-isolation",
+      "source_ref": "modules/infrastructure/p2/tests/Test-P2VM.ps1",
+      "sha256": "36bb6ae4f59e7e4b0821bc2cf01037ea0127689396af7081f7a1336987f2bbf9",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_broker.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_broker.py",
+      "sha256": "f0b00c2a2b2a6652b4e2d0a0e9fc644c34ca4c60b9c1b29c536b03fcc9cf1a75",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_contracts.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_contracts.py",
+      "sha256": "378af191e40f9c46a40c4ed7cb4804a368cb57850eabfc0e7e6c50307739b862",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_executor.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_executor.py",
+      "sha256": "04fe2090185958bd702e0bcf4ccbdaf220fe9ddc0ed73a8721f55b1441efa8b1",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_publisher.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_publisher.py",
+      "sha256": "99b74fe3e908f266a226e4b39999644bdb61a4e241c525616d8f5bc256ce5403",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_sandbox_gate.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_sandbox_gate.py",
+      "sha256": "57cb73cb278efdb97d2110af19161eb74211da0a1f1cb3e057a0481f2af8f297",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_store.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_store.py",
+      "sha256": "e95133aa9ccd624214f534d9cff8ee2914184cb8d3205bd80cb8fbc9ccea3980",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/p2_verifier.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/p2_verifier.py",
+      "sha256": "b6a0c0fe81f69a0b5d2c56a14bb25d4767ff2b680f231e4f34ff6a8db32f412a",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_broker.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_broker.py",
+      "sha256": "bac65f79fe841eaecfafc687ec482a18204948f66a43a12fbcbf2504b10df2a7",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_contracts.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_contracts.py",
+      "sha256": "bcff3ce053a2ac4f645ce96a5645634e32df4d889361027b7592eb807a8f0404",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_executor.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_executor.py",
+      "sha256": "457669a1d29ffb0f201dec700f6b325ac4645359e92bbe4bc9546902adae2ec1",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_publisher.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_publisher.py",
+      "sha256": "85271d34778ef7c78b5db6bccad454d08769b3485acd784ac54eeb9b2293bc6f",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_store.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_store.py",
+      "sha256": "91241e3c58ff37ec0c11cdb55c990bf4ae06faf2cf3a5a86099023f12d3b64b1",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "runtime/tests/test_p2_verifier.py",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runtime/tests/test_p2_verifier.py",
+      "sha256": "0b15399693e91360385e7e82084c6fcddeab2d044c86493f345e2fd0cf39d2d0",
+      "author": "infrastructure/p2_host"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "AGENTS.md",
+      "source_task": "owner-led-workflow",
+      "source_ref": "AGENTS.md",
+      "source_commit": "b85b78f2747e75b8bca21093f9add4a229b5fa22",
+      "source_blob_oid": "cbba5dbdb4fc735fb8287cd43f1d595268c0cad5",
+      "sha256": "b5b6b665c4bcc74bd344741713a08598a6d44c34d6d63d9d55676762cd610fb0",
+      "author": "historical reviewed owner-led workflow authors"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "docs/작업-파이프라인.md",
+      "source_task": "owner-led-workflow",
+      "source_ref": "docs/작업-파이프라인.md",
+      "source_commit": "b85b78f2747e75b8bca21093f9add4a229b5fa22",
+      "source_blob_oid": "2733af5faa4ddfbfe5f1d87cf8bf0ff3be3da25a",
+      "sha256": "231877ae7276560568334e6da5ccee7beb10edddc4e9eed2711e126910f47a8a",
+      "author": "historical reviewed owner-led workflow authors"
+    },
+    {
+      "kind": "product",
+      "destination_ref": "shared/workflows/owner-led-delivery.md",
+      "source_task": "owner-led-workflow",
+      "source_ref": "shared/workflows/owner-led-delivery.md",
+      "source_commit": "b85b78f2747e75b8bca21093f9add4a229b5fa22",
+      "source_blob_oid": "8d8027517737f4a098608485d19801118d1317f2",
+      "sha256": "71e07a367b38c86f40f04a67735ae8afb83f5e33bb608c0f02b04f8eb53c08f7",
+      "author": "historical reviewed owner-led workflow authors"
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-final-normal-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-normal-20261103.json",
+      "sha256": "a101bf2246765a300102c2cf4758832002d72197c6eef428a6649cf362cab214",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-final-receipt-readback-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-receipt-readback-20261103.json",
+      "sha256": "2c96839fcd07d56ffcafb1a739ca7d8888934f0b6cfd2458e1edd46dd858b5e4",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-final-publication-retry-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-final-publication-retry-20261103.json",
+      "sha256": "7453878671c0cc5a7fbd7cc543f6cbca4a0ea5ae875475e3b93f29851dec1cb7",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-denial-receipt-readback-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-denial-receipt-readback-20261103.json",
+      "sha256": "217afb0eec1434bf1aa36fd4329a668ea2532a6f01f62db8e5b1a2b9f409b256",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-prepare-denial-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-prepare-denial-20261103.json",
+      "sha256": "014bc00d8335ea60ad04b817f50ac2ea192e74adbe3ed6a2680634f2bf6ac2a1",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-direct-git-canary-denied-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-direct-git-canary-denied-20261103.json",
+      "sha256": "e0d8018d49e08e131c4e6a81e5b471399ea571bcdd3b6751ed1b8d24051c0456",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-safety-publication-denied-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-safety-publication-denied-20261103.json",
+      "sha256": "07746425eb682e4832060c8ab3dbb4822fc6fef42a773ac29b47f5d79733e61b",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-lifetime-sigkill-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-lifetime-sigkill-20261103.json",
+      "sha256": "3233b1e2b7ccd5f591bfe79d89525deac35be5cf7beb4c9de28abc7a5905c0d3",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-test-state-restored-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-test-state-restored-20261103.json",
+      "sha256": "e0880500f3ca058ba431daec04ff47077eac1f10b6b08def3509c2c8f1c3c607",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-uid-drop-explicituser-probe-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-explicituser-probe-20261103.json",
+      "sha256": "30e11955bd7227cc59280bbc64ba3d64d4423868a9ab401a6d1aa07ae107a51a",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-uid-drop-delegated-probe-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-uid-drop-delegated-probe-20261103.json",
+      "sha256": "4cada563e424d170bd19db625838ab8835867db36b013f2c33e66ccfe28fb63a",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-adapter-review-final-delta-20261030.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-adapter-review-final-delta-20261030.json",
+      "sha256": "8d822515bcc8767ed1b6b657f98a93500146f4566c4b8b93e840ed59af620ea7",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-cgroup-fix-review-20261030.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-cgroup-fix-review-20261030.json",
+      "sha256": "286054727448f98e3d1866d9d38b110f8587ea287c146c83481bfb433304285c",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-mount-fix-review-20261030.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-mount-fix-review-20261030.json",
+      "sha256": "9f6d3b60d61d03daf749b0c7aff70bed08341b8b5f159643caddce062e704b80",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-bwrap-profile-review-20261030.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-bwrap-profile-review-20261030.json",
+      "sha256": "65bd104addddcda36553b63f5c346ab530fc2f0a9492216a1f82b98fdff362b5",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-handoff-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-handoff-20261103.json",
+      "sha256": "6e894a488ba16ebe64510eab535f037c1ee528f2e545d600de3476cbd86e4d49",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/owner-milestone1-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/owner-milestone1-20261103.json",
+      "sha256": "f11c2b0e6023d886f99486be645f9075720ce8ab067defb3f5ae0689dd500df4",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-owner-vm-readback-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-20261103.json",
+      "sha256": "f0fd816aeddb70a2e25632b76589a1aef67b8e34cbc83e8c4ccb0e1c8bc59291",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-owner-vm-readback-authorized-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-readback-authorized-20261103.json",
+      "sha256": "37d4707eeaa12421cd07347cbbb1c3a338bc55f0ef2c723e3c1cf06ecbd4f030",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "historical_evidence",
+      "source_task": "p2-host-isolation",
+      "source_ref": "runs/p2-host-isolation/evidence/independent-owner-vm-review-20261103.json",
+      "destination_ref": "runs/p2-reviewed-release-20261103/evidence/imported-p2/independent-owner-vm-review-20261103.json",
+      "sha256": "746d7e77c47fbe35509358cabe0242d2ad9f364824262118e954bdd114e80674",
+      "original_record_bytes_preserved": true,
+      "new_test_execution": false
+    },
+    {
+      "kind": "artifact",
+      "source_task": "p2-host-isolation",
+      "source_ref": "outputs/p2-host-isolation/prepare-bwrap-profile.py",
+      "destination_ref": "outputs/p2-reviewed-release-20261103/prepare-bwrap-profile.py",
+      "sha256": "f690188e084849605a9c2504158a31ea64b842c22a0331fd07dd9c8d4efea7ae",
+      "original_record_bytes_preserved": true
+    },
+    {
+      "kind": "artifact",
+      "source_task": "p2-host-isolation",
+      "source_ref": "outputs/p2-host-isolation/vm-acceptance-reproduction.en.md",
+      "destination_ref": "outputs/p2-reviewed-release-20261103/vm-acceptance-reproduction.en.md",
+      "sha256": "3109c69a2d81909efaed5e581c91d0fd3b58f7f5254253f983a292c6c29627db",
+      "original_record_bytes_preserved": true
+    },
+    {
+      "kind": "artifact",
+      "source_task": "p2-host-isolation",
+      "source_ref": "outputs/p2-host-isolation/VM-실행-검증-20261103.md",
+      "destination_ref": "outputs/p2-reviewed-release-20261103/VM-실행-검증-20261103.md",
+      "sha256": "d874f39400b92d9afc3cb8511d20bd2dcc91dd7e2b594b9fc0ff9caa5998a27e",
+      "original_record_bytes_preserved": true
+    }
+  ],
+  "primary_head_unchanged": true,
+  "primary_registry_and_submitted_predecessor_records_unchanged": true,
+  "primary_frozen_products_unchanged": true,
+  "primary_runtime_unchanged": true,
+  "private_runtime": {
+    "copied_file_count": 637,
+    "exact_copy_verified": true,
+    "versions": {
+      "attrs": "26.1.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "referencing": "0.37.0",
+      "rfc8785": "0.1.4",
+      "rfc3339-validator": "0.1.4",
+      "rfc3986-validator": "0.1.1",
+      "rpds-py": "2026.9.1",
+      "six": "1.17.0",
+      "typing-extensions": "4.16.0"
+    },
+    "new_versions_or_downloads": false,
+    "clone_prefix_verified": true
+  },
+  "intended_hook_preserved": {
+    "present_before": false,
+    "sha256_before": null,
+    "sha256_after": null,
+    "regenerated": false
+  },
+  "claim_limits": [
+    "Imported tests and receipts retain original source task IDs and are historical evidence, not new release-task executions.",
+    "Only operator-managed same-host Linux pilot and local-bare publication scope is accepted; whole P2 remains incomplete."
+  ],
+  "vm_actions": 0,
+  "p2_tests_rerun": 0,
+  "mandatory_suite_executions": 0,
+  "remote_pushes": 0
+}

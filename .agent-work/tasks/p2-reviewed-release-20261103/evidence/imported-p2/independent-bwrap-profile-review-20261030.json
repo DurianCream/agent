@@ -1,0 +1,45 @@
+{
+  "task_id": "p2-host-isolation",
+  "reviewer": "/root/p2_review",
+  "assessment": "accepted",
+  "outcome": "passed",
+  "scope": "Static review only of new fixed-path bubblewrap AppArmor preparation helper; not AppArmor effectiveness or VM execution acceptance",
+  "reviewed_files": {
+    "work/p2-host-isolation/prepare_vm_bwrap_profile.py": "f690188e084849605a9c2504158a31ea64b842c22a0331fd07dd9c8d4efea7ae"
+  },
+  "criteria": [
+    {
+      "id": "bounded_resources_and_pinned_binary",
+      "outcome": "passed",
+      "evidence": "Fixed absent /opt/multi-p2/bin and profile path; root-protected ancestor/source/parser checks; exact configured SHA; no SUID/SGID/file capabilities; binary root:worker0550, directory0750, exclusive writes and copy readback."
+    },
+    {
+      "id": "profile_load_and_failure_handling",
+      "outcome": "passed",
+      "evidence": "Exact profile path and name; preexisting loaded name refused; syntax-only phase before add-not-replace; readback; failed load attempts unload before deleting new files, preserves resources when unload uncertain."
+    },
+    {
+      "id": "side_effect_boundary",
+      "outcome": "passed",
+      "evidence": "No sysctl, executor config or service-start code. Successful helper leaves only its new binary/directory/profile installed and loaded; it does not claim execution verified."
+    },
+    {
+      "id": "actual_profile_transition_and_execution",
+      "outcome": "not_run",
+      "reason": "Parent plans trusted Python version and attr/current observation with NNP retained during explicitly approved userns window; reviewer performed no execution."
+    }
+  ],
+  "findings": [],
+  "conditions": [
+    "Root operator serializes this one-off new-name operation; existing protected staging/install assumptions remain.",
+    "flags=(unconfined) userns is an application-specific exception, not an additional sandbox or security certification.",
+    "AppArmor causality remains a hypothesis until actual transition/capability behavior is observed.",
+    "Temporary user namespace setting/restoration is a separate parent-controlled action; this helper neither changes nor restores it.",
+    "No repeated test suite or remote mutation by reviewer."
+  ],
+  "verification_audit": {
+    "review_type": "required_static_preapply",
+    "tests_run": 0,
+    "redundant_tests": 0
+  }
+}

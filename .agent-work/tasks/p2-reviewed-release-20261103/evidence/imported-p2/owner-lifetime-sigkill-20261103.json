@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"test\": \"supervisor_SIGKILL_after_candidate_started\", \"candidate_observed_running\": true, \"worker_processes_before\": 4, \"worker_processes_after\": 0, \"cgroup_empty_or_removed\": true, \"held_fd_same_inode\": true, \"bytes_before\": 21, \"bytes_running\": 73, \"bytes_after\": 73, \"held_fd_stable_after_cleanup\": true, \"cleanup_seconds\": 0.30850226408801973, \"no_verification_receipt\": true, \"service\": {\"MainPID\": \"0\", \"Result\": \"signal\", \"ExecMainStatus\": \"9\", \"ActiveState\": \"failed\", \"SubState\": \"failed\"}, \"namespace_limit_before\": 0, \"namespace_limit_after\": 0}\n",
+  "stderr": ""
+}
