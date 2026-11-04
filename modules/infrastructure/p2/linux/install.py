@@ -20,6 +20,7 @@ WORKER_GROUP = "multi-p2-workers"
 ROOTS = ("/opt/multi-p2", "/etc/multi-p2", "/var/lib/multi-p2")
 PYTHON = "/opt/multi-p2-python/bin/python3"
 UNITS = ("multi-p2-control.service", "multi-p2-worker.service", "multi-p2-executor.service", "multi-p2-publisher.service")
+SOCKET_UNITS = ("multi-p2-executor.socket", "multi-p2-publisher.socket")
 ALLOWLIST = {
     "runtime/p2_contracts.py": "runtime/p2_contracts.py",
     "runtime/p2_store.py": "runtime/p2_store.py",
@@ -28,6 +29,7 @@ ALLOWLIST = {
     "runtime/p2_sandbox_gate.py": "runtime/p2_sandbox_gate.py",
     "runtime/p2_verifier.py": "runtime/p2_verifier.py",
     "runtime/p2_publisher.py": "runtime/p2_publisher.py",
+    "runtime/p2_rpc.py": "runtime/p2_rpc.py",
     "runtime/control_contracts.py": "runtime/control_contracts.py",
     "runtime/control-requirements.txt": "runtime/control-requirements.txt",
     "modules/infrastructure/p2/linux/preflight.py": "preflight.py",
@@ -35,10 +37,13 @@ ALLOWLIST = {
     "modules/infrastructure/p2/linux/worker_entry.py": "worker_entry.py",
     "modules/infrastructure/p2/linux/publisher_entry.py": "publisher_entry.py",
     "modules/infrastructure/p2/linux/rootfs_builder.py": "rootfs_builder.py",
+    "modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor": "multi-p2-bwrap-rpc.apparmor",
     "modules/infrastructure/p2/linux/systemd/multi-p2-control.service": "units/multi-p2-control.service",
     "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service": "units/multi-p2-worker.service",
     "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "units/multi-p2-executor.service",
     "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "units/multi-p2-publisher.service",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket": "units/multi-p2-executor.socket",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket": "units/multi-p2-publisher.socket",
 }
 MAX_SOURCE = 2 * 1024 * 1024
 
@@ -199,7 +204,7 @@ def installation_plan(facts, manifest, release_sha, expected):
     return {"schema_version": "0.1.0", "mode": "plan", "effects_performed": False,
             "release_sha256": release_sha, "files": manifest, "target_check": target, "observed_host": facts,
             "create_users": list(USERS), "create_group": WORKER_GROUP,
-            "create_roots": list(ROOTS), "install_units_inactive": list(UNITS),
+            "create_roots": list(ROOTS), "install_units_inactive": list(UNITS + SOCKET_UNITS),
             "required_python": PYTHON, "default_enrollments": [],
             "worker_execution": "implemented_prerequisites_unverified", "verify_adapter": "implemented_not_activated", "publish_adapter": "implemented_not_activated",
             "credentials_provisioned": False, "boundary_tests": "not_run"}
@@ -210,7 +215,7 @@ def check_resources():
     import grp
     for parent in ("/opt", "/etc", "/var/lib", "/etc/systemd/system", "/run"):
         secure_root_path(parent)
-    for path in (*ROOTS, *("/etc/systemd/system/" + name for name in UNITS), "/run/multi-p2-control"):
+    for path in (*ROOTS, *("/etc/systemd/system/" + name for name in UNITS + SOCKET_UNITS), "/run/multi-p2-control"):
         if os.path.lexists(path):
             raise ValueError("existing_installation_resource_requires_operator_review")
     for name in USERS:
@@ -337,14 +342,14 @@ def apply_install(captured, manifest, release_sha, expected, approved_sha):
         }
         for path, (uid, gid, mode) in layout.items():
             _mkdir(path); os.chown(path, uid, gid); os.chmod(path, mode)
-        for name in UNITS:
+        for name in UNITS + SOCKET_UNITS:
             source = "modules/infrastructure/p2/linux/systemd/" + name
             _write_new("/etc/systemd/system/" + name, captured[source])
         for path in ("/opt/multi-p2", "/opt/multi-p2/runtime", "/opt/multi-p2/units", "/etc/multi-p2", "/var/lib/multi-p2"):
             os.chmod(path, 0o755)
         subprocess.run(["/usr/bin/systemctl", "daemon-reload"], check=True, env=env, cwd="/", timeout=30)
         result = {"status": "installed_inactive", "release_sha256": release_sha, "effects_performed": True,
-                  "users": list(USERS), "units": list(UNITS), "services_started": False,
+                  "users": list(USERS), "units": list(UNITS + SOCKET_UNITS), "services_started": False,
                   "enrollments": [], "credentials_provisioned": False,
                   "worker_execution": "implemented_prerequisites_unverified", "verify_adapter": "implemented_not_activated", "publish_adapter": "implemented_not_activated",
                   "production_verifier_uid": 0, "publisher_uid": publisher.pw_uid,

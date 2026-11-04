@@ -1,0 +1,19 @@
+{
+  "command": [
+    "runtime/tests/test_p2_rpc.py",
+    "ReviewRegressionTests",
+    "-v"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) ... \r\n  test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) (role='verify') ... ERROR\r\n  test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) (role='publish') ... ERROR\r\ntest_effect_then_save_failure_is_unknown_and_retry_keeps_backend_key (__main__.ReviewRegressionTests.test_effect_then_save_failure_is_unknown_and_retry_keeps_backend_key) ... ok\r\n\r\n======================================================================\r\nERROR: test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) (role='verify')\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"<workspace>\\runtime\\tests\\test_p2_rpc.py\", line 103, in test_each_socket_activation_serves_only_one_request\r\n    listener=mock.Mock();listener.family=rpc.socket.AF_UNIX;listener.getsockopt.return_value=1\r\n                                         ^^^^^^^^^^^^^^^^^^\r\nAttributeError: module 'socket' has no attribute 'AF_UNIX'\r\n\r\n======================================================================\r\nERROR: test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) (role='publish')\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"<workspace>\\runtime\\tests\\test_p2_rpc.py\", line 103, in test_each_socket_activation_serves_only_one_request\r\n    listener=mock.Mock();listener.family=rpc.socket.AF_UNIX;listener.getsockopt.return_value=1\r\n                                         ^^^^^^^^^^^^^^^^^^\r\nAttributeError: module 'socket' has no attribute 'AF_UNIX'\r\n\r\n----------------------------------------------------------------------\r\nRan 2 tests in 0.175s\r\n\r\nFAILED (errors=2)\r\n",
+  "source_sha256": {
+    "runtime\\p2_broker.py": "5cff6e5f9c977fe84f4cd4495cd76453b3165e17b9f7fc34d403956baaec9760",
+    "runtime\\p2_store.py": "bb6c6c09838bcc3a87a9421fcbd6dab860c634a7ad2ffc4037dc9c1521003c38",
+    "runtime\\p2_rpc.py": "eff967c061d0d9586fdc8e21aa091d74744bab35a563f8b3ed4529a2f868d279",
+    "runtime\\tests\\test_p2_rpc.py": "f1a2a73fceb75ead45bd98781f2a10a408915e5ffbdaef662c49e2e176aaf834"
+  },
+  "source_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-review-regression-tests.json",
+  "source_sha256_original": "a8526c676f21638aa91c18e01b8240d2ac1794fbfede257c87cc3e0f59e67388",
+  "redaction": "Only absolute workspace prefix removed from the recorded Windows mock-harness traceback; no test outcome changed."
+}

@@ -1,0 +1,240 @@
+{
+  "schema_version": "advisory-companion-1",
+  "reviewer": "/root/rpc_activation_policy",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc",
+    "task_id": "p2-automatic-rpc-20261104"
+  },
+  "objective": "Assess permanent same-host RPC activation and deliberate override of an existing zero user namespace limit; do not authorize execution.",
+  "acceptance_criteria": [
+    "Distinguish temporary test authorization from sustained operation",
+    "Bound permanent proposal, rollback, and unresolved security applicability",
+    "Provide a concrete final owner decision question without stopping separately authorized testing"
+  ],
+  "project_context": {
+    "target": "Existing development VM; actual running release6.8.0-147-generic, installed linux-image-6.8.0-147-generic6.8.0-147.147 amd64; cached noble-updates/security origins.",
+    "data": "Benign payloads; fixed local bare repository target; no external HTTPS or desktop tool routing",
+    "inventory_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+    "inventory_sha256": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d"
+  },
+  "authorized_scope": {
+    "existing": "Explicit user instruction to activate persistently, documented in activation-user-decision.json, covers the same previously authenticated development VM and proposal hash only. Prior temporary tests and configured Git standing authorization remain separate.",
+    "unresolved": "none for this exact permanent activation decision",
+    "authority_limits": "Decision note records the existing human instruction; neither note nor this advisory is a runtime credential/grant. No new VM action, test, product edit or permission expansion by reviewer."
+  },
+  "proposal_ref": {
+    "path": "modules/infrastructure/p2/linux/rpc-deployment.en.md",
+    "sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "state": "Final zz proposal inspected; matches parent-provided digest.",
+    "proposed_delta": "New root0644 /etc/sysctl.d/zz-multi-p2-userns.conf containing user.max_user_namespaces = 15334; preserve existing dirtyfrag.conf; apply only own file; enable exactly executor.socket, publisher.socket, control.service."
+  },
+  "policy_refs": [
+    {
+      "id": "common",
+      "version": "1.2.0",
+      "owner": "repository owner",
+      "evidence": "shared/policies/common.json",
+      "applicability": "current advisory requirements; frozen task versions remain authoritative for task submission"
+    },
+    {
+      "id": "owner-led-delivery",
+      "version": "1.0.0",
+      "owner": "repository owner",
+      "evidence": "shared/workflows/owner-led-delivery.md",
+      "applicability": "current assigned workflow"
+    },
+    {
+      "id": "user-temporary-test-authorization",
+      "version": "current session as relayed by parent",
+      "owner": "user",
+      "evidence": "parent assignment",
+      "applicability": "temporary tests only; original user message not independently inspected"
+    }
+  ],
+  "recommendation": "proceed",
+  "rationale": "The user explicitly requested sustained activation after the precise VM-wide quota, persistence, preserved prior zero file and three units were explained. The scoped decision resolves the previous missing permanent-operation permission. Inspected owner evidence records application and bounded health success for this exact proposal; this advisory grants no authority.",
+  "risk": {
+    "level": null,
+    "status": "unverified",
+    "factors": [
+      "Host-wide namespace quota effect was disclosed and accepted for this VM.",
+      "Installed package metadata supports the two previously assessed fixes; overall kernel vulnerability status is not certified.",
+      "AppArmor and dedicated executable constraints remain separate from the global quota."
+    ]
+  },
+  "facts": [
+    {
+      "claim": "Live0; sole discovered definition dirtyfrag.conf0; zz proposal absent, no later key definition.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+      "status": "owner evidence inspected"
+    },
+    {
+      "claim": "Running release maps to installed linux-image6.8.0-147.147 amd64 and cached Ubuntu noble-updates/security origins.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+      "status": "owner evidence inspected"
+    },
+    {
+      "claim": "Previously inspected official Ubuntu CVE records list Noble linux fixed6.8.0-124.124 for both assessed CVEs.",
+      "source": "sources below",
+      "status": "prior official lookup reused; no new research"
+    },
+    {
+      "claim": "Explicit decision approve_persistent_activation binds this proposal, same VM,15334, new zz file, preserved old definition and exact three units.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/activation-user-decision.json",
+      "status": "decision note inspected; parent relays human instruction"
+    },
+    {
+      "claim": "Applied live15334; persistent file SHA25678bde2da72dd3b00473ce484a9c68dd5e47b97d41e92e5065c82e50ab8ad81e5; prior definition preserved; exact three units enabled/active;24 source/config hash checks recorded.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-activation.json",
+      "status": "owner actual evidence inspected"
+    },
+    {
+      "claim": "Fresh verification and authoritative publication replay passed; before/after commit8467d7e04b77748b0e118880d0f812279c8c6a96 unchanged; live quota15334 retained.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-health.json",
+      "status": "owner actual evidence inspected; not a new publication mutation"
+    }
+  ],
+  "inferences": [
+    "Installed-metadata/cached-origin correspondence supports that the running Ubuntu package includes the two documented fixes; no package signature re-verification, refreshed repository index, binary attestation, or universal vulnerability-free claim.",
+    "The original zero restriction may reflect other owner requirements; filename does not establish its rationale.",
+    "zz deliberately supersedes observed zero for this host-wide quota; approval must acknowledge that effect."
+  ],
+  "requirements": [
+    {
+      "id": "ACT-1",
+      "scope": "permanent activation",
+      "owner": "user/VM owner via orchestrator",
+      "constraint": "Explicitly choose sustained host-wide15334 overriding existing0 or retain0/inactive",
+      "acceptance": "Decision names quota, override and exact three units; no inference from temporary test approval",
+      "evidence": "Bounded decision reference",
+      "status": "satisfied by explicit scoped user decision"
+    },
+    {
+      "id": "ACT-2",
+      "scope": "candidate",
+      "owner": "infrastructure owner and independent evaluator",
+      "constraint": "Review final zz proposal and repaired source against exact hashes",
+      "acceptance": "No open material finding for activation; existing mandatory checks satisfied",
+      "evidence": "Final hash-bound handoff/review; no new redundant test suite requested"
+    },
+    {
+      "id": "ACT-3",
+      "scope": "existing zero rationale and security applicability",
+      "owner": "user/VM owner",
+      "constraint": "Make informed decision on overriding existing zero; retain explicit limits of package evidence",
+      "acceptance": "Owner chooses keep0 or approves the exact override acknowledging prior zero; named CVE package-version correspondence is now supported and no extra patch verification task is imposed",
+      "evidence": "New kernel inventory plus prior official fix records and final owner decision",
+      "status": "Owner explicitly chose override after disclosure; historical reason for zero remains unknown but no longer an unresolved authority condition."
+    },
+    {
+      "id": "ACT-4",
+      "scope": "approved activation only",
+      "owner": "infrastructure owner under orchestrator deployment assignment",
+      "constraint": "Preserve existing file; exclusive task-owned new file; no global sysctl reload; retain AppArmor and other controls; local fixed target only",
+      "acceptance": "Exact reviewed bytes/ownership and scoped live-value/unit/socket readback; persistence described as configured unless reboot actually observed",
+      "evidence": "Planned deployment readback and bounded health request already required by deployment plan",
+      "status": "Applied-state and bounded health evidence inspected; actual reboot not_run."
+    },
+    {
+      "id": "ACT-5",
+      "scope": "rollback",
+      "owner": "infrastructure owner",
+      "constraint": "Disable/stop incoming three units, stop scoped executor/publisher, confirm no workers/populated job cgroups, restore0/readback; remove only matching task-owned persistent file; preserve original0 file and ledgers",
+      "acceptance": "Mismatch stops destructive rollback steps; scoped prior runtime restored from known backup where needed",
+      "evidence": "Existing deployment rollback procedure and actual rollback evidence if invoked"
+    }
+  ],
+  "review_needed": {
+    "owner": "none",
+    "question": "none",
+    "reason": "Exact permanent effect now explicitly authorized; no further approval is requested for this same scope."
+  },
+  "unresolved_obligations": [],
+  "conditions": [
+    "Existing exact scope and deployment/rollback limits remain applicable; no new conditions or approval requirements added.",
+    "A material change of VM, proposal, target, permissions or endpoint is outside this assessment."
+  ],
+  "limitations": [
+    "Actual reboot not_run: persistent configuration verified, post-reboot behavior not observed.",
+    "No new research, tests, VM changes or product edits by this reviewer.",
+    "Overall kernel security and package signature/binary attestation are not certified.",
+    "Fresh verification plus existing publication replay does not prove a new publication mutation.",
+    "P0 stale_snapshot prevents recording an assessment against current bytes; this does not revoke the explicit user decision or introduce a new activation approval."
+  ],
+  "p0": {
+    "record_id": "obs-c7bc5d341a7f474880ec5ce9dbe84eb1",
+    "snapshot_digest": "sha256:1a17156394831f1a1a62cee1475e27b43f705b0c2788fc4297a33746632cec17",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "decision": "allow",
+    "observation_reason_codes": [
+      "within_declared_bounds"
+    ],
+    "mode": "observe",
+    "executable": false,
+    "authority_verified": false,
+    "workflow_assessment": "not_run: current status returned stale_snapshot for obs-c7bc5d341a7f474880ec5ce9dbe84eb1; orchestrator must refresh workspace observation for current owned-file snapshot before a matching record-bound assessment can be written.",
+    "policy_scope": "workspace.inspect declared owned workset; does not cover actual VM activation",
+    "content_checks": "not_performed",
+    "signature_verification": "not_performed",
+    "status": "stale",
+    "reason_codes": [
+      "stale_snapshot"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://ubuntu.com/blog/dirty-frag-linux-vulnerability-fixes-available",
+      "owner": "Canonical",
+      "observed_date": "2026-11-04",
+      "support": "Dirty Frag names two local privilege escalation CVEs; official mitigation blocks ESP/RxRPC modules at a different modprobe path; updates preferred."
+    },
+    {
+      "url": "https://ubuntu.com/security/CVE-2026-43284",
+      "owner": "Ubuntu Security Team",
+      "updated": "2026-10-12",
+      "support": "Noble linux fixed in6.8.0-124.124"
+    },
+    {
+      "url": "https://ubuntu.com/security/CVE-2026-43500",
+      "owner": "Ubuntu Security Team",
+      "updated": "2026-10-12",
+      "support": "Noble linux fixed in6.8.0-124.124"
+    }
+  ],
+  "validity": {
+    "evaluated_at": "2026-11-04",
+    "proposal_sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "expiry": "unverified; no deadline invented",
+    "review_triggers": [
+      "Material proposal/target/control change",
+      "New owner permanent decision or zero-setting requirement",
+      "Contradictory package evidence"
+    ]
+  },
+  "handoff": {
+    "changes": [
+      "runs/p2-automatic-rpc-20261104/evidence/activation-governance-approved.json"
+    ],
+    "checks": "Exact proposal hash plus decision/application/health evidence inspection only",
+    "next_actions": "Include companion in task evidence; main refreshes current workspace P0 observation if record-bound assessment is needed, then requests bounded matching assessment update. No extra user approval."
+  },
+  "supersedes_for_current_proposal": "Resolves authority issue in activation-governance-updated.json after explicit human decision; prior companions preserved as history.",
+  "new_evidence": [
+    {
+      "path": "runs/p2-automatic-rpc-20261104/evidence/activation-user-decision.json",
+      "sha256": "f71ac78165323797ee75387c743d1ed656ebbd7533f2a0a1b28b584d977daba3"
+    },
+    {
+      "path": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-activation.json",
+      "sha256": "522fb43d90c07164c346ffd2a8bb084dd7376196c1ac9caf349076ee663f0c69"
+    },
+    {
+      "path": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-health.json",
+      "sha256": "5997ca41e9c2c5a302e09e113694da6ce12dd8908cc2b97b07ca8a8202802b5a"
+    }
+  ]
+}

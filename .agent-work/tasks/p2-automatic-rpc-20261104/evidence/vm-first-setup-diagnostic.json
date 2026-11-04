@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"matching_setup_failures\": [{\"job\": \"job-a0d349c9e072410996c45ec98eb2b172\", \"diagnostic\": {\"exit_code\": 78, \"stderr\": \"{\\\"status\\\": \\\"failed\\\", \\\"code\\\": \\\"child_setup_failed\\\", \\\"exception_type\\\": \\\"PermissionError\\\", \\\"errno\\\": 13, \\\"line\\\": 755}\\n\", \"stderr_bytes_read\": 114}}], \"namespace_limit\": \"0\"}\n",
+  "stderr": ""
+}

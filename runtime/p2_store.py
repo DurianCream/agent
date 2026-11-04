@@ -280,7 +280,7 @@ class CandidateStore:
             return self._binding(db, enrollment_id, uid)
 
     def put_blob(self, enrollment_id, uid, data, expected_digest):
-        """Trusted intake API; upload authentication/transport is not implemented."""
+        """Trusted intake API; the broker authenticates upload and enrollment."""
         contract.digest(expected_digest)
         contract.uuid4(enrollment_id)
         self._uid(uid)
@@ -464,6 +464,19 @@ class CandidateStore:
         again on retries. Existing stage-only blocked requests stay blocked.
         """
         require(self.fixture_mode is True, "production_adapter_transport_unavailable")
+        return self._adapter_call(raw, uid, handler)
+
+    def production_adapter_call(self, raw, uid, handler):
+        """Admit only the protected local RPC workflow, retaining backend keys."""
+        from p2_rpc import ProductionWorkflow
+        require(self.fixture_mode is False and type(getattr(handler, '__self__', None)) is ProductionWorkflow and
+                handler.__self__.store is self, 'production_rpc_workflow_required')
+        return self._adapter_call(raw, uid, handler)
+
+    def _adapter_call(self, raw, uid, handler):
+        # Historical table name is retained for ledger compatibility; production
+        # and fixture stores cannot share an ownership/trust mode.
+        mode = 'fixture' if self.fixture_mode else 'production'
         self._uid(uid)
         peek = load_json(raw)
         require(type(peek) is dict and type(peek.get("binding")) is dict, "binding_unavailable")
@@ -487,7 +500,7 @@ class CandidateStore:
                     if old[2] == "blocked":
                         require(type(old[3]) is str and re.fullmatch(r"[a-z0-9_]{1,64}", old[3]), "ledger_corrupt")
                         return {"status": "blocked", "error_code": old[3], "authorization": False, "published": False,
-                                "trust_mode": "fixture", "request_id": request["request_id"], "replayed": True}
+                                "trust_mode": mode, "request_id": request["request_id"], "replayed": True}
                 else:
                     require(db.execute("SELECT (SELECT COUNT(*) FROM requests)+(SELECT COUNT(*) FROM fixture_adapter_calls)").fetchone()[0] < MAX_REQUESTS,
                             "request_quota")
@@ -500,16 +513,19 @@ class CandidateStore:
                                (*key, request["request_id"], valid.request_digest, backend_key, "pending"))
         if legacy: return self.process(raw, uid)
         result = handler(request, uid, backend_key)
-        require(type(result) is dict and result.get("trust_mode") == "fixture" and result.get("authorization") is False,
-                "fixture_adapter_false_authority")
-        require(result.get("status") in ("verified", "failed", "published", "blocked", "unknown", "in_progress"), "fixture_adapter_state")
         try:
+            # An effect may already exist. Invalid or unrecordable replies are
+            # unknown, never a claim that publication did not happen.
+            require(type(result) is dict and result.get("trust_mode") == mode and
+                    (not self.fixture_mode or result.get("authorization") is False),
+                    "fixture_adapter_false_authority")
+            require(result.get("status") in ("verified", "failed", "published", "blocked", "unknown", "in_progress"), "fixture_adapter_state")
             with self._transaction() as db:
                 error = result.get("error_code")
                 if result["status"] == "blocked":
                     require(type(error) is str and re.fullmatch(r"[a-z0-9_]{1,64}", error), "fixture_adapter_error")
                 db.execute("UPDATE fixture_adapter_calls SET state=?,error_code=? WHERE enrollment=? AND worker_uid=? AND idempotency=?",
                            (result["status"], error, *key))
-        except (sqlite3.Error, OSError):
+        except (sqlite3.Error, OSError, StoreError):
             raise StoreError("adapter_result_not_recorded") from None
         return {**result, "request_id": request["request_id"]}

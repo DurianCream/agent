@@ -1,0 +1,241 @@
+{
+  "task_id": "p2-automatic-rpc-20261104",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc"
+  },
+  "owner": "infrastructure/p2_host",
+  "status": "review_fixes_applied_and_affected_tests_ready_for_recheck_before_P1",
+  "baseline": "f70f1955d59292405530b5c92cbda6f4239a3619",
+  "source_hashes": {
+    "runtime/p2_rpc.py": "eff967c061d0d9586fdc8e21aa091d74744bab35a563f8b3ed4529a2f868d279",
+    "runtime/p2_broker.py": "5cff6e5f9c977fe84f4cd4495cd76453b3165e17b9f7fc34d403956baaec9760",
+    "runtime/p2_store.py": "bb6c6c09838bcc3a87a9421fcbd6dab860c634a7ad2ffc4037dc9c1521003c38",
+    "runtime/tests/test_p2_rpc.py": "72f6d201ad071cc7b7ee4678f0fb5a72852cfc61dd5970834f72545b625f968d",
+    "modules/infrastructure/p2/linux/worker_entry.py": "c3b7f67ea63b4e0b76d57f2e17ea0f0b472f0cae511cf26d31f2a7d7645d7908",
+    "modules/infrastructure/p2/linux/publisher_entry.py": "3f702b60c334bcdc059a3f4272c43e7ba356db349c042210ca9f5e4c35c0dadd",
+    "modules/infrastructure/p2/linux/install.py": "d19762d586083c484e9a40e4bbf765a204ce7d8540caa138595f29226b21de1c",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-control.service": "43842e9bbfb5383bfaecddd41d4f03081b951ca49be8a3b6b54c5b2daa695ee1",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "c5443e15f551a99a1e5376bbd9b5c601bdbc05724861a8ec4f86c803fb3d0daf",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "0c27806dc20cc3a895e6e6cca7e9ffe71f6d9fc4c380d0f4587b5b7e5a87e9c6",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket": "a0b5ca17fc32f2c50a618ed3adf38be5701fb448acede1de1ddb6a638ce35524",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket": "fb01ba69e73c9d5191f2d84b02bdfc9d872ab4f55712b059052ba4c1eb2d1ae4",
+    "modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor": "ab22db0dbccba6d21fa9a23ec0898306597e11d8ad4507d005871cdde6d352ac",
+    "modules/infrastructure/p2/linux/README.ko.md": "7a4a35eb170ec5a2e0480fd8d216bc6054a451fd2365d1fc66b68dedaa6e87e6",
+    "modules/infrastructure/p2/linux/rpc-deployment.en.md": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "outputs/p2-automatic-rpc-20261104/rpc-design.en.md": "c840e1b0bd8be6e1bc6d59217ef9a199671d1c946b75d78a55a7a4768f409280",
+    "runtime/native-map.json": "064408724986accea72338d623b799a2400baa52ab414ed51242dbc4b128dd3a"
+  },
+  "actual_test_target": {
+    "reference": "previously_authenticated_user_supplied_P2_VM",
+    "os": "Ubuntu24.04.2LTS",
+    "architecture": "x86_64",
+    "kernel": "6.8.0-147-generic",
+    "controller_uid": 995,
+    "submission_uid": 989,
+    "execution_uid": 988,
+    "execution_gid": 982,
+    "publisher_uid": 990,
+    "socket_creator_uid": 0,
+    "socket_creator_pid": 1
+  },
+  "acceptance_evidence": {
+    "identity_and_initialstate": "vm-reconcile.json",
+    "inactive_test_preparation": "vm-rpc-preparation.json",
+    "binary_profile": "vm-dedicated-executable.json",
+    "initial_failure": "vm-normal-first.json",
+    "failure_cause": "vm-first-setup-diagnostic.json",
+    "permission_fix": "vm-binary-parent-traverse.json",
+    "automatic_normal_success": "vm-normal-second.json",
+    "replay_and_denials": "vm-rpc-boundaries.json",
+    "final_applied_source": "vm-freeze-source-apply.json",
+    "final_duplicate_path_quota": "vm-final-materialized-quota.json"
+  },
+  "normal_result": {
+    "candidate_id": "cc4ffa24-67fd-468a-9214-385128cda82b",
+    "verification_id": "64b864e4-934b-4ddb-a135-007eab284e84",
+    "local_commit": "8467d7e04b77748b0e118880d0f812279c8c6a96",
+    "live_nonroot_client_waited_for_all_responses": true,
+    "manual_per_request_job_edits": false,
+    "external_publication": false
+  },
+  "actual_counts": {
+    "normal_VM_invocations": 2,
+    "normal_initial_environment_failure": 1,
+    "normal_full_success": 1,
+    "boundary_batch_invocations": 1,
+    "boundary_logical_assertions": 12,
+    "final_materialized_byte_quota_invocations": 1,
+    "new_VM_worker_jobs": 2,
+    "denial_batch_job_count_before_after": [
+      16,
+      16
+    ],
+    "namespace_after_every_test": 0
+  },
+  "focused_local_tests": {
+    "RPC_distinct_passed": 7,
+    "RPC_invocations": 2,
+    "store_passed": 26,
+    "store_skipped": 1,
+    "broker_passed": 13,
+    "broker_skipped": 6,
+    "installer_and_units_passed": 4,
+    "total_distinct_passed": 50,
+    "initial_host_environment_failures": "Initial broker/store fixture runs hit Windows sandbox hardlink permission; rerun once each in authorized host environment passed without code changes.",
+    "mandatory_P1": "not_run_pending_review_findings_resolution",
+    "sync_codex_write_check": "passed; no semantic role changes, generated hooks fingerprint noted separately",
+    "evidence_status": "Historical50pass7skip counts are author-reported from actual tool observations; no retained raw invocation files existed for those earlier runs. They are not independently verified counts. New review-regression outputs are retained below."
+  },
+  "normal_vs_final_source": "The successful normal path used RPC33d0598...; final RPCa7ffacdd... only adds a materialized-byte sum guard for duplicate paths. That affected case was independently exercised on the VM and rejected before creating a job. Other source deltas after normal are comments/enable metadata; unchanged normal behavior evidence is reused rather than relabelled as a rerun. Review fixes add post-effect unknown classification and one-request service lifetime. Actual fresh verification plus retry and protected publication reconciliation plus retry exercised both changed paths with distinct observed ExecMainPID values; exactly one new worker job and unchanged commit.",
+  "activation_plan": "modules/infrastructure/p2/linux/rpc-deployment.en.md",
+  "activation_prerequisites": {
+    "current_quota": 0,
+    "tested_operational_ceiling": 15334,
+    "persistent_file_proposal": "/etc/sysctl.d/zz-multi-p2-userns.conf",
+    "enable_exactly": [
+      "multi-p2-executor.socket",
+      "multi-p2-publisher.socket",
+      "multi-p2-control.service"
+    ],
+    "do_not_enable_directly": [
+      "multi-p2-executor.service",
+      "multi-p2-publisher.service"
+    ],
+    "permanent_setting_or_enable_applied": false,
+    "approval_needed": "Sustained host namespace ceiling and automatic socket/broker activation are outside temporary-test authorization.",
+    "existing_effective_definition": "/etc/sysctl.d/dirtyfrag.conf:1 user.max_user_namespaces=0",
+    "ordering_correction": "Numeric90 sorts before dirtyfrag.conf. Proposed absent zz file sorts after the only observed definition; explicit human approval required to override existing0."
+  },
+  "rollback": "Stop/disable only task sockets/controller then backend services; confirm worker/cgroup absence; restore quota0; remove only exact owned persistent file if approved/applied; restore expected backup bytes; never erase receipts/pending ledger or touch SSH/unrelated services.",
+  "remaining_limits": [
+    "Same-host Linux/local-bare only; no cross-host/HTTPS/desktop-tool integration.",
+    "Inline upload/bundle64KiB and frame128KiB; no large-blob streaming.",
+    "Pinned enrollment/base requires deliberate new enrollment and fresh identities for another baseline; recycling not implemented.",
+    "Systemd-created socket peer UID0/PID1 is authenticated endpoint provenance; publisher euid is separately enforced runtime identity.",
+    "Discarded-response test discarded a reply to an already-published idempotent request, not a newly-committing publication.",
+    "Mandatory P1 and final review/activation/publication remain pending."
+  ],
+  "tooling_side_effect": {
+    "path": "runtime/native-map.json",
+    "sha256": "064408724986accea72338d623b799a2400baa52ab414ed51242dbc4b128dd3a",
+    "detail": "Required sync_codex updated generated hooks fingerprint for this root. Other generated .codex/.agents status entries have no semantic git diff (LF/CRLF). Parent owns publication reconciliation.",
+    "late_registration_reason": "AGENTS-required sync generated this one tracked hooks fingerprint update; parent reviewed it as task-owned generated consistency metadata after the command. Exact path registered before candidate publication; ignored hooks/private paths are excluded.",
+    "old_native_map_sha256": "b32c3090c1bde6336baae94ce6772d70e5883cd7fe2c3ee6643dcfc12ed48d5a",
+    "old_map": {
+      "schema_version": "1.0.0",
+      "agents": [
+        "orchestrator",
+        "skill-manager",
+        "policy-manager",
+        "knowledge-manager",
+        "evaluator",
+        "coding",
+        "infrastructure",
+        "oss-rnd"
+      ],
+      "skills": [
+        "submit-result",
+        "maintain-module",
+        "oss-research"
+      ],
+      "files": {
+        ".codex/agents/orchestrator.toml": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
+        ".codex/agents/skill-manager.toml": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979",
+        ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+        ".codex/agents/knowledge-manager.toml": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74",
+        ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+        ".codex/agents/coding.toml": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8",
+        ".codex/agents/infrastructure.toml": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
+        ".codex/agents/oss-rnd.toml": "85071be41230730a58338f8b182aac4258baf59c21dda8bf8ce0dd6d36529226",
+        ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+        ".agents/skills/submit-result/SKILL.md": "942e321676735b5e494983312f526c2f131eb57ed69067cc87d35f07b154b5c4",
+        ".agents/skills/maintain-module/SKILL.md": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba",
+        ".agents/skills/oss-research/SKILL.md": "70631655a19faf031345f7b8b3520190322d6ebeccbc3a0d80d41ba3edff72b5",
+        ".codex/hooks.json": "ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4"
+      }
+    },
+    "new_map": {
+      "schema_version": "1.0.0",
+      "agents": [
+        "orchestrator",
+        "skill-manager",
+        "policy-manager",
+        "knowledge-manager",
+        "evaluator",
+        "coding",
+        "infrastructure",
+        "oss-rnd"
+      ],
+      "skills": [
+        "submit-result",
+        "maintain-module",
+        "oss-research"
+      ],
+      "files": {
+        ".codex/agents/orchestrator.toml": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
+        ".codex/agents/skill-manager.toml": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979",
+        ".codex/agents/policy-manager.toml": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+        ".codex/agents/knowledge-manager.toml": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74",
+        ".codex/agents/evaluator.toml": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+        ".codex/agents/coding.toml": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8",
+        ".codex/agents/infrastructure.toml": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
+        ".codex/agents/oss-rnd.toml": "85071be41230730a58338f8b182aac4258baf59c21dda8bf8ce0dd6d36529226",
+        ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+        ".agents/skills/submit-result/SKILL.md": "942e321676735b5e494983312f526c2f131eb57ed69067cc87d35f07b154b5c4",
+        ".agents/skills/maintain-module/SKILL.md": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba",
+        ".agents/skills/oss-research/SKILL.md": "70631655a19faf031345f7b8b3520190322d6ebeccbc3a0d80d41ba3edff72b5",
+        ".codex/hooks.json": "16c47de46c2a6735be98017b65cb3573cca64cc214dbb74d397e85cec5734615"
+      }
+    }
+  },
+  "evidence_hashes": {
+    "vm-reconcile.json": "25cc197aa41539ef3739530bfc438db4a9dc00d98afdc67fae4fc3abfd539701",
+    "vm-rpc-preparation.json": "b7d529acd49aa07427595b5226e849f2d1a843144a9f9345ca602278d444d97f",
+    "vm-dedicated-executable.json": "d23260e97ebbf540a43a30c902acce68f61f68f50b9e5fad80fe775200828227",
+    "vm-normal-first.json": "a52251773d53422fef6829b850fac4d57d1fef29961e1af6ccf968d01eea9b49",
+    "vm-first-setup-diagnostic.json": "4bf68495847b5476a661d8f28cc3e0911faefc2827c111cdfa0cf915db85bd1a",
+    "vm-binary-parent-traverse.json": "6c0295c36ca5d7574018101d6317ba18e06ab613c0d846436da71d1bf6a96390",
+    "vm-normal-second.json": "505ac9bea34adddca47553ac8ef162d085c7435bf242bd92307252a5960c04b6",
+    "vm-rpc-boundaries.json": "f3837f2d7e314eafcf8e379f59024503f2075392d85647ec1812f13212b7fd31",
+    "vm-freeze-source-apply.json": "ed37a71be46150ae00752f249890791fd6c4b89bf261e4f590a5df6ed202faed",
+    "vm-final-materialized-quota.json": "86af22bb32b00b46f74a894f7da2ee8cd7d4945ff28ad92ebce316f68ef37f7b",
+    "owner-review-regression-tests.json": "a8526c676f21638aa91c18e01b8240d2ac1794fbfede257c87cc3e0f59e67388",
+    "owner-review-lifecycle-test.json": "2a34ee760c72a4d934b229423abd650e8ff71875f28ee320cf3d65242c5d11ce",
+    "vm-review-fixes-applied.json": "c4a417be16bed00a2b2bb16b7d54e12c255542f0bbbad7863a709877bae08556",
+    "vm-review-save-failure-and-lifecycle.json": "3085d9f0af74ec84c4fbb9d91406b9d5e65bf4bd0624ac077c0dc412402c886d",
+    "vm-userns-definition-inventory.json": "50a484aba9ff348bc81c6ad42e874909decd1efb929b09a17888298f2e880e6f",
+    "vm-userns-definition-inventory-zz-proposal.json": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d",
+    "vm-kernel-package-inventory.json": "984072b7bd77cf0ed4d15ca9abdd3f084c1952b5954f28eb81865a6496d38678"
+  },
+  "review_fix_evidence": {
+    "owner-review-regression-tests.json": "runs/p2-automatic-rpc-20261104/evidence/owner-review-regression-tests.json",
+    "owner-review-lifecycle-test.json": "runs/p2-automatic-rpc-20261104/evidence/owner-review-lifecycle-test.json",
+    "vm-review-fixes-applied.json": "runs/p2-automatic-rpc-20261104/evidence/vm-review-fixes-applied.json",
+    "vm-review-save-failure-and-lifecycle.json": "runs/p2-automatic-rpc-20261104/evidence/vm-review-save-failure-and-lifecycle.json",
+    "vm-userns-definition-inventory.json": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory.json",
+    "vm-userns-definition-inventory-zz-proposal.json": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+    "vm-kernel-package-inventory.json": "runs/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+    "method": "modules/infrastructure/p2/linux/rpc-deployment.en.md"
+  },
+  "review_fix_counts": {
+    "new_distinct_local_cases_passed": 2,
+    "local_invocations": 2,
+    "initial_lifecycle_harness_failure": "Windows AF_UNIX mock constant absent; passing save-failure case not rerun; lifecycle-only corrected harness passed.",
+    "actual_VM_fault_batch_invocations": 1,
+    "actual_RPC_requests": 4,
+    "new_actual_worker_jobs": 1,
+    "publication_in_fault_batch": "Reconciliation of an existing actual commit, not a fresh commit."
+  },
+  "review_changes": [
+    "Broker post-effect result-save failure now unknown/published=null.",
+    "Post-handler StoreError validation/persistence errors also map to adapter_result_not_recorded.",
+    "One request per activated backend service preserves a fresh total-runtime budget for later requests; RuntimeMax retained.",
+    "Historical design checkpoint and publisher-unit socket comments corrected.",
+    "Existing quota0 definition and kernel package inventory preserved; zz proposal is pending human approval, no persistent change."
+  ],
+  "source_frozen": true
+}

@@ -1,0 +1,86 @@
+{
+  "task_id": "p2-automatic-rpc-20261104",
+  "reviewer": {
+    "subject": "/root/workflow_review",
+    "session": "20261104-rpc-initial-review"
+  },
+  "assessment": "rework",
+  "reviewed_baseline": "f70f1955d59292405530b5c92cbda6f4239a3619",
+  "reviewed_source_hashes": {
+    "runtime/p2_rpc.py": "a7ffacdd6121fa6d48da639a23b2f46d6be31b995cdbf3bddaed6803d6f2db04",
+    "runtime/p2_broker.py": "bc003746216b02e49acbaac2f030c3ce1507f46849f4561ce45efccf21fd87d0",
+    "runtime/p2_store.py": "f10e5bd940f05042cb5830797770903b9480dadb24b8698d30f71adf0ee4e9cc",
+    "runtime/tests/test_p2_rpc.py": "2f754eb1a8eb147c482cc38746d9ba90f4dea89498e553f9137e2b527b9e4d3a",
+    "modules/infrastructure/p2/linux/worker_entry.py": "c3b7f67ea63b4e0b76d57f2e17ea0f0b472f0cae511cf26d31f2a7d7645d7908",
+    "modules/infrastructure/p2/linux/publisher_entry.py": "3f702b60c334bcdc059a3f4272c43e7ba356db349c042210ca9f5e4c35c0dadd",
+    "modules/infrastructure/p2/linux/install.py": "d19762d586083c484e9a40e4bbf765a204ce7d8540caa138595f29226b21de1c",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-control.service": "43842e9bbfb5383bfaecddd41d4f03081b951ca49be8a3b6b54c5b2daa695ee1",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "c5443e15f551a99a1e5376bbd9b5c601bdbc05724861a8ec4f86c803fb3d0daf",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "a6f4102030f45d0f09fbf92f9208e0fa814431e9225c0f198639ebcf4011dcf2",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket": "a0b5ca17fc32f2c50a618ed3adf38be5701fb448acede1de1ddb6a638ce35524",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket": "fb01ba69e73c9d5191f2d84b02bdfc9d872ab4f55712b059052ba4c1eb2d1ae4",
+    "modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor": "ab22db0dbccba6d21fa9a23ec0898306597e11d8ad4507d005871cdde6d352ac",
+    "modules/infrastructure/p2/linux/README.ko.md": "7a4a35eb170ec5a2e0480fd8d216bc6054a451fd2365d1fc66b68dedaa6e87e6",
+    "modules/infrastructure/p2/linux/rpc-deployment.en.md": "20ddd20b783800579cdd3537d47127350df197579c43c16778dad0255d9b5d77",
+    "outputs/p2-automatic-rpc-20261104/rpc-design.en.md": "552125c499ff7a3f218e601e367e42c648ad87e015bb21f41175ccebf86cdd35",
+    "runtime/native-map.json": "064408724986accea72338d623b799a2400baa52ab414ed51242dbc4b128dd3a"
+  },
+  "owner_handoff_sha256": "e85e94565285d44576882ff0fd16c6350d02ce019e310c82b00510e6664a6618",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc"
+  },
+  "findings": [
+    {
+      "id": "RPC-1",
+      "severity": "major",
+      "criterion": "durable idempotent outcomes and unknown-state honesty",
+      "location": "runtime/p2_broker.py:Broker.handle_socket; runtime/p2_store.py:CandidateStore._adapter_call",
+      "evidence": "After handler returns publication, result persistence can raise adapter_result_not_recorded; production Broker converts StoreError to blocked/publishedFalse. Independent-result-save-failure-probe.json confirms response path with modeled effect; fixture branch already uses unknown.",
+      "impact": "Caller is falsely told no publication after an effect may already have committed.",
+      "remediation": "Production effect-uncertain result-save error must return unknown/publishedNone; focused save-failure and retry test with same backend key."
+    },
+    {
+      "id": "RPC-2",
+      "severity": "major",
+      "criterion": "bounded service lifecycle across multiple requests",
+      "location": "runtime/p2_rpc.py:serve while True; executor RuntimeMaxSec360 and publisher RuntimeMaxSec180",
+      "evidence": "Idle timeout resets on each accept; daemon admits unlimited sequential requests. Service lifetime clocks span all requests, without remaining-budget check or rotation.",
+      "impact": "A valid later request can start just before service lifetime expiry and be killed; verification stays pending/effect_unknown despite its own request budget.",
+      "remediation": "Rotate service per request or bound admission against remaining service lifetime, preserving host timeout protections; targeted consecutive-request evidence."
+    },
+    {
+      "id": "RPC-3",
+      "severity": "minor",
+      "criterion": "reproducibility/current status",
+      "location": "outputs/p2-automatic-rpc-20261104/rpc-design.en.md Remaining work; publisher unit final comment",
+      "evidence": "Design still says run completed boundary tests; publisher says no sockets/manual only.",
+      "impact": "Current operating instructions conflict with implementation and actual evidence.",
+      "remediation": "Update only stale descriptions and reflect final lifecycle fix."
+    }
+  ],
+  "pending_evidence": [
+    "Concrete existing namespace sysctl definition/precedence inventory before sustained-setting decision; no persistent write authorized.",
+    "Same-owner focused repairs and affected retest evidence.",
+    "Mandatory P1 intentionally pending findings resolution; no P1 assessment issued."
+  ],
+  "execution_counts": {
+    "independent_mock_cases": 1,
+    "mock_harness_invocations": 2,
+    "VM_calls": 0,
+    "broad_suite_runs": 0,
+    "product_edits": 0
+  },
+  "governance_conditions": [
+    "Temporary userns tests do not authorize permanent15334 or unit enablement.",
+    "Root-approved delegated client mapping and protected endpoint/source assumptions remain necessary."
+  ],
+  "limitations": [
+    "Initial findings review only; no wholeP2 certification.",
+    "Changed source and mapped actual evidence remain subject to final hash-bound review after repair."
+  ],
+  "summary_ko": "실제 자동 경로 증거는 확인했지만 게시 결과 저장 실패 응답과 여러 요청이 공유하는 서비스 수명 제한에 두 중대 결함이 있어 수정이 필요하다."
+}

@@ -1,0 +1,25 @@
+{
+  "task_id": "p2-automatic-rpc-20261104",
+  "reviewer": "/root/workflow_review",
+  "method": "Independent narrowly mocked production Broker.handle_socket fault observation; no actual publication or runtime test",
+  "cases": 1,
+  "harness_invocations": 2,
+  "first_harness_error": "Omitted store stub; no application behavior observed before corrected harness",
+  "modeled_effects": [
+    "modeled_backend_published_before_local_result_save_failed"
+  ],
+  "observed": {
+    "status": "blocked",
+    "error_code": "adapter_result_not_recorded",
+    "authorization": false,
+    "published": false,
+    "peer_authenticated": true,
+    "p2_isolation_verified": false,
+    "assurance": "kernel_peer_intake_only"
+  },
+  "expected": {
+    "status": "unknown",
+    "published": null
+  },
+  "finding_confirmed": true
+}

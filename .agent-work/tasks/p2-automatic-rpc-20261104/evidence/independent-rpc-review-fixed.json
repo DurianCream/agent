@@ -1,0 +1,163 @@
+{
+  "task_id": "p2-automatic-rpc-20261104",
+  "assessment": "accepted",
+  "assessment_scope": "Focused repaired-source and actual affected-evidence readiness; mandatory P1, final lifecycle and sustained activation remain separate pending criteria.",
+  "reviewer": {
+    "subject": "/root/workflow_review",
+    "session": "20261104-rpc-fixed-review",
+    "independent_of_principal_author": true,
+    "identity_authenticated": false
+  },
+  "author": "/root/p2_host",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc"
+  },
+  "reviewed_baseline": "f70f1955d59292405530b5c92cbda6f4239a3619",
+  "source_hashes": {
+    "runtime/p2_rpc.py": "eff967c061d0d9586fdc8e21aa091d74744bab35a563f8b3ed4529a2f868d279",
+    "runtime/p2_broker.py": "5cff6e5f9c977fe84f4cd4495cd76453b3165e17b9f7fc34d403956baaec9760",
+    "runtime/p2_store.py": "bb6c6c09838bcc3a87a9421fcbd6dab860c634a7ad2ffc4037dc9c1521003c38",
+    "runtime/tests/test_p2_rpc.py": "72f6d201ad071cc7b7ee4678f0fb5a72852cfc61dd5970834f72545b625f968d",
+    "modules/infrastructure/p2/linux/worker_entry.py": "c3b7f67ea63b4e0b76d57f2e17ea0f0b472f0cae511cf26d31f2a7d7645d7908",
+    "modules/infrastructure/p2/linux/publisher_entry.py": "3f702b60c334bcdc059a3f4272c43e7ba356db349c042210ca9f5e4c35c0dadd",
+    "modules/infrastructure/p2/linux/install.py": "d19762d586083c484e9a40e4bbf765a204ce7d8540caa138595f29226b21de1c",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-control.service": "43842e9bbfb5383bfaecddd41d4f03081b951ca49be8a3b6b54c5b2daa695ee1",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service": "c5443e15f551a99a1e5376bbd9b5c601bdbc05724861a8ec4f86c803fb3d0daf",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service": "0c27806dc20cc3a895e6e6cca7e9ffe71f6d9fc4c380d0f4587b5b7e5a87e9c6",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket": "a0b5ca17fc32f2c50a618ed3adf38be5701fb448acede1de1ddb6a638ce35524",
+    "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket": "fb01ba69e73c9d5191f2d84b02bdfc9d872ab4f55712b059052ba4c1eb2d1ae4",
+    "modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor": "ab22db0dbccba6d21fa9a23ec0898306597e11d8ad4507d005871cdde6d352ac",
+    "modules/infrastructure/p2/linux/README.ko.md": "7a4a35eb170ec5a2e0480fd8d216bc6054a451fd2365d1fc66b68dedaa6e87e6",
+    "modules/infrastructure/p2/linux/rpc-deployment.en.md": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "outputs/p2-automatic-rpc-20261104/rpc-design.en.md": "c840e1b0bd8be6e1bc6d59217ef9a199671d1c946b75d78a55a7a4768f409280",
+    "runtime/native-map.json": "064408724986accea72338d623b799a2400baa52ab414ed51242dbc4b128dd3a"
+  },
+  "handoff_sha256": "ca0b49f6106de86da3d69b87450220559d361100190e9ee23bc2e9da0356c4ec",
+  "prior_review": {
+    "path": "runs/p2-automatic-rpc-20261104/evidence/independent-rpc-review.json",
+    "sha256": "1d64fc5eca2aa830f894a570e6e407da7a6990e36da3f5e72d380bbbeca3f47a",
+    "preserved": true
+  },
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "RPC-1",
+      "severity": "major",
+      "outcome": "passed",
+      "evidence": "Broker.handle_socket special-cases adapter_result_not_recorded to unknown/publishedNone. Store post-handler validation and transaction are inside error conversion. Actual VM fresh verification created receipt before injected controller save error; retry recovered same backend key/receipt with exactly one new job. Publication case reconciled an existing commit before injected save error and recovered same key/commit. No fresh-commit claim for that fault case.",
+      "paths": [
+        "runtime/p2_broker.py",
+        "runtime/p2_store.py",
+        "runs/p2-automatic-rpc-20261104/evidence/vm-review-save-failure-and-lifecycle.json"
+      ]
+    },
+    {
+      "id": "RPC-2",
+      "severity": "major",
+      "outcome": "passed",
+      "evidence": "serve performs exactly one accept per activation, closes listener and returns. RuntimeMax limits retained. Actual verifier ExecMainPID81327->81342 and publisher81347->81398 show later requests receive new service instances. Focused lifecycle test checks both roles; no broad rerun needed.",
+      "paths": [
+        "runtime/p2_rpc.py",
+        "runtime/tests/test_p2_rpc.py",
+        "runs/p2-automatic-rpc-20261104/evidence/owner-review-lifecycle-test.json"
+      ]
+    },
+    {
+      "id": "RPC-3",
+      "severity": "minor",
+      "outcome": "passed",
+      "evidence": "Design describes completed boundary/fault cases and pending P1; publisher comment describes socket activation; deployment describes single-request lifecycle and concrete zz proposal with original zero retained."
+    }
+  ],
+  "criterion_outcomes": [
+    {
+      "id": "criterion-1",
+      "outcome": "passed",
+      "evidence": "Existing actual nonroot upload/stage/verify/publish evidence remains applicable; new affected real verification and authoritative reconciliation exercise repaired source without manual per-request job editing."
+    },
+    {
+      "id": "criterion-2",
+      "outcome": "passed",
+      "evidence": "Initial authenticated-binding/framing/quota/denial review retained; RPC1/RPC2 repaired and affected local+VM evidence confirms unknown-state and request-lifetime behavior."
+    },
+    {
+      "id": "criterion-3.implementation-testing-and-plan",
+      "outcome": "passed",
+      "evidence": "Same owner corrected defects and retained focused outputs. Sysctl read-only inventory identifies sole existing0 definition, proposalzzabsent/no laterkey, rollback preserves original0 and ledgers. No sustained activation claimed."
+    },
+    {
+      "id": "criterion-3.sustained-activation",
+      "outcome": "not_run",
+      "evidence": "Explicit human decision and final applicable governance conditions pending; current quota0, temporary fault wrapper/drop-in removed."
+    },
+    {
+      "id": "criterion-4.mandatory-P1-and-publication",
+      "outcome": "not_run",
+      "evidence": "Mandatory suite intentionally deferred until corrected source readiness. Own P1 assessment requires actual passing suite and finalized result; remote commit not yet claimed."
+    }
+  ],
+  "verification_scope": {
+    "read": "Only four changed code/test files, publisher comment, deployment/design delta and mapped new proof; prior unaffected findings retained.",
+    "source_hashes_checked": 17,
+    "independent_new_suite_runs": 0,
+    "independent_new_VM_calls": 0,
+    "product_edits": 0,
+    "new_author_local_distinct_cases": 2,
+    "author_local_invocations": 2,
+    "author_initial_harness_failure": "Lifecycle mock referenced unavailable WindowsAF_UNIX; save-failure case passed. Only corrected lifecycle case reran and passed.",
+    "author_new_VM_fault_batches": 1,
+    "author_new_RPC_requests": 4,
+    "author_new_worker_jobs": 1,
+    "previous_author_50pass_7skip": "Explicit author-reported historical tool observations, not retained independently inspectable invocation logs."
+  },
+  "governance_conditions": [
+    "This accepted evaluation is not approval of sustained host-wide namespace availability or unit enablement.",
+    "Existing definition /etc/sysctl.d/dirtyfrag.conf sets0; zz proposal intentionally overrides it. Preserve original file. File name alone does not establish security rationale.",
+    "Current activation-governance.json still references prior proposal hash20ddd20b...; it is not final approval of currenta3f07d30... proposal. Updated policy assessment and explicit owner decision remain pending.",
+    "Kernel package6.8.0-147.147 cached metadata is observed provenance only; no independent kernel security certification or re-verification of signatures here.",
+    "Retain AppArmor/NNP/namespaces/seccomp, separate identities and local fixed target; no externalHTTPS/desktop/crosshost expansion."
+  ],
+  "governance_record_inspected": {
+    "path": "runs/p2-automatic-rpc-20261104/evidence/activation-governance.json",
+    "sha256": "3acf61464f470b29c037f0159fcf944c989ef3f71837d5cd0750b04ee63c7658",
+    "applicability": "Existing constraints and unresolved authority; proposal binding stale pending updated advisory."
+  },
+  "pending_authorization": "User/VM owner permanent quota and exact three-unit decision remains pending; no new permissions granted by review.",
+  "limitations": [
+    "No independent VM or suite reruns in focused review; actual owner outputs inspected against repaired source and prior review.",
+    "Publisher fault case is reconciliation of existing actual commit, not crash during a new ref update.",
+    "Single-request activation retains systemd start/trigger rate limits; high-throughput fairness/generalized scheduling not claimed.",
+    "Local identities/evidence remain unauthenticated by signatures.",
+    "Whole P2, external transport, desktop tools and cross-host scope remain incomplete."
+  ],
+  "rereview_triggers": [
+    "Changed source/artifact hashes or materially different policy/target/runtime conditions.",
+    "Mandatory suite failure or final result/archive changes.",
+    "Updated activation governance/owner decision affects only activation conclusion unless it changes technical requirements."
+  ],
+  "evidence_hashes": {
+    "vm-reconcile.json": "25cc197aa41539ef3739530bfc438db4a9dc00d98afdc67fae4fc3abfd539701",
+    "vm-rpc-preparation.json": "b7d529acd49aa07427595b5226e849f2d1a843144a9f9345ca602278d444d97f",
+    "vm-dedicated-executable.json": "d23260e97ebbf540a43a30c902acce68f61f68f50b9e5fad80fe775200828227",
+    "vm-normal-first.json": "a52251773d53422fef6829b850fac4d57d1fef29961e1af6ccf968d01eea9b49",
+    "vm-first-setup-diagnostic.json": "4bf68495847b5476a661d8f28cc3e0911faefc2827c111cdfa0cf915db85bd1a",
+    "vm-binary-parent-traverse.json": "6c0295c36ca5d7574018101d6317ba18e06ab613c0d846436da71d1bf6a96390",
+    "vm-normal-second.json": "505ac9bea34adddca47553ac8ef162d085c7435bf242bd92307252a5960c04b6",
+    "vm-rpc-boundaries.json": "f3837f2d7e314eafcf8e379f59024503f2075392d85647ec1812f13212b7fd31",
+    "vm-freeze-source-apply.json": "ed37a71be46150ae00752f249890791fd6c4b89bf261e4f590a5df6ed202faed",
+    "vm-final-materialized-quota.json": "86af22bb32b00b46f74a894f7da2ee8cd7d4945ff28ad92ebce316f68ef37f7b",
+    "owner-review-regression-tests.json": "a8526c676f21638aa91c18e01b8240d2ac1794fbfede257c87cc3e0f59e67388",
+    "owner-review-lifecycle-test.json": "2a34ee760c72a4d934b229423abd650e8ff71875f28ee320cf3d65242c5d11ce",
+    "vm-review-fixes-applied.json": "c4a417be16bed00a2b2bb16b7d54e12c255542f0bbbad7863a709877bae08556",
+    "vm-review-save-failure-and-lifecycle.json": "3085d9f0af74ec84c4fbb9d91406b9d5e65bf4bd0624ac077c0dc412402c886d",
+    "vm-userns-definition-inventory.json": "50a484aba9ff348bc81c6ad42e874909decd1efb929b09a17888298f2e880e6f",
+    "vm-userns-definition-inventory-zz-proposal.json": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d",
+    "vm-kernel-package-inventory.json": "984072b7bd77cf0ed4d15ca9abdd3f084c1952b5954f28eb81865a6496d38678"
+  },
+  "summary_ko": "게시 후 저장 실패의 거짓 미게시 응답과 누적 서비스 수명 결함이 수정되어 영향 범위 재검토는 accepted다. 실제 VM에서 같은 영수증·게시 커밋으로 복구되고 요청별 새 서비스 PID가 확인됐다. 필수 P1, 영구 namespace 설정 승인·활성화와 원격 게시는 아직 대기다.",
+  "handoff": "Owner may run configured mandatory P1 once on frozen source. Main finalizes result and applicable activation decision; evaluator later performs bounded evidence/result binding and own P1 assessment. Preserve original rework record."
+}

@@ -1,0 +1,32 @@
+{
+  "record_type": "user_decision_note",
+  "task_id": "p2-automatic-rpc-20261104",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc"
+  },
+  "date": "2026-11-04",
+  "source": "Explicit user instruction in this conversation after RPC and namespace effects were explained",
+  "decision": "approve_persistent_activation",
+  "proposal_sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+  "approved_effects": {
+    "user.max_user_namespaces": 15334,
+    "persist_after_reboot": true,
+    "new_file": "/etc/sysctl.d/zz-multi-p2-userns.conf",
+    "existing_dirtyfrag_definition_preserved": true,
+    "enable_units": [
+      "multi-p2-executor.socket",
+      "multi-p2-publisher.socket",
+      "multi-p2-control.service"
+    ]
+  },
+  "limits": [
+    "Same previously authenticated VM and reviewed local RPC implementation",
+    "No unrelated sysctl changes or global reload",
+    "No external HTTPS publication or desktop-wide permissions claim"
+  ],
+  "not_a_runtime_credential_or_grant": true
+}

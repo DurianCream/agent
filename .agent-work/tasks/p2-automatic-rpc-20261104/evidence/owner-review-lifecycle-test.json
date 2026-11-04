@@ -1,0 +1,12 @@
+{
+  "command": [
+    "runtime/tests/test_p2_rpc.py",
+    "ReviewRegressionTests.test_each_socket_activation_serves_only_one_request",
+    "-v"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_each_socket_activation_serves_only_one_request (__main__.ReviewRegressionTests.test_each_socket_activation_serves_only_one_request) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 1 test in 0.006s\r\n\r\nOK\r\n",
+  "test_sha256": "72f6d201ad071cc7b7ee4678f0fb5a72852cfc61dd5970834f72545b625f968d",
+  "reason": "Corrected Windows-only mock harness constant; production code unchanged; no repeat of passing save-failure case."
+}

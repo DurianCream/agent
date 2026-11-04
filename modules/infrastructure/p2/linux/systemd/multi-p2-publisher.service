@@ -1,13 +1,13 @@
 [Unit]
 Description=Multi P2 protected local-bare publication service (no network publication)
 After=local-fs.target
-AssertPathExists=/etc/multi-p2/publication-job.json
+AssertPathExists=/etc/multi-p2/rpc.json
 
 [Service]
 Type=exec
 User=multi-p2-publish
 Group=multi-p2-publish
-ExecStart=/opt/multi-p2-python/bin/python3 -I -S -B /opt/multi-p2/publisher_entry.py --run
+ExecStart=/opt/multi-p2-python/bin/python3 -I -S -B /opt/multi-p2/publisher_entry.py --rpc
 WorkingDirectory=/
 UMask=0077
 NoNewPrivileges=yes
@@ -42,4 +42,4 @@ KillMode=control-group
 TimeoutStopSec=10s
 RuntimeMaxSec=180s
 Restart=no
-# No Install section, sockets or credential provider. Operator/manual job only.
+# Activated by multi-p2-publisher.socket; no direct enable or credential provider.

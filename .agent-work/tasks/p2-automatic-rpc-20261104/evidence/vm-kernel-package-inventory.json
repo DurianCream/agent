@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"uname_release\": \"6.8.0-147-generic\", \"package\": \"linux-image-6.8.0-147-generic\", \"dpkg_returncode\": 0, \"dpkg_metadata\": \"linux-image-6.8.0-147-generic\\t6.8.0-147.147\\tamd64\\tinstalled\\n\", \"apt_cache_returncode\": 0, \"apt_cache_policy\": \"linux-image-6.8.0-147-generic:\\n  Installed: 6.8.0-147.147\\n  Candidate: 6.8.0-147.147\\n  Version table:\\n *** 6.8.0-147.147 500\\n        500 http://kr.archive.ubuntu.com noble-updates/main amd64 Packages\\n        500 http://security.ubuntu.com noble-security/main amd64 Packages\\n        100 /var/lib/dpkg/status\\n\", \"provenance_limit\": \"Installed package metadata and already-cached repository policy only; no signature verification or index refresh.\", \"updates_installs_reboots_performed\": false, \"namespace_limit\": 0}\n",
+  "stderr": ""
+}

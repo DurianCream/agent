@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"health\": \"passed\", \"live_submission_uid\": 989, \"execution_uid\": 988, \"verification_id\": \"407b95fc-a46f-4fb5-8d60-e04567422cf2\", \"before_commit\": \"8467d7e04b77748b0e118880d0f812279c8c6a96\", \"after_commit\": \"8467d7e04b77748b0e118880d0f812279c8c6a96\", \"publication_kind\": \"existing-request authoritative replay; no new ref mutation\", \"namespace_limit_after\": 15334, \"units\": {\"multi-p2-control.service\": {\"enabled\": \"enabled\", \"active\": \"active\"}, \"multi-p2-executor.socket\": {\"enabled\": \"enabled\", \"active\": \"active\"}, \"multi-p2-publisher.socket\": {\"enabled\": \"enabled\", \"active\": \"active\"}}, \"services_stopped\": false}\n",
+  "stderr": ""
+}

@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"key\": \"user.max_user_namespaces\", \"live\": 0, \"systemd_definition_order\": [{\"path\": \"/etc/sysctl.d/dirtyfrag.conf\", \"resolved\": \"/etc/sysctl.d/dirtyfrag.conf\", \"line\": 1, \"value\": 0}], \"systemd_last_definition\": {\"path\": \"/etc/sysctl.d/dirtyfrag.conf\", \"resolved\": \"/etc/sysctl.d/dirtyfrag.conf\", \"line\": 1, \"value\": 0}, \"procps_sysctl_conf_last\": null, \"planned_file\": \"/etc/sysctl.d/zz-multi-p2-userns.conf\", \"planned_file_exists\": false, \"matching_later_files\": [], \"read_only\": true, \"unrelated_setting_values_emitted\": false}\n",
+  "stderr": ""
+}

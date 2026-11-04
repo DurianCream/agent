@@ -1,0 +1,150 @@
+{
+  "schema_version": "public-evidence-map-1",
+  "task_id": "p2-automatic-rpc-20261104",
+  "source_refs_are_artifacts_or_evidence": true,
+  "entries": [
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/public-final-summary.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/public-final-summary.json",
+      "sha256": "ec003317b37493382e6b1d36881a60e58cacecc6d1b9cde4b85bf0499030efb9"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-review-handoff.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/owner-review-handoff.json",
+      "sha256": "ca0b49f6106de86da3d69b87450220559d361100190e9ee23bc2e9da0356c4ec"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/focused-review-tests-public.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/focused-review-tests-public.json",
+      "sha256": "d7491ca00dd084c26e10a3b7944cb62342042c74be90e161d411565a9dd1d240"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-review-lifecycle-test.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/owner-review-lifecycle-test.json",
+      "sha256": "2a34ee760c72a4d934b229423abd650e8ff71875f28ee320cf3d65242c5d11ce"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/independent-result-save-failure-probe.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/independent-result-save-failure-probe.json",
+      "sha256": "119ed90afd7eb64f3e84e4da9130db7d6d76726382df083a520503af0f53dbe9"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/independent-rpc-review-initial.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/independent-rpc-review-initial.json",
+      "sha256": "197ac6e53374445d4ac880bf89b876563ef267a354c659f39925c43549d05a2f"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/independent-rpc-review-fixed.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/independent-rpc-review-fixed.json",
+      "sha256": "109737e4a9d9d096ae43212f9a0be90dd3925e4e45c486ec29193e39344d02b7"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/activation-user-decision.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/activation-user-decision.json",
+      "sha256": "f71ac78165323797ee75387c743d1ed656ebbd7533f2a0a1b28b584d977daba3"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/activation-governance-updated.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/activation-governance-updated.json",
+      "sha256": "c91c35a2423fc18eb009562563ad0aabbfd53ca8723457c42152191f1ee43d8a"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/activation-governance-approved.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/activation-governance-approved.json",
+      "sha256": "55835373e5b350d63fca4a11c4d2fca21799f754cbd8a5c5d511fed8b149b509"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-normal-first.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-normal-first.json",
+      "sha256": "a52251773d53422fef6829b850fac4d57d1fef29961e1af6ccf968d01eea9b49"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-first-setup-diagnostic.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-first-setup-diagnostic.json",
+      "sha256": "4bf68495847b5476a661d8f28cc3e0911faefc2827c111cdfa0cf915db85bd1a"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-binary-parent-traverse.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-binary-parent-traverse.json",
+      "sha256": "6c0295c36ca5d7574018101d6317ba18e06ab613c0d846436da71d1bf6a96390"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-normal-second.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-normal-second.json",
+      "sha256": "505ac9bea34adddca47553ac8ef162d085c7435bf242bd92307252a5960c04b6"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-rpc-boundaries.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-rpc-boundaries.json",
+      "sha256": "f3837f2d7e314eafcf8e379f59024503f2075392d85647ec1812f13212b7fd31"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-final-materialized-quota.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-final-materialized-quota.json",
+      "sha256": "86af22bb32b00b46f74a894f7da2ee8cd7d4945ff28ad92ebce316f68ef37f7b"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-review-save-failure-and-lifecycle.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-review-save-failure-and-lifecycle.json",
+      "sha256": "3085d9f0af74ec84c4fbb9d91406b9d5e65bf4bd0624ac077c0dc412402c886d"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-activation-readiness.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-activation-readiness.json",
+      "sha256": "dc5d26a4e4a1e1296e4ac45c3e40d12afa710ffb4f98b174d867bb5277bd2086"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+      "sha256": "984072b7bd77cf0ed4d15ca9abdd3f084c1952b5954f28eb81865a6496d38678"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory.json",
+      "sha256": "50a484aba9ff348bc81c6ad42e874909decd1efb929b09a17888298f2e880e6f"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+      "sha256": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-activation.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-persistent-activation.json",
+      "sha256": "522fb43d90c07164c346ffd2a8bb084dd7376196c1ac9caf349076ee663f0c69"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-persistent-health.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/vm-persistent-health.json",
+      "sha256": "5997ca41e9c2c5a302e09e113694da6ce12dd8908cc2b97b07ca8a8202802b5a"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-mandatory-p1-result.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/owner-mandatory-p1-result.json",
+      "sha256": "88c86fe76cbb140731a55ae92b91e9224eedb58b73422c71dc2322740431b13a"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-mandatory-p1-retry-result.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/owner-mandatory-p1-retry-result.json",
+      "sha256": "2654aa8016c8043dfee16db9ffe0d97f3012cddf5bafaac7471d9e0550e8222e"
+    },
+    {
+      "source_ref": "runs/p2-automatic-rpc-20261104/evidence/mandatory-p1-gate-receipt.json",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/mandatory-p1-gate-receipt.json",
+      "sha256": "eccffac1fdb68a54e2fa2f86c08f0662dbbe386fb6509d723ed3859c689aa751"
+    },
+    {
+      "source_ref": "outputs/p2-automatic-rpc-20261104/rpc-design.en.md",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/rpc-design.en.md",
+      "sha256": "c840e1b0bd8be6e1bc6d59217ef9a199671d1c946b75d78a55a7a4768f409280"
+    },
+    {
+      "source_ref": "outputs/p2-automatic-rpc-20261104/final-status.ko.md",
+      "archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/final-status.ko.md",
+      "sha256": "c5213f12c5e16c4416984363f4c9df1f66758dbe8606cb6793128419485675f2"
+    }
+  ],
+  "map_source_ref": "runs/p2-automatic-rpc-20261104/evidence/public-archive-map.json",
+  "map_archive_ref": ".agent-work/tasks/p2-automatic-rpc-20261104/evidence/public-archive-map.json",
+  "private_access_maps_backup_maps_raw_logs_excluded": true
+}

@@ -1,0 +1,222 @@
+{
+  "schema_version": "advisory-companion-1",
+  "reviewer": "/root/rpc_activation_policy",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc",
+    "task_id": "p2-automatic-rpc-20261104"
+  },
+  "objective": "Assess permanent same-host RPC activation and deliberate override of an existing zero user namespace limit; do not authorize execution.",
+  "acceptance_criteria": [
+    "Distinguish temporary test authorization from sustained operation",
+    "Bound permanent proposal, rollback, and unresolved security applicability",
+    "Provide a concrete final owner decision question without stopping separately authorized testing"
+  ],
+  "project_context": {
+    "target": "Existing development VM; actual running release6.8.0-147-generic, installed linux-image-6.8.0-147-generic6.8.0-147.147 amd64; cached noble-updates/security origins.",
+    "data": "Benign payloads; fixed local bare repository target; no external HTTPS or desktop tool routing",
+    "inventory_ref": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+    "inventory_sha256": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d"
+  },
+  "authorized_scope": {
+    "existing": "Parent reports explicit temporary 0 -> 15334 test windows with restoration to 0; implementation, actual testing, independent review and task-owned Git publication requested",
+    "unresolved": "Permanent quota override and exact persistent service/socket enablement",
+    "authority_limits": "Advisory only. No OS grant, runtime policy_decision, action_approval, VM mutation, source edit, test, or Git operation performed by reviewer."
+  },
+  "proposal_ref": {
+    "path": "modules/infrastructure/p2/linux/rpc-deployment.en.md",
+    "sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "state": "Final zz proposal inspected; matches parent-provided digest.",
+    "proposed_delta": "New root0644 /etc/sysctl.d/zz-multi-p2-userns.conf containing user.max_user_namespaces = 15334; preserve existing dirtyfrag.conf; apply only own file; enable exactly executor.socket, publisher.socket, control.service."
+  },
+  "policy_refs": [
+    {
+      "id": "common",
+      "version": "1.2.0",
+      "owner": "repository owner",
+      "evidence": "shared/policies/common.json",
+      "applicability": "current advisory requirements; frozen task versions remain authoritative for task submission"
+    },
+    {
+      "id": "owner-led-delivery",
+      "version": "1.0.0",
+      "owner": "repository owner",
+      "evidence": "shared/workflows/owner-led-delivery.md",
+      "applicability": "current assigned workflow"
+    },
+    {
+      "id": "user-temporary-test-authorization",
+      "version": "current session as relayed by parent",
+      "owner": "user",
+      "evidence": "parent assignment",
+      "applicability": "temporary tests only; original user message not independently inspected"
+    }
+  ],
+  "recommendation": "escalate",
+  "rationale": "Final proposal resolves filename precedence and clearly discloses intentional override. Actual installed running-kernel package version6.8.0-147.147 is later than official Noble fixed version6.8.0-124.124 for the two assessed Dirty Frag CVEs. This resolves the prior package-version uncertainty at installed-metadata/cached-origin evidence level. Permanent host-wide override still requires the user/VM owner decision; existing zero rationale remains unknown.",
+  "risk": {
+    "level": null,
+    "status": "unverified",
+    "factors": [
+      "Quota is host-wide, not an execution-UID allowlist; other permitted namespace users can gain availability.",
+      "Local-only endpoints limit network exposure, not kernel-wide user namespace effects.",
+      "Dedicated executable permissions, AppArmor restriction, NNP, namespaces, capabilities and seccomp are retained proposal controls, not proof of absence of kernel vulnerabilities.",
+      "Known evaluator findings are undergoing same-owner repair; this assessment does not supersede evaluator review."
+    ]
+  },
+  "facts": [
+    {
+      "claim": "Live0; sole discovered definition dirtyfrag.conf0; zz proposal absent, no later key definition.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+      "status": "owner evidence inspected"
+    },
+    {
+      "claim": "Running release maps to installed linux-image6.8.0-147.147 amd64 and cached Ubuntu noble-updates/security origins.",
+      "source": "runs/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+      "status": "owner evidence inspected"
+    },
+    {
+      "claim": "Previously inspected official Ubuntu CVE records list Noble linux fixed6.8.0-124.124 for both assessed CVEs.",
+      "source": "sources below",
+      "status": "prior official lookup reused; no new research"
+    }
+  ],
+  "inferences": [
+    "Installed-metadata/cached-origin correspondence supports that the running Ubuntu package includes the two documented fixes; no package signature re-verification, refreshed repository index, binary attestation, or universal vulnerability-free claim.",
+    "The original zero restriction may reflect other owner requirements; filename does not establish its rationale.",
+    "zz deliberately supersedes observed zero for this host-wide quota; approval must acknowledge that effect."
+  ],
+  "requirements": [
+    {
+      "id": "ACT-1",
+      "scope": "permanent activation",
+      "owner": "user/VM owner via orchestrator",
+      "constraint": "Explicitly choose sustained host-wide15334 overriding existing0 or retain0/inactive",
+      "acceptance": "Decision names quota, override and exact three units; no inference from temporary test approval",
+      "evidence": "Bounded decision reference"
+    },
+    {
+      "id": "ACT-2",
+      "scope": "candidate",
+      "owner": "infrastructure owner and independent evaluator",
+      "constraint": "Review final zz proposal and repaired source against exact hashes",
+      "acceptance": "No open material finding for activation; existing mandatory checks satisfied",
+      "evidence": "Final hash-bound handoff/review; no new redundant test suite requested"
+    },
+    {
+      "id": "ACT-3",
+      "scope": "existing zero rationale and security applicability",
+      "owner": "user/VM owner",
+      "constraint": "Make informed decision on overriding existing zero; retain explicit limits of package evidence",
+      "acceptance": "Owner chooses keep0 or approves the exact override acknowledging prior zero; named CVE package-version correspondence is now supported and no extra patch verification task is imposed",
+      "evidence": "New kernel inventory plus prior official fix records and final owner decision"
+    },
+    {
+      "id": "ACT-4",
+      "scope": "approved activation only",
+      "owner": "infrastructure owner under orchestrator deployment assignment",
+      "constraint": "Preserve existing file; exclusive task-owned new file; no global sysctl reload; retain AppArmor and other controls; local fixed target only",
+      "acceptance": "Exact reviewed bytes/ownership and scoped live-value/unit/socket readback; persistence described as configured unless reboot actually observed",
+      "evidence": "Planned deployment readback and bounded health request already required by deployment plan"
+    },
+    {
+      "id": "ACT-5",
+      "scope": "rollback",
+      "owner": "infrastructure owner",
+      "constraint": "Disable/stop incoming three units, stop scoped executor/publisher, confirm no workers/populated job cgroups, restore0/readback; remove only matching task-owned persistent file; preserve original0 file and ledgers",
+      "acceptance": "Mismatch stops destructive rollback steps; scoped prior runtime restored from known backup where needed",
+      "evidence": "Existing deployment rollback procedure and actual rollback evidence if invoked"
+    }
+  ],
+  "review_needed": {
+    "owner": "user/VM owner, coordinated by main orchestrator",
+    "question": "Approve sustained host-wide15334 via new /etc/sysctl.d/zz-multi-p2-userns.conf deliberately overriding existing dirtyfrag.conf0 while preserving it, and enable exactly multi-p2-executor.socket, multi-p2-publisher.socket, multi-p2-control.service; or retain0 and inactive units?",
+    "options": [
+      "Approve exact sustained operation after final independent review and existing deployment conditions",
+      "Retain0 and inactive units"
+    ],
+    "note": "Do not ask until concrete corrected proposal is ready. Existing task-owned Git standing authorization is separate and does not need to be requested again."
+  },
+  "unresolved_obligations": [
+    "Explicit permanent-operation decision, including whether the owner intends the existing0 requirement to remain",
+    "Final independent technical review remains the evaluator responsibility; no conclusion supplied by this advisory update"
+  ],
+  "conditions": [
+    "Already authorized controlled tests may continue with restoration to0 and existing timer/cleanup.",
+    "Retain0 until the explicit permanent decision; no further kernel-version clarification is required by this bounded assessment. Existing test and Git authorizations remain unaffected."
+  ],
+  "limitations": [
+    "No new web research, VM access, product changes or tests in this update.",
+    "Installed package metadata and cached origins are not refreshed signature verification or binary attestation.",
+    "Two named CVE fixes do not certify overall kernel security; original zero rationale remains unknown.",
+    "P0 observes declared repository-workspace inspection, not VM activation authorization; assessment attaches contextual activation limits and does not revoke existing workspace or Git authorization."
+  ],
+  "p0": {
+    "record_id": "obs-c7bc5d341a7f474880ec5ce9dbe84eb1",
+    "snapshot_digest": "sha256:1a17156394831f1a1a62cee1475e27b43f705b0c2788fc4297a33746632cec17",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "decision": "allow",
+    "observation_reason_codes": [
+      "within_declared_bounds"
+    ],
+    "mode": "observe",
+    "executable": false,
+    "authority_verified": false,
+    "workflow_assessment": "Recorded through control_integration.py assess; governance_only/escalate, reason authorization_uncertain; evaluator pending; executable=false authority_verified=false",
+    "policy_scope": "workspace.inspect declared owned workset; does not cover actual VM activation",
+    "content_checks": "not_performed",
+    "signature_verification": "not_performed"
+  },
+  "sources": [
+    {
+      "url": "https://ubuntu.com/blog/dirty-frag-linux-vulnerability-fixes-available",
+      "owner": "Canonical",
+      "observed_date": "2026-11-04",
+      "support": "Dirty Frag names two local privilege escalation CVEs; official mitigation blocks ESP/RxRPC modules at a different modprobe path; updates preferred."
+    },
+    {
+      "url": "https://ubuntu.com/security/CVE-2026-43284",
+      "owner": "Ubuntu Security Team",
+      "updated": "2026-10-12",
+      "support": "Noble linux fixed in6.8.0-124.124"
+    },
+    {
+      "url": "https://ubuntu.com/security/CVE-2026-43500",
+      "owner": "Ubuntu Security Team",
+      "updated": "2026-10-12",
+      "support": "Noble linux fixed in6.8.0-124.124"
+    }
+  ],
+  "validity": {
+    "evaluated_at": "2026-11-04",
+    "proposal_sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+    "expiry": "unverified; no deadline invented",
+    "review_triggers": [
+      "Material proposal/target/control change",
+      "New owner permanent decision or zero-setting requirement",
+      "Contradictory package evidence"
+    ]
+  },
+  "handoff": {
+    "changes": [
+      "runs/p2-automatic-rpc-20261104/evidence/activation-governance-updated.json",
+      "runs/p2-automatic-rpc-20261104/evidence/activation-governance-assessment-input.json"
+    ],
+    "checks": "Final proposal hash and bounded new evidence inspection only",
+    "next_actions": "Record P0 advisory; main requests concrete final permanent decision and integrates evaluator results; no new tests/Git approval requested."
+  },
+  "supersedes_for_current_proposal": "activation-governance.json; original preserved",
+  "new_evidence": [
+    {
+      "path": "runs/p2-automatic-rpc-20261104/evidence/vm-kernel-package-inventory.json",
+      "sha256": "984072b7bd77cf0ed4d15ca9abdd3f084c1952b5954f28eb81865a6496d38678"
+    },
+    {
+      "path": "runs/p2-automatic-rpc-20261104/evidence/vm-userns-definition-inventory-zz-proposal.json",
+      "sha256": "d76ef896d563d69981e51db021956d62897682bb316c7be8154a29aa9e70336d"
+    }
+  ]
+}

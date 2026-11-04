@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"path\": \"/opt/multi-p2/bin\", \"before\": \"0750\", \"after\": \"0o751\", \"meaning\": \"directory traversal only; file0550 and root write ownership unchanged\", \"namespace_limit\": \"0\"}\n",
+  "stderr": ""
+}

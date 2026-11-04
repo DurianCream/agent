@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"activation\": \"applied\", \"namespace_limit\": 15334, \"persistent_file\": \"/etc/sysctl.d/zz-multi-p2-userns.conf\", \"persistent_file_sha256\": \"78bde2da72dd3b00473ce484a9c68dd5e47b97d41e92e5065c82e50ab8ad81e5\", \"prior_definition_preserved\": true, \"units\": {\"multi-p2-executor.socket\": {\"enabled\": \"enabled\", \"active\": \"active\"}, \"multi-p2-publisher.socket\": {\"enabled\": \"enabled\", \"active\": \"active\"}, \"multi-p2-control.service\": {\"enabled\": \"enabled\", \"active\": \"active\"}}, \"reboot_configuration_verified\": true, \"actual_reboot_test\": \"not_run\", \"source_and_config_hashes_checked\": 24, \"health\": \"pending\"}\n",
+  "stderr": ""
+}

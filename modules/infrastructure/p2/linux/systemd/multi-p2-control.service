@@ -1,5 +1,5 @@
 [Unit]
-Description=Multi P2 authenticated stage-only broker (verify and publish unavailable)
+Description=Multi P2 authenticated local request broker
 After=local-fs.target
 
 [Service]
@@ -45,4 +45,6 @@ LimitCORE=0
 KillMode=control-group
 TimeoutStopSec=10s
 Restart=no
-# No Install section: operator verification is required before manual start.
+[Install]
+WantedBy=multi-user.target
+# Enable only after the reviewed operational namespace prerequisite is approved.

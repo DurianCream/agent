@@ -1,0 +1,106 @@
+{
+  "task_id": "p2-automatic-rpc-20261104",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-automatic-rpc"
+  },
+  "status": "reviewed_implementation_persistently_activated_health_passed",
+  "candidate_digest": "b96a12445fe02b34156336360ce2c0fa37e487d8348cfce17367e18ef6c2843a",
+  "source_freeze_ref": "runs/p2-automatic-rpc-20261104/evidence/owner-review-handoff.json",
+  "independent_review_ref": "runs/p2-automatic-rpc-20261104/evidence/independent-rpc-review-fixed.json",
+  "counts": {
+    "P1_preflight_failed_invocations": 1,
+    "P1_preflight_testcases": 0,
+    "P1_actual_suite_invocations": 1,
+    "P1_actual_tests_passed": 66,
+    "P1_elapsed_seconds": 393.625,
+    "candidate_unchanged": true,
+    "historical_local_cases": "Author-reported50pass7skip from tool observations; not independently verified retained output.",
+    "new_focused_review_cases_passed": 2,
+    "new_focused_review_invocations": 2,
+    "new_focused_harness_note": "First lifecycle mock failed before code exercise because Windows lacks AF_UNIX; only that case rerun after harness correction. Save-failure case passed first.",
+    "actual_normal_invocations": 2,
+    "actual_normal_success": 1,
+    "initial_normal_environment_failure": 1,
+    "actual_boundary_batches": 1,
+    "actual_boundary_assertions": 12,
+    "actual_materialized_quota_trials": 1,
+    "actual_post_effect_fault_lifecycle_batches": 1,
+    "fault_batch_RPC_requests": 4,
+    "parent_post_activation_health_invocations": 1,
+    "health_RPC_requests": 2
+  },
+  "observed_roles": {
+    "live_client_uid": 989,
+    "controller_uid": 995,
+    "execution_uid": 988,
+    "publisher_uid": 990,
+    "backend_socket_creator_uid": 0,
+    "backend_socket_creator_pid": 1
+  },
+  "activation": {
+    "activation": "applied",
+    "namespace_limit": 15334,
+    "persistent_file": "/etc/sysctl.d/zz-multi-p2-userns.conf",
+    "persistent_file_sha256": "78bde2da72dd3b00473ce484a9c68dd5e47b97d41e92e5065c82e50ab8ad81e5",
+    "prior_definition_preserved": true,
+    "units": {
+      "multi-p2-executor.socket": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "multi-p2-publisher.socket": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "multi-p2-control.service": {
+        "enabled": "enabled",
+        "active": "active"
+      }
+    },
+    "reboot_configuration_verified": true,
+    "actual_reboot_test": "not_run",
+    "source_and_config_hashes_checked": 24,
+    "health": "pending"
+  },
+  "health": {
+    "health": "passed",
+    "live_submission_uid": 989,
+    "execution_uid": 988,
+    "verification_id": "407b95fc-a46f-4fb5-8d60-e04567422cf2",
+    "before_commit": "8467d7e04b77748b0e118880d0f812279c8c6a96",
+    "after_commit": "8467d7e04b77748b0e118880d0f812279c8c6a96",
+    "publication_kind": "existing-request authoritative replay; no new ref mutation",
+    "namespace_limit_after": 15334,
+    "units": {
+      "multi-p2-control.service": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "multi-p2-executor.socket": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "multi-p2-publisher.socket": {
+        "enabled": "enabled",
+        "active": "active"
+      }
+    },
+    "services_stopped": false
+  },
+  "human_authorization_ref": "runs/p2-automatic-rpc-20261104/evidence/activation-user-decision.json",
+  "governance_ref": "runs/p2-automatic-rpc-20261104/evidence/activation-governance-approved.json",
+  "limits": [
+    "Same-host Linux local RPC and local-bare publication only.",
+    "Upload and materialized bundle64KiB, frame128KiB; no large-blob streaming.",
+    "No external HTTPS publication, desktop tool routing, cross-host authentication or UID recycling.",
+    "Persistent reboot configuration checked; actual reboot test not_run.",
+    "Health used fresh verification of the already-approved published candidate and exact publication replay; target ref unchanged.",
+    "Earlier frozen handoff/review records preserve their historical pre-activation status; this summary adds final operational outcome."
+  ],
+  "publication": "Parent orchestrator owns final result and verified remote Git publication; evidence packager did not commit or push.",
+  "privacy": "No private access map, SSH material, local connection map, private rollback map or raw temporary log included."
+}

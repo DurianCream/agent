@@ -1,6 +1,14 @@
 # Linux P2 기반 코드와 설치 전 확인
 
-이 디렉터리는 **기본 비활성 설치와 별도 실행·검증·게시 어댑터**를 제공합니다. broker RPC는 같은 Linux 커널의 Unix 소켓 `SO_PEERCRED` 기반 로컬 intake/staging이며, privileged 실행을 inline으로 수행하지 않습니다. 검증은 별도 root 감독 서비스, 게시는 별도 비-root publisher 서비스가 고정된 보호 job 파일을 받아 수행합니다. 원격 VM·터널 신원 인증이나 worker blob 업로드 RPC는 여전히 별도 구현 대상입니다. 코드·unit 파일의 존재와 실제 P2 적용 결과는 구분합니다.
+이 디렉터리는 **기본 비활성 설치와 별도 실행·검증·게시 어댑터**를 제공합니다. broker config `0.1.0`은 기존 stage-only 동작을 유지합니다. `0.2.0`은 같은 Linux 호스트의 인증된 Unix 소켓 RPC로 별도 root 검증기와 비-root publisher를 자동 호출하며, 요청마다 운영자가 보호 job 파일을 편집할 필요가 없습니다. 원격 VM·터널 신원 인증과 외부 HTTPS 게시, 데스크톱 도구 연결은 포함하지 않습니다.
+
+## 자동 로컬 RPC — 2026-11-04
+
+실제 VM에서 응답을 기다리는 제출 UID 989와 격리 실행 UID 988을 분리하여 `upload → stage → verify → publish`를 확인했습니다. controller는 UID 995, publisher는 UID 990이었으며, 이 숫자는 관찰값이지 설치 기본값이 아닙니다. 추가된 업로드 envelope `0.2.0`과 기존 요청 `0.1.0`은 구분됩니다. 현재 업로드·실행 묶음은 64KiB, JSON frame은 128KiB로 제한하며 더 큰 데이터의 streaming은 지원하지 않습니다.
+
+systemd socket activation에서 client의 `SO_PEERCRED`는 socket 생성자 PID 1/UID 0을 가리킵니다. 보호된 endpoint 경로·소유권·inode와 이 manager 신원을 검증하고, 실제 서비스 UID 및 controller peer는 서버에서 별도로 검증합니다. 응답 JSON의 UID 주장만으로 역할을 인증하지 않습니다. 동일 요청 재시도·위조 peer/범위/내용·시간/크기 제한도 실제 시험했으며 대상 ref와 job 수 불변을 확인했습니다.
+
+[설치·활성화·복구 명세](rpc-deployment.en.md)에 정확한 unit, 계정, 정책 결합과 권한을 정리했습니다. 현재 시험은 namespace 제한을 일시적으로 15334로 높인 뒤 매번 0으로 복원합니다. 상시 자동 운영에 필요한 영구 nonzero 제한과 broker/socket enable은 별도 승인 전제이며 아직 적용하지 않았습니다. 코드 설치와 상시 활성화 완료를 구분합니다.
 
 ## 환경은 실제 시험 시점에 선택
 
@@ -54,6 +62,6 @@ CPU는 cgroup 전체 사용량을 주기적으로 확인하므로 관찰 주기�
 
 게시 후 새 clone에서도 확인할 수 있는 기록은 [release 검증 보고서](../../../../.agent-work/tasks/p2-reviewed-release-20261103/report.ko.md)와 [작업 명세](../../../../.agent-work/tasks/p2-reviewed-release-20261103/spec.md)입니다. 현재 release 게시 절차는 진행 중이므로 이 링크는 게시 후 사용합니다. 작업 로컬의 상세 재현 자료는 `outputs/p2-host-isolation/vm-acceptance-reproduction.en.md`와 `VM-실행-검증-20261103.md`이며, 이 로컬 경로가 새 clone에 존재한다고 가정하지 않습니다.
 
-이 결과는 동일 Linux 호스트의 수동 pilot 범위입니다. worker 업로드·privileged executor 연결 RPC·호스트 간 인증·외부 HTTPS/GitHub 게시·실제 자격증명 회전·현재 데스크톱의 전체 도구/connector 격리는 미구현 또는 미검증입니다. 전체 P2 적용 완료로 해석하지 않습니다.
+위 2026-11-03 결과는 동일 Linux 호스트의 수동 pilot 기록입니다. 당시 남았던 제한된 업로드·privileged executor 연결은 이후 자동 로컬 RPC 절에서 별도로 다룹니다. 호스트 간 인증·외부 HTTPS/GitHub 게시·실제 자격증명 회전·현재 데스크톱의 전체 도구/connector 격리는 계속 미구현 또는 미검증이며, 전체 P2 적용 완료로 해석하지 않습니다.
 
 systemd 옵션 참고: [실행 환경](https://www.freedesktop.org/software/systemd/man/255/systemd.exec.html), [자원 제어](https://www.freedesktop.org/software/systemd/man/255/systemd.resource-control.html), [서비스 수명](https://www.freedesktop.org/software/systemd/man/255/systemd.service.html).

@@ -131,6 +131,19 @@
         "environment": "development",
         "issue": "p2-host-credential-isolation"
       }
+    },
+    "p2-automatic-rpc-20261104": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-04T18:16:45+09:00",
+      "summary": "동일 VM 내부의 자동 RPC 연결을 구현·실제 검증·독립 검토하고 사용자 승인에 따라 상시 활성화했다. 비특권 제출 요청이 수동 요청별 job 편집 없이 검증과 로컬 게시로 이어진다. 지정된 소켓·브로커는 enabled/active이고 namespace 상한은15334로 유지된다. 최종 Git 게시 절차가 이어진다.",
+      "path": "tasks/p2-automatic-rpc-20261104/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p2-automatic-rpc"
+      }
     }
   }
 }

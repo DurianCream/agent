@@ -1,0 +1,5 @@
+{
+  "returncode": 0,
+  "stdout": "{\"returncode\": 0, \"stdout\": \"{\\\"actual_peer\\\": {\\\"pid\\\": 1, \\\"uid\\\": 0, \\\"gid\\\": 0}, \\\"decoded_unique_bytes\\\": 40000, \\\"materialized_bytes\\\": 80000, \\\"result\\\": {\\\"backend_key\\\": \\\"88e67bff-0d05-464f-9548-39201532e085\\\", \\\"result\\\": {\\\"status\\\": \\\"unknown\\\", \\\"error_code\\\": \\\"rpc_bundle_quota\\\", \\\"authorization\\\": false, \\\"published\\\": null, \\\"trust_mode\\\": \\\"production\\\"}, \\\"server_uid\\\": 0, \\\"controller_uid\\\": 995}}\\n\", \"stderr\": \"\", \"jobs_before\": 16, \"jobs_after\": 16, \"namespace_limit_after\": 0}\n",
+  "stderr": ""
+}

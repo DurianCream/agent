@@ -1,8 +1,7 @@
 [Unit]
 Description=Multi P2 trusted root verification/execution supervisor
 After=local-fs.target
-AssertPathExists=/etc/multi-p2/verification-job.json
-AssertPathExists=/etc/multi-p2/executor.json
+AssertPathExists=/etc/multi-p2/rpc.json
 
 [Service]
 Type=exec
@@ -11,7 +10,7 @@ ExitType=main
 # with syscall filtering drops CAP_SETUID before our trusted privilege drop.
 # worker_entry and the executor independently require euid 0; no ambient caps.
 Group=root
-ExecStart=/opt/multi-p2-python/bin/python3 -I -S -B /opt/multi-p2/worker_entry.py --run
+ExecStart=/opt/multi-p2-python/bin/python3 -I -S -B /opt/multi-p2/worker_entry.py --rpc
 WorkingDirectory=/
 UMask=0077
 Delegate=cpu memory pids

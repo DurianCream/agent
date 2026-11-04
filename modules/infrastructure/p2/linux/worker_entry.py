@@ -80,8 +80,10 @@ def prepare_delegated_controllers():
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run", action="store_true", required=True)
-    parser.parse_args(argv)
+    mode=parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--run", action="store_true")
+    mode.add_argument("--rpc", action="store_true")
+    args=parser.parse_args(argv)
     verification_started = False
     try:
         if sys.platform != "linux" or os.geteuid() != 0 or not sys.flags.isolated or not sys.flags.no_site:
@@ -100,6 +102,10 @@ def main(argv=None):
         from p2_verifier import verify_job
         prepare_private_mounts()
         prepare_delegated_controllers()
+        if args.rpc:
+            from p2_rpc import serve
+            serve('verify')
+            return 0
         verification_started = True
         result = verify_job("/etc/multi-p2/verification-job.json")
         print(json.dumps(result, sort_keys=True))
