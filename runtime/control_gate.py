@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import agentctl as a
+import submission_profile as sp
 
 VERSION = '0.1.0'
 CONFIG = '.agent-work/gates.json'
@@ -138,6 +139,10 @@ def enroll(task_id, root=a.ROOT):
              'publication_policy': publication['policy'], 'publication_policy_sha256': publication['policy_sha256'],
              'config': profile, 'config_sha256': a.digest(config.read_bytes()),
              'created_at': _now(), 'nonce': uuid.uuid4().hex}
+    capability = sp.capture(root, publication['base_head'])
+    if capability is not None:
+        value['schema_version'] = sp.ENROLLMENT_VERSION
+        value['submission_profile'] = capability
     digest = _hash(value)
     a.write_json(companion, value)
     a.write_json(ledger, {'digest': digest, 'enrollment': value})
@@ -159,7 +164,14 @@ def check_enrollment(task_id, root=a.ROOT):
     value, stored = _read(companion), _read(ledger)
     a.require(stored == {'digest': _hash(value), 'enrollment': value} and
               task['control_enrollment'] == _hash(value), 'P1 enrollment differs from local ledger')
-    a.require(value['schema_version'] == VERSION and value['mode'] == 'enforce' and
+    expected_keys = {'schema_version', 'mode', 'assurance', 'task_id', 'binding', 'base_head',
+                     'publication_policy', 'publication_policy_sha256', 'config', 'config_sha256',
+                     'created_at', 'nonce'}
+    if value.get('schema_version') == sp.ENROLLMENT_VERSION:
+        expected_keys.add('submission_profile')
+        sp.validate_capture(value, root)
+    a.require(set(value) == expected_keys, 'Invalid P1 enrollment fields')
+    a.require(value['schema_version'] in (VERSION, sp.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
               value['assurance'] == 'local-cooperating-cli' and value['task_id'] == task_id,
               'Invalid P1 enrollment')
     _profile(value['config'])
@@ -307,8 +319,10 @@ def candidate(task_id, root=a.ROOT):
         index_modes[name] = mode
     native_modes = os.name != 'nt' and _git(root, 'config', '--get', 'core.filemode', optional=True) == 'true'
     source_names = set(filter(None, _git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z', raw=True).split('\0')))
+    if 'submission_profile' in enrollment:
+        source_names.update(filter(None, _git(root, 'ls-tree', '-r', '--name-only', '-z', enrollment['base_head'], raw=True).split('\0')))
     for name in sorted(source_names):
-        if name.startswith(('runtime/', 'shared/', 'core/', 'modules/', '.codex/', '.agents/')) or name in ('registry.json', 'AGENTS.md', '.gitattributes', '.gitignore'):
+        if ('submission_profile' in enrollment and sp.protected(name)) or name.startswith(('runtime/', 'shared/', 'core/', 'modules/', '.codex/', '.agents/')) or name in ('registry.json', 'AGENTS.md', '.gitattributes', '.gitignore'):
             safe = a.relative(root, name)
             if not safe.exists():
                 dependencies.append({'path': name, 'sha256': None, 'mode': None})
@@ -344,7 +358,8 @@ def run_tests(task_id, suite_id, root=a.ROOT):
     root = Path(root).resolve()
     before = candidate(task_id, root)
     enrollment = check_enrollment(task_id, root)
-    suite = next((s for s in enrollment['config']['required_suites'] if s['id'] == suite_id), None)
+    suites, profile_proof = sp.effective(task_id, before, enrollment, root)
+    suite = next((s for s in suites if s['id'] == suite_id), None)
     a.require(suite is not None, 'Unknown mandatory P1 suite')
     executable = a.relative(root, '.venv-controls/Scripts/python.exe' if os.name == 'nt'
                             else '.venv-controls/bin/python', file=True)
@@ -355,6 +370,7 @@ def run_tests(task_id, suite_id, root=a.ROOT):
     for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP'):
         env.pop(key, None)
     env['PYTHONDONTWRITEBYTECODE'] = '1'
+    env['AGENT_SUBMISSION_TASK'] = task_id
     log = a.relative(run, 'evidence/gate-test-' + uuid.uuid4().hex + '.log')
     code, reason = None, None
     with log.open('wb') as output:
@@ -401,6 +417,8 @@ def run_tests(task_id, suite_id, root=a.ROOT):
              'exit_code': code, 'reason': reason, 'candidate_unchanged': before == after,
              'evidence': {'path': log.relative_to(root).as_posix(), 'sha256': a.digest(log_bytes)},
              'assurance': 'local-executed-untrusted-candidate'}
+    if profile_proof is not None:
+        value['profile_digest'] = profile_proof['sha256']
     record = _append(run, 'test', value)
     return {'record': record, **value}
 
@@ -449,11 +467,14 @@ def _proofs(task_id, current, root, review_required=True):
         if value.get('candidate_digest') == current['digest']:
             a.require(value.get('task_id') == task_id, 'P1 evidence task mismatch')
             records.append((file.name, value))
-    selected = []
-    for suite in enrollment['config']['required_suites']:
+    suites, profile_proof = sp.effective(task_id, current, enrollment, root)
+    selected = [profile_proof] if profile_proof is not None else []
+    for suite in suites:
         matching = [(n, v) for n, v in records if v.get('kind') == 'test' and v.get('suite_id') == suite['id']]
         a.require(matching, 'P1 mandatory test evidence missing: ' + suite['id'])
         name, proof = max(matching, key=lambda row: (row[1]['created_at'], row[0]))
+        a.require(proof.get('profile_digest') == (profile_proof['sha256'] if profile_proof else None),
+                  'P1 test profile approval changed')
         a.require(proof['suite_digest'] == _hash(suite) and proof['outcome'] == 'passed' and
                   proof['exit_code'] == 0 and type(proof.get('tests_run')) is int and proof['tests_run'] > 0 and
                   proof['candidate_unchanged'] is True,
@@ -645,10 +666,11 @@ def check_publication(task_id, root=a.ROOT, commit=None, publication=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status'))
+    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status', 'select-profile', 'promote-full'))
     parser.add_argument('--task', required=True)
     parser.add_argument('--suite')
     parser.add_argument('--input')
+    parser.add_argument('--reason')
     args = parser.parse_args(argv)
     try:
         a.load_task(args.task)
@@ -656,6 +678,10 @@ def main(argv=None):
             value = candidate(args.task)
         elif args.command == 'run-tests':
             value = run_tests(args.task, args.suite)
+        elif args.command == 'select-profile':
+            value = sp.select(args.task, _read(a.relative(a.ROOT, args.input, file=True)))
+        elif args.command == 'promote-full':
+            value = sp.promote(args.task, args.reason)
         elif args.command == 'assess':
             value = assess(args.task, _read(a.relative(a.ROOT, args.input, file=True)))
         else:

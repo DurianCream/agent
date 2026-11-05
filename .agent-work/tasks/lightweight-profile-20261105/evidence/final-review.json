@@ -1,0 +1,125 @@
+{
+  "assessment": "accepted",
+  "assessment_scope": "Exact implementation candidate, mandatory proof, release-ready result and publication/activation plan; not a claim that future real remote publication or readback already occurred.",
+  "task_id": "lightweight-profile-20261105",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "lightweight-submission-profile"
+  },
+  "reviewed_revision": "29b1dd29616464c0e2bc8d1d9051473f65692b14",
+  "candidate_digest": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "reviewer": {
+    "subject": "light_profile_review",
+    "session": "root-light-profile-review-20261105",
+    "identity_authenticated": false
+  },
+  "author": "light_profile_owner; enrolled author orchestrator/root",
+  "source_manifest": {
+    "path": "runs/lightweight-profile-20261105/evidence/source-manifest.json",
+    "sha256": "3d70a3ae864e43152e0f697825f5366a59be83df9d855917b724c0fe55c84a0d",
+    "verified_entries": 29
+  },
+  "result_binding": {
+    "raw_sha256": "4a9e1a412f44373d19ed03f65985217037a04ee5cc712234d9c918c56739fe4f",
+    "subject_digest": "dea26285a4fa16c69dc20d5f35795cd26eaf6de553586ecf8219e46afd8ee94b"
+  },
+  "mandatory_proof": {
+    "path": "runs/lightweight-profile-20261105/gates/test-b593a1cf622a4d9381f87331e3025ae8.json",
+    "sha256": "b20bf908aa4bb4ee51adba2d2e047ef2c6bcef89c8d97048daa2f543caf59501",
+    "suite": "p1-regression",
+    "tests_run": 66,
+    "outcome": "passed",
+    "independent_observation": "Read actual raw test log, verified 66 individual ok lines, final OK, suite hash, receipt/log hashes, unchanged exact candidate; did not repeat suite."
+  },
+  "archive_binding": {
+    "manifest": "runs/lightweight-profile-20261105/evidence/archive-manifest.json",
+    "sha256": "463d4544f39b94bed2f773f74cfb426ed66b33881e0b2112f32eea5c7481b08e",
+    "exact_source_archive_pairs_verified": 22,
+    "additional_manifest_copy_verified": true
+  },
+  "criterion_outcomes": [
+    {
+      "criterion": "criterion-1",
+      "outcome": "passed",
+      "evidence": "Reused unchanged source/semantic eligibility and actual three-case CLI evidence from initial review; mandatory 66 current candidate passed."
+    },
+    {
+      "criterion": "criterion-2",
+      "outcome": "passed",
+      "evidence": "Independent negative proof checks, source boundary review, current mandatory suite, and exact evidence/archive/result binding. Existing submission/commit/destination gates retained."
+    },
+    {
+      "criterion": "criterion-3",
+      "outcome": "passed",
+      "evidence": "Legacy 48 hashes unchanged at initial review; no candidate change since then. Current implementation controls remain 0.1.0 with original full suites and SHA256 dfeaadca9e67cd7f1135d8fa271b0909cdb0c08f24affe411c0bea5ef8a9c755. Full-maintenance lifecycle and irreversible promotion supported."
+    },
+    {
+      "criterion": "criterion-4",
+      "outcome": "passed",
+      "evidence": "Required implementation verification now complete: focused actual lifecycle fixtures, independent review and original mandatory 66. Safe post-publication readback/recovery plan is scoped to authoritative checkout. This criterion is assessed as implementation support/readiness for verified publication; actual finish/remote/readback remain the parent lifecycle steps below."
+    }
+  ],
+  "pending_lifecycle_checks": [
+    {
+      "name": "Actual configured remote finish and commit verification",
+      "outcome": "not_run",
+      "reason": "Must follow this assessment and successful validate/submit; parent executes and reports actual commit."
+    },
+    {
+      "name": "Published HEAD capability readback",
+      "outcome": "not_run",
+      "reason": "Parent executes activation-plan only after verified finish. This assessment does not assert a new real task was enrolled."
+    }
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "LP-D01",
+      "status": "resolved",
+      "evidence": "Confirmed in implementation review; unchanged source and actual full-maintenance fixture retained."
+    }
+  ],
+  "p0_observation": {
+    "record_id": "obs-d6dc0bee3efa4a409b0cc2dcb39c6bc8",
+    "snapshot_digest": "sha256:8b3695fd49073d123311f41bd91155bc22bf654cf7e5848f0c442940b4c15221",
+    "observation_digest": "sha256:1579525b78e1b2986995458f5ea506f506b9efd21d3d0fd5eca590b8a7b5c0a1",
+    "policy_digest": "sha256:14ee3ae4f8eac5f6bef183f8c08c1aa8613abb64a6e79c8f8e38300ce142130f",
+    "invocation": "control_policy.evaluate_action",
+    "original_decision": "allow",
+    "current_status": "stale_age",
+    "governance": "No required-review decision in this advisory workspace observation; no governance assessment invented.",
+    "assessment_registration": "not_run: stale observation is not current execution authority; no refresh performed.",
+    "limits": "Declared low-risk workspace inspection only; not a low-risk classification of the high-risk gate implementation. executable=false, authority_verified=false, content/signature checks not performed."
+  },
+  "governance_conditions": [
+    "Existing high-risk full-profile treatment preserved.",
+    "This advisory acceptance grants no host, network, production or new destination authority.",
+    "Exact candidate, artifacts and current proof bindings must persist through existing finish guards."
+  ],
+  "limitations": [
+    "Windows symlink/junction execution remains not_run because host creation was denied; static resolver inspection and other boundary cases do not become executed alias evidence.",
+    "Local identities and evidence are unauthenticated; no OS isolation, all-tool enforcement, direct-Git prevention or coordinated same-user tamper prevention is claimed.",
+    "Owner fixture identities are synthetic; local bare publication is not actual configured remote publication.",
+    "Parent report correctly distinguishes planned publication/activation and authoritative checkout from preserved outer workspace.",
+    "Raw logs remain local; reviewed bounded copies and proof receipt are published as exact archives."
+  ],
+  "pending_authorization": "No new authorization requested or granted; existing parent scope and host restrictions apply.",
+  "re_review_triggers": [
+    "Any changed product candidate, required test proof, reviewed result, referenced evidence or owned archive bytes",
+    "Failed publication or readback requiring source repair",
+    "New factual completion claims beyond observed parent post-publication evidence"
+  ],
+  "handoff": {
+    "changes": [
+      "Created final-review.json and exact durable archive; independent P1 assess registration follows."
+    ],
+    "remaining": [
+      "Parent validate/submit/finish and report actual remote commit.",
+      "Parent read-only post-publication profile/seed and old enrollment readback; preserve outer checkout.",
+      "Keep initial review record unchanged; this final review resolves its mandatory-evidence uncertainty."
+    ]
+  }
+}

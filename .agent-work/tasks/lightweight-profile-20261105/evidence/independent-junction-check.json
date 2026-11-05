@@ -1,0 +1,5 @@
+{
+  "name": "Real Windows junction path rejection",
+  "outcome": "not_run",
+  "reason": "Host denied New-Item -ItemType Junction with access denied. No escalation or permission weakening attempted."
+}

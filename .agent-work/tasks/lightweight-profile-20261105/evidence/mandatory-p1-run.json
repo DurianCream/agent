@@ -1,0 +1,28 @@
+{
+  "command": "control_gate run-tests --task lightweight-profile-20261105 --suite p1-regression",
+  "invocations": 1,
+  "elapsed_seconds": 305.921,
+  "before_candidate": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "after_candidate": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "candidate_unchanged": true,
+  "receipt": {
+    "record": "test-b593a1cf622a4d9381f87331e3025ae8.json",
+    "kind": "test",
+    "task_id": "lightweight-profile-20261105",
+    "candidate_digest": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+    "suite_id": "p1-regression",
+    "suite_digest": "e171934673cfd3c4b7485d619c33ad64e8c655a5b0d112ffb149abd675e8f4be",
+    "created_at": "2026-11-05T09:35:05.840591+00:00",
+    "outcome": "passed",
+    "tests_run": 66,
+    "exit_code": 0,
+    "reason": null,
+    "candidate_unchanged": true,
+    "evidence": {
+      "path": "runs/lightweight-profile-20261105/evidence/gate-test-506cc23613ed49deb2643f7d5157a052.log",
+      "sha256": "438f181b6e81cf1eb1cb671097d9d64db8f5a65d3a4ca63465f785042c33e832"
+    },
+    "assurance": "local-executed-untrusted-candidate"
+  },
+  "receipt_sha256": "b20bf908aa4bb4ee51adba2d2e047ef2c6bcef89c8d97048daa2f543caf59501"
+}

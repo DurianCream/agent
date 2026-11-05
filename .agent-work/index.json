@@ -157,6 +157,19 @@
         "environment": "development",
         "issue": "workflow-proportionality-application"
       }
+    },
+    "lightweight-profile-20261105": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-05T18:58:11+09:00",
+      "summary": "제한된 일반 설명문 변경을 위한 경량 런타임 제출 프로필을 구현했다. 독립 검수자가 정확한 후보의 의미·영향을 승인한 경우에만 실제 문서 무결성 검사3개를 사용하며, 기록·최종 독립 판정·게시 통제는 유지한다. 현재 구현 작업은 원래 전체 P1 검사66개를 통과했고 최종 게시·활성화 확인을 진행한다.",
+      "path": "tasks/lightweight-profile-20261105/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "lightweight-submission-profile"
+      }
     }
   }
 }

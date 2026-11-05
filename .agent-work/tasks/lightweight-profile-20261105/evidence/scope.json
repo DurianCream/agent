@@ -1,0 +1,18 @@
+{
+  "task_id": "lightweight-profile-20261105",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "lightweight-submission-profile"
+  },
+  "risk": "high",
+  "reason": "Changes execution/submission/publication gate selection; existing full controls must apply to this task.",
+  "owner": "/root/light_profile_owner",
+  "reviewer": "/root/light_profile_review",
+  "baseline": "29b1dd29616464c0e2bc8d1d9051473f65692b14",
+  "current_task_light_selection_permitted": false,
+  "early_review_ref": "runs/lightweight-profile-20261105/evidence/early-design-review.json",
+  "design_disposition": "LP-D01 to be resolved by explicit immutable capture versus light eligibility/full maintenance semantics; prototype permitted after clarification."
+}

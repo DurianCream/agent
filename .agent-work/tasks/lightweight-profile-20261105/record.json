@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "lightweight-profile-20261105",
+  "saved_at": "2026-11-05T18:58:11+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "29b1dd29616464c0e2bc8d1d9051473f65692b14",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agent-work/repository.json\n M .agents/skills/maintain-module/SKILL.md\n M .agents/skills/oss-research/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M .codex/config.toml\n M AGENTS.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n M modules/coding/module.json\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/control_gate.py\n M runtime/native-map.json\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n M shared/workflows/owner-led-delivery.md\n?? .agent-work/submission-profiles.json\n?? .agent-work/tasks/lightweight-profile-20261105/\n?? docs/lightweight-submission.ko.md\n?? docs/prose/\n?? runtime/submission_profile.py\n?? runtime/tests/light_document_checks.py\n?? runtime/tests/test_submission_profile.py",
+    "worktree_sha256": "aaa48c28bd946d80da209394c2fd39aa4e18a75b68d1628d092ea2bf66596bf8"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "lightweight-profile-20261105",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.3.0"
+    },
+    "created_at": "2026-11-05T17:35:18+09:00",
+    "objective": "Implement a versioned lightweight submission profile with bounded eligibility reduced unnecessary checks and preserved independent review durable records and security gates",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "A concrete light profile reduces unnecessary full regression for explicitly eligible low-impact work without using author-declared risk alone as authority",
+        "required": true,
+        "verification_ids": [
+          "owner-tests",
+          "independent-review",
+          "mandatory-full"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Independent review evidence integrity scope ownership immutable snapshots and exact publication checks remain mandatory and protected changes cannot downgrade themselves",
+        "required": true,
+        "verification_ids": [
+          "owner-tests",
+          "independent-review",
+          "mandatory-full"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Legacy and in-progress enrollments retain their original required checks and outcome bindings while new profile selection or promotion is explicit and versioned",
+        "required": true,
+        "verification_ids": [
+          "owner-tests",
+          "independent-review",
+          "mandatory-full"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Focused adversarial tests actual lifecycle demonstrations independent review and safe activation support the implementation and verified authorized publication",
+        "required": true,
+        "verification_ids": [
+          "owner-tests",
+          "independent-review",
+          "mandatory-full"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "제한된 일반 설명문 변경을 위한 경량 런타임 제출 프로필을 구현했다. 독립 검수자가 정확한 후보의 의미·영향을 승인한 경우에만 실제 문서 무결성 검사3개를 사용하며, 기록·최종 독립 판정·게시 통제는 유지한다. 현재 구현 작업은 원래 전체 P1 검사66개를 통과했고 최종 게시·활성화 확인을 진행한다.",
+    "work": [
+      "이번 작업을 고위험 게이트 변경으로 분류하고 변경 전 전체 프로필을 유지했다. 기존 gates.json·result schema·이미 시작한 작업의 등록과 스냅샷을 바꾸지 않았다.",
+      "커밋된 활성화 설정을 새 작업의0.2.0 controls에만 캡처하고, 이전0.1.0 작업은 전체 검사를 유지하도록 했다. 기본값은 전체 검사다.",
+      "정확한 허용 목록의 기존 docs/prose/*.txt 일반 문서만 지원한다. 작성자의 등급이나 확장자만으로 승인하지 않으며, 의미·영향을 확인한 독립 후보별 승인과 관련 증거를 요구한다.",
+      "후보·파일·의존성·근거 변경은 기존 승인을 무효화한다. 보호 대상은 기준과 현재 목록의 합집합으로 검사하고, 전체 검증으로 승격하면 해당 작업에서 경량으로 복귀하지 못한다.",
+      "실제 CLI fixture에서 경량3개 검사·최종 판정·제출·로컬 bare 게시를 확인했다. 전체 유지보수 경로도 실제 경량3개와 원래 fixture 전체1개 검사를 실행해 게시했다. 이는 실제 구현 작업의 필수66개와 구분한다.",
+      "사전 검토 LP-D01을 해결하고, 새 런타임 지원과 모순되던 지침·스킬 버전·핀·생성물을 함께 갱신했다. 최종 후보의 기존 전체 P1은1회만 실행했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/lightweight-profile-20261105/usage.ko.md",
+        "description": "지원 범위와 사용 순서",
+        "sha256": "91bd57715689bbe6fd5169c6c87843a925060a470a2e9c904115ad8fde5cd061"
+      },
+      {
+        "path": "outputs/lightweight-profile-20261105/owner-summary.ko.md",
+        "description": "구현·시험 결과와 한계",
+        "sha256": "093361e7a4350fb69ac7d6b0dd46d85a67c602009b3fbc5b558d269616652719"
+      }
+    ],
+    "verification": [
+      {
+        "id": "owner-tests",
+        "name": "구현 담당 집중·실제 CLI 검증",
+        "method": "실제 subprocess CLI와 로컬 Git remote, 우회·변경·재사용·호환성 사례",
+        "outcome": "passed",
+        "evidence": [
+          "runs/lightweight-profile-20261105/evidence/owner-handoff.json",
+          "runs/lightweight-profile-20261105/evidence/focused-tests-summary.json"
+        ],
+        "notes": "실행한 고유15개 통과. 기록된28method 호출은23통과·초기fixture/하네스 실패4·skip1이며 반복에는 사유가 있다. fixture 검수 신원은 합성값이며 실제 독립 검토가 아니다."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 적대적 구현 검토",
+        "method": "실제 변경·증거·경계의 독립 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/lightweight-profile-20261105/evidence/early-design-review.json",
+          "runs/lightweight-profile-20261105/evidence/implementation-review-initial.json",
+          "runs/lightweight-profile-20261105/evidence/independent-focused-checks.json"
+        ],
+        "notes": "LP-D01 해결, 새 중대 결함 없음. 일부 proof 거부 검사에는 합성 영수증을 사용했고 실행·게시 성공으로 주장하지 않는다. 최종 검사와 결과 연결은 별도 P1 평가에서 확인한다."
+      },
+      {
+        "id": "mandatory-full",
+        "name": "현재 구현 작업의 전체 필수 P1 검사",
+        "method": "기존 전체 프로필과 승인된 로컬 Git fixture 실행 환경",
+        "outcome": "passed",
+        "evidence": [
+          "runs/lightweight-profile-20261105/evidence/mandatory-p1-run.json"
+        ],
+        "notes": "기존 full66개를1회 실행해 통과했다. 이 작업에 새 경량 프로필을 적용하지 않았다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "초기 지원은 정확히 허용된 기존 일반 설명문 파일뿐이다. 현재 등록 예시는 docs/prose/project-overview.txt다. 새 파일·삭제·코드·설정·권한·보안·지침 변경은 경량 대상이 아니다.",
+      "result 필드·일곱 절 저장 보고서·init/checkpoint/validate/submit/finish·최종 독립 검수와 게시 검사는 유지한다.",
+      "선언된 검수 신원과 로컬 기록은 인증된 신원이나 OS 강제가 아니다. 직접 Git 실행이나 같은 사용자 권한의 전체 기록 조작을 막는다고 주장하지 않는다.",
+      "Windows 연결 경로의 실제 생성 시험은 not_run이다. 실제 시간·비용 절감률은 측정하지 않았다.",
+      "기능 활성화는 게시 기준과 일치하는 현재 authoritative checkout에서 확인한다. 이전 HEAD와 통제 변경을 보존한 바깥 작업공간을 경량 사용 가능한 상태로 만들었다고 주장하지 않는다.",
+      "Windows symlink/junction 실제 생성 검사는 not_run이다(Win1314/접근 거부). 정확한 증거: runs/lightweight-profile-20261105/evidence/independent-junction-check.json. 필수 기준이 아닌 추가 확인이며 기존 경로 해석기 정적 검토를 실제 실행 성공으로 바꾸지 않는다."
+    ],
+    "next_actions": [
+      "최종 독립 판정을 결과와 모든 공개 증거에 연결한 뒤 validate/submit/finish와 원격 커밋을 확인한다.",
+      "게시된 HEAD의 활성화 설정·일반 문서·기존 full등록 불변을 읽기 전용으로 확인한다. 실제 새 작업 생성은 하지 않는다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\work\\p2-reviewed-release-20261103",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "lightweight-submission-profile"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-89cb824698ee477ca08f6ef436296c0a",
+    "snapshot_digest": "sha256:8b3695fd49073d123311f41bd91155bc22bf654cf7e5848f0c442940b4c15221",
+    "status": "review_pending",
+    "task_id": "lightweight-profile-20261105",
+    "mode": "observe"
+  },
+  "spec_sha256": "cea23e365825ab228930741f516611d6cc441f8d1df7ce0aede251df9e37f6d7"
+}

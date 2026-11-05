@@ -1,0 +1,48 @@
+{
+  "candidate": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "checks": [
+    {
+      "name": "Current source manifest and candidate exact binding",
+      "outcome": "passed",
+      "files": 29
+    },
+    {
+      "name": "No arbitrary suite via selected light profile",
+      "outcome": "passed",
+      "observed": "Unknown mandatory P1 suite"
+    },
+    {
+      "name": "Missing execution blocks completed submission",
+      "outcome": "passed",
+      "observed": "P1 mandatory test evidence missing: light-document-integrity"
+    },
+    {
+      "name": "Missing final review blocks completed submission",
+      "outcome": "passed",
+      "observed": "P1 independent review missing"
+    },
+    {
+      "name": "Failed execution blocks completed submission",
+      "outcome": "passed",
+      "observed": "P1 mandatory test did not pass"
+    },
+    {
+      "name": "Reselection invalidates prior successful proof chain",
+      "outcome": "passed",
+      "observed": "P1 test profile approval changed"
+    },
+    {
+      "name": "Promotion cannot reselect light",
+      "outcome": "passed",
+      "observed": "Full promotion is irreversible"
+    },
+    {
+      "name": "Light proof cannot satisfy promoted full submission",
+      "outcome": "passed",
+      "observed": "P1 mandatory test evidence missing: unit"
+    }
+  ],
+  "limitations": [
+    "First fixture setup failed at local bare initial push before assertions. Retried with setup push omitted; no publication claim. Test receipts mocked only for proof-rejection checks."
+  ]
+}

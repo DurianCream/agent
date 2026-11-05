@@ -1,0 +1,887 @@
+{
+  "digest": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "candidate": {
+    "schema_version": "0.1.0",
+    "task_id": "lightweight-profile-20261105",
+    "enrollment_digest": "f1e3becd3eea1763dcf937dffec8d7434c897b4bebafbaa080db86b81e9417c2",
+    "binding": {
+      "schema_version": "1.0.0",
+      "repository_id": "multi",
+      "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+      "task_id": "lightweight-profile-20261105",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "lightweight-submission-profile"
+      }
+    },
+    "base_head": "29b1dd29616464c0e2bc8d1d9051473f65692b14",
+    "environment": [
+      {
+        "path": ".venv-controls/Lib/site-packages/attrs-26.1.0.dist-info/METADATA",
+        "sha256": "4cd40e690f23bf37cbcad34efd6758e062df1df07c86833f7e3ce95bf1fa38cc"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/jsonschema-4.26.0.dist-info/METADATA",
+        "sha256": "05b189866ca98a96da3934bf6b83687ced3ff85325273b77e16b705f6d8b26d2"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/jsonschema_specifications-2025.9.1.dist-info/METADATA",
+        "sha256": "35abd41757f32b4ea24756920ded47b70173d77cbc052a5a6d3ab583b2e8d89d"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/pip-25.0.1.dist-info/METADATA",
+        "sha256": "4fa7318cf30f979db7cec45c12cbbc2b4f88a15f12eefbf59a6291d0a03af926"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/referencing-0.37.0.dist-info/METADATA",
+        "sha256": "c93b00e6ab1524fd60848376604c189a114374776475c25a31d57be47b29de6a"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/rfc3339_validator-0.1.4.dist-info/METADATA",
+        "sha256": "ac4dc2cdea6a8b61c16babbf35c0e9fa6e22e45f1c0338e66e089108dde872d2"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/rfc3986_validator-0.1.1.dist-info/METADATA",
+        "sha256": "feddd8265433ba7be465e1649b486ec83c4c78f593f36284e7ae6d655cae163c"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/rfc8785-0.1.4.dist-info/METADATA",
+        "sha256": "9dfbf420c8c18077dd7697ec12fe2838b5901683573ae128df2d3403330f7aa9"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/rpds_py-2026.9.1.dist-info/METADATA",
+        "sha256": "778fb36890d26c5657d256db3e61a05a637468aa4cf607f8d1059c5079fcefd8"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/six-1.17.0.dist-info/METADATA",
+        "sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468"
+      },
+      {
+        "path": ".venv-controls/Lib/site-packages/typing_extensions-4.16.0.dist-info/METADATA",
+        "sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46"
+      },
+      {
+        "path": ".venv-controls/Scripts/python.exe",
+        "sha256": "fc9188d3eb84b0c8849da5987ea9e7802486a09afadb672dcd9cae9e64149076"
+      },
+      {
+        "path": ".venv-controls/pyvenv.cfg",
+        "sha256": "d6a3af9dad988e4ae03c8e018f553095076188f8af37759f55088e95968e981e"
+      }
+    ],
+    "dependencies": [
+      {
+        "path": ".agents/skills/maintain-module/SKILL.md",
+        "sha256": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba",
+        "mode": "100644"
+      },
+      {
+        "path": ".agents/skills/oss-research/SKILL.md",
+        "sha256": "70631655a19faf031345f7b8b3520190322d6ebeccbc3a0d80d41ba3edff72b5",
+        "mode": "100644"
+      },
+      {
+        "path": ".agents/skills/submit-result/SKILL.md",
+        "sha256": "6a308a43425af0b114eb75b3bc299ca37c6a9d2c6d8fa2377b6b16c84c2f9fa7",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/coding.toml",
+        "sha256": "9d940caf868a43d4e93167cb01e5d2225c93c3e46e5ff0ebdb4aac4bae0d3411",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/evaluator.toml",
+        "sha256": "11d6d1e5c69e596095edeb63e32d93f954704b6aa3cbfbbd462ea71987ada5d4",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/infrastructure.toml",
+        "sha256": "baedb4676ae37973f85e314099b007cf3a12426cabe04b1eadafa9c1b8bae7af",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/knowledge-manager.toml",
+        "sha256": "12d208eac5f458f933d3860b00e547aa38bff217a9ab11b66ec27eb5ee39373f",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/orchestrator.toml",
+        "sha256": "a070e012f9cd6df278b5994703ec7dc11b66d7d8e7b7e4b795489941f87076c2",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/oss-rnd.toml",
+        "sha256": "8b96f0787b0ad96864eb7244f2bb2d663a064a5dbc36e52c777504865a25b1ed",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/policy-manager.toml",
+        "sha256": "6b47871c4368cc6c28f1433948012fb28bce8ad188097766422e0fc9a8e4346e",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/agents/skill-manager.toml",
+        "sha256": "ec6b5360518ba75725adebcda3f6e6556bc9193d4d457cf83d49c573738aec24",
+        "mode": "100644"
+      },
+      {
+        "path": ".codex/config.toml",
+        "sha256": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
+        "mode": "100644"
+      },
+      {
+        "path": ".gitignore",
+        "sha256": "af9a727f02ffb0b958b1079f71e29edacdefd915f75b0ec940173d60f25b4baa",
+        "mode": "100644"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "33347a6eb0b2b04ca69aadd408ec706252e8eea05c240ce69008978ea74d700f",
+        "mode": "100644"
+      },
+      {
+        "path": "core/evaluator/instructions.md",
+        "sha256": "acd6a18ea2bf73e46fb77abe0ac744c277c0b1b43c4c5600b990b915c9bb15ec",
+        "mode": "100644"
+      },
+      {
+        "path": "core/evaluator/module.json",
+        "sha256": "4fc2512556765faa269401491be0b30ef5578db29de170cfd3957216a6c1791e",
+        "mode": "100644"
+      },
+      {
+        "path": "core/knowledge-manager/instructions.md",
+        "sha256": "0b974a5b448135e67c7d739bf627c4683a63a4bef91981009fd67543556b3946",
+        "mode": "100644"
+      },
+      {
+        "path": "core/knowledge-manager/module.json",
+        "sha256": "2a93518863463608b1f09917036b6ef99245acd5157d2ebcda23b06a55bf04df",
+        "mode": "100644"
+      },
+      {
+        "path": "core/orchestrator/instructions.md",
+        "sha256": "6bd0e3552256095f949a27b5eed434b0d72739424ab201b46365c89dd10af380",
+        "mode": "100644"
+      },
+      {
+        "path": "core/orchestrator/module.json",
+        "sha256": "785921833e579cccdcc3ef83263fbc1930e09bb6348e4a1d5010044ed8475c80",
+        "mode": "100644"
+      },
+      {
+        "path": "core/policy-manager/instructions.md",
+        "sha256": "271048a62f2a23b99f52480b088fd80696638735c70070f4878c175cf58ac3d4",
+        "mode": "100644"
+      },
+      {
+        "path": "core/policy-manager/module.json",
+        "sha256": "58e251628583875392ac10be4c5aae1238e74af1e83348e73a0a2853759d1c9a",
+        "mode": "100644"
+      },
+      {
+        "path": "core/skill-manager/instructions.md",
+        "sha256": "d8c3ab824302c8beb576d7c85ddc1d4a41aa8256919b618726bfb2d21821e99e",
+        "mode": "100644"
+      },
+      {
+        "path": "core/skill-manager/module.json",
+        "sha256": "a68fe6fc6d9666f6f16223dda33ae24e98b6722810495f3b762c108cd3ce2a9c",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/coding/instructions.md",
+        "sha256": "cfc130e3ad4bd4702f864445f21a8544db37dd312bf84818955db8c74fae7ff6",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/coding/module.json",
+        "sha256": "4b17cb4868d16d73e18a3a3d957dae6f3a735f2b626ce6b7d7ac10d236faeb5f",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/instructions.md",
+        "sha256": "f4965ebe5f54a30cd5b6a13c5aab97304ea5b91d34681ffdf3782131dc40a506",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/module.json",
+        "sha256": "1a48f55870804f0bb11696c19ffd5f887bc9e80b2513638df9166b981b56362d",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/HyperV-설치-안내.md",
+        "sha256": "497fac1dd78f2774b436263a9c4eba67f3fbd81654e4c2a85ad0a0706039cb22",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/New-P2VM.ps1",
+        "sha256": "a12ae8e6ac103a2abc70765f9ea9cc9ea8f5928e3f92f99f87ad7e38818b3cb0",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/P2VM.psm1",
+        "sha256": "f2a9902838e578bfe913f010f50a1b980f7f9315cbe8c138f2e8f0ddeb83edbd",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/deployment-contract.en.md",
+        "sha256": "88b4a761d35fede95a78759b24902616b46e2e0fd55b102d150f2fca248b763c",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/README.ko.md",
+        "sha256": "7a4a35eb170ec5a2e0480fd8d216bc6054a451fd2365d1fc66b68dedaa6e87e6",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/install.py",
+        "sha256": "d19762d586083c484e9a40e4bbf765a204ce7d8540caa138595f29226b21de1c",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/preflight.py",
+        "sha256": "9d71bd0e6e4a8f22368242a6505725145a65264ddd7a3237f498c19a75df6d1f",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor",
+        "sha256": "ab22db0dbccba6d21fa9a23ec0898306597e11d8ad4507d005871cdde6d352ac",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/publisher_entry.py",
+        "sha256": "3f702b60c334bcdc059a3f4272c43e7ba356db349c042210ca9f5e4c35c0dadd",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/rootfs_builder.py",
+        "sha256": "c2a47787ca20440996cc27cc8f4ca5745cf1f71b11a97056881234aff6faf0f3",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/rpc-deployment.en.md",
+        "sha256": "a3f07d30a4375c93b850eb9902279b1fbbfa88b0941e600fb0e2da4ff5affe6a",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-control.service",
+        "sha256": "43842e9bbfb5383bfaecddd41d4f03081b951ca49be8a3b6b54c5b2daa695ee1",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service",
+        "sha256": "c5443e15f551a99a1e5376bbd9b5c601bdbc05724861a8ec4f86c803fb3d0daf",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket",
+        "sha256": "a0b5ca17fc32f2c50a618ed3adf38be5701fb448acede1de1ddb6a638ce35524",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service",
+        "sha256": "0c27806dc20cc3a895e6e6cca7e9ffe71f6d9fc4c380d0f4587b5b7e5a87e9c6",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket",
+        "sha256": "fb01ba69e73c9d5191f2d84b02bdfc9d872ab4f55712b059052ba4c1eb2d1ae4",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service",
+        "sha256": "16165d84518821fb0d428528831e7d00d7c9533ef23f9cc11bb8ca05d1bba4d4",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/tests/test_linux_preparation.py",
+        "sha256": "4f8a4eea71eff8a34e3d2923b9335ab24361dc85500055c269ac560853bf8a12",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/linux/worker_entry.py",
+        "sha256": "c3b7f67ea63b4e0b76d57f2e17ea0f0b472f0cae511cf26d31f2a7d7645d7908",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/infrastructure/p2/tests/Test-P2VM.ps1",
+        "sha256": "36bb6ae4f59e7e4b0821bc2cf01037ea0127689396af7081f7a1336987f2bbf9",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/oss-rnd/instructions.md",
+        "sha256": "fe8b3fc827717b777a9b506c9a98121b100d31f57e8264e4ec45644b83d3eaf5",
+        "mode": "100644"
+      },
+      {
+        "path": "modules/oss-rnd/module.json",
+        "sha256": "94920485eedc98bb9680207a4caef7a3be650b66633643f11f13eb700630b461",
+        "mode": "100644"
+      },
+      {
+        "path": "registry.json",
+        "sha256": "faa1278457192c4027f42ccec1c193910247b72df8c46e96077071f0c24d9b3c",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/agentctl.py",
+        "sha256": "46fd2be04d5694f7f845e56307916a033c6a44f7bcb09808058ab3a28c72344b",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/codex-settings.toml",
+        "sha256": "e0282fd3fdef312d75e4d14495b1e0899884b9508f5dc7b9740021820c82f80a",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/context-hooks.json",
+        "sha256": "b6917f354b32f3e747839e1dddb222507a61786e1fe3cd692338ed3eb9ff0f7d",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/context_checkpoint.py",
+        "sha256": "ddb1644924f7bc3910f7d60d30c08f3fa139dd0a1c6246573b04a3b4800e9008",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control-requirements.txt",
+        "sha256": "f3f219e92a885e290a8e49cf8258bb2e2350b2ae3cfa7df478363cdafe78da28",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control_contracts.py",
+        "sha256": "81dcbd4b0c53c25d4712f24a8a811d38c57d2a9963927a238a2599bfe644a813",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control_gate.py",
+        "sha256": "eca77172ece72288681ddb248508a6ce8c48231e5cf75b0e37e814596494ecf4",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control_integration.py",
+        "sha256": "f5571e2d0f2abd8506bad6221920a2f034aabcea35628fbf6052ce75b7911208",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control_policy.py",
+        "sha256": "a464f01146eb3c66f33173035e9bcb6e7077f9a0a11fdc75ce254a7c5574a146",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/control_workflow.py",
+        "sha256": "b83259cfbfa2b152bfe36ee9089f66e1a092aac136f3d3064d475f95a7172aa2",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/controlctl.py",
+        "sha256": "6ece5a3f6620c5429d410dc503fb647cd4a1f5cfeaeb935fbbd0dc7fe58c4216",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/legacy_memory.py",
+        "sha256": "d71642065d028e6ace38baa70be7cb56dcb517dfded81540003562f34496e5fc",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/native-map.json",
+        "sha256": "d7d01d48b288a6e96ac99678ca3b43e51dfe6d3c79a46892d503098a129eeb87",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_broker.py",
+        "sha256": "5cff6e5f9c977fe84f4cd4495cd76453b3165e17b9f7fc34d403956baaec9760",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_contracts.py",
+        "sha256": "378af191e40f9c46a40c4ed7cb4804a368cb57850eabfc0e7e6c50307739b862",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_executor.py",
+        "sha256": "04fe2090185958bd702e0bcf4ccbdaf220fe9ddc0ed73a8721f55b1441efa8b1",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_publisher.py",
+        "sha256": "99b74fe3e908f266a226e4b39999644bdb61a4e241c525616d8f5bc256ce5403",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_rpc.py",
+        "sha256": "eff967c061d0d9586fdc8e21aa091d74744bab35a563f8b3ed4529a2f868d279",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_sandbox_gate.py",
+        "sha256": "57cb73cb278efdb97d2110af19161eb74211da0a1f1cb3e057a0481f2af8f297",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_store.py",
+        "sha256": "bb6c6c09838bcc3a87a9421fcbd6dab860c634a7ad2ffc4037dc9c1521003c38",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/p2_verifier.py",
+        "sha256": "b6a0c0fe81f69a0b5d2c56a14bb25d4767ff2b680f231e4f34ff6a8db32f412a",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/repo_automation.py",
+        "sha256": "021ff8e50b8c5830e7ecf05b493a1cc23f8a5b6718477c9345b700d342188846",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/repoctl.py",
+        "sha256": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/submission_profile.py",
+        "sha256": "b0fe2c7035341deaf870f8d48ddb2190cf18458121948027bc68efff96bbc34f",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/sync_codex.py",
+        "sha256": "c7620a924cf6bcc74e248dd05ef0442a51ad4dde12a39d83f4b01620b586e5da",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/fixtures/control-contracts/action-request.json",
+        "sha256": "7d27e8a71c5b82d62b564ca3c39a6d2c26f935cbe4b5fdd538a9a7027e9d498b",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/fixtures/control-contracts/all-envelopes.json",
+        "sha256": "3b6fa344c6c5ff4f41c9d69de6b3f2f4158b10c87a4dbbbea2d397b3678fd996",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/fixtures/control-contracts/unicode-vector.json",
+        "sha256": "50d21c711f86f886186560fdaee98091fcb11ad6c66e336fb7c3c08451f2cf4a",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/fixtures/control-observe/context.json",
+        "sha256": "5eec57a35da1284f30d0d87d99d060424feb2731bb90fc391cc815088e0b2bf4",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/fixtures/control-observe/request.json",
+        "sha256": "e59e1027bfc41dda7f233849ca5063cee469e99047dda0a372c16a190772a17c",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/light_document_checks.py",
+        "sha256": "0d05a79fb0f1c87254665a8ffb440c2036057d3ecd0454191202ecc0216aee48",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_codex_settings.py",
+        "sha256": "2d469addce54b502e355db42b4cf71f65185928050d4afb736e690d5bd25e428",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_context_checkpoint.py",
+        "sha256": "dcea75029e310e9153b42f461e92be4cde8c3d7d8bed7930a61e25b8f4e6eb18",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_contract.py",
+        "sha256": "260527353c9fa75b03394590ec07e65d9832f3708d5157bebdccbfd4cf6f38e9",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_contracts.py",
+        "sha256": "41f86381c40d5f5eeb368b806088ef32e8ad8943761d3233d17ec3d064d3339a",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_gate.py",
+        "sha256": "ce48a6a047fb287092bcd37d4c6c5d563c2ba35d471d055cc182cba58c250197",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_gate_integration.py",
+        "sha256": "d44be0a0da02ce5a79beda19738777cdc2eb62c3065caa539679b3d32cf89ab5",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_integration.py",
+        "sha256": "c3a15399e1269b89c02a0a29e6d870e121b7e5a915570f41eda2574400e91219",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_policy.py",
+        "sha256": "86a721ae8fd5056123f329e5e1296113bbd2f4074d3ccbe8ebcca8a218b86570",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_control_workflow.py",
+        "sha256": "cb0a228c6dbbaca9b62440886948efe3b3a3666ea72cde8745b204f87f1324a5",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_controlctl.py",
+        "sha256": "998bcfce5cdde2c2b1fec699b1ee5f3f798fb1d974cba055732af8b00b2434cf",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_legacy_memory.py",
+        "sha256": "4ab460d12e6d6212eaf52c8b1604c603a00f6163c300f221a9ecd5396b56de92",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_broker.py",
+        "sha256": "bac65f79fe841eaecfafc687ec482a18204948f66a43a12fbcbf2504b10df2a7",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_contracts.py",
+        "sha256": "bcff3ce053a2ac4f645ce96a5645634e32df4d889361027b7592eb807a8f0404",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_executor.py",
+        "sha256": "457669a1d29ffb0f201dec700f6b325ac4645359e92bbe4bc9546902adae2ec1",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_publisher.py",
+        "sha256": "85271d34778ef7c78b5db6bccad454d08769b3485acd784ac54eeb9b2293bc6f",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_rpc.py",
+        "sha256": "72f6d201ad071cc7b7ee4678f0fb5a72852cfc61dd5970834f72545b625f968d",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_store.py",
+        "sha256": "91241e3c58ff37ec0c11cdb55c990bf4ae06faf2cf3a5a86099023f12d3b64b1",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_p2_verifier.py",
+        "sha256": "0b15399693e91360385e7e82084c6fcddeab2d044c86493f345e2fd0cf39d2d0",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_repo_automation.py",
+        "sha256": "56ccddd74e906c9171c604ea6cee017e027665aecff2476b347759e03b62ce7f",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_repoctl.py",
+        "sha256": "17b2740e9637b5a2187e57b8f9257fe132dc733c022e22e28d3be385db443e53",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_submission_profile.py",
+        "sha256": "69dc03ecb23146600d583752f34b21a319dfe8e2916c4106161d5d6b6f98dba9",
+        "mode": "100644"
+      },
+      {
+        "path": "runtime/tests/test_work_scope.py",
+        "sha256": "62252dce67c34cc33e74a57f68dc2307c57b544c22e12243d2fe2df24d939f0c",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/knowledge/README.md",
+        "sha256": "9dd28cbf501b08dc07b5582350e0f7ca635fadaac1b010581a8b03e1b71207c4",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/knowledge/index.json",
+        "sha256": "b7c220a77c9809000d5881ef33ef8e2b987823ebf253320a5e2d2268d54c6931",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/policies/common.json",
+        "sha256": "eac899f5e84c875960741bb479e6b24e2908b9e0cf1fff3190007467d245ec2c",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/policies/execution-controls.observe.json",
+        "sha256": "4e167a067e8f85dc858a11181e00e400dd2b23e440a6ef93d5e2af45a401f1e5",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/control-envelope.schema.json",
+        "sha256": "575f6acb2a014413ba75339b306785def8513ddf4e73e9890c249c4e5778f806",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/control-observation.schema.json",
+        "sha256": "eeae04264257857f5fca5770f7234f53536aa785ea968879d796b934efab876d",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/control-observe-policy.schema.json",
+        "sha256": "cdecfedacff2ce624ca54136d58c9a461fde9552a191acbfdec1a235a769ffa7",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/control-workflow.schema.json",
+        "sha256": "552e522840f5a8ab58ce7477ae0ed2d9a36468b87796fa2797eed4c6b470bd39",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/module.schema.json",
+        "sha256": "3a37caae17a6820f9ca905044eb0983b43f352e66190bfaa0d95c4c38b05d9e2",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/policy.schema.json",
+        "sha256": "3dbd4bb07c1a52cf14c65893d41c145fe40020c3bc1087bad83fd4180607f4f2",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/registry.schema.json",
+        "sha256": "ece5e6c23c177fa92830db025e11522e4b43a30e010a67643936ad87338c6797",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/schemas/result.schema.json",
+        "sha256": "168a2212fe4562e965ad2170d0de015447aabaea8137e09ab843ad178c1575a3",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/skills/maintain-module/SKILL.md",
+        "sha256": "8db9cbf2e599cececf930934b17a6506382ff6e9249561f5b3f1e3c6843e58ab",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/skills/oss-research/SKILL.md",
+        "sha256": "83b23c47f447efc080cd6723fd02c8d0253ad86d0d375a663d20c325711cd461",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/skills/skills.json",
+        "sha256": "dbcfa17a51285ab1af335b023301296aac6dab7d1bad1420bbd24094a0988cbb",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/skills/submit-result/SKILL.md",
+        "sha256": "7bbd2dc08cc51c0676148a6ab2d2081872089102566988a4834520c621a8668a",
+        "mode": "100644"
+      },
+      {
+        "path": "shared/workflows/owner-led-delivery.md",
+        "sha256": "1b1dc0e4e72513d409d0417f33b4ba61b59bf0e0bd82f7c5f46ae642e8dcd4db",
+        "mode": "100644"
+      }
+    ],
+    "entries": [
+      {
+        "path": ".agent-work/submission-profiles.json",
+        "state": "file",
+        "oid": "49c83af6c210d14defbb6b434ced10acc9ce95cb",
+        "mode": "100644",
+        "raw_sha256": "d7c95f17e6334895dd18edd377550621a44b5305602c2b49649b0c25f4f8152b"
+      },
+      {
+        "path": ".agents/skills/submit-result/SKILL.md",
+        "state": "file",
+        "oid": "7c81293b746491604b212635635660166e983eca",
+        "mode": "100644",
+        "raw_sha256": "6a308a43425af0b114eb75b3bc299ca37c6a9d2c6d8fa2377b6b16c84c2f9fa7"
+      },
+      {
+        "path": ".codex/agents/coding.toml",
+        "state": "file",
+        "oid": "6ac52279fd649a1369b7b71add2820f81678eed7",
+        "mode": "100644",
+        "raw_sha256": "9d940caf868a43d4e93167cb01e5d2225c93c3e46e5ff0ebdb4aac4bae0d3411"
+      },
+      {
+        "path": ".codex/agents/evaluator.toml",
+        "state": "file",
+        "oid": "5be9600c6458396feb18475edbc339de3ab73b8b",
+        "mode": "100644",
+        "raw_sha256": "11d6d1e5c69e596095edeb63e32d93f954704b6aa3cbfbbd462ea71987ada5d4"
+      },
+      {
+        "path": ".codex/agents/infrastructure.toml",
+        "state": "file",
+        "oid": "c3fc8d96d2258695334435e0137c82eeb2f4788b",
+        "mode": "100644",
+        "raw_sha256": "baedb4676ae37973f85e314099b007cf3a12426cabe04b1eadafa9c1b8bae7af"
+      },
+      {
+        "path": ".codex/agents/knowledge-manager.toml",
+        "state": "file",
+        "oid": "2625184972803d1100f069d3d0a461a4567e21c4",
+        "mode": "100644",
+        "raw_sha256": "12d208eac5f458f933d3860b00e547aa38bff217a9ab11b66ec27eb5ee39373f"
+      },
+      {
+        "path": ".codex/agents/orchestrator.toml",
+        "state": "file",
+        "oid": "d28927061044caf8f872bf505f34d6cbb7fadeb2",
+        "mode": "100644",
+        "raw_sha256": "a070e012f9cd6df278b5994703ec7dc11b66d7d8e7b7e4b795489941f87076c2"
+      },
+      {
+        "path": ".codex/agents/oss-rnd.toml",
+        "state": "file",
+        "oid": "4a679d59337645a14022efd1c041213a76f7fa09",
+        "mode": "100644",
+        "raw_sha256": "8b96f0787b0ad96864eb7244f2bb2d663a064a5dbc36e52c777504865a25b1ed"
+      },
+      {
+        "path": ".codex/agents/policy-manager.toml",
+        "state": "file",
+        "oid": "63ffc3e231daf0e4c5621d900d33453aa870d3df",
+        "mode": "100644",
+        "raw_sha256": "6b47871c4368cc6c28f1433948012fb28bce8ad188097766422e0fc9a8e4346e"
+      },
+      {
+        "path": ".codex/agents/skill-manager.toml",
+        "state": "file",
+        "oid": "998c1a9aabf0a77e6f1c0b8d48a7c7c1054bc8f4",
+        "mode": "100644",
+        "raw_sha256": "ec6b5360518ba75725adebcda3f6e6556bc9193d4d457cf83d49c573738aec24"
+      },
+      {
+        "path": "AGENTS.md",
+        "state": "file",
+        "oid": "24719785657cd8948692f78b1f13f4b43c25e76e",
+        "mode": "100644",
+        "raw_sha256": "33347a6eb0b2b04ca69aadd408ec706252e8eea05c240ce69008978ea74d700f"
+      },
+      {
+        "path": "core/evaluator/module.json",
+        "state": "file",
+        "oid": "3a65312183de9332a347a608f82b2dd11f8aee8a",
+        "mode": "100644",
+        "raw_sha256": "4fc2512556765faa269401491be0b30ef5578db29de170cfd3957216a6c1791e"
+      },
+      {
+        "path": "core/knowledge-manager/module.json",
+        "state": "file",
+        "oid": "23922751ac0dbd714759d531e32c1c0f3c560c0f",
+        "mode": "100644",
+        "raw_sha256": "2a93518863463608b1f09917036b6ef99245acd5157d2ebcda23b06a55bf04df"
+      },
+      {
+        "path": "core/orchestrator/module.json",
+        "state": "file",
+        "oid": "e577ba4cbfcf6efd232b0074cb7ee795f6995621",
+        "mode": "100644",
+        "raw_sha256": "785921833e579cccdcc3ef83263fbc1930e09bb6348e4a1d5010044ed8475c80"
+      },
+      {
+        "path": "core/policy-manager/module.json",
+        "state": "file",
+        "oid": "ceaba6842341189f3dc52fd92cc1596fd09f171a",
+        "mode": "100644",
+        "raw_sha256": "58e251628583875392ac10be4c5aae1238e74af1e83348e73a0a2853759d1c9a"
+      },
+      {
+        "path": "core/skill-manager/module.json",
+        "state": "file",
+        "oid": "b5de97f2ee95ee5459b2d1058c6c1c0079e3a75e",
+        "mode": "100644",
+        "raw_sha256": "a68fe6fc6d9666f6f16223dda33ae24e98b6722810495f3b762c108cd3ce2a9c"
+      },
+      {
+        "path": "docs/lightweight-submission.ko.md",
+        "state": "file",
+        "oid": "95ded13f6ef3ca0bfabe33a441ac3439c7139182",
+        "mode": "100644",
+        "raw_sha256": "91bd57715689bbe6fd5169c6c87843a925060a470a2e9c904115ad8fde5cd061"
+      },
+      {
+        "path": "docs/prose/project-overview.txt",
+        "state": "file",
+        "oid": "b0b029ee87e4b844183ae390091cb6528679f7eb",
+        "mode": "100644",
+        "raw_sha256": "a8f6c017a7e3c08b2e7e4817332e9a5e947e3c26aec7714005d10afc4d2c9fb4"
+      },
+      {
+        "path": "modules/coding/module.json",
+        "state": "file",
+        "oid": "772c18e13a491a1141b193c4671aee649c759fac",
+        "mode": "100644",
+        "raw_sha256": "4b17cb4868d16d73e18a3a3d957dae6f3a735f2b626ce6b7d7ac10d236faeb5f"
+      },
+      {
+        "path": "modules/infrastructure/module.json",
+        "state": "file",
+        "oid": "22b901d9eeff8ac6b19ca7539df8fa1f8c33d929",
+        "mode": "100644",
+        "raw_sha256": "1a48f55870804f0bb11696c19ffd5f887bc9e80b2513638df9166b981b56362d"
+      },
+      {
+        "path": "modules/oss-rnd/module.json",
+        "state": "file",
+        "oid": "f61527660ec8614aa7605a1b3013fdd3e2fe032d",
+        "mode": "100644",
+        "raw_sha256": "94920485eedc98bb9680207a4caef7a3be650b66633643f11f13eb700630b461"
+      },
+      {
+        "path": "runtime/control_gate.py",
+        "state": "file",
+        "oid": "5be04fd6e37ce637b6ac77313da564fb69865190",
+        "mode": "100644",
+        "raw_sha256": "eca77172ece72288681ddb248508a6ce8c48231e5cf75b0e37e814596494ecf4"
+      },
+      {
+        "path": "runtime/native-map.json",
+        "state": "file",
+        "oid": "64b7e70384b346a9fdaa82860c9973a2999bc887",
+        "mode": "100644",
+        "raw_sha256": "d7d01d48b288a6e96ac99678ca3b43e51dfe6d3c79a46892d503098a129eeb87"
+      },
+      {
+        "path": "runtime/submission_profile.py",
+        "state": "file",
+        "oid": "5b772aeb71cfb94a77da5214bcbdac031866efa3",
+        "mode": "100644",
+        "raw_sha256": "b0fe2c7035341deaf870f8d48ddb2190cf18458121948027bc68efff96bbc34f"
+      },
+      {
+        "path": "runtime/tests/light_document_checks.py",
+        "state": "file",
+        "oid": "687e8671687eacd2dd2aab701d8046bc07e75ab2",
+        "mode": "100644",
+        "raw_sha256": "0d05a79fb0f1c87254665a8ffb440c2036057d3ecd0454191202ecc0216aee48"
+      },
+      {
+        "path": "runtime/tests/test_submission_profile.py",
+        "state": "file",
+        "oid": "c0c6c1bba002ff275425ad864b9e55ad58a84df4",
+        "mode": "100644",
+        "raw_sha256": "69dc03ecb23146600d583752f34b21a319dfe8e2916c4106161d5d6b6f98dba9"
+      },
+      {
+        "path": "shared/skills/skills.json",
+        "state": "file",
+        "oid": "d797b4b3fdf6e56b4888839399a4942148cbefbc",
+        "mode": "100644",
+        "raw_sha256": "dbcfa17a51285ab1af335b023301296aac6dab7d1bad1420bbd24094a0988cbb"
+      },
+      {
+        "path": "shared/skills/submit-result/SKILL.md",
+        "state": "file",
+        "oid": "103773777241ad766ee1e5a1efe590042bdfe05a",
+        "mode": "100644",
+        "raw_sha256": "7bbd2dc08cc51c0676148a6ab2d2081872089102566988a4834520c621a8668a"
+      },
+      {
+        "path": "shared/workflows/owner-led-delivery.md",
+        "state": "file",
+        "oid": "f4fe56f6c6b9daade2161db493417ae25c00653c",
+        "mode": "100644",
+        "raw_sha256": "1b1dc0e4e72513d409d0417f33b4ba61b59bf0e0bd82f7c5f46ae642e8dcd4db"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "git": "git version 2.53.0.windows.3",
+  "test_environment": "Windows local isolated Git fixtures; synthetic reviewer identities; no service remote contacted",
+  "current_task_controls_sha256": "dfeaadca9e67cd7f1135d8fa271b0909cdb0c08f24affe411c0bea5ef8a9c755",
+  "current_enrollment_schema": "0.1.0",
+  "controls_config_sha256": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985",
+  "result_schema_sha256": "168a2212fe4562e965ad2170d0de015447aabaea8137e09ab843ad178c1575a3"
+}

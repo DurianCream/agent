@@ -21,7 +21,7 @@ This repository provides coding, infrastructure, and open-source R&D modules plu
 
 ## Applicability of proportional handling
 
-Apply the revised tiers to work started after this instruction change. Do not migrate in-progress tasks, weaken their acceptance criteria, refresh frozen snapshots, or rewrite historical reports. The procedure change itself must follow its pre-change controls and independent review; it cannot use its new light tier to waive its own obligations. Current init/validate/submit/checkpoint/finish requirements remain in force for actual changes. A runtime lightweight submission profile is not implemented by these instructions and requires a separate scoped user request.
+Apply the revised tiers to work started after this instruction change. Do not migrate in-progress tasks, weaken their acceptance criteria, refresh frozen snapshots, or rewrite historical reports. The procedure change itself must follow its pre-change controls and independent review; it cannot use its new light tier to waive its own obligations. Current init/validate/submit/checkpoint/finish requirements remain in force for actual changes. The opt-in ordinary-prose-v1 runtime profile supports only independently approved, previously allowlisted ordinary prose edits; see shared/skills/submit-result/SKILL.md. The instruction-level light tier is broader than runtime eligibility. Existing tasks retain their original enrollment and full required suites.
 
 ## Language
 

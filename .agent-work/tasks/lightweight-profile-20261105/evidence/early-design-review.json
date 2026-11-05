@@ -1,0 +1,85 @@
+{
+  "review_kind": "early bounded design review; not implementation acceptance",
+  "assessment": "rework",
+  "prototype_disposition": "Ready for bounded implementation once LP-D01 is made explicit; no need for another broad design review.",
+  "reviewer": {
+    "subject": "light_profile_review",
+    "session": "root-light-profile-review-20261105",
+    "identity_authenticated": false
+  },
+  "author": "light_profile_owner",
+  "task_id": "lightweight-profile-20261105",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "lightweight-submission-profile"
+  },
+  "reviewed_revision": "29b1dd29616464c0e2bc8d1d9051473f65692b14",
+  "hashes": {
+    "runs/lightweight-profile-20261105/evidence/design.md": "7e071d53efa4cf69981fd34f07b2eaa4ea9d37209dc96d49e61230a72fd042bb",
+    "runtime/control_gate.py": "dc2dd53f2ae97e6260e28415c16e6479ae1d494b08f816d511a30dd4e95b244e",
+    "runtime/agentctl.py": "46fd2be04d5694f7f845e56307916a033c6a44f7bcb09808058ab3a28c72344b"
+  },
+  "criterion_outcomes": [
+    {
+      "criterion": "Design bounds low-impact eligibility and retains independent semantic review",
+      "outcome": "passed",
+      "evidence": "Design sections 2-6 and concrete refinements; static design only."
+    },
+    {
+      "criterion": "Versioned legacy compatibility and full-policy maintenance remain coherent",
+      "outcome": "failed",
+      "evidence": "LP-D01: unconditional captured-config mutation rejection contradicts promised future full-reviewed allowlist maintenance."
+    },
+    {
+      "criterion": "Implementation, adversarial execution, actual activation and remote publication",
+      "outcome": "not_run",
+      "evidence": "Pre-implementation assignment explicitly excludes test suites and publication."
+    }
+  ],
+  "findings": [
+    {
+      "id": "LP-D01",
+      "severity": "major",
+      "affected_criterion": "Full-profile recovery and future capability maintenance",
+      "location": "design.md sections 1, 4 and 7",
+      "evidence": "Captured config mutation is stated to fail closed without a profile qualification; section 7 requires future allowlist edits under full gates. Existing check_enrollment is invoked by candidate, tests, assessment, submit and publication, so an unconditional equivalent check would block full maintenance too. This is a confirmed specification tension, not an executed implementation defect.",
+      "impact": "A newly capability-enrolled task cannot update its allowlist even after full promotion, or implementers might relax the wrong enrollment boundary to escape the deadlock.",
+      "remediation": "Specify that captured enrollment/config bytes remain immutable; light requires live config equality, while explicit irreversible full promotion uses the original full suites and permits a separately reviewed config change as ordinary owned candidate content. Equivalent bounded maintenance semantics are acceptable.",
+      "reverification": "A fresh capability task editing the companion config must fail light; after promotion it must require full tests/current review and complete the full lifecycle without rewriting enrollment/history."
+    }
+  ],
+  "proof_obligations": [
+    "Compare protected dependencies over the union of baseline tree and current worktree/index names, including staged deletions, untracked protected additions, modes and symlinks. Existing candidate source_names is current-only; do not use it alone as a baseline unchanged oracle.",
+    "Define actual changed-set scope explicitly: every published product change must be allowlisted; undeclared protected worktree edits must invalidate light execution, and unrelated unpublished prose must not silently become owned. Preserve exact commit-path/content enforcement and narrow generated-record exceptions.",
+    "Strictly validate enrollment 0.1 versus 0.2 fields; missing/unknown capability or selection state must not fall back to legacy/full silently. Original 0.1 remains full without rewriting bytes. Demonstrate deletion of each mirrored component and version downgrade rejection.",
+    "Bind selection record identity/hash and evidence into executed test proofs and final review. Reselecting the same candidate with changed rationale/evidence must invalidate earlier executions/review; promotion cannot replay old light proofs. Reviewer and final result must remain independently declared and candidate-bound.",
+    "Fixed checker must execute all three substantive assertions with nonzero coverage; modified checker/runtime/dependency bytes cannot qualify light. Retain current mandatory suite unchanged for this implementation task.",
+    "Exercise absent/failed evidence, author identity collision, replay across task/scope, stale candidate, config change/deletion, staged protected deletion, executable/symlink, promotion, and publication commit/destination mismatch. Preserve recoverable submit/finish state; local bare fixture is not actual configured remote evidence."
+  ],
+  "governance_conditions": [
+    "This high-risk implementation stays under its preexisting full P1 enrollment.",
+    "No production, VM, network, product edits or test execution performed in this early review."
+  ],
+  "pending_authorization": "No new authorization requested; review never grants execution authority.",
+  "limitations": [
+    "Static source/design review only. Same-user writable records and mirrored hashes cannot authenticate identity, prove test truth, prevent coordinated deletion or direct Git bypass.",
+    "Existing candidate author tests were not examined because implementation has not been handed off."
+  ],
+  "re_review_triggers": [
+    "Implementation and source freeze with actual test evidence",
+    "Changed design hashes or scope",
+    "Final real activation and publication claims"
+  ],
+  "handoff": {
+    "changes": [
+      "Created this task-owned review evidence only."
+    ],
+    "remaining": [
+      "Owner resolves LP-D01 and implements proof obligations.",
+      "Parent incorporates evidence into existing common result and checkpoint; no duplicate task initialization or early final gate assessment."
+    ]
+  }
+}

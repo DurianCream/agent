@@ -1,0 +1,41 @@
+{
+  "assessment": "accepted",
+  "review_scope": "Result-layout-only compatibility correction; prior source/test conclusions retained without rerun.",
+  "task_id": "lightweight-profile-20261105",
+  "candidate_digest": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "reviewer": {
+    "subject": "light_profile_review",
+    "session": "root-light-profile-review-20261105"
+  },
+  "prior_assessment_record": "review-50dc8ea182b542f1b6c825b96fc5adfd.json",
+  "prior_result_sha256": "4a9e1a412f44373d19ed03f65985217037a04ee5cc712234d9c918c56739fe4f",
+  "current_result_sha256": "6a03214f2e6e799b276be645ac92a9c0799557527416968472beae03326a3158",
+  "current_result_subject_digest": "632a2fc14a2f46a0bdfdec701cdbfc0d218b924ed4ac1cfdf7530ed4fbabd432",
+  "verification": {
+    "outcome": "passed",
+    "evidence": "Reconstructed prior result by removing only the appended limitation and reinserting the exact moved row at its original position; prior result-subject digest matches previous assessment. All prior assessment evidence/test receipt hashes unchanged. No required criterion referenced alias-boundary.",
+    "tests_rerun": 0
+  },
+  "change": {
+    "removed_standalone_verification": {
+      "id": "alias-boundary",
+      "name": "실제 Windows 연결 경로 사례",
+      "method": "심볼릭 링크 및 junction 생성 기반 검사",
+      "outcome": "not_run",
+      "evidence": [
+        "runs/lightweight-profile-20261105/evidence/independent-junction-check.json"
+      ],
+      "notes": "호스트 권한 거부로 실행하지 못했다. 기존 경로 해석기의 정적 확인과 다른 경계 증거만 재사용하며 실제 연결 경로 시험 통과로 표시하지 않는다."
+    },
+    "appended_limitation": "Windows symlink/junction 실제 생성 검사는 not_run이다(Win1314/접근 거부). 정확한 증거: runs/lightweight-profile-20261105/evidence/independent-junction-check.json. 필수 기준이 아닌 추가 확인이며 기존 경로 해석기 정적 검토를 실제 실행 성공으로 바꾸지 않는다."
+  },
+  "findings": [],
+  "limits": [
+    "Windows alias execution remains not_run; no passing or not_applicable conversion.",
+    "This optional attempt is not a mandatory suite or required acceptance criterion.",
+    "Prior source acceptance and publication/activation limits remain unchanged."
+  ],
+  "remaining": [
+    "Parent validates/submits/finishes and performs actual published-checkout readback."
+  ]
+}

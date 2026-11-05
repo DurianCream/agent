@@ -1,0 +1,300 @@
+{
+  "identity": "synthetic local fixture, not authenticated",
+  "transcript": [
+    {
+      "command": [
+        "runtime/agentctl.py",
+        "init",
+        "--module",
+        "coding",
+        "--task",
+        "profile-task",
+        "--objective",
+        "Improve ordinary prose",
+        "--criterion",
+        "Reviewed prose edit",
+        "--repo",
+        "sample",
+        "--project",
+        "sample",
+        "--service",
+        "agents",
+        "--environment",
+        "development",
+        "--issue",
+        "prose"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "command": "init",
+        "data": {
+          "task_id": "profile-task",
+          "state": "queued",
+          "run": "<fixture-checkout>\\runs\\profile-task",
+          "output": "<fixture-checkout>\\outputs\\profile-task",
+          "repository": {
+            "task_id": "profile-task",
+            "repository_id": "sample",
+            "spec": "<fixture-checkout>\\.agent-work\\tasks\\profile-task\\spec.md"
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "command": [
+        "runtime/agentctl.py",
+        "transition",
+        "profile-task",
+        "running"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "command": "transition",
+        "data": {
+          "task_id": "profile-task",
+          "state": "running"
+        },
+        "errors": []
+      }
+    },
+    {
+      "command": [
+        "runtime/control_gate.py",
+        "select-profile",
+        "--task",
+        "profile-task",
+        "--input",
+        "runs/profile-task/evidence/selection.json"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "data": {
+          "record": "profile-b371448d0a7641158f831d381c20cb7c.json",
+          "candidate_digest": "8502a251218273655bd27bf8d9dacfa2c23469f69029ff94c815396ac3c218ab",
+          "reviewer": {
+            "subject": "reviewer",
+            "session": "independent-session"
+          },
+          "reason": "Only ordinary descriptive wording changes; no unresolved material uncertainty.",
+          "impact": {
+            "docs/prose/overview.txt": {
+              "ordinary_prose": true,
+              "no_behavior_change": true,
+              "uncertainty": "none",
+              "rationale": "Read both versions: only a descriptive adjective changes."
+            }
+          },
+          "evidence": [
+            {
+              "path": "runs/profile-task/evidence/review.txt",
+              "sha256": "92a32d3813becc2426752db39c44a91287dd7eb7c6dcc423f8001cd3f50a3384"
+            }
+          ],
+          "schema_version": "0.1.0",
+          "kind": "profile",
+          "task_id": "profile-task",
+          "profile": "ordinary-prose-v1",
+          "risk_tier": "light",
+          "enrollment_digest": "77b97f5585673ab6e2224b1885bf18d87b02a0414270fdf5019a5443fde893b6",
+          "created_at": "2026-11-05T09:08:23.037414+00:00",
+          "identity_authenticated": false
+        }
+      }
+    },
+    {
+      "command": [
+        "runtime/control_gate.py",
+        "run-tests",
+        "--task",
+        "profile-task",
+        "--suite",
+        "light-document-integrity"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "data": {
+          "record": "test-9146373e87a1416caea51e59c8705925.json",
+          "kind": "test",
+          "task_id": "profile-task",
+          "candidate_digest": "8502a251218273655bd27bf8d9dacfa2c23469f69029ff94c815396ac3c218ab",
+          "suite_id": "light-document-integrity",
+          "suite_digest": "7b17a59398e54f684da5a6eb0e56470dabbd52b59e97e66c11969afa622a575d",
+          "created_at": "2026-11-05T09:08:30.413544+00:00",
+          "outcome": "passed",
+          "tests_run": 3,
+          "exit_code": 0,
+          "reason": null,
+          "candidate_unchanged": true,
+          "evidence": {
+            "path": "runs/profile-task/evidence/gate-test-faafb3c0c65f4b28bb100801b66154bc.log",
+            "sha256": "c8febb53b250339dc707f906fc04bb8297f470afa5ff40357034eac0e372fb77"
+          },
+          "assurance": "local-executed-untrusted-candidate",
+          "profile_digest": "2246717a4007eba7aa77b8ca3358db7c04cbfbe1de423ddb4399a44d3724bcec"
+        }
+      }
+    },
+    {
+      "command": [
+        "runtime/control_gate.py",
+        "assess",
+        "--task",
+        "profile-task",
+        "--input",
+        "runs/profile-task/evidence/selection.json"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "data": {
+          "record": "review-b1e7e90f1d964b4aa3658d60d79215a8.json",
+          "kind": "review",
+          "task_id": "profile-task",
+          "candidate_digest": "8502a251218273655bd27bf8d9dacfa2c23469f69029ff94c815396ac3c218ab",
+          "reviewer": {
+            "subject": "reviewer",
+            "session": "independent-session"
+          },
+          "verdict": "accepted",
+          "evidence": [
+            {
+              "path": "runs/profile-task/evidence/review.txt",
+              "sha256": "92a32d3813becc2426752db39c44a91287dd7eb7c6dcc423f8001cd3f50a3384"
+            },
+            {
+              "path": "outputs/profile-task/wording.txt",
+              "sha256": "60b8b8cad4e7a24684ffa6aa0417d7a71794bf6619ac1b1724c0c0d4998924e0"
+            }
+          ],
+          "tests": [
+            {
+              "path": "runs/profile-task/gates/profile-b371448d0a7641158f831d381c20cb7c.json",
+              "sha256": "2246717a4007eba7aa77b8ca3358db7c04cbfbe1de423ddb4399a44d3724bcec"
+            },
+            {
+              "path": "runs/profile-task/gates/test-9146373e87a1416caea51e59c8705925.json",
+              "sha256": "8fb2e5be03ba66b5239ed983681fcd3083a10a93e041662f67eed6812b01c00e"
+            }
+          ],
+          "result_digest": "5c3c1852463894a26f98eec1773d83ba80431577eed60b8b491a5a8a424ed70f",
+          "created_at": "2026-11-05T09:08:33.315740+00:00",
+          "identity_authenticated": false
+        }
+      }
+    },
+    {
+      "command": [
+        "runtime/repoctl.py",
+        "checkpoint",
+        "--task",
+        "profile-task"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "data": {
+          "task_id": "profile-task",
+          "repository_id": "sample",
+          "spec": "<fixture-checkout>\\.agent-work\\tasks\\profile-task\\spec.md"
+        }
+      }
+    },
+    {
+      "command": [
+        "runtime/agentctl.py",
+        "validate",
+        "profile-task"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "command": "validate",
+        "data": {
+          "task_id": "profile-task",
+          "valid": true,
+          "result_status": "completed"
+        },
+        "errors": []
+      }
+    },
+    {
+      "command": [
+        "runtime/agentctl.py",
+        "submit",
+        "profile-task"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "command": "submit",
+        "data": {
+          "task_id": "profile-task",
+          "state": "submitted",
+          "result_status": "completed",
+          "report": "<fixture-checkout>\\outputs\\profile-task\\result.md",
+          "repository": {
+            "task_id": "profile-task",
+            "repository_id": "sample",
+            "spec": "<fixture-checkout>\\.agent-work\\tasks\\profile-task\\spec.md"
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "command": [
+        "runtime/repoctl.py",
+        "finish",
+        "--task",
+        "profile-task"
+      ],
+      "exit_code": 0,
+      "response": {
+        "ok": true,
+        "data": {
+          "schema_version": "1.0.0",
+          "task_id": "profile-task",
+          "base_head": "2c346bcbd01be9341a091841ff09d0d5337d1d57",
+          "policy": {
+            "schema_version": "1.0.0",
+            "enabled": true,
+            "remote": "origin",
+            "expected_url": "<local-bare-remote>",
+            "branch": "main"
+          },
+          "policy_sha256": "6f94385e193363d52aae374162c22ecb88332655997635222866db0ab5c0b07f",
+          "preexisting_dirty": [],
+          "paths": [
+            "docs/prose/overview.txt"
+          ],
+          "phase": "pushed",
+          "staged_paths": [
+            ".agent-work/INDEX.md",
+            ".agent-work/index.json",
+            ".agent-work/tasks/profile-task/record.json",
+            ".agent-work/tasks/profile-task/report.ko.md",
+            ".agent-work/tasks/profile-task/spec.md",
+            "docs/prose/overview.txt"
+          ],
+          "commit": "d12a728dc8108f49b486b81358547bd750a24469",
+          "pushed_at": "2026-11-05T18:09:17+09:00",
+          "gate": {
+            "schema_version": "0.1.0",
+            "task_id": "profile-task",
+            "commit": "d12a728dc8108f49b486b81358547bd750a24469",
+            "seal_digest": "2ae6d4bb5044fa99823cc30b3df82b3bac5a1afa546bb0af97f5065b21214bfd",
+            "candidate_digest": "8502a251218273655bd27bf8d9dacfa2c23469f69029ff94c815396ac3c218ab",
+            "status": "passed",
+            "assurance": "local-cooperating-cli",
+            "checked_at": "2026-11-05T18:09:17+09:00"
+          }
+        }
+      }
+    }
+  ]
+}

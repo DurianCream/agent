@@ -1,0 +1,120 @@
+{
+  "scope": "Local isolated Git fixtures only; no service remote effects",
+  "cases": [
+    {
+      "name": "test_cli_real_light_lifecycle",
+      "outcome": "passed",
+      "evidence": "affected-boundary-retest-final.log",
+      "actual_runner": true
+    },
+    {
+      "name": "test_default_full_and_light_requires_independent_semantics",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_candidate_mutation_and_reselection_invalidate_tests",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_control_union_staged_deletion_and_untracked_addition",
+      "outcome": "passed",
+      "evidence": "affected-boundary-retest-final.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_protected_mixed_and_new_paths_rejected",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_document_boundaries",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_evidence_and_mirrored_state_deletion_fail_closed",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_full_promotion_allows_config_maintenance_without_enrollment_rewrite",
+      "outcome": "passed",
+      "evidence": "actual-full-maintenance.log",
+      "actual_runner": true
+    },
+    {
+      "name": "test_legacy_absence_never_enables_light",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_linked_document_rejected",
+      "outcome": "not_run",
+      "reason": "Windows symlink creation error1314",
+      "evidence": "symlink-boundary.log"
+    },
+    {
+      "name": "test_unknown_root_and_workflow_configuration_rejected",
+      "outcome": "passed",
+      "evidence": "affected-boundary-retest-final.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_assume_unchanged_control_mutation_rejected",
+      "outcome": "passed",
+      "evidence": "affected-boundary-retest-final.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_mode_and_unregistered_new_document_rejected",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_profile_marker_record_and_enrollment_tampering_rejected",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_unknown_committed_profile_version_fails_new_enrollment",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    },
+    {
+      "name": "test_companion_deletion_or_version_change_cannot_downgrade",
+      "outcome": "passed",
+      "evidence": "focused-negative-run.log",
+      "actual_runner": false
+    }
+  ],
+  "executed_distinct": 15,
+  "not_run_distinct": 1,
+  "method_invocations": 28,
+  "passed_invocations": 23,
+  "failed_or_error_invocations": 4,
+  "skipped_invocations": 1,
+  "repeated_invocations": 12,
+  "log_hashes": {
+    "focused-negative-run.log": "f4cd5918863172d64a2034a9762ae4cdba9dc0d1508f90b3a7c22673a1552944",
+    "affected-boundary-retest-final.log": "88fdfcb519888f2fee7274c805278d0adc0576433dd35542d34e72bb22d9a14b",
+    "actual-full-maintenance.log": "d4c9fc3f1c5191a22fa5cfb4d4ece7340c08e7b67eddaa72feb888ac8e50094b",
+    "symlink-boundary.log": "1eeedbd40dcea4dfaab44b0b6c1d20ae021c4eaa4047af1e24eee900f2de24b7"
+  },
+  "notes": [
+    "Other negative fixtures use mocked test-runner receipts where needed; they prove rejection behavior, not actual suite execution.",
+    "Actual light CLI and maintenance fixture paths ran their configured interpreters and published only to local bare remotes.",
+    "Initial failures and repeated counts are retained in owner-handoff; no claimed cost/time savings.",
+    "Raw logs remain local. This bounded summary preserves outcomes and hashes without private paths."
+  ]
+}

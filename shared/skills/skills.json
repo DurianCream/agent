@@ -3,7 +3,7 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "path": "shared/skills/submit-result/SKILL.md"
     },
     {

@@ -1,0 +1,138 @@
+{
+  "task_id": "lightweight-profile-20261105",
+  "owner": "light_profile_owner",
+  "risk_tier": "high",
+  "reason": "Runtime submission gate selection with publication consequences",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "lightweight-submission-profile"
+  },
+  "candidate_digest": "d3a85e386a231d16097ad5d2002d3b600022f97f40d83492a5ebabf76edcf457",
+  "product_files": 29,
+  "source_manifest": "runs/lightweight-profile-20261105/evidence/source-manifest.json",
+  "status": "implementation, focused verification and original full mandatory suite passed; parent final review/result binding and publication remain",
+  "design_finding": {
+    "id": "LP-D01",
+    "resolution": "Captured baseline stays immutable. Light checks current equality; irreversible full uses original suites and permits reviewed companion maintenance. Actual full-maintenance regression passed."
+  },
+  "verification": [
+    {
+      "id": "profile-focused",
+      "outcome": "passed",
+      "distinct_executed_cases": 15,
+      "evidence": [
+        "focused-negative-run.log",
+        "affected-boundary-retest-final.log",
+        "actual-full-maintenance.log"
+      ],
+      "method": "Real Git fixtures; test receipt runner mocked in negative unit fixtures except explicitly actual lifecycle/maintenance cases"
+    },
+    {
+      "id": "profile-cli",
+      "outcome": "passed",
+      "evidence": [
+        "cli-light-lifecycle-final.json",
+        "affected-boundary-retest-final.log"
+      ],
+      "method": "Actual CLI init/transition, candidate-specific synthetic approval, actual three-case checker, final assess, checkpoint, validate, submit, finish, local bare remote readback"
+    },
+    {
+      "id": "profile-maintenance",
+      "outcome": "passed",
+      "evidence": [
+        "actual-full-maintenance.log"
+      ],
+      "method": "Actual light checker three cases, irreversible promotion, actual originally enrolled fixture full suite one case, independent synthetic review, submit/finish; original enrollment bytes asserted unchanged"
+    },
+    {
+      "id": "profile-symlink",
+      "outcome": "not_run",
+      "evidence": [
+        "symlink-boundary.log"
+      ],
+      "reason": "Windows error1314 prevents creating real fixture symlink. Test skips; source path resolver rejects symlinks/junctions. No claim of executed symlink defense."
+    },
+    {
+      "id": "legacy-preservation",
+      "outcome": "passed",
+      "evidence": [
+        "legacy-hashes-before.json",
+        "legacy-preservation.json"
+      ],
+      "files": 48
+    },
+    {
+      "id": "structure",
+      "outcome": "passed",
+      "evidence": [
+        "doctor.json",
+        "sync-check.json",
+        "diff-check.json"
+      ]
+    },
+    {
+      "id": "mandatory-p1",
+      "outcome": "passed",
+      "tests_run": 66,
+      "invocations": 1,
+      "elapsed_seconds": 305.921,
+      "candidate_unchanged": true,
+      "evidence": [
+        "mandatory-p1-run.json"
+      ],
+      "receipt_sha256": "b20bf908aa4bb4ee51adba2d2e047ef2c6bcef89c8d97048daa2f543caf59501"
+    },
+    {
+      "id": "independent-final-review",
+      "outcome": "not_run",
+      "reason": "Implementation review found no new material defects and resolved LP-D01; only final mandatory proof/result binding remains with evaluator."
+    },
+    {
+      "id": "external-publication-and-primary-activation",
+      "outcome": "not_run",
+      "reason": "Parent owns reviewed deployment and actual configured remote publication"
+    }
+  ],
+  "invocation_counts": {
+    "test_method_invocations": 28,
+    "distinct_cases_attempted": 16,
+    "distinct_executed_cases": 15,
+    "distinct_skipped_cases": 1,
+    "passed_invocations": 23,
+    "failed_or_error_invocations": 4,
+    "skipped_invocations": 1,
+    "repeated_invocations": 12,
+    "notes": "Counts are test methods, not inner checker cases. No skipped case counted passed. Not a measured cost/savings claim."
+  },
+  "rerun_reasons": [
+    "Normal fixture initially omitted Python cache ignore rule, then required result artifact; both fixed without gate relaxation.",
+    "New conservative unknown-source protection justified affected retests; fixture also required production lock ignore rule for finish.",
+    "Full-maintenance mock receipt replaced by actual checker/full-suite execution; only that case repeated.",
+    "Final symlink skip diagnostic redacted paths; message-only source edit did not change tested eligibility behavior."
+  ],
+  "compatibility": {
+    "result_schema": "1.0.0 unchanged",
+    "gates_config": "0.1.0 unchanged",
+    "old_enrollment": "0.1.0 unchanged and full",
+    "new_capability_enrollment": "0.2.0",
+    "profile_config": "0.1.0",
+    "submit_result_skill": "1.4.0",
+    "owner_workflow": "1.2.0",
+    "module_patch_bumps": "Eight exact skill pins and generated adapters, no role/permission expansion"
+  },
+  "limitations": [
+    "Initial eligible scope is ordinary descriptive existing UTF-8 nonexecutable exact-allowlisted prose, intentionally narrower than conversational light tier.",
+    "Local hashes and declared identities are not authentication, an OS sandbox, or protection against coordinated same-user tampering/direct Git bypass.",
+    "Local bare fixture is not evidence of the real authorized service remote or primary activation.",
+    "Windows symlink creation was unavailable."
+  ],
+  "remaining_actions": [
+    "Parent incorporates bounded archives and artifacts into complete result and checkpoints.",
+    "Independent evaluator binds exact unchanged candidate, mandatory proof, final result and artifacts.",
+    "Parent validate/submit/finish to the exact configured destination; verify remote commit.",
+    "Parent read-only published HEAD capability probe in authoritative checkout; no outer activation or new task."
+  ]
+}
