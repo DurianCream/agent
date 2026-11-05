@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "protected_sources": [
+    {
+      "path": "shared/schemas/result.schema.json",
+      "canonical_matches_HEAD": true,
+      "sha256": "168a2212fe4562e965ad2170d0de015447aabaea8137e09ab843ad178c1575a3"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "canonical_matches_HEAD": true,
+      "sha256": "eac899f5e84c875960741bb479e6b24e2908b9e0cf1fff3190007467d245ec2c"
+    },
+    {
+      "path": ".agent-work/gates.json",
+      "canonical_matches_HEAD": true,
+      "sha256": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985"
+    },
+    {
+      "path": ".agent-work/automation.json",
+      "canonical_matches_HEAD": true,
+      "sha256": "aa88837b7f11ca6bf40fa5c930e8c0dfbf76fd59c4d2f175e83035d619d131aa"
+    },
+    {
+      "path": "runtime/agentctl.py",
+      "canonical_matches_HEAD": true,
+      "sha256": "46fd2be04d5694f7f845e56307916a033c6a44f7bcb09808058ab3a28c72344b"
+    },
+    {
+      "path": "runtime/control_gate.py",
+      "canonical_matches_HEAD": true,
+      "sha256": "dc2dd53f2ae97e6260e28415c16e6479ae1d494b08f816d511a30dd4e95b244e"
+    },
+    {
+      "path": "runtime/repoctl.py",
+      "canonical_matches_HEAD": true,
+      "sha256": "7f5c45032cc94000091a8f104ccfa8ef2a48eb9959e9eb7c790435b19762f30e"
+    },
+    {
+      "path": "runtime/sync_codex.py",
+      "canonical_matches_HEAD": true,
+      "sha256": "c7620a924cf6bcc74e248dd05ef0442a51ad4dde12a39d83f4b01620b586e5da"
+    }
+  ],
+  "all_eight_submit_result_pins": "1.3.0",
+  "module_ids_scopes_tools": "unchanged by implementation; version-decisions documents dependency-only increments",
+  "hooks_hash_preserved": true,
+  "preexisting_dirty": [],
+  "registration": "existing modules updated; no registry addition; doctor passed",
+  "historical_snapshots": "not edited; new task snapshot still pinned to pre-change contracts",
+  "runtime_profile": "unsupported; unchanged current contract required"
+}

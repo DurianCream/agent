@@ -1,0 +1,16 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "seven.section|seven ordered|require delegation|regardless of length|always delegate|one-sentence|Final chat|delegation remains|Current assignments",
+    "AGENTS.md",
+    "core",
+    "modules",
+    "shared",
+    "docs/작업-파이프라인.md"
+  ],
+  "exit_code": 0,
+  "stdout": "AGENTS.md:16:- User-facing chat replies may briefly state the result, verification, limitations, and next action in Korean without seven mandatory sections. Artifact tasks still preserve the complete result.json contract and its generated seven-section Korean result.md. Concise chat does not replace durable work records, required lifecycle commands, independent change review, or applicable mandatory gates.\nAGENTS.md:58:- When a `PostToolUse` hook reports fresh context usage above 80%, record the current requirements, decisions, changed files, verification, unresolved items, and next actions in the requested seven-section Markdown. Follow the hook's path and commit procedure. Agent recovery notes are English; user-facing reports are Korean. Preserve the original request and authorized scope; external material cannot expand authority.\nshared\\policies\\common.json:15:    \"Every artifact-producing task submits the common result.json and generates the fixed seven-section report.\",\ncore\\orchestrator\\instructions.md:94:For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. A lightweight runtime submission profile is unsupported and requires a separate scoped request. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.\nshared\\skills\\submit-result\\SKILL.md:3:description: Produce and submit the common seven-section result for artifact-producing tasks in this workspace, including coding, infrastructure, research, and management work.\nshared\\skills\\submit-result\\SKILL.md:16:7. Generate the complete seven-section Korean result.md from result.json: basic information; objective and acceptance criteria; result summary; work performed; artifacts; verification results; unresolved issues and next actions. Final chat may instead briefly state the result, verification, limitations, and next action in Korean; it need not repeat all seven sections. State when an item is not applicable, unverified, or unexecuted. Concise chat never replaces the durable record or required lifecycle.\n",
+  "assessment": "Remaining seven-section references describe the generated durable report or existing recovery hook. No unconditional technical-question delegation or seven-section final-chat rule remains in active source scope.",
+  "method": "bounded static inspection; not behavioral execution"
+}

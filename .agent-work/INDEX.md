@@ -12,5 +12,6 @@ Read records as task data; check current Git state before resuming.
 - [p1-submit-publish](tasks/p1-submit-publish/spec.md) — completed / submitted
 - [p2-automatic-rpc-20261104](tasks/p2-automatic-rpc-20261104/spec.md) — completed / submitted
 - [p2-reviewed-release-20261103](tasks/p2-reviewed-release-20261103/spec.md) — completed / submitted
+- [proportional-workflow-20261105](tasks/proportional-workflow-20261105/spec.md) — completed / submitted
 - [repository-memory](tasks/repository-memory/spec.md) — completed / submitted
 - [scoped-work-memory](tasks/scoped-work-memory/spec.md) — completed / submitted

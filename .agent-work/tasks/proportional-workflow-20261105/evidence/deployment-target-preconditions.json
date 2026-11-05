@@ -1,0 +1,142 @@
+{
+  "target": "user primary project workspace; resolved by parent",
+  "baseline": "05f1b3e451d7fd64d3b1dce64a4370828d835bdb",
+  "files": [
+    {
+      "path": ".agents/skills/submit-result/SKILL.md",
+      "target_raw_sha256": "942e321676735b5e494983312f526c2f131eb57ed69067cc87d35f07b154b5c4",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/coding.toml",
+      "target_raw_sha256": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/evaluator.toml",
+      "target_raw_sha256": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/infrastructure.toml",
+      "target_raw_sha256": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/knowledge-manager.toml",
+      "target_raw_sha256": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/orchestrator.toml",
+      "target_raw_sha256": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/oss-rnd.toml",
+      "target_raw_sha256": "85071be41230730a58338f8b182aac4258baf59c21dda8bf8ce0dd6d36529226",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/policy-manager.toml",
+      "target_raw_sha256": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410",
+      "canonical_matches_base": true
+    },
+    {
+      "path": ".codex/agents/skill-manager.toml",
+      "target_raw_sha256": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "AGENTS.md",
+      "target_raw_sha256": "b5b6b665c4bcc74bd344741713a08598a6d44c34d6d63d9d55676762cd610fb0",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/evaluator/instructions.md",
+      "target_raw_sha256": "22aa3f6bd8d78651d9daad11096f8315b793d164a9aca77f42b76e54133e8c42",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/evaluator/module.json",
+      "target_raw_sha256": "627c4ac843242440e692c27288679feb7196d04cb43c76acf2e08a8a8f460b1f",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/knowledge-manager/module.json",
+      "target_raw_sha256": "dd9aea14ddcc196e1494e8d1fe23415b278e42d7f0aa53cbad7ac6d4117475e7",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/orchestrator/instructions.md",
+      "target_raw_sha256": "8de7ef2e5dd9d93c8c6b434bcc2a9dc25a844165eee3504e8248aa940644535f",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/orchestrator/module.json",
+      "target_raw_sha256": "db64342804ca14d56ff8dd9dae0044abc40f950b51f3402949533281b35ac735",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/policy-manager/module.json",
+      "target_raw_sha256": "fbff36bb694f5e93baa7c5177405bc5c1cef5a9b4e279831a7ecde211204f206",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "core/skill-manager/module.json",
+      "target_raw_sha256": "4893078bc3d47788fabca734c111dc534f52a4b0102ccf43b5b4d5206c560cae",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "docs/\uc791\uc5c5-\ud30c\uc774\ud504\ub77c\uc778.md",
+      "target_raw_sha256": "231877ae7276560568334e6da5ccee7beb10edddc4e9eed2711e126910f47a8a",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "modules/coding/module.json",
+      "target_raw_sha256": "af9abb6d31417119dc2ca873e5cab9c051cd4469dce7a3c3a7266685c1608334",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "modules/infrastructure/module.json",
+      "target_raw_sha256": "e180b580606f3f31ad7d8f61b03c0b890816c737d5250a128199478dc0cc36b2",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "modules/oss-rnd/module.json",
+      "target_raw_sha256": "b4749fbd6d591c0045d24f30265b90b0e243781c2e10cf1d1f52d63411dfd3e6",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "runtime/native-map.json",
+      "target_raw_sha256": "b32c3090c1bde6336baae94ce6772d70e5883cd7fe2c3ee6643dcfc12ed48d5a",
+      "canonical_matches_base": false,
+      "differing_file_fingerprints": [
+        ".codex/hooks.json"
+      ]
+    },
+    {
+      "path": "shared/skills/skills.json",
+      "target_raw_sha256": "a0783b97f82666e44cf8744a0a01852b0d0bc9b0e5e7ab59b07f7730d11c4e2c",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "shared/skills/submit-result/SKILL.md",
+      "target_raw_sha256": "00a6f81e2aa9939b1188009fad8d182fff080c128f6e98cbf12ff1ed39f4a78f",
+      "canonical_matches_base": true
+    },
+    {
+      "path": "shared/workflows/owner-led-delivery.md",
+      "target_raw_sha256": "71e07a367b38c86f40f04a67735ae8afb83f5e33bb608c0f02b04f8eb53c08f7",
+      "canonical_matches_base": true
+    }
+  ],
+  "generator": {
+    "path": "runtime/sync_codex.py",
+    "canonical_matches_reviewed": true,
+    "target_raw_sha256": "9d4574c341cf57c7d364ef90e0a0932dc92b1063f734736e019c3cbc3612a8e3"
+  },
+  "target_hook_hash": "ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4",
+  "map_hook_hash": "ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4",
+  "writes_performed": false
+}

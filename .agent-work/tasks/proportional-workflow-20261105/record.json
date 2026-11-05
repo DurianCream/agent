@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "proportional-workflow-20261105",
+  "saved_at": "2026-11-05T10:32:09+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "05f1b3e451d7fd64d3b1dce64a4370828d835bdb",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agent-work/repository.json\n M .agents/skills/maintain-module/SKILL.md\n M .agents/skills/oss-research/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M .codex/config.toml\n M AGENTS.md\n M core/evaluator/instructions.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n M \"docs/\\354\\236\\221\\354\\227\\205-\\355\\214\\214\\354\\235\\264\\355\\224\\204\\353\\235\\274\\354\\235\\270.md\"\n M modules/coding/module.json\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/native-map.json\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n M shared/workflows/owner-led-delivery.md\n?? .agent-work/tasks/proportional-workflow-20261105/",
+    "worktree_sha256": "ff7bba6a39c7ccfdb75dd078572ac28b151c901bb6122b3260839ea10140ba66"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "proportional-workflow-20261105",
+    "module": {
+      "id": "orchestrator",
+      "version": "0.2.7"
+    },
+    "created_at": "2026-11-05T09:56:05+09:00",
+    "objective": "Apply proportional light normal and high-risk instruction workflows while preserving independent change review durable records runtime contracts and mandatory gates",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Risk-based routing and concise conversation are consistent across repository role skill and generated instructions",
+        "required": true,
+        "verification_ids": [
+          "owner-checks",
+          "independent",
+          "p1",
+          "primary-apply"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Independent adversarial review durable recovery records same-owner repair and applicable mandatory gates remain required for actual changes",
+        "required": true,
+        "verification_ids": [
+          "owner-checks",
+          "independent",
+          "p1",
+          "primary-apply"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Current runtime submission contracts permissions historical snapshots and in-progress acceptance criteria are not weakened or retroactively changed",
+        "required": true,
+        "verification_ids": [
+          "owner-checks",
+          "independent",
+          "p1",
+          "primary-apply"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Versions pins generated profiles bounded checks independent review and authorized publication are completed for the exact changes",
+        "required": true,
+        "verification_ids": [
+          "owner-checks",
+          "independent",
+          "p1",
+          "primary-apply"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "승인된 경량·일반·고위험 절차를 지침·역할·스킬·생성 프로필에 일관되게 반영하고 실제 multi 프로젝트 폴더에도 적용했다. 단순 설명과 채팅 답변은 간결하게 처리하며 실제 변경의 독립 적대적 검수·영속 기록·기존 제출 계약과 필수 게이트는 유지한다. 최종 게시 절차를 진행한다.",
+    "work": [
+      "이번 변경 자체는 검수 의무에 영향을 주는 고위험 지침 변경으로 분류하고 기존 통제로 검증했다. 새 경량 규칙으로 자신에 대한 통제를 면제하지 않았다.",
+      "AGENTS, 공유 workflow, orchestrator, evaluator, submit-result와 한국어 안내를 수정했다. 위험도는 영향·불확실성·복구 가능성으로 판단하고 파일 수만으로 낮추지 않는다.",
+      "workflow1.1.0, submit-result1.3.0, orchestrator/evaluator0.3.0으로 갱신했다. 나머지6개 모듈은 스킬 pin 변경에 따른 patch 버전만 올리고 생성물을 동기화했다.",
+      "결과 schema·공통 정책·런타임·필수 게이트·자동 게시 설정과 기존 스냅샷을 보존했다. 경량 제출 프로필을 구현했다고 주장하지 않는다.",
+      "담당자와 독립 평가자가 문서·경로·시나리오와 버전·생성물 호환성을 확인했다. 필수 P1 묶음은 최종 후보에서1회만 실행했다.",
+      "실제 primary 프로젝트의25개 사전조건을 확인·백업한 뒤15개 소스를 적용하고 대상의 기존 Python으로 생성물을 동기화했다.24개는 검토본과 일치하고 로컬 훅은 바이트 그대로 유지됐다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/proportional-workflow-20261105/작업-파이프라인.md",
+        "description": "적용된 위험도별 절차 안내; 게시 보고서 보관 사본: [안내](evidence/작업-파이프라인.md)",
+        "sha256": "c1985e4fea005ca84b2370f0efaba7a8b26d17109f8226015e2c9a14a41028bd"
+      }
+    ],
+    "verification": [
+      {
+        "id": "owner-checks",
+        "name": "관련 지침·시나리오·호환성 확인",
+        "method": "정적10개 시나리오1회, doctor, 생성물 일치와 버전·보호 대상 대조",
+        "outcome": "passed",
+        "evidence": [
+          "runs/proportional-workflow-20261105/evidence/owner-handoff.json",
+          "runs/proportional-workflow-20261105/evidence/scenario-review.json",
+          "runs/proportional-workflow-20261105/evidence/compatibility.json",
+          "runs/proportional-workflow-20261105/evidence/public-verification-summary.json"
+        ],
+        "notes": "실제 AI 행동이나 호스트 강제 기능을 시험한 것은 아니다. 초기 native-map 줄바꿈 문제는 해당 파일만 정리해 확인했다."
+      },
+      {
+        "id": "independent",
+        "name": "독립 적대적 소스·적용 준비 검토",
+        "method": "작성자와 다른 evaluator가25개 소스 및 필수 검사·적용 계획을 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/proportional-workflow-20261105/evidence/initial-source-review.json",
+          "runs/proportional-workflow-20261105/evidence/deployment-readiness-review.json"
+        ],
+        "notes": "확인된 결함 없음. 필요한 반례·경계와 보호 소스·스냅샷 보존을 확인했으며 전체 검사 재실행은 하지 않았다."
+      },
+      {
+        "id": "p1",
+        "name": "필수 P1 검사",
+        "method": "작업별 TEMP/TMP 및 승인된 호스트 환경에서 최종 후보 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/proportional-workflow-20261105/evidence/gate-suite-receipt.json",
+          "runs/proportional-workflow-20261105/evidence/public-verification-summary.json"
+        ],
+        "notes": "실제 suite1회66개 통과,382.827초. 후보3bd3b43dd404ed7c0793c8168ebc4a4c65f71d6e5f1891f0a1e3eab6b20a56f1 유지."
+      },
+      {
+        "id": "primary-apply",
+        "name": "실제 프로젝트 지침 적용",
+        "method": "검토된 한정 helper로 사전 해시·백업·적용·대상 동기화·읽기 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/proportional-workflow-20261105/evidence/primary-activation.json",
+          "runs/proportional-workflow-20261105/evidence/deployment-plan.json",
+          "runs/proportional-workflow-20261105/evidence/deployment-target-preconditions.json"
+        ],
+        "notes": "24개 검토 파일 일치, native-map은 기존 로컬 훅 hash를 유지. Git/index 작업0, VM/Lumia 변경0. 기존 세션에 이미 로드된 지침의 재로딩을 주장하지 않는다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "현재 런타임은 별도 경량 제출 프로필을 지원하지 않는다. 기존 init/validate/submit/finish·result 필드·필수 게이트를 유지한다.",
+      "변경은 지침 설정이며 실제 모델 행동이나 OS 권한을 강제하는 엔진을 구현한 것이 아니다.",
+      "새 규칙은 이후 작업에 기본 적용한다. 과거 기록·불변 스냅샷·진행 중 작업의 수용 기준은 자동 전환하지 않는다.",
+      "시간 절감률은 측정하지 않았다. 기존 필수 검사에 드는 시간은 이 문서 변경만으로 제거되지 않는다."
+    ],
+    "next_actions": [
+      "최종 평가를 실제 적용 증거와 연결한 뒤 validate·submit·finish 및 원격 커밋 확인을 수행한다.",
+      "경량 런타임 제출 프로필이 필요하면 별도의 명시적 요청과 호환성 검토로 진행한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\work\\p2-reviewed-release-20261103",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "workflow-proportionality-application"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-064da1c4b0e54065bf1065dbfbcea4ef",
+    "snapshot_digest": "sha256:0285c148ede64e4f78af155e8ff2e9b3b547727d346d64c8d7406f382f75b782",
+    "status": "review_pending",
+    "task_id": "proportional-workflow-20261105",
+    "mode": "observe"
+  },
+  "spec_sha256": "7437b8b2aa85aa15875e07ebce99c63a38924268a7508859e0c5128f7790cceb"
+}

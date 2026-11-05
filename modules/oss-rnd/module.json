@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "oss-rnd",
   "name": "Open-source R&D",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Analyze repositories, reproduce experiments, benchmark, and assess adoption.",
@@ -48,7 +48,7 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "path": "shared/skills/submit-result/SKILL.md"
     },
     {

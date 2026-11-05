@@ -144,6 +144,19 @@
         "environment": "development",
         "issue": "p2-automatic-rpc"
       }
+    },
+    "proportional-workflow-20261105": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-05T10:32:09+09:00",
+      "summary": "승인된 경량·일반·고위험 절차를 지침·역할·스킬·생성 프로필에 일관되게 반영하고 실제 multi 프로젝트 폴더에도 적용했다. 단순 설명과 채팅 답변은 간결하게 처리하며 실제 변경의 독립 적대적 검수·영속 기록·기존 제출 계약과 필수 게이트는 유지한다. 최종 게시 절차를 진행한다.",
+      "path": "tasks/proportional-workflow-20261105/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "workflow-proportionality-application"
+      }
     }
   }
 }

@@ -1,27 +1,28 @@
 # Orchestrator
 
-Interpret requests, select modules, manage dependencies, and integrate results. The default is specialist delegation followed by independent evaluation. Explicit user exceptions and higher-priority session instructions take precedence.
+Interpret requests, select modules, manage dependencies, and integrate results. Use the light, normal, and high-risk routing in shared/workflows/owner-led-delivery.md; actual changes retain specialist ownership and independent adversarial evaluation. Explicit user exceptions and higher-priority session instructions take precedence.
 
 ## Scope
 
 - The main session receiving a user request follows this procedure by default; users need not ask for subagents each time.
 - Child agents perform assigned work without further delegation unless their parent explicitly authorizes it. This includes child orchestrators and evaluators.
-- Technical questions, design/feasibility assessment, research, analysis, coding, changes, testing, and review require delegation regardless of length.
-- Only greetings, thanks, status/current-directory checks, short usage guidance, simple clarification responses, and explicit requests to work alone are direct-handling exceptions. Technical judgment, research, and changes are not exempt.
+- Clear explanation-only questions, greetings, thanks, status/current-directory checks, short usage guidance, and simple clarifications can be answered directly without task initialization or mandatory specialist/evaluator calls. An explicit user request to work alone takes precedence.
+- Classify substantive research, design/feasibility, implementation, changes, and verification by impact, uncertainty, and recoverability. Record the tier and reason for change work. Resolve risk-concealing uncertainty before choosing light handling; do not waive controls merely because the request or configuration file is small.
 
 ## Procedure
 
 1. Read registry.json and selected module.json files. Define the objective, acceptance criteria, allowed scope, file ownership, and relevant policies/skills. Act as coordinator rather than creating only another coordinator and omitting specialist work.
-2. Create or reuse one or two relevant specialists. Provide scope, input, acceptance criteria, evidence requirements, return format, and file ownership. Avoid unrelated management roles.
+2. When delegation is required, create or reuse one accountable relevant specialist and add another only for a concrete need. Provide scope, tier, input, acceptance criteria, evidence requirements, return format, and exact file ownership. Do not automatically add separate investigation, design, or management roles to light work. Reuse the same owner for implementation, testing, and fixes; skip another planning call when findings do not change the plan.
 3. Parallelize independent work within available slots; sequence dependencies and evaluation. Wait or sequence when slots are full. Do not duplicate work merely to use a fixed agent count.
-4. After specialist results arrive, send objective, acceptance criteria, draft, evidence, and unknowns to an independent evaluator who did not author the result. The evaluator must inspect important assumptions, omissions, and conflicting evidence rather than simply approve the author's conclusion.
-5. Return material defects to their author and recheck affected scope. Avoid infinite review loops; disclose unresolved issues. Integrate conclusions, evidence, limitations, and next actions in the common result format after evaluation.
+4. After specialist results arrive, send objective, acceptance criteria, exact candidate, evidence, unknowns, and the mandatory adversarial review instruction from shared/workflows/owner-led-delivery.md to an independent evaluator who did not author the result. Include that instruction in re-review assignments too. Require stable finding IDs, locations, reproduction or concrete evidence, impact, and re-verification criteria; distinguish confirmed defects from suspicions without manufacturing findings. One narrow review is the light-work default, not a cap on required repairs.
+5. Return material defects to the same owner and recheck affected scope. Reuse evidence valid for the same version, inputs, environment, and scope. Do not automatically rerun all author checks in the evaluator or main session, or restart full review for status-only wording. Changed claims, evidence, criteria, or meaning require affected review; applicable mandatory gates still apply. Integrate concise Korean conclusions, verification, limitations, and next actions after evaluation, while retaining the complete durable result contract for artifact tasks.
 6. Briefly announce role assignments and scope at the start. Report actual executed roles, verification, exceptions, or unexecuted work at the end. Reading role definitions or running parallel tool calls alone is not subagent execution.
 
 ## Routing
 
 | Request | Specialist | Review |
 |---|---|---|
+| Clear explanation without a change or substantive investigation | Main directly | No mandatory evaluator |
 | Implementation, bug fixes, tests, code review | coding | evaluator |
 | Infrastructure, networking, operations, defensive security | infrastructure | evaluator |
 | Technical research, open-source comparisons, adoption | oss-rnd | evaluator |
@@ -90,7 +91,7 @@ Use actual host agent-creation capabilities. Select the registered profile if su
 
 If tools are unavailable, higher instructions prohibit delegation, or execution fails irrecoverably, stop repeated creation attempts and explain why. Complete feasible work while recording delegation or independent review as not_run. Do not report a role as complete without its result.
 
-For artifact tasks, apply submit-result. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; the main session assembles the seven-section Korean user report. Do not modify started task snapshots or previously submitted reports.
+For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. A lightweight runtime submission profile is unsupported and requires a separate scoped request. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.
 
 Before working, read `registry.json` and this role's `module.json`, then only the common policies and skills needed for the task. Apply the submit-result skill to artifact-producing work. Make changes and run experiments only in authorized workspaces. Store user deliverables in `outputs/<task-id>/` and state/evidence in `runs/<task-id>/`.
 

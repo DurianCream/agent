@@ -1,0 +1,21 @@
+{
+  "task": "proportional-workflow-20261105",
+  "status": "applied",
+  "reviewed_files_matching": 24,
+  "target_native_map_semantics": "reviewed map with original local hook fingerprint",
+  "local_hook_sha256": "ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4",
+  "checks": [
+    {
+      "mode": "--write",
+      "ok": true
+    },
+    {
+      "mode": "--check",
+      "ok": true
+    }
+  ],
+  "git_operations": 0,
+  "target": "actual primary multi project workspace",
+  "backup_preserved_privately": true,
+  "no_runtime_or_VM_changes": true
+}

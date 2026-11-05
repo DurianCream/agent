@@ -1,6 +1,6 @@
 # Owner-led delivery workflow
 
-Version: 1.0.0
+Version: 1.1.0
 Status: experimental instruction workflow
 Applies to: every main session and delegated role working in this repository, through the mandatory reference in root AGENTS.md.
 
@@ -10,9 +10,23 @@ Keep analysis, implementation, test-environment application, actual testing, fai
 
 This document defines agent behavior, not an OS sandbox, authenticated identity, automatic scheduler, or runtime permission gate. Existing user authorization, host restrictions, repository lifecycle rules, immutable task scope and snapshots, and domain-specific role instructions continue to apply. Do not expand access, deploy merely because review passed, or resume stopped work without a user request to resume. Explicit user instructions and higher-priority instructions take precedence.
 
+## Risk tiers and routing
+
+The main session classifies work by impact, uncertainty, and recoverability, not by file count or lines changed. Record the tier and a one-line reason in the existing task record for change work; clear explanation-only conversation needs no separate task record.
+
+| Tier | Inclusion and exclusion | Default path |
+|---|---|---|
+| Light | Clear explanations; wording, links, role descriptions, or small configuration cleanup with no product behavior, permission, or security-boundary effect. Unresolved material uncertainty excludes this tier. | Answer explanations directly. For actual changes: one accountable specialist owner, one narrow independent adversarial review, and concise durable records using the existing contract. |
+| Normal | Ordinary features, bugs, APIs, dependencies, behavior changes, and substantive research/design that do not meet high-risk conditions. | Brief plan, only necessary investigation/design, the same owner's implementation and relevant tests, independent adversarial review, and affected repair/re-review. |
+| High risk | Authentication, credentials, permissions, OS isolation, execution/publication gates, production deployment, consequential external writes, data deletion, migrations, or recovery. | Impact and recovery plan, necessary specialist investigation, implementation and relevant real-environment verification, independent adversarial review, existing approvals and mandatory gates, and applicable post-application checks. |
+
+A configuration file is not automatically light. Changes to namespaces, service permissions, review obligations, or publication gates require impact assessment and normal or high-risk handling. Investigate risk-concealing unknowns narrowly; unresolved high-risk conditions remain high risk. Split mixed work only at independent boundaries, never divide one security boundary to evade controls. Use existing authorization without inventing new approvals.
+
+These are instruction-level routing rules, not automatic runtime profiles. Preserve independent review for actual changes and all applicable mandatory gates at every tier. For documentation-only work, content verification can use document, path, and scenario review; existing mandatory submission/publication gates must be satisfied separately. Do not promise zero test time or measured savings without measurements.
+
 ## 1. Scope and assignment
 
-The orchestrator records the objective, exact repository/project/service/environment/issue, acceptance criteria, accountable specialist owner, exact file ownership, available test environment, allowed effects, and expected handoff before dispatch. Reuse suitable existing specialists and preserve the same owner through the repair loop.
+For work requiring delegation, the orchestrator records the objective, risk tier and reason, exact repository/project/service/environment/issue, acceptance criteria, accountable specialist owner, exact file ownership, available test environment, allowed effects, and expected handoff before dispatch. Reuse suitable existing specialists and preserve the same owner through the repair loop.
 
 Set a task-proportionate work budget, a check-in point, and stop/escalation conditions before substantial work. Use available time/cost measurements or bounded milestones; never invent measured token usage. Examples of escalation conditions are a missing required environment, an exhausted agreed budget, an unexpected consequential effect, or repeated failure without a new diagnostic hypothesis. There is no universal mandatory test count. A budget boundary triggers a concise decision about scope or continuation, not an automatic claim of completion or an endless retry loop.
 
@@ -34,6 +48,8 @@ R&D does not require making the proposed technology pass. A supported finding th
 
 ## 3. Evidence handoff
 
+Every change task retains the objective, tier and reason, actual files/behavior changed, decisions and reasons, checks/results/evidence (including not_run and why), review verdict and stable finding IDs with repair status, and unfinished work/next actions. Update this durable specification at meaningful implementation completion, review handoff, and repair completion; do not rewrite the whole specification after every tool call. High-risk records also retain the target environment, permissions, versions, and recovery conditions. Existing result fields and linked task evidence are sufficient; do not add duplicate empty reports or unversioned schema fields. These records must allow recovery after context compaction.
+
 Before requesting final independent review, the owner provides:
 
 - Exact candidate revision or file/artifact hashes and accountable author identity.
@@ -47,11 +63,15 @@ Keep credentials and private connection maps out of published evidence. Use the 
 
 ## 4. Independent review and repair
 
+Every review and re-review assignment includes this instruction:
+
+> Treat the candidate as another AI's work and perform adversarial verification. Do not trust the author's completion claim; inspect actual changes and evidence. Examine relevant counterexamples, boundaries, errors, and regressions. Separate confirmed defects from unverified suspicions and do not manufacture findings. Give each finding a stable ID, location, reproduction or concrete evidence, impact, and re-verification criterion.
+
 The evaluator must not author the principal candidate or redelegate its evaluation. It inspects the exact candidate, acceptance criteria, and relevant actual evidence. For an actual execution or deployment claim, require evidence of the applicable real environment path. Static or local tests may support preparation readiness but cannot certify that unexecuted deployment or isolation works.
 
 Independent review does not mean blindly rerunning every author test. Reproduce only important claims whose evidence, reliability, or coverage needs independent confirmation, and satisfy any existing mandatory checks. State which findings came from source inspection, author evidence, and independent execution.
 
-Return material defects to the same owner with the affected criterion and a concrete finding. The owner performs analysis, correction, and affected retesting, then supplies the changed evidence for focused re-review. Retain unaffected findings. Do not create a new specialist or restart the entire review for each defect.
+One narrow review is the default for light changes, not a limit that permits unresolved required defects. Return material defects to the same owner with the affected criterion and a concrete finding. The owner performs analysis, correction, and affected retesting, then supplies the changed evidence for focused re-review. Retain unaffected findings. Status wording alone does not restart full review; changes to factual claims, evidence, acceptance criteria, or meaning require review of those affected parts. Reused evidence must still match the relevant version, inputs, environment, and scope. Record the reason when new changes, failures, concrete concerns, environment differences, or mandatory gates require reruns. Do not create a new specialist or restart the entire review for each defect.
 
 Final review follows the owner's evidence-ready handoff. A narrowly scoped early review is appropriate when a material design, authority, or safety uncertainty must be resolved before a consequential test; it is not a mandatory review of every command or temporary script. Missing evidence can produce an inconclusive review rather than a fabricated approval.
 
@@ -67,10 +87,10 @@ Follow the existing validate/submit/checkpoint/finish lifecycle. Configuration a
 
 ## Delegation and ownership continuity
 
-Main-session delegation remains the default defined by AGENTS.md. A child may create another agent only with explicit parent authorization for a bounded subtask; further descendants do not inherit unlimited delegation permission. Evaluators cannot delegate their own evaluation. Use the host's actual available concurrency limit rather than a hard-coded slot count.
+Main-session delegation follows the risk tiers and explanation exception defined by AGENTS.md. Do not automatically add investigation, design, or management roles to light work; reuse suitable owners, and skip a new planning call when the findings do not change the plan. A child may create another agent only with explicit parent authorization for a bounded subtask; further descendants do not inherit unlimited delegation permission. Evaluators cannot delegate their own evaluation. Use the host's actual available concurrency limit rather than a hard-coded slot count.
 
 An authorized child contribution does not transfer the accountable owner's testing and repair responsibility. Replace an owner only for a concrete reason such as unavailability, a genuine scope change, or a user request, with a recorded handoff of candidate, evidence, unresolved items, and responsibility. Tool availability and role declarations never create new execution permissions.
 
 ## Compatibility
 
-This is a new repository-wide workflow version bound by AGENTS.md. Existing module IDs, versions, dependency pins, schemas, generated role profiles, and immutable task snapshots are unchanged. Current assignments must explicitly use this workflow when resumed; historical reports and earlier snapshots retain their original meaning. No module registration or schema migration is introduced. The current task is limited to instruction configuration and does not claim that host-enforced routing or an end-to-end multi-agent deployment has been implemented or verified.
+Version 1.1.0 applies by default to tasks started after this instruction revision. Existing in-progress acceptance criteria, task enrollment, historical reports, and frozen snapshots retain their original meaning; do not automatically migrate them. This procedure change follows its pre-change controls rather than exempting itself as light work. Module and skill versions/pins and affected generated adapters are maintained together; module IDs, permissions, runtime gate configuration, and result schema 1.0.0 remain unchanged. Ordinary explanation needs no artifact initialization. Actual changes still use the current init/validate/submit/checkpoint/finish lifecycle, including short records in existing fields for light changes. There is no lightweight runtime submission profile; any schema/profile/contract implementation requires a separate scoped user request and compatibility proposal. These instructions do not implement host-enforced routing or prove future agent behavior or deployment success.

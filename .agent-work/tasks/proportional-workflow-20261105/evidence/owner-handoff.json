@@ -1,0 +1,63 @@
+{
+  "owner": "skill-manager proportionality_check",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "workflow-proportionality-application"
+  },
+  "task": "proportional-workflow-20261105",
+  "risk": "high",
+  "reason": "Review/delegation obligations change; preserve pre-change controls and mandatory gate profile.",
+  "ownership": "25 exact product paths in publication manifest; parent owns lifecycle/result and final publication",
+  "changes": "Impact-based routing; direct explanation; same-owner independent adversarial change review; concise chat with unchanged durable schema/lifecycle; gate-change vs gate-use distinction; future-task applicability.",
+  "versions": "workflow 1.1.0, submit-result 1.3.0, orchestrator/evaluator 0.3.0; six other modules patch bump solely for changed exact skill pin. common policy unchanged.",
+  "preservation": "Baseline generated adapters canonical-equal HEAD; no meaningful manual changes. Hooks hash unchanged. Runtime, schema, gate and automation sources unchanged.",
+  "verification": {
+    "doctor": {
+      "runs": 1,
+      "status": "passed"
+    },
+    "sync_write": {
+      "runs": 1,
+      "status": "passed"
+    },
+    "sync_check": {
+      "runs": 2,
+      "status": "passed"
+    },
+    "scenario_walkthrough": {
+      "runs": 1,
+      "distinct_scenarios": 10,
+      "status": "passed",
+      "kind": "static"
+    },
+    "diff_check": {
+      "runs": 2,
+      "first": "failed due to generated native-map CRLF reported as whitespace",
+      "repair": "normalized only native-map line endings to LF, no generator logic change",
+      "final": "passed"
+    },
+    "mandatory_p1_suite": {
+      "runs": 0,
+      "status": "not_run",
+      "reason": "Intentionally held until independent source review resolves material fixes."
+    },
+    "independent_review": {
+      "status": "not_run",
+      "reason": "Parent to assign independent evaluator to frozen candidate."
+    },
+    "live_behavior_or_deployment": {
+      "status": "not_run",
+      "reason": "Outside instruction-only scope; no live behavior claim."
+    }
+  },
+  "remaining": [
+    "Independent source/evidence review and focused fixes if required",
+    "Run mandatory configured suite once on final candidate with task-local TEMP/TMP and UTF8; local Git fixture host permissions required",
+    "Evaluator registers own P0/P1 assessments as applicable",
+    "Parent populates result.json, checkpoint/validate/submit and standing-authorized finish; confirm remote commit"
+  ],
+  "freeze": "Product candidate frozen at source-hashes.json; no more source edits until review finding or explicit parent assignment."
+}

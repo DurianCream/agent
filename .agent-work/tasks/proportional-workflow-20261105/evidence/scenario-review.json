@@ -1,0 +1,193 @@
+{
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "workflow-proportionality-application"
+  },
+  "reviewer": "skill-manager author",
+  "walkthrough_invocations": 1,
+  "distinct_scenarios": 10,
+  "cases": [
+    {
+      "id": "S01",
+      "scenario": "Clear option explanation",
+      "expected_and_observed_instruction": "Main direct answer; no artifact initialization, specialist, or mandatory evaluator",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "AGENTS.md",
+          "line": 7,
+          "anchor": "Clear explanation-only questions may"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "scenario": "Nonbehavioral wording/link edit",
+      "expected_and_observed_instruction": "Light tier; one owner and independent narrow review; current durable result lifecycle",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 19,
+          "anchor": "| Light |"
+        },
+        {
+          "path": "shared/skills/submit-result/SKILL.md",
+          "line": 18,
+          "anchor": "For light actual changes"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "scenario": "Ordinary API behavior change",
+      "expected_and_observed_instruction": "Normal tier; necessary investigation, same owner implementation/relevant tests, independent review",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 20,
+          "anchor": "| Normal |"
+        },
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 37,
+          "anchor": "Owner's implementation"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "scenario": "Namespace, credentials, publication gates",
+      "expected_and_observed_instruction": "High risk or assessed elevated configuration; security boundaries cannot be split or bypassed",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 21,
+          "anchor": "| High risk |"
+        },
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 23,
+          "anchor": "A configuration file is not automatically light"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "scenario": "Valid evidence at same version",
+      "expected_and_observed_instruction": "Reuse only while version, inputs, environment and scope match; no blind full repeat",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 74,
+          "anchor": "Reused evidence must still match"
+        },
+        {
+          "path": "core/evaluator/instructions.md",
+          "line": 23,
+          "anchor": "Do not automatically rerun all author tests"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "scenario": "Fix changes a failure path",
+      "expected_and_observed_instruction": "Stable finding ID; same owner repair; evaluator rechecks affected criteria and regression",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "core/evaluator/instructions.md",
+          "line": 20,
+          "anchor": "Preserve IDs during repair"
+        },
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 74,
+          "anchor": "Return material defects to the same owner"
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "scenario": "Required verification unavailable",
+      "expected_and_observed_instruction": "not_run/blocker remains explicit; no completion by relabeling",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 40,
+          "anchor": "If that environment is unavailable"
+        },
+        {
+          "path": "shared/skills/submit-result/SKILL.md",
+          "line": 20,
+          "anchor": "no unresolved required defect"
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "scenario": "Runtime lacks lightweight submission",
+      "expected_and_observed_instruction": "Keep current contract; separate scoped request for profile/schema implementation",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/skills/submit-result/SKILL.md",
+          "line": 18,
+          "anchor": "There is no runtime lightweight submission profile"
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "scenario": "Historical and in-progress work",
+      "expected_and_observed_instruction": "No automatic migration, rewritten snapshots, or weakened acceptance; this revision uses old controls",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 96,
+          "anchor": "Version 1.1.0 applies"
+        },
+        {
+          "path": "AGENTS.md",
+          "line": 24,
+          "anchor": "The procedure change itself"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "scenario": "Resume after context compaction",
+      "expected_and_observed_instruction": "Durable objective/tier/files/decisions/checks/review/open issues/next steps updated at milestones",
+      "method": "static scenario walkthrough; not live agent execution",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": "shared/workflows/owner-led-delivery.md",
+          "line": 51,
+          "anchor": "Every change task retains"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Instruction/path reasoning only; no multi-agent behavior or live deployment proof.",
+    "Independent evaluator and configured P1 suite pending."
+  ]
+}

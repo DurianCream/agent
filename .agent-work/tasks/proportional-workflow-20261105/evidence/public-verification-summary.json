@@ -1,0 +1,26 @@
+{
+  "task_id": "proportional-workflow-20261105",
+  "candidate_digest": "3bd3b43dd404ed7c0793c8168ebc4a4c65f71d6e5f1891f0a1e3eab6b20a56f1",
+  "mandatory_suite": {
+    "id": "p1-regression",
+    "invocations": 1,
+    "tests_run": 66,
+    "outcome": "passed",
+    "exit_code": 0,
+    "candidate_unchanged": true,
+    "reported_test_elapsed_seconds": 382.827,
+    "receipt": "runs/proportional-workflow-20261105/evidence/gate-suite-receipt.json"
+  },
+  "other_checks": {
+    "static_scenario_walkthroughs": 1,
+    "distinct_scenarios": 10,
+    "doctor_runs": 1,
+    "sync_write_runs": 1,
+    "sync_check_runs": 2,
+    "diff_check_runs": 2,
+    "diff_initial_issue": "Generated native-map CRLF reported as whitespace; LF normalization only; affected diff recheck passed."
+  },
+  "review": "Initial independent source review accepted with no findings; final task/P0/P1 assessment and publication remain parent/evaluator responsibility.",
+  "raw_log_publication": "Excluded: original local runner log retained privately with hash in receipt. No local path map or raw temporary execution log archived.",
+  "assurance": "Local execution, not authenticated runner or live deployment proof."
+}

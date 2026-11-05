@@ -1,0 +1,18 @@
+{
+  "scope": "Parent-owned final local activation only after independent final review; exact 25 reviewed instruction/version/adapter targets, no Git/index reconciliation",
+  "preconditions_file": "deployment-target-preconditions.json",
+  "target_content": "24 of 25 canonical source/adapter files equal base. native-map differs solely in legitimate local hook fingerprint. No meaningful user conflict.",
+  "interpreter": "Existing interpreter from target .codex/hooks.json PostToolUse command; verified file exists and reproduces target hook bytes using unchanged context-hooks template. Do not publish its absolute path.",
+  "steps": [
+    "Revalidate all target raw hashes from preconditions immediately before any write, plus generator and hook hash. Abort only affected activation if a mismatch appears.",
+    "Back up exact 25 original files under a task-local recovery directory outside tracked publication paths; preserve byte-for-byte backups and a hash manifest. Do not alter Git index, HEAD, history, or unrelated P2 files.",
+    "Copy the 15 reviewed non-generated sources from the final reviewed candidate using source-hashes.json checks. Exclude runtime/native-map.json and the 9 generated adapters from blind copying.",
+    "Invoke unchanged target runtime/sync_codex.py --write then --check using the interpreter already configured in the TARGET hook; do not substitute clone interpreter/root. The generator detects manual adapter changes; stop on conflict.",
+    "Confirm 24 source/adapter targets equal reviewed hashes; native-map matches reviewed fingerprints except target-specific hooks hash stays ea98516874d20d9903a47dd056af0aa160498cfa66cd5a918aebe971b214afd4. Confirm local hook bytes and unrelated generated outputs are unchanged.",
+    "If activation fails, preserve diagnostics and report to same owner. Recover only these task-owned target files from exact backups when still matching just-applied hashes; never overwrite intervening changes.",
+    "Report local activation separately from nested-checkout publication. Existing sessions may retain loaded instructions; new tasks should load updated repository rules."
+  ],
+  "writes_performed": false,
+  "hook_render_matches_existing": true,
+  "remaining": "Parent final deployment decision/execution and target readback."
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python",
+    "runtime/sync_codex.py",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"ok\": true, \"agents\": [\"orchestrator\", \"skill-manager\", \"policy-manager\", \"knowledge-manager\", \"evaluator\", \"coding\", \"infrastructure\", \"oss-rnd\"], \"skills\": [\"submit-result\", \"maintain-module\", \"oss-research\"], \"missing\": [], \"changed\": []}\n",
+  "stderr": ""
+}

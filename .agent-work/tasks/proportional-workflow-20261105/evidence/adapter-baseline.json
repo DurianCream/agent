@@ -1,0 +1,65 @@
+{
+  "checked": [
+    {
+      "path": ".codex/agents/coding.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "4f4c101999f998aafa440906a28e4508293a8d780a74ffe7e84cb4a2f12987a8"
+    },
+    {
+      "path": ".codex/agents/evaluator.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "abbffbf0008eef33482e91a6c2b1957169116a720ef659fe4f06d0c1c9782004"
+    },
+    {
+      "path": ".codex/agents/infrastructure.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "4ab6f62632a6c3203cf77083433ced1edb57e00f3a979a21c06de7cdc3a8564c"
+    },
+    {
+      "path": ".codex/agents/knowledge-manager.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "7db069cb065f6abbd386b5176a6889cd26653a9336b2b1ae750aba3ba5c7ef74"
+    },
+    {
+      "path": ".codex/agents/orchestrator.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "c984b3b21a0d208666e601c68cf99d661e398d8e26e5379a79f1d71edfdd7efa"
+    },
+    {
+      "path": ".codex/agents/oss-rnd.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "85071be41230730a58338f8b182aac4258baf59c21dda8bf8ce0dd6d36529226"
+    },
+    {
+      "path": ".codex/agents/policy-manager.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "004e33ad68770e79a4446759000450fc4f7334cf3c9f851b78f4233635364410"
+    },
+    {
+      "path": ".codex/agents/skill-manager.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "3444bfe166c0852b08c569978d1ad1a289a2c737bdb825259e2485238754a979"
+    },
+    {
+      "path": ".agents/skills/maintain-module/SKILL.md",
+      "canonical_matches_HEAD": true,
+      "sha256": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba"
+    },
+    {
+      "path": ".agents/skills/oss-research/SKILL.md",
+      "canonical_matches_HEAD": true,
+      "sha256": "70631655a19faf031345f7b8b3520190322d6ebeccbc3a0d80d41ba3edff72b5"
+    },
+    {
+      "path": ".agents/skills/submit-result/SKILL.md",
+      "canonical_matches_HEAD": true,
+      "sha256": "942e321676735b5e494983312f526c2f131eb57ed69067cc87d35f07b154b5c4"
+    },
+    {
+      "path": ".codex/config.toml",
+      "canonical_matches_HEAD": true,
+      "sha256": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb"
+    }
+  ],
+  "meaningful_manual_changes": false
+}

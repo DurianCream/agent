@@ -1,0 +1,87 @@
+{
+  "task_id": "proportional-workflow-20261105",
+  "candidate_digest": "3bd3b43dd404ed7c0793c8168ebc4a4c65f71d6e5f1891f0a1e3eab6b20a56f1",
+  "phase": "Owner checks plus initial independent source review; final evaluator assessment and local activation may add separately bounded records.",
+  "entries": [
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/adapter-baseline.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/adapter-baseline.json",
+      "sha256": "43fe0af7b714fd557e8a7269a217d51987922e97588d69b32cfc91a8de15d144"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/version-decisions.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/version-decisions.json",
+      "sha256": "f0f68a05692206c8a5a6d02c2ebbb4f57e60bdc0b9e23ca68dca655de5e17f34"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/doctor.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/doctor.json",
+      "sha256": "3647eaf19c0cbfe938e3b520423d877ef44191ee588abe442e8d1405bcd405f4"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/sync-check-final.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/sync-check-final.json",
+      "sha256": "436b972a2c45f87744f93fd91b813c32138c51af50139fbd1cc10bdeaf75c500"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/diff-check-after-lf.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/diff-check-after-lf.json",
+      "sha256": "ec610bf282153e05bfb290d9034bd0352c857c2ddf47512836e654bd32dad335"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/scenario-review.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/scenario-review.json",
+      "sha256": "9c96c72ae247b2e1dce0ec0672373e20c8c96df6b52eabec174e58a35c9ff34c"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/compatibility.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/compatibility.json",
+      "sha256": "7e658d5ec254f922883c8010d24472749945dd65a2eb1b04421b5d4975da3cba"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/instruction-conflict-search.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/instruction-conflict-search.json",
+      "sha256": "3a58884e85b96ab632ec71ba45a4951988e4b8c2d5959ac47d07ddf5bb52c681"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/source-hashes.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/source-hashes.json",
+      "sha256": "8de76047540458f5797fa23d2c91cb098d10d51c372d71b4f78e3e2e9dd081a9"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/owner-handoff.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/owner-handoff.json",
+      "sha256": "6b7d917fc9a684a99464200e3d467734f96b0b368528bafc6b0489dd3b9cca2a"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/initial-source-review.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/initial-source-review.json",
+      "sha256": "3f0acad4ba4c474f6b0aa0d804a20ade97608b859f04304a2333b32a8fcf8bd5"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/gate-suite-receipt.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/gate-suite-receipt.json",
+      "sha256": "83bec949409ff497ff1dedf5ef0c7cdf2d8f1b9b2bab7455050c827f36b2121e"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/public-verification-summary.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/public-verification-summary.json",
+      "sha256": "00246fe3c6f371dd5647815d2e342584cbb82bb23e1fac0f2b19b66285f7067b"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/deployment-target-preconditions.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/deployment-target-preconditions.json",
+      "sha256": "2f5f2fa056b78f33fff04677c0b3e119e70b38403a1acc46a36e37f8b7d7c16d"
+    },
+    {
+      "source_ref": "runs/proportional-workflow-20261105/evidence/deployment-plan.json",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/deployment-plan.json",
+      "sha256": "0f2cd3895edf025da26c952d477c4d5b390aee47797be01cbd2ad3bd429f5591"
+    },
+    {
+      "source_ref": "outputs/proportional-workflow-20261105/구현-검토-안내.md",
+      "archive_path": ".agent-work/tasks/proportional-workflow-20261105/evidence/implementation-handoff-ko.md",
+      "sha256": "c13991313eea12c8c429483034b53dfa8fbba2f8e23961ccff4c86f958002113"
+    }
+  ]
+}
