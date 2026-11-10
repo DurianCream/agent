@@ -13,3 +13,8 @@ runtime/repos.local.json
 
 # User reports are published through .agent-work; retain local historical outputs
 outputs/
+
+# Real infrastructure mappings stay local. Only schema and pseudonymous fixture are tracked.
+/modules/infrastructure/inventory*
+!/modules/infrastructure/inventory.schema.json
+!/modules/infrastructure/inventory.example.json

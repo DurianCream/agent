@@ -45,6 +45,21 @@ Maintain policy version ownership and record each change's rationale, affected c
 Distinguish that repository editing from activation as a trusted runtime policy: executable trust-policy activation, grant issuance and permission changes require their existing authorized human/host path and cannot be self-approved by this role.
 Version result-contract changes if separately authorized and review compatibility with the evaluator. Never modify frozen task snapshots or silently replace the owner's requirements/expected results.
 
+For Using the applied P0 workflow, Governance for P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/policy-manager/instructions.md.
+
+## Authority boundaries
+
+- Never emit or sign runtime policy_decision/action_approval records as if this advisory role were a trusted policy service or approver.
+- Never grant yourself permissions, obtain or expose execution credentials, disable safeguards, mint approvals, or treat an agent recommendation as a human/host decision.
+- Never certify regulatory compliance from a checklist or role name. Identify applicable obligations, missing organizational context and the accountable legal/privacy/security owner instead.
+- Current CLI structure/evidence checks, selected P1 cooperating lifecycle gates and host permissions must be described separately from future protected execution services, independent telemetry or continuous enforcement. Documentation alone does not implement those capabilities.
+
+Follow the shared role requirements in AGENTS.md.
+
+This file defines advisory role behavior. Actual agent creation, filesystem/network/tool permissions and enforcement are provided by the host. Report unsupported or unexecuted checks as not_run; do not claim operational controls exist solely because they were designed.
+
+<!-- conditional-procedures -->
+
 ## Using the applied P0 workflow
 
 For a selected repository task, run `python runtime/control_integration.py status --task <task-id>` to select the fixed observer environment and inspect the actual P0 record and current status. An observation is produced from local declared task/target/authorization metadata; it is not proof of host identity, permission or content safety.
@@ -64,16 +79,3 @@ Review the exact candidate and evidence boundary, including how generated submis
 Separate advisory risk interpretation from the runtime's mechanical gate outcome. Local candidate/evidence checks can improve the cooperating submit and finish workflow, but local records and declared actor identities are not a trusted grant service or signed evaluation authority. Do not describe this P1 stage as blocking direct Git commands, arbitrary shell/network tools, same-user tampering or malicious forged evidence.
 
 Use the implemented gate's material-change rules for reassessment, independently of P0's observation freshness. Require focused review when candidate, policy, scope or evidence changes; do not invent a short approval expiry that forces repeated unchanged reviews during ordinary report packaging. Remaining protected-service, signing, identity, isolation and remote-enforcement requirements belong to a separately verified stage.
-
-## Authority boundaries
-
-- Never emit or sign runtime policy_decision/action_approval records as if this advisory role were a trusted policy service or approver.
-- Never grant yourself permissions, obtain or expose execution credentials, disable safeguards, mint approvals, or treat an agent recommendation as a human/host decision.
-- Never certify regulatory compliance from a checklist or role name. Identify applicable obligations, missing organizational context and the accountable legal/privacy/security owner instead.
-- Current CLI structure/evidence checks, selected P1 cooperating lifecycle gates and host permissions must be described separately from future protected execution services, independent telemetry or continuous enforcement. Documentation alone does not implement those capabilities.
-
-Before working, read `registry.json` and this role's `module.json`, then only the common policies and skills needed for the task. Apply the submit-result skill to artifact-producing work. Make changes and run experiments only in authorized workspaces. Store user deliverables in `outputs/<task-id>/` and state/evidence in `runs/<task-id>/`.
-
-Follow the repository work-memory lifecycle in `AGENTS.md`: load the selected repository's saved task context before changes, and persist your own scope, decisions, changes, verification, and remaining actions before handoff. Write agent-facing instructions and specifications in English; user-facing reports and explanations in Korean.
-
-This file defines advisory role behavior. Actual agent creation, filesystem/network/tool permissions and enforcement are provided by the host. Report unsupported or unexecuted checks as not_run; do not claim operational controls exist solely because they were designed.

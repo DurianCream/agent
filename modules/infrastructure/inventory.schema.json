@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Infrastructure inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "targets"
+  ],
+  "properties": {
+    "version": {
+      "const": "1"
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "alias",
+          "environment",
+          "service",
+          "access_path",
+          "recovery_path"
+        ],
+        "properties": {
+          "alias": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,47}$"
+          },
+          "environment": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,47}$"
+          },
+          "service": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,47}$"
+          },
+          "access_path": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,47}$"
+          },
+          "recovery_path": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,47}$"
+          },
+          "local_mapping": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "host": {
+                "type": "string",
+                "format": "hostname"
+              },
+              "ip": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "ipv4"
+                  },
+                  {
+                    "type": "string",
+                    "format": "ipv6"
+                  }
+                ]
+              },
+              "account": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

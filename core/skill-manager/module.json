@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "skill-manager",
   "name": "Skill and Module Manager",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Maintain skills, module registration, dependencies, and versions.",
@@ -56,6 +56,11 @@
       "id": "maintain-module",
       "version": "1.0.1",
       "path": "shared/skills/maintain-module/SKILL.md"
+    },
+    {
+      "id": "harness-delivery",
+      "version": "1.0.0",
+      "path": "shared/workflows/harness-delivery.md"
     }
   ],
   "policies": [

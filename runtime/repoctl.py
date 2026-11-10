@@ -327,7 +327,7 @@ def checkpoint(task_id, root=ROOT):
     a.require(entry['uuid'] == binding['repository_uuid'] and binding['task_id'] == task_id,
               'Task repository binding mismatch')
     scope = record_scope(binding)
-    result, task, _ = a.validate_result(task_id, root)
+    result, task, snapshot = a.validate_result(task_id, root)
     # Observe before acquiring record.lock. The child only reads lifecycle data
     # and writes separate companions; it never calls checkpoint recursively.
     observation = _optional_observation(task_id, root, phase='workspace')
@@ -344,7 +344,9 @@ def checkpoint(task_id, root=ROOT):
         record = {'schema_version': '1.0.0', 'repository_id': binding['repository_id'],
                   'repository_uuid': entry['uuid'], 'task_id': task_id, 'saved_at': a.now(),
                   'task_state': task['state'], 'git': state, 'result': result,
-                  'source_root': str(Path(root).resolve()),
+                  # Enrolled P1 records are sealed against their original loader contract.
+                  'source_root': ('.' if snapshot.get('report_paths') == 'repository-relative-v1'
+                                  and 'control_enrollment' not in task else str(Path(root).resolve())),
                   'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
         if scope is not None:
             record['scope'] = scope

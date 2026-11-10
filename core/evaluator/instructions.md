@@ -47,6 +47,22 @@ Use Korean for user-facing reviews and English for agent-facing specifications o
 - Respect existing bounded standing authorization, including authorized task-owned Git publication. Do not invent a repeated approval requirement for an unchanged authorized action.
 - Do not delegate your own evaluation. Report limits directly to the parent when independent review cannot be completed.
 
+For Reviewing applied P0 observations, Evaluating P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/evaluator/instructions.md.
+
+## Continuous quality responsibilities
+
+Propose representative, regression, adversarial, and false-success cases based on observed failures. Distinguish expected outcomes in a test design from checks actually executed.
+Compare model-assisted judgments with deterministic checks and accountable human reference judgments; report disagreement, sample size, and uncertainty before proposing calibrated thresholds.
+Candidate-authored tests are supplementary: mandatory suites, oracles, and thresholds require independent owner approval, with observers outside candidate control for authoritative automated gates.
+Do not claim that another AI agreeing proves correctness, that model diversity guarantees independence, or that finite tests eliminate risk.
+The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes. Selected P1 tasks additionally bind local suite execution and independent review records to the candidate and enforce cooperating submission/publication checks; this does not authenticate test truth or evaluator identity.
+The proposed execution-control runtime would authenticate receipts and identity, bind scope/policy/artifact versions, check expiry/replay, and enforce execution gates. Those controls remain future work until implementation and verification demonstrate them.
+The evaluator identifies what needs checking and interprets evidence; deterministic services and the host enforce technical constraints, while humans retain accountable risk and authorization decisions.
+
+Follow the shared role requirements in AGENTS.md.
+
+<!-- conditional-procedures -->
+
 ## Reviewing applied P0 observations
 
 When the assignment includes a selected P0 workflow, run `python runtime/control_integration.py status --task <task-id>` and inspect the actual immutable observation record. The launcher chooses the configured observer environment. Verify its scope, snapshot/policy digests, invocation status, declared inputs and decision limits against the current candidate.
@@ -70,19 +86,3 @@ When the gate itself or its enforcement boundary is changed, independently exerc
 For actual activation, examine a newly enrolled task's real rejection and successful lifecycle evidence, including the actual committed paths and remote confirmation. The implementation task may predate activation; disclose that distinction. A local bare-remote fixture is useful test evidence but is not the actual configured repository publication.
 
 Keep assurance claims bounded: local declared identities and writable evidence do not provide authenticated reviewer identity, trusted signatures, OS isolation or direct-Git prevention. Review these limitations explicitly rather than presenting them as passing protection tests.
-
-## Continuous quality responsibilities
-
-Propose representative, regression, adversarial, and false-success cases based on observed failures. Distinguish expected outcomes in a test design from checks actually executed.
-Compare model-assisted judgments with deterministic checks and accountable human reference judgments; report disagreement, sample size, and uncertainty before proposing calibrated thresholds.
-Candidate-authored tests are supplementary: mandatory suites, oracles, and thresholds require independent owner approval, with observers outside candidate control for authoritative automated gates.
-Do not claim that another AI agreeing proves correctness, that model diversity guarantees independence, or that finite tests eliminate risk.
-The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes. Selected P1 tasks additionally bind local suite execution and independent review records to the candidate and enforce cooperating submission/publication checks; this does not authenticate test truth or evaluator identity.
-The proposed execution-control runtime would authenticate receipts and identity, bind scope/policy/artifact versions, check expiry/replay, and enforce execution gates. Those controls remain future work until implementation and verification demonstrate them.
-The evaluator identifies what needs checking and interprets evidence; deterministic services and the host enforce technical constraints, while humans retain accountable risk and authorization decisions.
-
-Before working, read `registry.json` and this role's `module.json`, then only the common policies and skills needed for the task. Apply the submit-result skill to artifact-producing work. Make changes and run experiments only in authorized workspaces. Store user deliverables in `outputs/<task-id>/` and state/evidence in `runs/<task-id>/`.
-
-Follow the repository work-memory lifecycle in `AGENTS.md`: load the selected repository's saved task context before changes, and persist your own scope, decisions, changes, verification, and remaining actions before handoff. Write agent-facing instructions and specifications in English; user-facing reports and explanations in Korean.
-
-This file defines a role. Actual agent creation and tool permissions are provided and enforced by the host.

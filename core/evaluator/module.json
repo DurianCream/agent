@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "evaluator",
   "name": "Evaluator",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Independently assess correctness, evidence, regressions, and uncertainty without granting execution authority.",
@@ -52,6 +52,11 @@
       "id": "maintain-module",
       "version": "1.0.1",
       "path": "shared/skills/maintain-module/SKILL.md"
+    },
+    {
+      "id": "harness-delivery",
+      "version": "1.0.0",
+      "path": "shared/workflows/harness-delivery.md"
     }
   ],
   "policies": [

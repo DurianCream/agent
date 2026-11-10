@@ -134,6 +134,7 @@ class ContextSettingsTests(unittest.TestCase):
     def test_hook_template_survives_sync_and_protects_manual_edits(self):
         template = {"hooks": {"PostToolUse": [{"hooks": [{"type": "command", "command": '"{python}" "{root}/runtime/context_checkpoint.py"', "timeout": 5}]}]}}
         (self.root / "runtime/context-hooks.json").write_text(json.dumps(template), encoding="utf-8")
+        (self.root / "runtime/context_checkpoint.py").write_text("# fixture\n", encoding="utf-8")
         self.assertTrue(sync.synchronize(self.root, write=True)["ok"])
         hook_file = self.root / ".codex/hooks.json"
         generated = hook_file.read_bytes()

@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "oss-rnd",
   "name": "Open-source R&D",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Analyze repositories, reproduce experiments, benchmark, and assess adoption.",
@@ -55,6 +55,11 @@
       "id": "oss-research",
       "version": "1.0.1",
       "path": "shared/skills/oss-research/SKILL.md"
+    },
+    {
+      "id": "harness-delivery",
+      "version": "1.0.0",
+      "path": "shared/workflows/harness-delivery.md"
     }
   ],
   "policies": [

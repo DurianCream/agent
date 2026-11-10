@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "policy-manager",
   "name": "Policy Manager",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Assess contextual governance requirements and policy conflicts, and propose testable controls without granting execution authority.",
@@ -55,6 +55,11 @@
       "id": "maintain-module",
       "version": "1.0.1",
       "path": "shared/skills/maintain-module/SKILL.md"
+    },
+    {
+      "id": "harness-delivery",
+      "version": "1.0.0",
+      "path": "shared/workflows/harness-delivery.md"
     }
   ],
   "policies": [

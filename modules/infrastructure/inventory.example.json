@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "targets": [
+    {
+      "alias": "pilot-a",
+      "environment": "lab",
+      "service": "vpn-a",
+      "access_path": "management-a",
+      "recovery_path": "console-b"
+    }
+  ]
+}

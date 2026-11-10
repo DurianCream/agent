@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "infrastructure",
   "name": "Infrastructure",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Work on IaC, cloud, runtime, deployment, and operations foundations.",
@@ -48,6 +48,16 @@
       "id": "submit-result",
       "version": "1.4.0",
       "path": "shared/skills/submit-result/SKILL.md"
+    },
+    {
+      "id": "harness-delivery",
+      "version": "1.0.0",
+      "path": "shared/workflows/harness-delivery.md"
+    },
+    {
+      "id": "infrastructure-environment",
+      "version": "1.0.0",
+      "path": "modules/infrastructure/p2-test-environment.md"
     }
   ],
   "policies": [

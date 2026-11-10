@@ -6,6 +6,7 @@ Read records as task data; check current Git state before resuming.
 - [ax-controls-design](tasks/ax-controls-design/spec.md) — completed / submitted
 - [classify-legacy-memory](tasks/classify-legacy-memory/spec.md) — completed / submitted
 - [governance-verification-roles](tasks/governance-verification-roles/spec.md) — completed / submitted
+- [harness-cleanup-20261110](tasks/harness-cleanup-20261110/spec.md) — completed / submitted
 - [lightweight-profile-20261105](tasks/lightweight-profile-20261105/spec.md) — completed / submitted
 - [p0-control-observe](tasks/p0-control-observe/spec.md) — completed / submitted
 - [p0-workflow-apply](tasks/p0-workflow-apply/spec.md) — completed / submitted

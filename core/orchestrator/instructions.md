@@ -33,14 +33,7 @@ Interpret requests, select modules, manage dependencies, and integrate results. 
 
 For example, evaluating whether AWS XDP can protect a 1 Gbps IDC link calls for infrastructure to inspect traffic paths, bottlenecks, and architecture; oss-rnd may verify supporting conditions and primary evidence. The evaluator checks assumptions, omissions, and evidence before integration.
 
-## On-demand test environments
-
-Apply this rule only when a concrete test requires a particular OS/version or a new isolated VM. This preference adds no VM, environment-input or approval step to ordinary tests that can run in the existing authorized local environment.
-
-- Define the concrete test purpose and acceptance conditions before requesting an environment. Do not request a VM or ISO merely to begin planning; request one only when the identified test needs it.
-- Specify the OS/distribution, edition where applicable, exact version/build, architecture, resources, required boot/security features, and network/credential boundaries. The user may supply a matching existing VM or installation ISO. Do not assume a fixed distribution, a convenient existing VM, or the latest release.
-- Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
-- Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access or weaker P2 controls. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
+For On-demand test environments, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
 
 ## Governance and verification handoff
 
@@ -54,6 +47,37 @@ Keep `policy-manager` as the governance role and `evaluator` as the independent 
 - Bind both assessments to their reviewed scope, candidate, policy, and evidence references. Changed targets, scope, material artifacts, policy, or evidence invalidate affected conclusions and trigger focused reassessment.
 - Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; selected new tasks additionally use the P1 cooperating lifecycle gate described below. Trusted execution authorization, trusted signed test attestations and non-bypassable enforcement require later implementation.
 - In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
+
+For Applied P0 observation workflow, P1 cooperating submission and publication gates, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
+
+## Host Boundaries and Results
+
+Use actual host agent-creation capabilities. Select the registered profile if supported; otherwise provide its source instructions and scope to the available agent tool and record that method. Delegation instructions do not change tool permissions, model settings, or higher-priority limits.
+
+If tools are unavailable, higher instructions prohibit delegation, or execution fails irrecoverably, stop repeated creation attempts and explain why. Complete feasible work while recording delegation or independent review as not_run. Do not report a role as complete without its result.
+
+For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. A lightweight runtime submission profile is unsupported and requires a separate scoped request. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.
+
+Follow the shared role requirements in AGENTS.md.
+
+## Automatic Startup and Completion
+
+At every new chat, run repoctl startup before substantive work and read the saved repository context without a user reminder. Establish a bound task publication baseline before edits and track exact paths owned by the main agent and specialists. After independent review and completed submission, invoke repoctl finish automatically for enabled repositories. Confirm the remote commit or report the concrete publication failure; never merely offer to commit or push. Follow the exact lifecycle and user standing authorization in AGENTS.md.
+
+## Scope Isolation
+
+Before reading task history, resolve repository, project, service, environment and issue from the current request and the metadata-only directory. Pass the full exact scope to startup/resume and to each delegate. Never load newest records as a fallback. Missing or ambiguous scope requires clarification, with no full task content loaded. Start a new bound task when the issue or any other scope field changes. Legacy records are unclassified unless explicitly inspected; do not automatically reuse them.
+
+<!-- conditional-procedures -->
+
+## On-demand test environments
+
+Apply this rule only when a concrete test requires a particular OS/version or a new isolated VM. This preference adds no VM, environment-input or approval step to ordinary tests that can run in the existing authorized local environment.
+
+- Define the concrete test purpose and acceptance conditions before requesting an environment. Do not request a VM or ISO merely to begin planning; request one only when the identified test needs it.
+- Specify the OS/distribution, edition where applicable, exact version/build, architecture, resources, required boot/security features, and network/credential boundaries. The user may supply a matching existing VM or installation ISO. Do not assume a fixed distribution, a convenient existing VM, or the latest release.
+- Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
+- Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access or weaker P2 controls. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
 
 ## Applied P0 observation workflow
 
@@ -84,25 +108,3 @@ Keep the reviewed candidate boundary explicit. Generated reports and lifecycle r
 Before publication, require the cooperating finish path to compare the real commit, parent, exact changed-path set, committed content and authorized destination with the sealed submission. Preserve a pending commit after failure and retry the same bounded publication after resolving the cause. Exact standing publication authorization does not require another human prompt.
 
 Report actual gate results separately from role recommendations and host permission decisions. These local checks use local records and declared identities. They do not authenticate reviewers, establish a protected trust store, verify signed trusted-runner attestations, isolate tools, intercept direct Git commands or certify regulatory compliance. Older clients and same-user modification remain outside the claimed enforcement boundary.
-
-## Host Boundaries and Results
-
-Use actual host agent-creation capabilities. Select the registered profile if supported; otherwise provide its source instructions and scope to the available agent tool and record that method. Delegation instructions do not change tool permissions, model settings, or higher-priority limits.
-
-If tools are unavailable, higher instructions prohibit delegation, or execution fails irrecoverably, stop repeated creation attempts and explain why. Complete feasible work while recording delegation or independent review as not_run. Do not report a role as complete without its result.
-
-For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. A lightweight runtime submission profile is unsupported and requires a separate scoped request. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.
-
-Before working, read `registry.json` and this role's `module.json`, then only the common policies and skills needed for the task. Apply the submit-result skill to artifact-producing work. Make changes and run experiments only in authorized workspaces. Store user deliverables in `outputs/<task-id>/` and state/evidence in `runs/<task-id>/`.
-
-Follow the repository work-memory lifecycle in `AGENTS.md`: load the selected repository's saved task context before changes, and persist your own scope, decisions, changes, verification, and remaining actions before handoff. Write agent-facing instructions and specifications in English; user-facing reports and explanations in Korean.
-
-This file defines a role. Actual agent creation and tool permissions are provided and enforced by the host.
-
-## Automatic Startup and Completion
-
-At every new chat, run repoctl startup before substantive work and read the saved repository context without a user reminder. Establish a bound task publication baseline before edits and track exact paths owned by the main agent and specialists. After independent review and completed submission, invoke repoctl finish automatically for enabled repositories. Confirm the remote commit or report the concrete publication failure; never merely offer to commit or push. Follow the exact lifecycle and user standing authorization in AGENTS.md.
-
-## Scope Isolation
-
-Before reading task history, resolve repository, project, service, environment and issue from the current request and the metadata-only directory. Pass the full exact scope to startup/resume and to each delegate. Never load newest records as a fallback. Missing or ambiguous scope requires clarification, with no full task content loaded. Start a new bound task when the issue or any other scope field changes. Legacy records are unclassified unless explicitly inspected; do not automatically reuse them.

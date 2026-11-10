@@ -170,6 +170,19 @@
         "environment": "development",
         "issue": "lightweight-submission-profile"
       }
+    },
+    "harness-cleanup-20261110": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-10T15:37:27+09:00",
+      "summary": "승인된 로컬 하네스 정리와 검증을 완료했다. 예산 초과 세 사례는 재시험에서 모두 통과했다. 사례별 최신 판정은 9건 통과·0건 실패·4건 미실행이며, 운영 배포와 VM 시험은 수행하지 않았다.",
+      "path": "tasks/harness-cleanup-20261110/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "harness-cost-hygiene-infrastructure"
+      }
     }
   }
 }

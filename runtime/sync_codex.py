@@ -60,7 +60,7 @@ def read_context_settings(root):
     return result
 
 
-def render(root=ROOT):
+def render(root=ROOT, hook_python=None):
     registry = read_json(root / "registry.json")
     inventory = read_json(root / "shared/skills/skills.json")
     files, agents = {}, []
@@ -82,6 +82,8 @@ def render(root=ROOT):
             continue
         module = read_json(safe_file(root, entry["path"]))
         body = safe_file(root, module["instructions"]).read_text(encoding="utf-8")
+        # Role snapshots retain the complete source. Inject only its unconditional entry.
+        body = body.partition("\n<!-- conditional-procedures -->\n")[0]
         instructions = (
             f"You are {module['name']} ({module['id']}).\n"
             "Resolve paths against the framework root containing registry.json and runtime/agentctl.py.\n"
@@ -122,7 +124,7 @@ def render(root=ROOT):
     if hook_source.exists():
         hook_text = hook_source.read_text(encoding="utf-8-sig")
         # Expand path values before JSON parsing; quotes/backslashes remain JSON-safe.
-        hook_text = hook_text.replace("{python}", json.dumps(sys.executable)[1:-1])
+        hook_text = hook_text.replace("{python}", json.dumps(hook_python or sys.executable)[1:-1])
         hook_text = hook_text.replace("{root}", json.dumps(str(root.resolve()).replace(chr(92), "/"))[1:-1])
         hooks = json.loads(hook_text)
         if set(hooks.get("hooks", {})) != {"PostToolUse"}:
@@ -132,33 +134,74 @@ def render(root=ROOT):
 
 
 def synchronize(root=ROOT, write=False):
-    files, agents, skills = render(root)
+    hook_name = ".codex/hooks.json"
+    hook_file = safe_file(root, hook_name)
+    receipt_path = safe_file(root, "work/codex-hook-install.json")
+    receipt = read_json(receipt_path) if receipt_path.is_file() else {}
+    # A local installation records the exact bytes and interpreter used by --write.
+    # Never execute a path read from a receipt. Re-render the full command and structure.
+    installed = bool(hook_file.is_file() and receipt.get("sha256") ==
+                     hashlib.sha256(hook_file.read_bytes()).hexdigest())
+    interpreter = receipt.get("python") if installed else None
+    if interpreter and not (Path(interpreter).is_absolute() and Path(interpreter).is_file()):
+        raise ValueError("Installed hook interpreter unavailable; review local installation")
+    files, agents, skills = render(root, interpreter)
     state_path = root / "runtime/native-map.json"
     old = read_json(state_path).get("files", {}) if state_path.exists() else {}
     retired = sorted(set(old) - set(files))
     if write and retired:
         raise ValueError("Retired adapters require review and explicit removal: " + ", ".join(retired))
     missing, changed = [], list(retired)
+    hook_ready = None
     for name, content in files.items():
         file = safe_file(root, name)
+        if name == hook_name:
+            hook_ready = file.is_file() and file.read_text(encoding="utf-8") == content
+            if not file.exists():
+                continue  # Fresh clone: tracked adapters and local activation are separate.
         if not file.exists():
             missing.append(name)
         elif file.read_text(encoding="utf-8") != content:
             changed.append(name)
-            if write and hashlib.sha256(file.read_bytes()).hexdigest() != old.get(name):
-                raise ValueError(f"Manual change detected; review {name} before replacement")
+            if write:
+                prior_hash = old.get(name)
+                if name == hook_name:
+                    template_text = (root / "runtime/context-hooks.json").read_text(encoding="utf-8-sig")
+                    if prior_hash == hashlib.sha256(template_text.encode("utf-8")).hexdigest():
+                        prior_hash = None  # Portable template hashes do not attest installed bytes.
+                prior_bytes = hashlib.sha256(file.read_bytes()).hexdigest() == prior_hash
+                if not (prior_bytes or (name == hook_name and installed)):
+                    raise ValueError(f"Manual change detected; review {name} before replacement")
+    hashes = {name: hashlib.sha256(content.encode("utf-8")).hexdigest()
+              for name, content in files.items()}
+    if hook_name in files:
+        template = (root / "runtime/context-hooks.json").read_text(encoding="utf-8-sig")
+        hashes[hook_name] = hashlib.sha256(template.encode("utf-8")).hexdigest()
+    if hook_name in files and (write or hook_file.exists()):
+        if not safe_file(root, "runtime/context_checkpoint.py").is_file():
+            if write:
+                raise ValueError("Context hook target is missing")
+            hook_ready = False
+            changed.append("runtime/context_checkpoint.py")
     if write:
         for name, content in files.items():
             file = safe_file(root, name)
             file.parent.mkdir(parents=True, exist_ok=True)
             file.write_text(content, encoding="utf-8", newline="\n")
+        if hook_name in files:
+            receipt_path.parent.mkdir(parents=True, exist_ok=True)
+            receipt_path.write_text(json.dumps({"python": interpreter or sys.executable,
+                                                "sha256": hashlib.sha256(hook_file.read_bytes()).hexdigest()}),
+                                    encoding="utf-8")
+            hook_ready = True
         state_path.write_text(json.dumps({
             "schema_version": "1.0.0", "agents": agents, "skills": skills,
-            "files": {name: hashlib.sha256(content.encode("utf-8")).hexdigest()
-                      for name, content in files.items()}
+            "files": hashes
         }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         missing, changed = [], []
-    return {"ok": not missing and not changed, "agents": agents, "skills": skills,
+    elif old != hashes:
+        changed.append("runtime/native-map.json")
+    return {"local_hook_ready": hook_ready, "ok": not missing and not changed, "agents": agents, "skills": skills,
             "missing": missing, "changed": changed}
 
 

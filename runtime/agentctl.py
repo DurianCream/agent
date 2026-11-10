@@ -333,7 +333,7 @@ def init_task(module, task_id, objective, criteria, root=ROOT):
     criteria_spec = [{"id": f"criterion-{i+1}", "description": c, "required": True}
                      for i, c in enumerate(criteria)]
     module_spec = {"id": module, "version": selected["version"]}
-    snapshot = {"schema_version": "1.0.0", "module": module, "created_at": now(), "files": [],
+    snapshot = {"schema_version": "1.0.0", "report_paths": "repository-relative-v1", "module": module, "created_at": now(), "files": [],
                 "task_spec": {"module": module_spec, "objective": objective, "criteria": criteria_spec},
                 "versions": {
                     "modules": [{"id": name, "version": modules[name]["manifest"]["version"]}
@@ -523,12 +523,16 @@ def md(value):
     return text.replace("\n", "<br>")
 
 
-def file_link(root, name):
-    target = quote(relative(root, name, file=True).as_posix(), safe="/:")
+def file_link(root, name, portable=False):
+    path = relative(root, name, file=True)
+    # Both render destinations are two levels below the framework root.
+    location = "../../" + path.relative_to(Path(root).resolve()).as_posix() if portable else path.as_posix()
+    target = quote(location, safe="/:")
     return f"[{md(name)}](<{target}>)"
 
 
 def report_text(result, task, snapshot, root=ROOT):
+    portable = snapshot.get("report_paths") == "repository-relative-v1"
     lines = ["# 작업 결과", "", f"## 1. {HEADINGS[0]}", "",
              f"- 작업 ID: {md(result['task_id'])}",
              f"- 담당 모듈: {md(result['module']['id'])} / {md(result['module']['version'])}",
@@ -546,13 +550,13 @@ def report_text(result, task, snapshot, root=ROOT):
               "", f"## 4. {HEADINGS[3]}", ""]
     lines += ["- " + md(item) for item in result["work"]]
     lines += ["", f"## 5. {HEADINGS[4]}", ""]
-    lines += [f"- {file_link(root, a['path'])}: {md(a['description'])}"
+    lines += [f"- {file_link(root, a['path'], portable)}: {md(a['description'])}"
               + (f" (SHA-256: {a['sha256']})" if a["sha256"] else "") for a in result["artifacts"]] or ["해당 없음"]
     lines += ["", f"## 6. {HEADINGS[5]}", ""]
     for check in result["verification"]:
         lines.append(f"- {md(check['id'])} · {md(check['name'])}: {LABELS[check['outcome']]}")
         lines.append(f"  - 방법: {md(check['method'])}")
-        links = ", ".join(file_link(root, name) for name in check["evidence"]) or "미실행 또는 해당 없음"
+        links = ", ".join(file_link(root, name, portable) for name in check["evidence"]) or "미실행 또는 해당 없음"
         lines.append(f"  - 증거: {links}")
         lines.append(f"  - 비고: {md(check['notes']) if check['notes'] else '해당 없음'}")
     if result["sources"]:
