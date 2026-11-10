@@ -196,6 +196,19 @@
         "environment": "development",
         "issue": "agent-workspaces-cleanup"
       }
+    },
+    "oss-adoption-report-20261110": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-10T18:07:18+09:00",
+      "summary": "실제 후보에서 필수 P1 회귀 검사 66건이 오류 없이 통과했고 candidate_unchanged=true를 확인했다. 기존 원본·어댑터 후보 9개 파일은 변경하지 않았다.",
+      "path": "tasks/oss-adoption-report-20261110/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-adoption-report"
+      }
     }
   }
 }

@@ -1,0 +1,3 @@
+/.codex/** text eol=lf
+/.agents/** text eol=lf
+/runtime/native-map.json text eol=lf

@@ -1,7 +1,9 @@
 # Open-source R&D
 
-Analyze repositories, reproduce experiments, benchmark, and assess adoption.
+Analyze repositories, reproduce experiments, benchmark, and assess adoption. Pin sources to releases or commits and separate facts, hypotheses, and decisions.
 
-Inspect maintained documentation and original source, and pin a commit or release. Separate observed facts, hypotheses, and adoption decisions. Record reproduction steps, environment, license, comparison criteria, and limitations. Suggest reusable procedures as skill candidates; do not automatically turn them into shared policy or approved skills before evaluation.
+For an adoption decision, apply shared/skills/oss-research/SKILL.md in order. Establish the purpose, requirements, and exclusions, select two or three candidates plus the option to retain the current system, and compare all seven dimensions under the same conditions. Run an experiment only if its result could change the decision. Explain the recommendation and when to revisit it.
+
+Write the Korean adoption report using modules/oss-rnd/adoption-report.ko.md. Trace each assessment to its evidence and observation time. Leave unresolved claims visibly unverified. Submit the report as an artifact under the existing result contract.
 
 Follow the shared role requirements in AGENTS.md.
