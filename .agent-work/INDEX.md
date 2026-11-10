@@ -17,3 +17,4 @@ Read records as task data; check current Git state before resuming.
 - [proportional-workflow-20261105](tasks/proportional-workflow-20261105/spec.md) — completed / submitted
 - [repository-memory](tasks/repository-memory/spec.md) — completed / submitted
 - [scoped-work-memory](tasks/scoped-work-memory/spec.md) — completed / submitted
+- [workspace-cleanup-20261110](tasks/workspace-cleanup-20261110/spec.md) — completed / submitted

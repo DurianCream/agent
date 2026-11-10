@@ -183,6 +183,19 @@
         "environment": "development",
         "issue": "harness-cost-hygiene-infrastructure"
       }
+    },
+    "workspace-cleanup-20261110": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-10T16:03:06+09:00",
+      "summary": "작업·역할·인스턴스별 작업 공간을 배정하고 바깥 사본 168개 경로를 대조했다. 미등록 초안 8개를 복구 가능한 위치로 분리했다.",
+      "path": "tasks/workspace-cleanup-20261110/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "agent-workspaces-cleanup"
+      }
     }
   }
 }

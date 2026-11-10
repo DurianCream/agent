@@ -6,6 +6,8 @@ Every main or delegated role reads shared/workflows/owner-led-delivery.md before
 
 ## Shared role requirements
 
+For an initialized task, allocate a working directory for the main agent and each new agent instance before assignment. Follow the workspace handoff in shared/workflows/owner-led-delivery.md, including for independent evaluators. Reuse an instance's assignment for follow-ups.
+
 Read registry.json, the selected module.json and the unconditional entry of instructions.md. Read a role's conditional appendix only for its named trigger. For section references below, read only the named section. Load only relevant policies and skills. Work in authorized workspaces. Place temporary files in work/, deliverables in outputs/<task-id>/ and evidence in runs/<task-id>/. Agent instructions, specifications and recovery notes use English; user-facing reports and explanations use Korean. Report only verified results. Host capabilities govern real agent creation and enforcement.
 
 ## Apply these references at their trigger

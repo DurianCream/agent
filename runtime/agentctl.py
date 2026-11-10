@@ -20,7 +20,7 @@ from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SCHEMA_KEYS = {
     "$schema", "$id", "title", "description", "type", "required", "properties",
@@ -642,11 +642,30 @@ def register(manifest_path, root=ROOT):
     return {"registered": manifest["id"], "version": manifest["version"]}
 
 
+def allocate_workspace(task_id, role, root=ROOT):
+    """Allocate a fresh role instance within this task's ignored scratch tree."""
+    root = Path(root).resolve()
+    identifier(role)
+    _, task, _ = load_task(task_id, root)
+    require(task["state"] in ("queued", "running", "waiting"), "Task is closed")
+    _, modules = load_registry(root)
+    require(role in modules and modules[role]["entry"]["enabled"], "Unknown or disabled role")
+    relative_name = f"work/agents/{task_id}/{role}"
+    role_dir = relative(root, relative_name)
+    require(role_dir == root / relative_name, "Workspace path was redirected")
+    role_dir.mkdir(parents=True, exist_ok=True)
+    instance = Path(tempfile.mkdtemp(prefix="instance-", dir=role_dir))
+    return {"task_id": task_id, "role": role, "workspace": instance.relative_to(root).as_posix()}
+
+
 def parser():
     cli = argparse.ArgumentParser(description=__doc__)
     sub = cli.add_subparsers(dest="command", required=True)
     sub.add_parser("doctor")
     sub.add_parser("list")
+    workspace = sub.add_parser("workspace", help="Allocate a fresh task-scoped working directory")
+    workspace.add_argument("task")
+    workspace.add_argument("--role", required=True)
     init = sub.add_parser("init")
     init.add_argument("--repo", help="Registered repository ID for durable work records")
     for name in ("project", "service", "environment", "issue"):
@@ -676,6 +695,8 @@ def main(argv=None):
             data = [{"id": k, "version": v["manifest"]["version"], "name": v["manifest"]["name"],
                      "kind": v["manifest"]["kind"], "enabled": v["entry"]["enabled"]}
                     for k, v in modules.items()]
+        elif args.command == "workspace":
+            data = allocate_workspace(args.task, args.role)
         elif args.command == "init":
             if args.repo:
                 import repoctl

@@ -1,0 +1,1356 @@
+{
+  "primary_head": "b85b78f2747e75b8bca21093f9add4a229b5fa22",
+  "published_rev": "c43dc5a41633ece9b58bda75eb09c3043a5e2935",
+  "rows": [
+    {
+      "path": ".agent-work/INDEX.md",
+      "status": " M",
+      "sha256": "6c08d266b3b7365547fa9c16247b8ce2208febaa98e28ce2f6461cdad5ef6db4",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/index.json",
+      "status": " M",
+      "sha256": "6c56be64b74ae280bdfdaf54a349a879133ef9640494607275a010852733d55b",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agents/skills/submit-result/SKILL.md",
+      "status": " M",
+      "sha256": "e7cdef2876e93efe82113fd4f2c65d04509eb04de09fa52eda3da6ce6dcbec3a",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/coding.toml",
+      "status": " M",
+      "sha256": "825bcccf949fa50945f04184ff4cd5f4dde18bfb696e4a894e98dd032b72e36e",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/evaluator.toml",
+      "status": " M",
+      "sha256": "0aaeb1c549d153d4f6a142f2e0fb4bd95dcdc6174f0b89726ddf7712ef6751f3",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/infrastructure.toml",
+      "status": " M",
+      "sha256": "3e34010989dc0ac44138048325418dcf1b15f65d4067bde9389bef885b2e0e33",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".codex/agents/knowledge-manager.toml",
+      "status": " M",
+      "sha256": "12e3d9a76a3c10f312d51d4327843dde696786e045184605b90491f6326d030b",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/orchestrator.toml",
+      "status": " M",
+      "sha256": "b172e2c2acc348bde18cebc7e012f447d65bc025af59c4bf7fa86a4e5a1138b1",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".codex/agents/oss-rnd.toml",
+      "status": " M",
+      "sha256": "9a9b94677830bdd9eee9c3e1e142968621264928c3b1d96c7e7f4dfc50001f4e",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/policy-manager.toml",
+      "status": " M",
+      "sha256": "210c49cf91380b83b43d827f34370e2f490c2658ba2c5596b3fb3018390d0bc9",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".codex/agents/skill-manager.toml",
+      "status": " M",
+      "sha256": "5dc4faf12bbdf043e2108bd52d285cf3322e8fc9496872e526f2a45dae208152",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".gitignore",
+      "status": " M",
+      "sha256": "2762c1bf6f11d9c37761e3941b4cc32cd99f3f67d79965ae99c4eb37b2d8f497",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "AGENTS.md",
+      "status": " M",
+      "sha256": "9790b2fb46b95b9e8809cd1473b6976ad2876d643445526200cbfd017fb88e18",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "README.md",
+      "status": " M",
+      "sha256": "4433fde2a6eac883f04ac7bb6ffd96fa8e409f9b1bbe0a8190a1031522334f50",
+      "published": "eol-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "core/evaluator/instructions.md",
+      "status": " M",
+      "sha256": "172f089db2b1b9f8f6bc7eaed7932dcb042b234fa43e4e8a47cfd369df022919",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/evaluator/module.json",
+      "status": " M",
+      "sha256": "7d6e2c5bf95ba5ba7dc8d32875f3427ef35b35cd82b017d28647c52979032490",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/knowledge-manager/instructions.md",
+      "status": " M",
+      "sha256": "c1e0e199f968042afb09e1aab405deffa103cb93dd7d5ee7991d026094f2ffda",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/knowledge-manager/module.json",
+      "status": " M",
+      "sha256": "af4bf758af843f9df9224580352004858b4f5e69b52f14631fa0876fdecc49e7",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/orchestrator/instructions.md",
+      "status": " M",
+      "sha256": "7195be1814dfead592625a00e73b9bfaf4a59333557e6f69a855969b9395de6f",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "core/orchestrator/module.json",
+      "status": " M",
+      "sha256": "6208fabc937904d20b87efe7aa6a4dba16d95af40633311ce03b3da04d98c499",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "core/policy-manager/instructions.md",
+      "status": " M",
+      "sha256": "89d70a09fbda5ef423e9032eb8d52a0b3d8f82c8adf69f606c6703b2da176e8e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/policy-manager/module.json",
+      "status": " M",
+      "sha256": "c1095f4c9ed26114308cf579048ced7fe0ff64a99cdf3b94de23f6a1080ae9e4",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/skill-manager/instructions.md",
+      "status": " M",
+      "sha256": "72b263aba233a2d68ce77eb80ce4f9bf8afbc568b1b8475c4e5119be7bf0800b",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "core/skill-manager/module.json",
+      "status": " M",
+      "sha256": "f17cf5bce6a1ff95d528deec622eb52b56d71c75dd3895a383f46a23b222ec7d",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "docs/작업-파이프라인.md",
+      "status": " M",
+      "sha256": "c1985e4fea005ca84b2370f0efaba7a8b26d17109f8226015e2c9a14a41028bd",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/coding/instructions.md",
+      "status": " M",
+      "sha256": "a7d7c9e0ae63b90ba2196f95fb7266faccd05b947da9376c8c37129f79055a85",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/coding/module.json",
+      "status": " M",
+      "sha256": "109fce607605d33e04f12eed84d6c6bb8158df23e120455775c345a458d74951",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/infrastructure/instructions.md",
+      "status": " M",
+      "sha256": "4390e6967420b4b3f8770440bdbec48bd53863ffdc922093f4ae19b34c6e3163",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/module.json",
+      "status": " M",
+      "sha256": "2c35e7f712afc64310a4dc6ded9540f44bdcff1acd465bbca81906093d48fce8",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/oss-rnd/instructions.md",
+      "status": " M",
+      "sha256": "1b3c2bef3aa6f0c868008ab4440c1dc7613dbb13ccb7001639e7e2e27dc42a76",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/oss-rnd/module.json",
+      "status": " M",
+      "sha256": "92420d571eed12bde9e8effd63aa789310c0e86303149483fae8cbf4ce569772",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/agentctl.py",
+      "status": " M",
+      "sha256": "ae7a5135d3792bfb570c242d23ced28cc70a163c3e0f38daae40cb1b9867d20b",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/native-map.json",
+      "status": " M",
+      "sha256": "10574bb36010a0838155c8f7a38704286999486f8c8eeff47417dce681062643",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/repoctl.py",
+      "status": " M",
+      "sha256": "aa61c5b501a6d480bd2d26f592fb587e300fa738af9fa13342cd447f9c5d4554",
+      "published": "eol-only",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/sync_codex.py",
+      "status": " M",
+      "sha256": "1b03e74efb9e3a59e815523b592a1d4154afffbce7a80c5799d33d68d9a92b4d",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/tests/test_codex_settings.py",
+      "status": " M",
+      "sha256": "44dbbb994b1338da4ceba61d3124ee740c90a466605407b3fca2258568d0cdac",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/tests/test_contract.py",
+      "status": " M",
+      "sha256": "9c2c03d4a40986ed579c169dbdc59a5efd7e0fb70ce6431f96e7dac63f248997",
+      "published": "different",
+      "open_owner": "harness-followup-20261110",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "shared/skills/skills.json",
+      "status": " M",
+      "sha256": "dd28665c280aedd5a038d9ebc4a99ba4f2365428bf51e4a63df293252a55d821",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "shared/skills/submit-result/SKILL.md",
+      "status": " M",
+      "sha256": "f41b3b2182765ebba2e07e93b12156e4102383fecc89b0bee8fd8c37f55cacfc",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "shared/workflows/owner-led-delivery.md",
+      "status": " M",
+      "sha256": "795b0a78d086c69d814e6afcd2b6bcdda69b7d268360f1382ac09124f782cfcf",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/harness-followup-20261110/record.json",
+      "status": "??",
+      "sha256": "e6f44499caec279e3e410f0f758cd41695a13e8c7356d47649f8c59768ff3c52",
+      "published": "primary-only",
+      "open_owner": "harness-followup-20261110",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/harness-followup-20261110/report.ko.md",
+      "status": "??",
+      "sha256": "c05c0fe5b39a113c9a79720fe047f870a862c73c24da749a4580fb05f61dd5a9",
+      "published": "primary-only",
+      "open_owner": "harness-followup-20261110",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/harness-followup-20261110/spec.md",
+      "status": "??",
+      "sha256": "ca4ae25ebbb62e3615dac3eb24d15424ce0ee6d7afc847e20ad243acc6272195",
+      "published": "primary-only",
+      "open_owner": "harness-followup-20261110",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/activation-plan.md",
+      "status": "??",
+      "sha256": "aef4dd02e6b8b8744216c1c2ea3a955655c38e9a8e86c1fedce1ca14231b27d0",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/archive-manifest.json",
+      "status": "??",
+      "sha256": "463d4544f39b94bed2f773f74cfb426ed66b33881e0b2112f32eea5c7481b08e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/cli-light-lifecycle-final.json",
+      "status": "??",
+      "sha256": "6ec76ee46310bc3a4a3e9d0b84443a6c864c809d4bd43618c83dd1ddc8ed92be",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/design.md",
+      "status": "??",
+      "sha256": "7e071d53efa4cf69981fd34f07b2eaa4ea9d37209dc96d49e61230a72fd042bb",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/diff-check.json",
+      "status": "??",
+      "sha256": "595c3e34e9028630d0ed123fd868aae8498bb1a03d527e1748e918dc840d49a1",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/doctor.json",
+      "status": "??",
+      "sha256": "a5918b6d6f5f7583f62d54c7d90038cfa672cc69084c4d6af6fb9b905e23f87e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/early-design-review.json",
+      "status": "??",
+      "sha256": "ffa7d46025bd8c270dc6ca322ae5bc6dcb5c4979d2621e088cd5e6a5d3e6c7b6",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/environment.json",
+      "status": "??",
+      "sha256": "dcdb423898f92df2f1adbc636008377688cecd33b1cd15c8719ee57fbc597ecd",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/final-review.json",
+      "status": "??",
+      "sha256": "c3b8e250aee310ce0afceed1067962577af76e46c7a70051871f42e31bbeb776",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/focused-tests-summary.json",
+      "status": "??",
+      "sha256": "bdf1d8aa21460d11d9d62d7eade41d3daae26c2eaaf11f9cf43a22c0eaf9e864",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/implementation-review-initial.json",
+      "status": "??",
+      "sha256": "49cf3a51c5f0ff72ba95edc89ea90240164e87a088d01efdcf2cd28374ff1b90",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/independent-focused-checks.json",
+      "status": "??",
+      "sha256": "46be9fca8ced170b23f0d46d4abbeae50c4ecf29280cadcbb631526542d64463",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/independent-junction-check.json",
+      "status": "??",
+      "sha256": "f766c3167866c7e6ba65d3b1c6b3bd802370fe762b49c7c9a3d96a5a96b8083a",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/legacy-hashes-before.json",
+      "status": "??",
+      "sha256": "a9b70275ff9b0c836ad9e72d96621e2c0c1c39960539c3eea93558cc64caa72c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/legacy-preservation.json",
+      "status": "??",
+      "sha256": "8146c524e44dd0b50cd10ba7cd43fed8bbca8fc885e8084bcac1b6b256aa1f7c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/mandatory-gate-receipt.json",
+      "status": "??",
+      "sha256": "b20bf908aa4bb4ee51adba2d2e047ef2c6bcef89c8d97048daa2f543caf59501",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/mandatory-p1-run.json",
+      "status": "??",
+      "sha256": "5c3b4183a385b8f99a007ceb94c087f7d20b38668127403d014ba361a03b9242",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/owner-handoff.json",
+      "status": "??",
+      "sha256": "8c89beb8bc584730133841d207e8f0ce4bfcc7501c92e3e6f1d6b4104fcb5c5c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/owner-summary.ko.md",
+      "status": "??",
+      "sha256": "093361e7a4350fb69ac7d6b0dd46d85a67c602009b3fbc5b558d269616652719",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/result-layout-review.json",
+      "status": "??",
+      "sha256": "67095ab7729eae8d3c19102059c4bc920a87bc80b0b46cd0f5fe32391ce3f3b3",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/scope.json",
+      "status": "??",
+      "sha256": "ed6337cf5f23e84c804a9f3c4457fdc1cf1b84d288f6568233601fe8f7047e7e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/source-candidate.json",
+      "status": "??",
+      "sha256": "363590e1975d77e95d8d777c2e8b78ae2baccaa37511780cfc9127d94114c6d8",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/source-manifest.json",
+      "status": "??",
+      "sha256": "3d70a3ae864e43152e0f697825f5366a59be83df9d855917b724c0fe55c84a0d",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/sync-check.json",
+      "status": "??",
+      "sha256": "beb9eb904d45229f376e21f89f8ab84df7e9f3e5f78f112eb17664436702df2f",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/evidence/usage.ko.md",
+      "status": "??",
+      "sha256": "91bd57715689bbe6fd5169c6c87843a925060a470a2e9c904115ad8fde5cd061",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/record.json",
+      "status": "??",
+      "sha256": "4c435afdcb2da415c885c1b9b5e2f9f8fe5031a2e4733696ba88ef0c90912502",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/report.ko.md",
+      "status": "??",
+      "sha256": "e3c39fde7c67f8452c3f249bee6c492e36d3834bfc58cb59d9c0a1cbbef875c5",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/lightweight-profile-20261105/spec.md",
+      "status": "??",
+      "sha256": "cea23e365825ab228930741f516611d6cc441f8d1df7ce0aede251df9e37f6d7",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/HyperV-설치-안내.md",
+      "status": "??",
+      "sha256": "497fac1dd78f2774b436263a9c4eba67f3fbd81654e4c2a85ad0a0706039cb22",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/Linux-P2-기반-안내.md",
+      "status": "??",
+      "sha256": "77b6e2cd8d34e1977002cf870cd2d14dba043e4ad90690b3da57beb743bfa8ed",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/broker-api.en.md",
+      "status": "??",
+      "sha256": "16d5f96d7a3159e184313fa5d2d7ef6aaf3ed643639f0600fa7723e81770d51e",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/broker-author-20261030.json",
+      "status": "??",
+      "sha256": "a024cb6f27e3926c8426a03236b7343e7a6032e7abc63106f08d5bf3fede2e02",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/handoff-broker-20261030.json",
+      "status": "??",
+      "sha256": "f4431e5d68335f62e1ad5b15681738f23fd7d67a01ae243e944781ace2aa66a9",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/handoff-os-request.json",
+      "status": "??",
+      "sha256": "436a58114f1b4966609a34efe2fd9692c63fbaefc2a0efccf5432282821b8d62",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/handoff-state.json",
+      "status": "??",
+      "sha256": "1cc5a464d22132632eb13ffae1c9d7f3b5e6e0afe8bda209b4a7802db2e8a64a",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/host-author.json",
+      "status": "??",
+      "sha256": "bd5be8c5a7ab8b0045abd946dc734d1d5d27e032ebf8cd3a09fd1d1f54bcbae0",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/host-discovery.json",
+      "status": "??",
+      "sha256": "e73383faf53da08f4b3e176c21321b7a79a303bb33ed6f2435cb8994024682ea",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/host-next-author-20261030.json",
+      "status": "??",
+      "sha256": "bac761738f63b17d436fb6823e398d35fe8a65fb9877fbf3fe8297839f0e643a",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/independent-broker-review-20261030.json",
+      "status": "??",
+      "sha256": "471b92781ba8b18c27368b9abcbf79224dd2d5c330ac2db9c10e38adeb2fc06a",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/independent-host-probe.json",
+      "status": "??",
+      "sha256": "e92be55eece954aadb69b271955428f8361e74c9c34f03ce7012186870a01356",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/independent-os-request-review.json",
+      "status": "??",
+      "sha256": "c101e8d90e49b7a75f9352199d3446183d6122d7d2b1d807404d603bae3d5759",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/independent-review.json",
+      "status": "??",
+      "sha256": "59fc21936ca5865f28b7e44f1464bfc5e1b0ff2fc1bc542d95cb250b0eb29540",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/os-request-author.json",
+      "status": "??",
+      "sha256": "5b8b56d66e7c344498415280ac042d28a5f3c5c5f3c4efbdd392dfafd783a4a9",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/os-workflow-author.json",
+      "status": "??",
+      "sha256": "ee42cba65ec5bb64d5bf1596c6ba3ce3a7b3696b9c786d6e7affc52a8934262b",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/os-workflow-sync.json",
+      "status": "??",
+      "sha256": "3d7bf8f6216805e760fe711685e2330b9ffeab3b7409d6a9956bf5bc84ca025f",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/runtime-author.json",
+      "status": "??",
+      "sha256": "e28267913a8da9ebc5fe687a618223c4f804e5b96e963b1dc9bfb4a812616915",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/evidence/runtime-discovery.json",
+      "status": "??",
+      "sha256": "ad5bf3519882b92fe256464363f8eaafa84a5ffc867865c5c0cd5be0db8bcfaf",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/implementation.en.md",
+      "status": "??",
+      "sha256": "5b3c86fdbb0126ebb21ce2ce8df90900a7762a2ef55d64139c67a88500be9850",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/linux-admission-test-request.en.md",
+      "status": "??",
+      "sha256": "712a88cbee9e4efff9654b10886816c20e68d5b749b65d45b7ce7a2d5dc1742a",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/record.json",
+      "status": "??",
+      "sha256": "f50f1e7eb5641e3cce48e02fe3ae6e682799b8d05e5565833e6e323f1523c2bc",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/report.ko.md",
+      "status": "??",
+      "sha256": "d183830fa672ef95af9594019cc86227edc1bb380005f64cb2a935863ade0eca",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/spec.md",
+      "status": "??",
+      "sha256": "ccf462994efe853db06eceb88d39c9c8639f3c42672458b02594d104cbb538e0",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/test-environment-request.en.md",
+      "status": "??",
+      "sha256": "cb713cadaa23bb8fb94b27f67401281064d8a309b6fe45290b7b701b410d6c80",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/p2-host-isolation/디렉터리-구조와-역할.md",
+      "status": "??",
+      "sha256": "413489d4efc68e552374168164e0ad111411b7a55c633d5da70764e7c809f97b",
+      "published": "primary-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/adapter-baseline.json",
+      "status": "??",
+      "sha256": "43fe0af7b714fd557e8a7269a217d51987922e97588d69b32cfc91a8de15d144",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/compatibility.json",
+      "status": "??",
+      "sha256": "7e658d5ec254f922883c8010d24472749945dd65a2eb1b04421b5d4975da3cba",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/deployment-plan.json",
+      "status": "??",
+      "sha256": "0f2cd3895edf025da26c952d477c4d5b390aee47797be01cbd2ad3bd429f5591",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/deployment-target-preconditions.json",
+      "status": "??",
+      "sha256": "2f5f2fa056b78f33fff04677c0b3e119e70b38403a1acc46a36e37f8b7d7c16d",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/diff-check-after-lf.json",
+      "status": "??",
+      "sha256": "ec610bf282153e05bfb290d9034bd0352c857c2ddf47512836e654bd32dad335",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/doctor.json",
+      "status": "??",
+      "sha256": "3647eaf19c0cbfe938e3b520423d877ef44191ee588abe442e8d1405bcd405f4",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/final-review.json",
+      "status": "??",
+      "sha256": "8a70cd4b26d05aa29349cb53f8d49c40c0fcaa9c1a369fcc94a69f15d26a2f37",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/gate-suite-receipt.json",
+      "status": "??",
+      "sha256": "83bec949409ff497ff1dedf5ef0c7cdf2d8f1b9b2bab7455050c827f36b2121e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/implementation-handoff-ko.md",
+      "status": "??",
+      "sha256": "c13991313eea12c8c429483034b53dfa8fbba2f8e23961ccff4c86f958002113",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/initial-source-review.json",
+      "status": "??",
+      "sha256": "3f0acad4ba4c474f6b0aa0d804a20ade97608b859f04304a2333b32a8fcf8bd5",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/instruction-conflict-search.json",
+      "status": "??",
+      "sha256": "3a58884e85b96ab632ec71ba45a4951988e4b8c2d5959ac47d07ddf5bb52c681",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/owner-handoff.json",
+      "status": "??",
+      "sha256": "6b7d917fc9a684a99464200e3d467734f96b0b368528bafc6b0489dd3b9cca2a",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/primary-activation.json",
+      "status": "??",
+      "sha256": "f5f73969d068bd162bbb528b065d81c6446d63fb96e3e40fab4b204a99be51e3",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/public-archive-index.json",
+      "status": "??",
+      "sha256": "7d639d8510d894be1fdbcb1c489c924c186b86cc522b06a45174dbbf2c474b0f",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/public-verification-summary.json",
+      "status": "??",
+      "sha256": "00246fe3c6f371dd5647815d2e342584cbb82bb23e1fac0f2b19b66285f7067b",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/scenario-review.json",
+      "status": "??",
+      "sha256": "9c96c72ae247b2e1dce0ec0672373e20c8c96df6b52eabec174e58a35c9ff34c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/source-hashes.json",
+      "status": "??",
+      "sha256": "8de76047540458f5797fa23d2c91cb098d10d51c372d71b4f78e3e2e9dd081a9",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/sync-check-final.json",
+      "status": "??",
+      "sha256": "436b972a2c45f87744f93fd91b813c32138c51af50139fbd1cc10bdeaf75c500",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/version-decisions.json",
+      "status": "??",
+      "sha256": "f0f68a05692206c8a5a6d02c2ebbb4f57e60bdc0b9e23ca68dca655de5e17f34",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/evidence/작업-파이프라인.md",
+      "status": "??",
+      "sha256": "c1985e4fea005ca84b2370f0efaba7a8b26d17109f8226015e2c9a14a41028bd",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/record.json",
+      "status": "??",
+      "sha256": "cb2c748b4267323a8869a3a1f5faefaa82fb3d762674d8305de45a894f0e1924",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/report.ko.md",
+      "status": "??",
+      "sha256": "b6de16965f861a1f46f8e24bccd04596e8d814f562137d1e3f3cb3169c1a206e",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agent-work/tasks/proportional-workflow-20261105/spec.md",
+      "status": "??",
+      "sha256": "7437b8b2aa85aa15875e07ebce99c63a38924268a7508859e0c5128f7790cceb",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agents/skills/evaluator-procedures/SKILL.md",
+      "status": "??",
+      "sha256": "61c647ff87463519a48d188ff6742b1355615499fbaf23cb486f4d266ef69225",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/harness-delivery/SKILL.md",
+      "status": "??",
+      "sha256": "bd684df235a81f98dd63bb4aa0e65ac198102288e3ed9620848e27457fec933c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agents/skills/harness-legacy/SKILL.md",
+      "status": "??",
+      "sha256": "bb1257e6e883145dadb8240200b1fe2e4418b6dcca83fd734c2f296090a2f234",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/harness-memory/SKILL.md",
+      "status": "??",
+      "sha256": "629249f2ff7d4b369c291a992a67b5493c960c955f8fd814edb7ab1f86f8c16a",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/harness-publication/SKILL.md",
+      "status": "??",
+      "sha256": "41dbbb47e81fe9fb8d0a1ca83b97edb37c6f0471ff5fe50704ebc2152fdfff0b",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/harness-recovery/SKILL.md",
+      "status": "??",
+      "sha256": "218fdd498a6c484c83b23d950452968daf79d868e803f0c6e464860727c4dcce",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/infrastructure-environment/SKILL.md",
+      "status": "??",
+      "sha256": "f7a1f35a5f85d1a3c004104d787740a16baae1338e7701e56e1a62154374fc5c",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": ".agents/skills/infrastructure-procedures/SKILL.md",
+      "status": "??",
+      "sha256": "a988ab563d87bc45a538b28cfebb9d1d81b28bcd51193a9513ccc9475b648ad2",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/orchestrator-procedures/SKILL.md",
+      "status": "??",
+      "sha256": "28eccb11a2024dfac8c55961c3aa162583cf1eab795de43eabd81f971f04597a",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": ".agents/skills/policy-manager-procedures/SKILL.md",
+      "status": "??",
+      "sha256": "bbce93e25c282e30dafd6e58868fd6ae00a65f383bf3b984b5b97ce8643b7c9a",
+      "published": "primary-only",
+      "open_owner": null,
+      "disposition": "quarantined-retired-adapter"
+    },
+    {
+      "path": "docs/디렉터리-구조와-역할.md",
+      "status": "??",
+      "sha256": "413489d4efc68e552374168164e0ad111411b7a55c633d5da70764e7c809f97b",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "evals/behavior-protocol.md",
+      "status": "??",
+      "sha256": "1b5cab11d4cbfa859efac85072699cbee1b3730a8bc7c6e7409ee4a57e06acc8",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "evals/harness-behavior-v1.json",
+      "status": "??",
+      "sha256": "14ba686aac97865b4c958d09b61140c70968c3e0189e30a39fa02d7173016222",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "evals/results/harness-cleanup-20261110.json",
+      "status": "??",
+      "sha256": "6b21e9550587a22e7bbd02744a6322acba553b9ff256676a647b77c8824f926a",
+      "published": "eol-only",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/infrastructure/inventory.example.json",
+      "status": "??",
+      "sha256": "bb4714bbf0a91829b4dfbf5097565018206e202e7a988ca356b690555dc6e4a1",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/infrastructure/inventory.schema.json",
+      "status": "??",
+      "sha256": "a54e47932b2d9527f52fe779477b98a1f4f5f89329a8b1083093d5cae6ed49fb",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/infrastructure/p2-test-environment.md",
+      "status": "??",
+      "sha256": "fb4db553e11bec6926700d5a5ac213a12ab175fac5825a9b0b9be31bbac0a7ff",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "modules/infrastructure/p2/HyperV-설치-안내.md",
+      "status": "??",
+      "sha256": "497fac1dd78f2774b436263a9c4eba67f3fbd81654e4c2a85ad0a0706039cb22",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/New-P2VM.ps1",
+      "status": "??",
+      "sha256": "a12ae8e6ac103a2abc70765f9ea9cc9ea8f5928e3f92f99f87ad7e38818b3cb0",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/P2VM.psm1",
+      "status": "??",
+      "sha256": "f2a9902838e578bfe913f010f50a1b980f7f9315cbe8c138f2e8f0ddeb83edbd",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/deployment-contract.en.md",
+      "status": "??",
+      "sha256": "88b4a761d35fede95a78759b24902616b46e2e0fd55b102d150f2fca248b763c",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/README.ko.md",
+      "status": "??",
+      "sha256": "d441bedd17fae5bb0da88b0df873c9e3c6f58d7f791428650ffdf75e6e49f167",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/install.py",
+      "status": "??",
+      "sha256": "667e1aa8f6ce06d5a6932623dc512e5965133489fb78fe838f6aedfbbc275014",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/preflight.py",
+      "status": "??",
+      "sha256": "9d71bd0e6e4a8f22368242a6505725145a65264ddd7a3237f498c19a75df6d1f",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/publisher_entry.py",
+      "status": "??",
+      "sha256": "17693548ee849c4c1664156fc2d056bcdb3c3aaf5ded877d7f2f74d35e7a1b9b",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/rootfs_builder.py",
+      "status": "??",
+      "sha256": "c2a47787ca20440996cc27cc8f4ca5745cf1f71b11a97056881234aff6faf0f3",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/systemd/multi-p2-control.service",
+      "status": "??",
+      "sha256": "b3e309e2d9d005d2541ad3d3e7700a4afd3eb4fd7e52c4c415a617333ee9cac8",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/systemd/multi-p2-executor.service",
+      "status": "??",
+      "sha256": "cfb8a72b88795008ead269ce06041a73e11fac1f65d3a42fd30644cc86f5037a",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service",
+      "status": "??",
+      "sha256": "4d5ce3f1b8bd21e4907a03f777c2e320abe2bd9abdd2f76dc2e3dbcdae53edaa",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/systemd/multi-p2-worker.service",
+      "status": "??",
+      "sha256": "16165d84518821fb0d428528831e7d00d7c9533ef23f9cc11bb8ca05d1bba4d4",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/tests/test_linux_preparation.py",
+      "status": "??",
+      "sha256": "4f8a4eea71eff8a34e3d2923b9335ab24361dc85500055c269ac560853bf8a12",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/linux/worker_entry.py",
+      "status": "??",
+      "sha256": "2e8c29747c558216e53e9f40716164831a83e7b5824e77ba41df1a418b6309d6",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/p2/tests/Test-P2VM.ps1",
+      "status": "??",
+      "sha256": "36bb6ae4f59e7e4b0821bc2cf01037ea0127689396af7081f7a1336987f2bbf9",
+      "published": "eol-only",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "modules/infrastructure/runbook.ko.md",
+      "status": "??",
+      "sha256": "9eaf72e63856d31fb0c78b2ad30b7d3a7632e35ead7e01ba4dd91db7e7a2d953",
+      "published": "byte-identical",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    },
+    {
+      "path": "runtime/p2_broker.py",
+      "status": "??",
+      "sha256": "f0b00c2a2b2a6652b4e2d0a0e9fc644c34ca4c60b9c1b29c536b03fcc9cf1a75",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_contracts.py",
+      "status": "??",
+      "sha256": "378af191e40f9c46a40c4ed7cb4804a368cb57850eabfc0e7e6c50307739b862",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_executor.py",
+      "status": "??",
+      "sha256": "04fe2090185958bd702e0bcf4ccbdaf220fe9ddc0ed73a8721f55b1441efa8b1",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_publisher.py",
+      "status": "??",
+      "sha256": "99b74fe3e908f266a226e4b39999644bdb61a4e241c525616d8f5bc256ce5403",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_sandbox_gate.py",
+      "status": "??",
+      "sha256": "57cb73cb278efdb97d2110af19161eb74211da0a1f1cb3e057a0481f2af8f297",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_store.py",
+      "status": "??",
+      "sha256": "e95133aa9ccd624214f534d9cff8ee2914184cb8d3205bd80cb8fbc9ccea3980",
+      "published": "different",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/p2_verifier.py",
+      "status": "??",
+      "sha256": "b6a0c0fe81f69a0b5d2c56a14bb25d4767ff2b680f231e4f34ff6a8db32f412a",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_broker.py",
+      "status": "??",
+      "sha256": "bac65f79fe841eaecfafc687ec482a18204948f66a43a12fbcbf2504b10df2a7",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_contracts.py",
+      "status": "??",
+      "sha256": "bcff3ce053a2ac4f645ce96a5645634e32df4d889361027b7592eb807a8f0404",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_executor.py",
+      "status": "??",
+      "sha256": "457669a1d29ffb0f201dec700f6b325ac4645359e92bbe4bc9546902adae2ec1",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_publisher.py",
+      "status": "??",
+      "sha256": "85271d34778ef7c78b5db6bccad454d08769b3485acd784ac54eeb9b2293bc6f",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_store.py",
+      "status": "??",
+      "sha256": "91241e3c58ff37ec0c11cdb55c990bf4ae06faf2cf3a5a86099023f12d3b64b1",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "runtime/tests/test_p2_verifier.py",
+      "status": "??",
+      "sha256": "0b15399693e91360385e7e82084c6fcddeab2d044c86493f345e2fd0cf39d2d0",
+      "published": "byte-identical",
+      "open_owner": "p2-host-isolation",
+      "disposition": "retained-open-task"
+    },
+    {
+      "path": "shared/workflows/harness-delivery.md",
+      "status": "??",
+      "sha256": "efbd601454a4434952a4935689c873af6e851cbd772fd144eb0de0caa5e36073",
+      "published": "different",
+      "open_owner": null,
+      "disposition": "retained-checkout-file"
+    }
+  ],
+  "method": "Relative path comparison against published commit blobs, raw SHA-256, CRLF normalization only for the EOL category. The outer checkout has its own divergent commit and two open tasks. A matching published file can still be required at its local path. Recorded immediately after quarantine, before any later feature activation.",
+  "counts": {
+    "retained-checkout-file": 92,
+    "retained-open-task": 68,
+    "quarantined-retired-adapter": 8
+  }
+}
