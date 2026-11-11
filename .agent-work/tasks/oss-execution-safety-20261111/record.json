@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "oss-execution-safety-20261111",
+  "saved_at": "2026-11-11T09:45:43+09:00",
+  "task_state": "queued",
+  "git": {
+    "branch": "main",
+    "head": "4a4770f9508da2a00e5271d321a15a9e5e3a6036",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n?? .agent-work/tasks/oss-execution-safety-20261110-finish/\n?? .agent-work/tasks/oss-execution-safety-20261110/",
+    "worktree_sha256": "73061cd1fa6141e1aabbc5b932e3070c84da943b43ee8ab28051b28efbd520ac"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "oss-execution-safety-20261111",
+    "module": {
+      "id": "skill-manager",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T09:45:40+09:00",
+    "objective": "Publish the exact preserved seven-file OSS execution safety candidate under fresh enrollment, preserving all historical records and excluded files.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Restored seven-file candidate matches all preservation SHA256 hashes exactly.",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-2",
+        "description": "Fresh sync_codex check, doctor ok true, independent evaluation and mandatory P1 pass with zero errors and candidate_unchanged true.",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-3",
+        "description": "Commit and push only owned candidate and permitted new-task records; exclude historical tasks, backup, unrelated adapters, infrastructure and runtime p2 files.",
+        "required": true,
+        "verification_ids": []
+      }
+    ],
+    "status": "partial",
+    "summary": "작업 진행 중.",
+    "work": [
+      "작업을 초기화했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "check-1",
+        "name": "완료 기준 검증",
+        "method": "작업에 맞는 실제 검증",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "아직 실행하지 않음"
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "완료 기준 검증 전"
+    ],
+    "next_actions": [
+      "작업과 검증 수행"
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-execution-safety"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": null,
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "ownership_empty"
+    ],
+    "record_id": "obs-fdd44337a86e4909ad867fce1569850b",
+    "snapshot_digest": null,
+    "status": "not_ready",
+    "task_id": "oss-execution-safety-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "18f785633ba49f498656f44d52ab9cac57bac40b5f0a3b8b1e39f0b5c560e8b5"
+}

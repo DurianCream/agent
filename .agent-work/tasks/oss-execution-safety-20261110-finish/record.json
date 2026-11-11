@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "oss-execution-safety-20261110-finish",
+  "saved_at": "2026-11-10T18:42:31+09:00",
+  "task_state": "waiting",
+  "git": {
+    "branch": "main",
+    "head": "4a4770f9508da2a00e5271d321a15a9e5e3a6036",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/oss-research/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M modules/oss-rnd/instructions.md\n M modules/oss-rnd/module.json\n M runtime/native-map.json\n M shared/skills/oss-research/SKILL.md\n M shared/skills/skills.json\n?? .agent-work/tasks/oss-execution-safety-20261110-finish/\n?? .agent-work/tasks/oss-execution-safety-20261110/",
+    "worktree_sha256": "d1530d3635ddde37d3f5ad3d2f66e41b0ac1cc4661cf7ed33b68acbbbe3d932b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "oss-execution-safety-20261110-finish",
+    "module": {
+      "id": "policy-manager",
+      "version": "0.2.5"
+    },
+    "created_at": "2026-11-10T18:28:52+09:00",
+    "objective": "Complete oss-execution-safety-20261110: regenerate adapters, independent review, full P1, scoped publication",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Adapters regenerated and check plus doctor report ok true",
+        "required": true,
+        "verification_ids": [
+          "adapter-generation",
+          "adapter-check",
+          "doctor"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Independent evaluator accepts exact candidate and all mandatory P1 suites pass with zero errors and candidate_unchanged true",
+        "required": true,
+        "verification_ids": [
+          "independent-review",
+          "p1-regression"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Publish only original task source changes, affected adapters and bounded task records; exclude unrelated adapters infrastructure and runtime p2",
+        "required": true,
+        "verification_ids": [
+          "scope-check",
+          "publication"
+        ]
+      }
+    ],
+    "status": "partial",
+    "summary": "어댑터 재생성·동기화 검사·doctor와 필수 P1 66개 테스트를 통과했습니다. 후보 불변을 확인했으며, 기존 부분 제출 기록과 후속 작업의 소유권 제한 때문에 게시가 남았습니다.",
+    "work": [
+      "고위험 문서 변경의 후속 완료 작업입니다. 원작업 oss-execution-safety-20261110은 partial로 제출되어 닫혔으므로 기존 기록과 스냅샷을 보존하고 후속 ID를 만들었습니다.",
+      "policy-manager /root/safety_owner가 대상 어댑터 2개와 runtime/native-map.json을 재생성했습니다. 원작업 소스 4개의 내용은 변경하지 않았습니다.",
+      "sync_codex.py --write, --check와 agentctl doctor를 각각 1회 실행해 exit 0 및 ok: true를 확인했습니다.",
+      "어댑터·infrastructure·runtime/p2_* 관련 보호 파일 66개의 바이트 불변을 확인했습니다. 재생성 후 복원이 필요한 무관 파일은 없었습니다.",
+      "담당자·범위·복구·환경·검증 순서는 evidence/handoff.md에 기록했습니다.",
+      "독립 evaluator /root/safety_review가 소스 4개와 생성 파일 3개의 해시·내용·버전·보호 파일을 확인하고 사전 어댑터 검토를 accepted로 판정했습니다.",
+      "사전 검토 이후 필수 P1 p1-regression을 1회 실행했습니다. 66개 테스트가 408.128초에 오류 0건으로 통과했고 candidate_unchanged=true입니다. 이전 환경 실패 이후 권한이 변경된 환경에서 재실행한 것이며 중복 실행은 없습니다.",
+      "게시 대상 원소스의 track 명령은 File was already dirty before task 오류를 반환했습니다. 닫힌 원작업과 소유권·공유 인덱스 제약을 우회하지 않았습니다.",
+      "root의 finish 1회 시도는 제출·완료 상태 요건에서 거부됐으며 staging·커밋·푸시는 실행되지 않았습니다. 최종 독립 검토는 검증과 partial 보고의 정확성을 accepted로 판정했습니다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "adapter-generation",
+        "name": "어댑터 재생성",
+        "method": "python runtime/sync_codex.py --write",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/adapter-write.txt"
+        ],
+        "notes": "1회 실행, exit 0, ok: true"
+      },
+      {
+        "id": "adapter-check",
+        "name": "어댑터 동기화 검사",
+        "method": "python runtime/sync_codex.py --check",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/adapter-check.txt"
+        ],
+        "notes": "1회 실행, exit 0, ok: true, missing/changed 없음"
+      },
+      {
+        "id": "doctor",
+        "name": "매니페스트 검사",
+        "method": "python runtime/agentctl.py doctor",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/doctor.txt"
+        ],
+        "notes": "1회 실행, exit 0, ok: true, 8개 모듈·5개 스킬"
+      },
+      {
+        "id": "scope-check",
+        "name": "무관한 파일 보존",
+        "method": "SHA-256 비교",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/scope-preservation.json",
+          "runs/oss-execution-safety-20261110-finish/evidence/candidate-hashes.json"
+        ],
+        "notes": "보호 파일 66개 바이트 불변. 소스 4개 및 생성 결과 3개 해시 기록"
+      },
+      {
+        "id": "diff-check",
+        "name": "공백 오류 검사",
+        "method": "git diff --check",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/diff-check.txt"
+        ],
+        "notes": "exit 0. 줄바꿈 경고는 무관 파일 게시를 허용하지 않습니다."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 재검수",
+        "method": "evaluator",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/adapter-independent-review.md",
+          "runs/oss-execution-safety-20261110-finish/evidence/final-independent-review.md"
+        ],
+        "notes": "사전 어댑터 및 최종 후보·검증 증거·partial 보고 독립 검토 accepted, 확정 결함 없음. 게시 미완료 기준은 별도로 구분했으며 게시 허가를 뜻하지 않습니다."
+      },
+      {
+        "id": "p1-regression",
+        "name": "필수 P1 회귀",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/p1-regression.txt",
+          "runs/oss-execution-safety-20261110-finish/evidence/gate-test-b5649523936e43abab5fafd38a6cb3e1.log"
+        ],
+        "notes": "1회 실행. 66개 테스트, 408.128초, OK, 오류 0건, exit 0, candidate_unchanged=true. 후보 digest 2c2f324df0615fba5d7c586b58a9f2afd6b14bb66f825ce07ea60bd5a345aa29."
+      },
+      {
+        "id": "publication",
+        "name": "작업 범위 게시",
+        "method": "python runtime/repoctl.py finish --task oss-execution-safety-20261110-finish",
+        "outcome": "failed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110-finish/evidence/publication-ownership-blocker.txt",
+          "runs/oss-execution-safety-20261110-finish/evidence/publication-finish-blocker.txt"
+        ],
+        "notes": "root가 finish를 1회 실행했으나 exit 1, Only a submitted completed task can publish automatically로 거부됐습니다. 실제 staging·커밋·푸시는 not_run입니다. 원소스 track도 preexisting_dirty로 거부됐습니다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "문서 규칙과 생성 어댑터 변경이며 실제 OS 격리 또는 P2 재개를 입증하지 않습니다.",
+      "기존 부분 제출 기록은 불변이며 후속 작업 소유권 등록은 원래 소스의 preexisting_dirty 때문에 차단됩니다. 이를 우회하거나 수명주기 파일을 수동 변경하지 않았습니다."
+    ],
+    "next_actions": [
+      "지원되는 작업 재개 또는 소유권 이전 절차를 마련한 뒤 검토된 소스·어댑터와 필요한 작업 기록만 게시합니다.",
+      "후속 작업은 partial 상태로 남겨 재개 가능성을 보존합니다. 기존 제출 기록·스냅샷·게이트를 수동 변경하지 않습니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-execution-safety"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-2094cb9023eb4bbc973602d51ce1cfbb",
+    "snapshot_digest": "sha256:d793d644a120ee7d6463004e05c592b411fab5b45e23f25fe28c3d90be929ba6",
+    "status": "review_pending",
+    "task_id": "oss-execution-safety-20261110-finish",
+    "mode": "observe"
+  },
+  "spec_sha256": "5fb26641a4220730e47c0421d2155234c9ae7bcc6e4a4d5b90ef139ddaebf359"
+}

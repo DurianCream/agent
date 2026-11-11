@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "oss-execution-safety-20261110",
+  "saved_at": "2026-11-10T18:24:17+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "4a4770f9508da2a00e5271d321a15a9e5e3a6036",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M modules/oss-rnd/instructions.md\n M modules/oss-rnd/module.json\n M shared/skills/oss-research/SKILL.md\n M shared/skills/skills.json\n?? .agent-work/tasks/oss-execution-safety-20261110/",
+    "worktree_sha256": "37b96b0dc14af558ac05a46f1c0fab88108abe0ab6004d43efb953e559ce669c"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "oss-execution-safety-20261110",
+    "module": {
+      "id": "policy-manager",
+      "version": "0.2.5"
+    },
+    "created_at": "2026-11-10T18:16:07+09:00",
+    "objective": "Add read-only default and disposable execution safety rules for OSS research without resuming P2",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "OSS instructions and skill cover read-only default, disposable execution, credential exclusion, unavailable-environment stop and untrusted repository instructions",
+        "required": true,
+        "verification_ids": [
+          "source-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Module and skill versions are updated and adapters regenerated or honestly not_run under host restrictions",
+        "required": true,
+        "verification_ids": [
+          "doctor",
+          "adapter-generation",
+          "adapter-check"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Existing verification and independent adversarial review are recorded with environment failures separated and unrelated edits preserved",
+        "required": true,
+        "verification_ids": [
+          "scope-check",
+          "p1-regression",
+          "independent-review"
+        ]
+      }
+    ],
+    "status": "partial",
+    "summary": "OSS 실행 안전 규칙과 버전을 변경했습니다. 어댑터 쓰기 제한과 회귀 환경 오류로 게시하지 않았습니다.",
+    "work": [
+      "고위험 문서 변경: 외부 코드 실행 및 자격 증명 경계를 다루므로 policy-manager가 변경하고 독립 평가를 받습니다.",
+      "modules/oss-rnd/instructions.md와 shared/skills/oss-research/SKILL.md에 읽기 전용 기본값, 일회용 환경 실행, 호스트 설치 금지, 자격 증명 차단, 환경 부재 시 not_run 및 요청 후 중단, 외부 지시문 데이터 취급을 추가했습니다.",
+      "oss-rnd 모듈을 0.3.0, oss-research 스킬과 모듈 핀을 1.2.0으로 올렸습니다. 기존 스냅샷과 P2 구현은 변경하지 않았습니다.",
+      "담당자 및 범위·위험·복구·호환성 기록: runs/oss-execution-safety-20261110/evidence/handoff.md.",
+      "독립 평가의 REV-1에 따라 한국어 보고서 인코딩을 복구했고, REV-2에 따라 P1 오류 원인을 작업공간 git init 실패와 TEMP 접근 거부로 구분했습니다.",
+      "독립 평가자 safety_review가 REV-1·REV-2 해결과 소스 해시 불변을 확인했습니다. 필수 테스트 미통과로 P1 평가 등록은 거부되었습니다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "source-review",
+        "name": "규칙 시나리오 검토",
+        "method": "작성자 정적 검토",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/scenario-review.md",
+          "runs/oss-execution-safety-20261110/evidence/candidate-hashes.json"
+        ],
+        "notes": "실제 에이전트 행동이나 OS 격리 시험은 아닙니다."
+      },
+      {
+        "id": "doctor",
+        "name": "매니페스트 검증",
+        "method": "agentctl doctor",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/doctor.txt"
+        ],
+        "notes": "8개 모듈, 5개 스킬 구조 검사 통과"
+      },
+      {
+        "id": "diff-check",
+        "name": "공백 오류 검사",
+        "method": "git diff --check",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/diff-check.txt"
+        ],
+        "notes": "줄바꿈 경고만 관찰"
+      },
+      {
+        "id": "scope-check",
+        "name": "무관한 파일 보존",
+        "method": "변경 전후 SHA-256 비교",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/scope-check.json"
+        ],
+        "notes": "어댑터·infrastructure·runtime/p2_* 파일 59개의 바이트 보존"
+      },
+      {
+        "id": "adapter-generation",
+        "name": "어댑터 재생성",
+        "method": "sync_codex --write",
+        "outcome": "not_run",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/environment-blockers.md"
+        ],
+        "notes": "호스트가 .codex/.agents를 읽기 전용으로 지정하여 실행하지 않았습니다."
+      },
+      {
+        "id": "adapter-check",
+        "name": "어댑터 동기화 검사",
+        "method": "sync_codex --check",
+        "outcome": "failed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/adapters-check.txt"
+        ],
+        "notes": "재생성 미실행으로 대상 어댑터 2개와 native-map이 오래된 상태"
+      },
+      {
+        "id": "p1-regression",
+        "name": "P1 회귀",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "failed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/p1-regression.txt",
+          "runs/oss-execution-safety-20261110/evidence/gate-test-ef9903c1f5ad46d4a0e027ac4ff84501.log",
+          "runs/oss-execution-safety-20261110/evidence/environment-blockers.md"
+        ],
+        "notes": "66개 테스트, 132개 오류. 작업공간 fixture의 git init에서 cannot mkdir / File exists, TEMP fixture 생성·정리에서 WinError 5가 발생했습니다. 재실행 준비 mkdir도 거부되어 두 번째 suite는 실행하지 않았습니다. 변경의 회귀 통과를 입증하지 못했습니다."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 검토",
+        "method": "evaluator",
+        "outcome": "passed",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/independent-review.md",
+          "runs/oss-execution-safety-20261110/evidence/report-encoding-check.json"
+        ],
+        "notes": "독립 평가와 집중 재검토를 실제 수행했습니다. 소스 의미 검토는 accepted, REV-1·REV-2는 해결했습니다. 필수 회귀 미통과로 전체 결론은 inconclusive이며 P1 평가 등록도 거부되었습니다. 이 항목의 passed는 검토 수행과 문서 요건 확인을 뜻하며 게시 승인이나 회귀 통과가 아닙니다."
+      },
+      {
+        "id": "commit",
+        "name": "커밋",
+        "method": "repoctl finish",
+        "outcome": "not_run",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/environment-blockers.md"
+        ],
+        "notes": "필수 회귀의 환경 오류와 .git 읽기 전용으로 실행하지 않았습니다."
+      },
+      {
+        "id": "push",
+        "name": "푸시",
+        "method": "repoctl finish",
+        "outcome": "not_run",
+        "evidence": [
+          "runs/oss-execution-safety-20261110/evidence/environment-blockers.md"
+        ],
+        "notes": "필수 회귀 실패 및 커밋 없음으로 실행하지 않았습니다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "문서 규칙이며 OS 격리 강제나 실제 성능 측정 결과를 제공하지 않습니다.",
+      "어댑터 재생성 not_run: .codex/.agents 읽기 전용.",
+      "P1 회귀는 작업공간 git init과 TEMP fixture 환경 오류로 실패했으며 변경의 회귀 통과를 주장할 수 없습니다. 이전에 보고된 NtCreateDirectoryObject 오류까지 도달하지 않았습니다.",
+      "독립 평가의 소스 검토와 보고서 복구 재검토는 완료했습니다. 전체 검증은 inconclusive이고 필수 회귀 미통과로 커밋·푸시를 실행하지 않았습니다."
+    ],
+    "next_actions": [
+      "쓰기 가능한 허용 환경에서 대상 어댑터 재생성을 수행합니다.",
+      "fixture 오류를 해결한 허용 환경에서 P1 회귀와 해당 독립 평가를 수행한 후 제출·게시 절차를 재개합니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-execution-safety"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-be8b5e806a85493994d5c15386e71b77",
+    "snapshot_digest": "sha256:771b12bc0bffe811013e465c98273abb71d63383b7c46abeccc3cb4d24a988a9",
+    "status": "review_pending",
+    "task_id": "oss-execution-safety-20261110",
+    "mode": "observe"
+  },
+  "spec_sha256": "e8dac3655bfebd3d4f4e8dc4d3e44063ad8a35e7c1cfee0d51050add39ad1fd4"
+}

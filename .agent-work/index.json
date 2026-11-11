@@ -209,6 +209,58 @@
         "environment": "development",
         "issue": "oss-adoption-report"
       }
+    },
+    "oss-execution-safety-20261110": {
+      "status": "partial",
+      "state": "submitted",
+      "saved_at": "2026-11-10T18:24:17+09:00",
+      "summary": "OSS 실행 안전 규칙과 버전을 변경했습니다. 어댑터 쓰기 제한과 회귀 환경 오류로 게시하지 않았습니다.",
+      "path": "tasks/oss-execution-safety-20261110/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-execution-safety"
+      }
+    },
+    "oss-execution-safety-20261110-finish": {
+      "status": "partial",
+      "state": "waiting",
+      "saved_at": "2026-11-10T18:42:31+09:00",
+      "summary": "어댑터 재생성·동기화 검사·doctor와 필수 P1 66개 테스트를 통과했습니다. 후보 불변을 확인했으며, 기존 부분 제출 기록과 후속 작업의 소유권 제한 때문에 게시가 남았습니다.",
+      "path": "tasks/oss-execution-safety-20261110-finish/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-execution-safety"
+      }
+    },
+    "oss-execution-safety-20261111": {
+      "status": "partial",
+      "state": "queued",
+      "saved_at": "2026-11-11T09:45:43+09:00",
+      "summary": "작업 진행 중.",
+      "path": "tasks/oss-execution-safety-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-execution-safety"
+      }
+    },
+    "oss-execution-safety-20261111b": {
+      "status": "partial",
+      "state": "queued",
+      "saved_at": "2026-11-11T09:52:45+09:00",
+      "summary": "작업 진행 중.",
+      "path": "tasks/oss-execution-safety-20261111b/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-execution-safety"
+      }
     }
   }
 }
