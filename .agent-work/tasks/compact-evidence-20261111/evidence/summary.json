@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "id": "check-policy",
+      "result": "passed",
+      "command": "doctor; sync_codex --check; git diff --check; test_control_gate_evidence",
+      "metrics": {
+        "tests_added": 3,
+        "tests_deleted": 0,
+        "historical_files_changed": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/compact-evidence-20261111/evidence/owner-audit.json",
+          "sha256": "3c8fe2078cbc72d87b0bcb2478f2f0fdae745d9da102d5a25046a1a4cd6ecb0f"
+        }
+      ]
+    },
+    {
+      "id": "check-suite",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task compact-evidence-20261111 --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "elapsed_seconds": 765.669
+      },
+      "evidence": [
+        {
+          "path": "runs/compact-evidence-20261111/evidence/gate-test-99141ab088bf4800a68b1709bfa24f1c.log",
+          "sha256": "c8a8158586417477ebe6a36e4e7f72cd55c10660e2fa0b21cb2ea15f0de9ea8c"
+        }
+      ]
+    },
+    {
+      "id": "check-review",
+      "result": "passed",
+      "command": "independent source review; python -m unittest (10 boundary tests); local fixture submit/finish/push and committed-size probe",
+      "metrics": {
+        "confirmed_findings": 0,
+        "boundary_tests": 10,
+        "boundary_seconds": 44.203,
+        "probe_seconds": 20.263
+      },
+      "evidence": [
+        {
+          "path": "runs/compact-evidence-20261111/evidence/reviewer-review.json",
+          "sha256": "ca32f56def5cf7af77b4d2834bc0a21ea2ff6f1baa2fa2bdd14ddb9899505f41"
+        }
+      ]
+    }
+  ]
+}

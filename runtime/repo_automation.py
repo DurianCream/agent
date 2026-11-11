@@ -8,6 +8,7 @@ from pathlib import Path
 import agentctl as a
 import repoctl as r
 import secret_scan
+import task_evidence
 
 
 def policy(path):
@@ -126,6 +127,7 @@ def finish(task_id, root=a.ROOT):
             a.require(remote_head(path, settings) == head, 'Remote is ahead or diverged; reconcile separately')
             a.require(not staged_paths(path), 'Unrelated staged changes block automatic publication')
             r.checkpoint(task_id, root)
+            task_evidence.validate(path, task_id, value)
             owned = sorted(set(value['paths'] + ['.agent-work/automation.json'] + [
                 '.agent-work/tasks/' + task_id + '/' + name
                 for name in ('spec.md', 'record.json', 'report.ko.md')]))
@@ -168,6 +170,7 @@ def finish(task_id, root=a.ROOT):
         # P1 checks the real created/retried commit before any remote effect.
         # A failure preserves phase=committed, so a retry cannot make a duplicate
         # completion commit.
+        task_evidence.validate(path, task_id, value, commit=value['commit'])
         gate = a.control_gate_call('check_publication', task_id, root,
                                   commit=value['commit'], publication=value)
         remote = remote_head(path, settings)

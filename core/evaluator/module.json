@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "evaluator",
   "name": "Evaluator",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Independently assess correctness, evidence, regressions, and uncertainty without granting execution authority.",
@@ -45,7 +45,7 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "path": "shared/skills/submit-result/SKILL.md"
     },
     {
@@ -55,7 +55,7 @@
     },
     {
       "id": "harness-delivery",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "path": "shared/workflows/harness-delivery.md"
     }
   ],

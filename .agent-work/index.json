@@ -404,6 +404,19 @@
         "environment": "development",
         "issue": "p0-observation-removal"
       }
+    },
+    "compact-evidence-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T18:51:11+09:00",
+      "summary": "커밋용 증거 요약·원본 해시·크기 상한 구현과 독립 검수를 완료했습니다. 실제 origin/main 게시·원격 확인은 main의 후속 lifecycle 단계입니다.",
+      "path": "tasks/compact-evidence-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "compact-task-evidence"
+      }
     }
   }
 }

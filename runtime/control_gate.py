@@ -596,6 +596,8 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
         a.require(a.digest(a.relative(root, artifact['path'], file=True).read_bytes()) in reviewed_hashes,
                   'P1 artifact was not bound by review evidence')
     _, _, publication = _context(task_id, root)
+    import task_evidence
+    task_evidence.validate(root, task_id, publication)
     record_entries = [_reviewed_blob(root, name) for name in sorted(publication['paths']) if _evidence_path(name, task_id)]
     for item in record_entries:
         a.require(item['state'] == 'file' and a.digest(a.relative(root, item['path'], file=True).read_bytes()) in reviewed_hashes,
