@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "modules/infrastructure/p2/New-P2VM.ps1: LF parse passed\r\nmodules/infrastructure/p2/tests/Test-P2VM.ps1: LF parse passed\r\nmodules/infrastructure/p2/P2VM.psm1: LF parse passed\r\n",
+  "reason": "Both tracked .ps1 files and their .psm1 module parse successfully with LF in Windows PowerShell; no .bat/.cmd files and no CRLF exception required. Parse-only, no P2/Hyper-V execution."
+}

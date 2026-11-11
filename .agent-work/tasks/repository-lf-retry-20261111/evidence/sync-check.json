@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python",
+    "runtime/sync_codex.py",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"local_hook_ready\": true, \"ok\": true, \"agents\": [\"orchestrator\", \"skill-manager\", \"policy-manager\", \"knowledge-manager\", \"evaluator\", \"coding\", \"infrastructure\", \"oss-rnd\"], \"skills\": [\"submit-result\", \"maintain-module\", \"oss-research\", \"harness-delivery\", \"infrastructure-environment\"], \"missing\": [], \"changed\": []}\r\n",
+  "stderr": ""
+}

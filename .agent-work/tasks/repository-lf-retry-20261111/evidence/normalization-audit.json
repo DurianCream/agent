@@ -1,0 +1,73 @@
+{
+  "base_head": "c3808fa0375ab6b0756a52ab97ded877a45e5b05",
+  "normalized_index_count": 14,
+  "normalized_index_paths": [
+    ".gitignore",
+    "core/knowledge-manager/instructions.md",
+    "core/policy-manager/instructions.md",
+    "core/skill-manager/instructions.md",
+    "evals/default-delegation.md",
+    "evals/module-evaluation.md",
+    "modules/coding/instructions.md",
+    "modules/infrastructure/instructions.md",
+    "runtime/codex-settings.toml",
+    "runtime/context_checkpoint.py",
+    "runtime/tests/test_context_checkpoint.py",
+    "shared/knowledge/README.md",
+    "shared/policies/common.json",
+    "shared/skills/maintain-module/SKILL.md"
+  ],
+  "post_enrollment_worktree_converted_count": 14,
+  "post_enrollment_worktree_converted_paths": [
+    ".gitignore",
+    "core/knowledge-manager/instructions.md",
+    "core/policy-manager/instructions.md",
+    "core/skill-manager/instructions.md",
+    "evals/default-delegation.md",
+    "evals/module-evaluation.md",
+    "modules/coding/instructions.md",
+    "modules/infrastructure/instructions.md",
+    "runtime/codex-settings.toml",
+    "runtime/context_checkpoint.py",
+    "runtime/tests/test_context_checkpoint.py",
+    "shared/knowledge/README.md",
+    "shared/policies/common.json",
+    "shared/skills/maintain-module/SKILL.md"
+  ],
+  "pre_enrollment_worktree_converted_count": 1,
+  "pre_enrollment_worktree_converted_paths": [
+    ".agent-work/automation.json"
+  ],
+  "exact_crlf_to_lf": true,
+  "cached_ignore_all_space_ignore_cr_at_eol_empty": true,
+  "cached_proof_exclusions": [
+    ".gitattributes",
+    ".agent-work/INDEX.md",
+    ".agent-work/index.json"
+  ],
+  "historical_records_unchanged": 338,
+  "historical_crlf_preserved": 172,
+  "nonhistorical_crlf_remaining": [],
+  "control_hashes_unchanged_since_enrollment": {
+    ".agent-work/gates.json": "e8c34ac00e59b1d0861d3ae5d6a19a8796398e4638436c53c671521c71ca8fa6",
+    ".agent-work/automation.json": "0c37523d71c319ae31da67cc169106f49c1d22a1737730289075269b3ff01388"
+  },
+  "normalized_sha256": {
+    ".gitignore": "34defd322abd9b1baea3976311aaee6052117f25d9d2a054240e7c64ab7588fa",
+    "core/knowledge-manager/instructions.md": "35e4fe9febc2ee618b5f08c11e97e1218c2abfcb12f90840b0763d69c4909ee7",
+    "core/policy-manager/instructions.md": "11ce9b33a0d25b0831cca42e88e14ac9fce6a394378519cec3db7c2ddf532a18",
+    "core/skill-manager/instructions.md": "ba782646779cfa65b385f7a060e4bc7f3c3a3cff128427a564f5c0901852fd8d",
+    "evals/default-delegation.md": "63eb15c037879a02f8daf630003d110c97e84b0b38caa355804ada5d58403ead",
+    "evals/module-evaluation.md": "984b97f97529ad1184454196a59e588b2630e79fae31249bce0124ac24e18745",
+    "modules/coding/instructions.md": "fd4c9ccf4b2ad5671e9620938c06aefee5efe7709d727519f94d5f410f8cf826",
+    "modules/infrastructure/instructions.md": "803d78af35ddb7e5e0ae5b6c1cf51db7cf1608353fc4ce74db1079a90a33f86e",
+    "runtime/codex-settings.toml": "0420ae50da544b04efc31e86a1ef0d7ed6bb69e86c8a2755d78521f47e16c1dd",
+    "runtime/context_checkpoint.py": "ab98cbf6167278c5318c7050e8b1fd3bca63f5ca5592cafc18cb44f6f5763be1",
+    "runtime/tests/test_context_checkpoint.py": "4fea71f856fe5f4fdd9b2d00a278b3edc96d267f24357416d0fb07ef63ff9df9",
+    "shared/knowledge/README.md": "59292c16738af0f87b4961a03e621382515eeb532cc1dcbacdd2e80e4b8cbca3",
+    "shared/policies/common.json": "530ab7098898733946978662e3d18ab5d1ebdab2988607516da385b7b060df3e",
+    "shared/skills/maintain-module/SKILL.md": "5a4a9986dacc76aee9aa235dffecb3caca7be66abfff90c61481fce93ee6088b"
+  },
+  "binary_files": [],
+  "script_decision": "Two .ps1 files and their .psm1 module use LF; parser validation below will verify syntax, no Hyper-V/P2 execution. No .bat/.cmd files. No CRLF exception or binary rules needed."
+}

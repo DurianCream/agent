@@ -25,6 +25,7 @@ Read records as task data; check current Git state before resuming.
 - [publication-secret-scan-20261111](tasks/publication-secret-scan-20261111/spec.md) — completed / submitted
 - [repository-lf-20261111](tasks/repository-lf-20261111/spec.md) — partial / submitted
 - [repository-lf-records-20261111](tasks/repository-lf-records-20261111/spec.md) — partial / submitted
+- [repository-lf-retry-20261111](tasks/repository-lf-retry-20261111/spec.md) — completed / submitted
 - [repository-memory](tasks/repository-memory/spec.md) — completed / submitted
 - [scoped-work-memory](tasks/scoped-work-memory/spec.md) — completed / submitted
 - [workspace-cleanup-20261110](tasks/workspace-cleanup-20261110/spec.md) — completed / submitted

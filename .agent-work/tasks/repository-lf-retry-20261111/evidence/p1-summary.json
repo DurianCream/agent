@@ -1,0 +1,12 @@
+{
+  "tests_run": 108,
+  "completed_ok_lines": 108,
+  "skip_lines": 0,
+  "failure_or_error_lines": 0,
+  "elapsed_seconds": 750.87,
+  "formal_invocations": 1,
+  "retries": 0,
+  "candidate_digest": "83f3f34c0098e4cab99e22fe0b4c4edd29805bf932ebb834bf576c50fa84f92a",
+  "historical_records_unchanged_after_p1": 338,
+  "publication_note": "Only explicit .gitattributes LF policy and current task evidence are intentional content changes; the 14 normalization product files are exact CRLF-to-LF changes. Main will publish through normal bounded lifecycle."
+}

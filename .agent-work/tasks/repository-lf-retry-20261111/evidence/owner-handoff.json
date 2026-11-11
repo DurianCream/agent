@@ -1,0 +1,27 @@
+{
+  "task": "repository-lf-retry-20261111",
+  "repository": "multi",
+  "project": "multi",
+  "service": "agent-framework",
+  "environment": "development",
+  "issue": "repository-lf-normalization",
+  "tier": "normal",
+  "reason": "Reversible line-ending storage normalization without code semantics change.",
+  "owner": "/root/lf_owner",
+  "orchestrator": "/root",
+  "evaluator": "/root/lf_evaluator",
+  "owner_workspace": "work/agents/repository-lf-20261111/coding/instance-7yr4vzr0",
+  "allowed_changes": "Global LF .gitattributes policy, exact 14 CRLF-to-LF product paths, current task records only.",
+  "failure_rule": "One formal full P1 invocation with existing 1800s timeout. If failed or timed out, preserve exact candidate and stop. No rollback, retry, code/test/timeout edits.",
+  "history_rule": "Preserve every preexisting historical record byte and stored hash; nested -text rules retained.",
+  "python": "3.14.4",
+  "git": "git version 2.53.0.windows.3",
+  "local_tests": "Windows PowerShell parser and configured local P1 runner; no VM or P2 execution.",
+  "invocations_before_p1": {
+    "sync_check": 1,
+    "doctor": 1,
+    "powershell_parse": 1
+  },
+  "orchestrator_workspace": "work/agents/repository-lf-retry-20261111/orchestrator/instance-9lbmk77h",
+  "evaluator_workspace": "work/agents/repository-lf-retry-20261111/evaluator/instance-iew5g7vo"
+}

@@ -1,0 +1,29 @@
+{
+  "current_candidate_digest": "83f3f34c0098e4cab99e22fe0b4c4edd29805bf932ebb834bf576c50fa84f92a",
+  "test_candidate_digest": "83f3f34c0098e4cab99e22fe0b4c4edd29805bf932ebb834bf576c50fa84f92a",
+  "candidate_matches": true,
+  "log_hash_matches": true,
+  "summary_lines": [
+    "Ran 108 tests in 743.113s",
+    "OK"
+  ],
+  "observed_ok": 108,
+  "skips": [],
+  "historical_count": 338,
+  "historical_mismatches": [],
+  "changed_normalized_paths_since_review": [],
+  "normalized_audit_hashes_match": true,
+  "gate_receipt_count": 1,
+  "impact_mode": "full",
+  "suite_argv": [
+    "@project-python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "runtime/tests",
+    "-p",
+    "test_control_gate*.py",
+    "-v"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "git",
+    "status",
+    "--short",
+    "--",
+    ".agents",
+    ".codex",
+    "runtime/native-map.json"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

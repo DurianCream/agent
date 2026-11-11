@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python",
+    "runtime/agentctl.py",
+    "doctor"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"ok\": true, \"command\": \"doctor\", \"data\": {\"modules\": 8, \"skills\": 5, \"result_contract\": \"1.0.0\", \"runtime_version\": \"0.3.0\", \"execution\": \"host\", \"schema_validation\": \"repository-supported-keywords\"}, \"errors\": []}\r\n",
+  "stderr": ""
+}

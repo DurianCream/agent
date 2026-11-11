@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python",
+    "runtime/control_gate.py",
+    "run-tests",
+    "--task",
+    "repository-lf-retry-20261111",
+    "--suite",
+    "p1-regression"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 750.87,
+  "formal_invocations": 1,
+  "retries": 0
+}

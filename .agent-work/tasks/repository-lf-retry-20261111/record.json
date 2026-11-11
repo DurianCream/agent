@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "repository-lf-retry-20261111",
+  "saved_at": "2026-11-11T14:29:00+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "c3808fa0375ab6b0756a52ab97ded877a45e5b05",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .gitattributes\n M .gitignore\n M core/knowledge-manager/instructions.md\n M core/policy-manager/instructions.md\n M core/skill-manager/instructions.md\n M evals/default-delegation.md\n M evals/module-evaluation.md\n M modules/coding/instructions.md\n M modules/infrastructure/instructions.md\n M runtime/codex-settings.toml\n M runtime/context_checkpoint.py\n M runtime/tests/test_context_checkpoint.py\n M shared/knowledge/README.md\n M shared/policies/common.json\n M shared/skills/maintain-module/SKILL.md\n?? .agent-work/tasks/repository-lf-retry-20261111/",
+    "worktree_sha256": "7b02191c94dfa30d56eafefca2ad7516615287afb41210e83d8b11381f89f5b2"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "repository-lf-retry-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T14:05:56+09:00",
+    "objective": "Normalize repository text to LF without content or historical hash changes; preserve candidate on failure",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Global LF attributes preserve existing rules; binary and Windows script decisions evidenced",
+        "required": true,
+        "verification_ids": [
+          "policy"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Renormalization contains only CRLF-to-LF byte changes excluding authorized attributes and current task records",
+        "required": true,
+        "verification_ids": [
+          "normalization"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Historic records unchanged; sync_codex check and doctor pass; adapters clean",
+        "required": true,
+        "verification_ids": [
+          "normalization",
+          "health"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Full P1 1800-second suite and independent evaluator accept exact LF candidate",
+        "required": true,
+        "verification_ids": [
+          "p1",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "저장소 14개 파일의 LF 정규화와 전체 LF 정책을 적용했습니다. 내용 동일성 검증, 필수 P1 108개 시험 및 독립 검수를 통과했습니다.",
+    "work": [
+      "신규 작업 등록 전에 Git 내용이 이미 LF인 automation.json의 작업 트리만 LF로 정리하여 등록 해시를 안정화했습니다.",
+      ".gitattributes에 전체 LF 규칙을 추가하고 기존 세 규칙과 과거 기록의 -text 규칙을 유지했습니다.",
+      "git add --renormalize .와 Git 인덱스 체크아웃을 사용하여 14개 파일을 LF로 정규화했습니다.",
+      "정책·현재 작업 기록을 제외한 정확한 CRLF→LF 비교 및 공백·줄바꿈 무시 비교가 모두 통과했습니다.",
+      "기존 기록 338개의 원시 바이트와 해시를 보존했습니다. 바이너리와 .bat/.cmd 파일은 없고 PowerShell 스크립트는 LF 구문 분석을 통과했습니다.",
+      "시스템 core.autocrlf=true, 하네스 코드, 시험 코드 및 1800초 제한을 변경하지 않았습니다.",
+      "필수 P1 전체 시험 108개가 단일 실행으로 통과했습니다. 실행 명령 전체 750.87초, unittest 시험 743.113초이며 건너뜀·실패·재시도는 없습니다.",
+      "독립 evaluator가 동일 후보와 실제 시험 증거를 검토하고 accepted 판정을 내렸습니다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/repository-lf-retry-20261111/normalization-report.ko.md",
+        "description": "LF normalization and verification report",
+        "sha256": "6b1ea5d2d430026d78f5e796ced15866c34107d8f3068fd813b618611098e4b7"
+      }
+    ],
+    "verification": [
+      {
+        "id": "policy",
+        "name": "LF 정책 및 Windows 스크립트",
+        "method": "추적 파일 목록·속성 검토와 PowerShell 구문 분석",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-lf-retry-20261111/evidence/normalization-audit.json",
+          "runs/repository-lf-retry-20261111/evidence/powershell-lf-parse.json"
+        ],
+        "notes": "기존 규칙 유지. 바이너리 없음, CRLF 예외 불필요."
+      },
+      {
+        "id": "normalization",
+        "name": "줄바꿈만 변경 및 과거 기록 보존",
+        "method": "정확한 바이트 비교, git diff --cached --ignore-all-space --ignore-cr-at-eol",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-lf-retry-20261111/evidence/preflight.json",
+          "runs/repository-lf-retry-20261111/evidence/normalization-audit.json"
+        ],
+        "notes": "14개 정규화, 비교 결과 비어 있음. 기존 기록 338개 불변."
+      },
+      {
+        "id": "health",
+        "name": "동기화·doctor·어댑터 상태",
+        "method": "sync_codex --check, agentctl doctor, git status",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-lf-retry-20261111/evidence/sync-check.json",
+          "runs/repository-lf-retry-20261111/evidence/doctor.json",
+          "runs/repository-lf-retry-20261111/evidence/adapter-status.json"
+        ],
+        "notes": "두 명령 ok:true, 어댑터 수정 표시 없음."
+      },
+      {
+        "id": "p1",
+        "name": "필수 P1 전체 시험",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-lf-retry-20261111/evidence/p1-receipt.json",
+          "runs/repository-lf-retry-20261111/evidence/p1-invocation.json",
+          "runs/repository-lf-retry-20261111/evidence/gate-test-195914d8c4ac41708a49ee37d03258fc.log",
+          "runs/repository-lf-retry-20261111/evidence/p1-summary.json"
+        ],
+        "notes": "전체 P1 108개 통과, 실패·건너뜀 0개. 실행 명령 750.87초(시험 743.113초), 정식 실행 1회·재시도 0회. 후보 바이트 불변."
+      },
+      {
+        "id": "review",
+        "name": "독립 evaluator 검수",
+        "method": "별도 evaluator가 정확한 후보와 실제 증거 검토",
+        "outcome": "passed",
+        "evidence": [
+          "runs/repository-lf-retry-20261111/evidence/review-final.json",
+          "runs/repository-lf-retry-20261111/evidence/review-final-checks.json",
+          "runs/repository-lf-retry-20261111/evidence/review-retry-checks.json"
+        ],
+        "notes": "독립 evaluator accepted. 14개 정규화와 기존 기록 338개 불변, 실제 시험 증거를 확인했습니다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "과거 기록 보존을 위해 기존 .agent-work/.gitattributes의 -text 규칙을 유지했습니다. 기존 기록 338개 중 CRLF 172개는 그대로 보존했습니다."
+    ],
+    "next_actions": [
+      "메인 에이전트가 정식 validate·submit 이후 finish로 커밋·푸시하고 최종 상태를 확인합니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-lf-normalization"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-82d709685f4f450991810e4fcd1960de",
+    "snapshot_digest": "sha256:eb460083702dd9eebcdaa5fe05abf4216385c4961576f19354bf70d3f74229e4",
+    "status": "review_pending",
+    "task_id": "repository-lf-retry-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "defe5ae869a16ccb04e6a8220b79f5563f96ff4bbb3c7fd1bd53639d55893cee"
+}

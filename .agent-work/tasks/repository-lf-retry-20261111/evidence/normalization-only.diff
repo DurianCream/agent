@@ -1,0 +1,8 @@
+Normalization-only cached diff evidence wrapper
+Command: git diff --cached --ignore-all-space --ignore-cr-at-eol
+Scope: 14 normalization product files staged; authorized .gitattributes and current task indexes excluded from staging.
+Observed exit code: 0
+Observed stdout bytes: 0
+Observed comparison: empty, no content differences.
+Raw empty stdout preserved in runs/repository-lf-retry-20261111/evidence/normalization-only.raw.diff; normalization-audit.json provides exact CRLF-to-LF byte verification.
+This wrapper is nonempty evidence metadata, not diff output.
