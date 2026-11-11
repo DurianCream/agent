@@ -439,9 +439,14 @@ def main(argv=None):
     p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
     p = sub.add_parser('import-legacy'); p.add_argument('--repo', required=True); p.add_argument('--source-task', required=True)
     p = sub.add_parser('approve-memory'); p.add_argument('--task', required=True); p.add_argument('--legacy-task', required=True)
+    p = sub.add_parser('transfer-ownership'); p.add_argument('--task', required=True); p.add_argument('--source-task', required=True); p.add_argument('--path', action='append', required=True)
+    p = sub.add_parser('prepare-records-only'); p.add_argument('--task', required=True); p.add_argument('--source-task', required=True)
     args = cli.parse_args(argv)
     try:
-        if args.command in ('import-legacy', 'approve-memory'):
+        if args.command in ('transfer-ownership', 'prepare-records-only'):
+            import task_recovery
+            value = task_recovery.prepare(args.task, args.source_task, args.path if args.command == 'transfer-ownership' else None)
+        elif args.command in ('import-legacy', 'approve-memory'):
             import legacy_memory
             value = legacy_memory.import_legacy(args.repo, args.source_task) if args.command == 'import-legacy' else legacy_memory.approve_memory(args.task, args.legacy_task)
         elif args.command in ('startup', 'begin', 'track', 'finish'):

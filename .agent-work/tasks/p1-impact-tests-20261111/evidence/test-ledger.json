@@ -1,0 +1,192 @@
+{
+  "notice": "Owner execution ledger. Distinct cases and repeated invocations are not summed as unique coverage. Full gate records/logs are authoritative for final suite. Early focused outputs were observed in session; durable focused summaries and final full log preserve their outcomes.",
+  "focused_invocations": [
+    {
+      "name": "existing gate file",
+      "tests_run": 53,
+      "outcome": "passed",
+      "elapsed_seconds": 252.619,
+      "reason": "Initial baseline compatibility; later included in official full."
+    },
+    {
+      "name": "impact initial fixture",
+      "tests_run": 9,
+      "outcome": "failed",
+      "elapsed_seconds": 5.996,
+      "reason": "Fixture runtime directory already existed; fixed exist_ok without product behavior change."
+    },
+    {
+      "name": "recovery initial boundary",
+      "tests_run": 8,
+      "outcome": "failed",
+      "elapsed_seconds": 73.18,
+      "reason": "One diagnostic-message assertion exposed validation-before-state ordering; fixed closed-state check first."
+    },
+    {
+      "name": "impact first complete",
+      "tests_run": 9,
+      "outcome": "passed",
+      "elapsed_seconds": 191.585,
+      "reason": "All requested selection boundaries passed; measured excessive per-file Git cost."
+    },
+    {
+      "name": "recovery with positive publication fixtures",
+      "tests_run": 10,
+      "outcome": "failed",
+      "elapsed_seconds": 105.012,
+      "reason": "Two positive fixtures omitted mandatory artifact; fixed fixture without weakening artifact gate."
+    },
+    {
+      "name": "records-only focused diagnostic",
+      "tests_run": 1,
+      "outcome": "failed",
+      "elapsed_seconds": 16.718,
+      "reason": "Same missing fixture artifact confirmed before repair."
+    },
+    {
+      "name": "initial fast integrity",
+      "tests_run": 4,
+      "outcome": "passed",
+      "elapsed_seconds": 2.017,
+      "reason": "Actual source checkout structural checks."
+    },
+    {
+      "name": "positive local publication first",
+      "tests_run": 2,
+      "outcome": "passed",
+      "elapsed_seconds": 101.635,
+      "reason": "Actual local commits and pushes; fixture test process output stubbed."
+    },
+    {
+      "name": "impact after batch baseline reading",
+      "tests_run": 9,
+      "outcome": "passed",
+      "elapsed_seconds": 43.749,
+      "reason": "Relevant rerun after exact-byte batched Git read optimization."
+    },
+    {
+      "name": "impact execution/review binding",
+      "tests_run": 1,
+      "outcome": "passed",
+      "elapsed_seconds": 11.434,
+      "reason": "New production selection/proof/assessment integration boundary."
+    },
+    {
+      "name": "R1 shared protection",
+      "tests_run": 1,
+      "outcome": "passed",
+      "elapsed_seconds": 12.524,
+      "reason": "Nine existing shared-module subcases; affected review repair."
+    },
+    {
+      "name": "R2 index envelope",
+      "tests_run": 1,
+      "outcome": "passed",
+      "elapsed_seconds": 0.001,
+      "reason": "Ordinary/records-only envelope payload, version and field boundaries."
+    },
+    {
+      "name": "R3 source proof tamper",
+      "tests_run": 1,
+      "outcome": "passed",
+      "elapsed_seconds": 8.711,
+      "reason": "Both stale and recomputed candidate-digest tampering rejected by original anchor."
+    },
+    {
+      "name": "positive local publication after anchor",
+      "tests_run": 2,
+      "outcome": "passed",
+      "elapsed_seconds": 118.799,
+      "reason": "Affected end-to-end rerun after source submission anchor repair."
+    },
+    {
+      "name": "legacy prose compatibility",
+      "tests_run": 16,
+      "outcome": "passed",
+      "elapsed_seconds": 337.212,
+      "reason": "Not included by required test_control_gate*.py pattern; changed profile branch compatibility."
+    },
+    {
+      "name": "fixture dependency retention",
+      "tests_run": 1,
+      "outcome": "passed",
+      "elapsed_seconds": 4.95,
+      "reason": "New tracked dependency mutation is still rejected after fixture baseline reduction."
+    },
+    {
+      "name": "positive local publication optimized fixture",
+      "tests_run": 2,
+      "outcome": "passed",
+      "elapsed_seconds": 109.346,
+      "reason": "Same assertions after fixture-only preparation optimization."
+    },
+    {
+      "name": "O1 partial without runner/evidence-only",
+      "tests_run": 2,
+      "outcome": "passed",
+      "elapsed_seconds": 6.152,
+      "reason": "Preserve incomplete closure while retaining original anchored file identity."
+    },
+    {
+      "name": "pinned context before lock fix",
+      "tests_run": 29,
+      "outcome": "failed",
+      "elapsed_seconds": 2.427,
+      "reason": "New exact runner measurement exposed the existing launcher/lock-holder PID mismatch."
+    },
+    {
+      "name": "pinned focused original/base comparison",
+      "tests_run": 2,
+      "outcome": "mixed",
+      "reason": "Original failed 0.132s; same-version base interpreter passed 0.129s."
+    },
+    {
+      "name": "pinned context after lock fix",
+      "tests_run": 29,
+      "outcome": "passed",
+      "elapsed_seconds": 1.918,
+      "reason": "Actual PID assertion and lock-release assertions preserved."
+    },
+    {
+      "name": "pinned context timing attempt",
+      "tests_run": 29,
+      "outcome": "failed",
+      "elapsed_seconds": 2.453,
+      "reason": "Lock fix passed; separate observed atomic_json WinError5, root cause unconfirmed."
+    },
+    {
+      "name": "pinned context final timing retry",
+      "tests_run": 29,
+      "outcome": "passed",
+      "elapsed_seconds": 2.45,
+      "reason": "Original CRLF restored in edited fixture; production bytes unchanged; previous failure preserved."
+    }
+  ],
+  "full_attempts": [
+    {
+      "record": "test-767a70a7811744cf867f754288533c74.json",
+      "outcome": "failed",
+      "reason": "registered 600-second timeout; candidate also changed during independent repairs"
+    },
+    {
+      "record": "test-ed07598acdba4257b339e38477ba7559.json",
+      "outcome": "failed",
+      "elapsed_seconds": 360.379,
+      "reason": "Owner intentionally terminated owned runner after O1 partial-closure regression confirmation; no passing summary; preserved superseded evidence"
+    },
+    {
+      "record": "test-a0eed08fa79b447a901d49fe145e7af7.json",
+      "outcome": "passed",
+      "tests_run": 92,
+      "elapsed_seconds": 556.274,
+      "reason": "Passed before the later isolated checkpoint process fixture repair; retained but superseded for final candidate"
+    },
+    {
+      "record": "test-3d9997e01fc84cf9a26b425b57098347.json",
+      "outcome": "passed",
+      "tests_run": 92,
+      "elapsed_seconds": 548.1967217999045,
+      "reason": "Final fixed candidate; exact original mandatory suite and 600-second limit; candidate_unchanged true"
+    }
+  ]
+}

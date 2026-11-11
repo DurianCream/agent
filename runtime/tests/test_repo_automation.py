@@ -35,7 +35,8 @@ class AutomationTests(unittest.TestCase):
         r.git(self.path, 'add', '--', 'seed.txt', '.agent-work/repository.json')
         r.git(self.path, 'commit', '-m', 'Initial')
         r.git(self.path, 'remote', 'add', 'origin', str(self.remote))
-        r.git(self.path, 'push', '-u', 'origin', 'main')
+        # Seed the bare fixture by fetching objects/refs; no receive hooks are needed.
+        r.git(self.remote, 'fetch', str(self.path), 'refs/heads/main:refs/heads/main')
         a.write_json(self.path / '.agent-work/automation.json', {
             'schema_version': '1.0.0', 'enabled': True, 'remote': 'origin',
             'expected_url': str(self.remote), 'branch': 'main'})

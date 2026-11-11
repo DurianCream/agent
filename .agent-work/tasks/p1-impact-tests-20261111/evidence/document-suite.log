@@ -1,0 +1,9 @@
+test_adapter_consistency (impact_document_checks.ImpactDocumentChecks.test_adapter_consistency) ... ok
+test_document_integrity (impact_document_checks.ImpactDocumentChecks.test_document_integrity) ... ok
+test_registry (impact_document_checks.ImpactDocumentChecks.test_registry) ... ok
+test_result_contract (impact_document_checks.ImpactDocumentChecks.test_result_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.628s
+
+OK

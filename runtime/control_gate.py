@@ -17,6 +17,7 @@ from pathlib import Path
 
 import agentctl as a
 import submission_profile as sp
+import impact_tests as impact
 
 VERSION = '0.1.0'
 CONFIG = '.agent-work/gates.json'
@@ -143,6 +144,10 @@ def enroll(task_id, root=a.ROOT):
     if capability is not None:
         value['schema_version'] = sp.ENROLLMENT_VERSION
         value['submission_profile'] = capability
+    impact_capability = impact.capture(root, publication['base_head'])
+    if impact_capability is not None:
+        value['schema_version'] = impact.ENROLLMENT_VERSION
+        value['impact_tests'] = impact_capability
     digest = _hash(value)
     a.write_json(companion, value)
     a.write_json(ledger, {'digest': digest, 'enrollment': value})
@@ -167,11 +172,14 @@ def check_enrollment(task_id, root=a.ROOT):
     expected_keys = {'schema_version', 'mode', 'assurance', 'task_id', 'binding', 'base_head',
                      'publication_policy', 'publication_policy_sha256', 'config', 'config_sha256',
                      'created_at', 'nonce'}
-    if value.get('schema_version') == sp.ENROLLMENT_VERSION:
+    if value.get('schema_version') == impact.ENROLLMENT_VERSION:
+        expected_keys.add('impact_tests')
+        a.require(value['impact_tests'] == impact.capture(root, value['base_head']), 'Impact capture differs from baseline')
+    if value.get('schema_version') == sp.ENROLLMENT_VERSION or (value.get('schema_version') == impact.ENROLLMENT_VERSION and 'submission_profile' in value):
         expected_keys.add('submission_profile')
         sp.validate_capture(value, root)
     a.require(set(value) == expected_keys, 'Invalid P1 enrollment fields')
-    a.require(value['schema_version'] in (VERSION, sp.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
+    a.require(value['schema_version'] in (VERSION, sp.ENROLLMENT_VERSION, impact.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
               value['assurance'] == 'local-cooperating-cli' and value['task_id'] == task_id,
               'Invalid P1 enrollment')
     _profile(value['config'])
@@ -302,6 +310,8 @@ def candidate(task_id, root=a.ROOT):
     enrollment = check_enrollment(task_id, root)
     a.require(enrollment is not None, 'Task is not P1 enrolled')
     _, _, publication = _context(task_id, root)
+    import task_recovery
+    task_recovery.validate(task_id, root, publication)
     paths = publication['paths']
     a.require(type(paths) is list and len(paths) <= 512 and len(set(paths)) == len(paths),
               'Invalid P1 owned path set')
@@ -352,6 +362,11 @@ def _append(run, prefix, value):
         json.dump(value, stream, ensure_ascii=False, indent=2)
         stream.write('\n')
     return name
+
+
+def impact_selection(task_id, current, enrollment, root):
+    state = sp._state(task_id, root)
+    return impact.select(current, enrollment, root, forced=bool(state and state[1]['profile'] == 'full'))
 
 
 def run_tests(task_id, suite_id, root=a.ROOT):
@@ -419,6 +434,8 @@ def run_tests(task_id, suite_id, root=a.ROOT):
              'assurance': 'local-executed-untrusted-candidate'}
     if profile_proof is not None:
         value['profile_digest'] = profile_proof['sha256']
+    if 'impact_tests' in enrollment:
+        value['impact_selection'] = impact_selection(task_id, before, enrollment, root)
     record = _append(run, 'test', value)
     return {'record': record, **value}
 
@@ -427,7 +444,14 @@ def assess(task_id, value, root=a.ROOT):
     root = Path(root).resolve()
     current = candidate(task_id, root)
     enrollment = check_enrollment(task_id, root)
-    a.require(type(value) is dict and set(value) == {'candidate_digest', 'reviewer', 'verdict', 'evidence'},
+    required_fields = {'candidate_digest', 'reviewer', 'verdict', 'evidence'}
+    if 'impact_tests' in enrollment:
+        required_fields |= {'impact_digest', 'impact_review'}
+        selection = impact_selection(task_id, current, enrollment, root)
+        a.require(value.get('impact_digest') == _hash(selection), 'Impact review selection is stale')
+        review = value.get('impact_review')
+        a.require(type(review) is dict and set(review) == {e['path'] for e in current['candidate']['entries']} and all(type(v) is str and len(v) >= 10 for v in review.values()), 'Independent impact review must cover every owned path')
+    a.require(type(value) is dict and set(value) == required_fields,
               'Invalid P1 assessment fields')
     _identity(value['reviewer'])
     author = enrollment['config']['author']
@@ -449,6 +473,8 @@ def assess(task_id, value, root=a.ROOT):
               'tests': _proofs(task_id, current, root, review_required=False),
               'result_digest': _hash(_result_subject(_read(a.relative(_run(task_id, root), 'result.json', file=True)), root)),
               'created_at': _now(), 'identity_authenticated': False}
+    if 'impact_tests' in enrollment:
+        record.update(impact_digest=value['impact_digest'], impact_review=value['impact_review'])
     name = _append(_run(task_id, root), 'review', record)
     return {'record': name, **record}
 
@@ -479,6 +505,8 @@ def _proofs(task_id, current, root, review_required=True):
                   proof['exit_code'] == 0 and type(proof.get('tests_run')) is int and proof['tests_run'] > 0 and
                   proof['candidate_unchanged'] is True,
                   'P1 mandatory test did not pass')
+        if 'impact_tests' in enrollment:
+            a.require(proof.get('impact_selection') == impact_selection(task_id, current, enrollment, root), 'P1 impact selection changed')
         _evidence_valid(root, proof['evidence'])
         selected.append({'path': 'runs/' + task_id + '/gates/' + name, 'sha256': a.digest((run / 'gates' / name).read_bytes())})
     if not review_required:
@@ -489,6 +517,8 @@ def _proofs(task_id, current, root, review_required=True):
     _identity(review['reviewer'])
     a.require(review['verdict'] == 'accepted' and all(review['reviewer'][k] != enrollment['config']['author'][k]
               for k in ('subject', 'session')), 'P1 review is unresolved or not independent')
+    if 'impact_tests' in enrollment:
+        a.require(review.get('impact_digest') == _hash(impact_selection(task_id, current, enrollment, root)), 'P1 impact review changed')
     a.require(review.get('tests') == selected, 'P1 review does not cover current test executions')
     a.require(review['evidence'], 'P1 review evidence missing')
     for item in review['evidence']:
@@ -506,6 +536,23 @@ def _result_subject(result, root):
                                          for name in evidence]}
 
 
+def _incomplete_candidate(task_id, root, enrollment):
+    """Seal only transferable file identity; incomplete work needs no test runner."""
+    _, binding, publication = _context(task_id, root)
+    paths = publication['paths']
+    a.require(type(paths) is list and len(paths) <= 512 and len(paths) == len(set(paths)), 'Invalid incomplete owned path set')
+    product = sorted(name for name in paths if name not in _managed(task_id) and not _evidence_path(name, task_id))
+    if not product:
+        return None
+    for name in product:
+        a.relative(root, name)
+        a.require(not name.startswith(('runs/', 'outputs/', '.git/')), 'Incomplete publication path unsupported')
+    value = {'schema_version': VERSION, 'kind': 'incomplete-file-candidate', 'task_id': task_id,
+             'enrollment_digest': _hash(enrollment), 'binding': binding, 'base_head': publication['base_head'],
+             'entries': [_reviewed_blob(root, name) for name in product]}
+    return {'digest': _hash(value), 'candidate': value}
+
+
 def check_submission(task_id, root=a.ROOT, result=None, persist=False):
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
@@ -515,7 +562,25 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
     if result is None:
         result = _read(a.relative(run, 'result.json', file=True))
     if result['status'] != 'completed':
-        return {'mode': 'enforce', 'status': 'incomplete-result', 'assurance': 'local-cooperating-cli'}
+        response = {'mode': 'enforce', 'status': 'incomplete-result', 'assurance': 'local-cooperating-cli'}
+        task = _read(run / 'task.json')
+        file = run / 'incomplete-candidate.json'
+        anchor = task.get('submission', {}).get('incomplete_candidate_sha256')
+        if anchor is not None:
+            a.require(file.is_file() and a.digest(file.read_bytes()) == anchor, 'Incomplete candidate differs from source submission anchor')
+            saved = _read(file)
+            a.require(saved['candidate']['digest'] == _hash(saved['candidate']['candidate']), 'Incomplete candidate digest mismatch')
+            response['incomplete_candidate_sha256'] = anchor
+        elif persist and result['status'] == 'partial' and task['state'] == 'running':
+            incomplete = _incomplete_candidate(task_id, root, enrollment)
+            if incomplete is not None:
+                saved = {'candidate': incomplete, 'result_sha256': a.digest((json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8'))}
+                if file.exists():
+                    a.require(_read(file) == saved, 'Incomplete candidate changed after submission attempt')
+                else:
+                    a.write_json(file, saved)
+                response['incomplete_candidate_sha256'] = a.digest(file.read_bytes())
+        return response
     a.require(enrollment['config']['policy']['submission'] == 'allow', 'P1 submission policy denies action')
     current = candidate(task_id, root)
     proofs = _proofs(task_id, current, root)
@@ -584,9 +649,10 @@ def _check_generated(task_id, root, enrollment, actual):
                      'summary': result['summary'], 'path': 'tasks/' + task_id + '/spec.md', 'scope': binding['scope']}
     a.require(index['tasks'][task_id] == expected_item, 'P1 index entry is not derived from submitted task')
     baseline_text = _git(root, 'show', enrollment['base_head'] + ':.agent-work/index.json', optional=True)
-    baseline = json.loads(baseline_text) if baseline_text else {'tasks': {}}
-    a.require({k: v for k, v in index['tasks'].items() if k != task_id} == baseline['tasks'],
-              'P1 unrelated index entries changed')
+    baseline = json.loads(baseline_text) if baseline_text else {'schema_version': '1.0.0', 'tasks': {}}
+    import task_recovery
+    _, _, publication = _context(task_id, root)
+    task_recovery.check_index(task_id, root, publication, index, baseline)
     rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
     rows.extend(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}" for key, item in sorted(index['tasks'].items()))
     a.require(a.relative(root, '.agent-work/INDEX.md', file=True).read_text(encoding='utf-8') == '\n'.join(rows) + '\n',
@@ -666,7 +732,7 @@ def check_publication(task_id, root=a.ROOT, commit=None, publication=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status', 'select-profile', 'promote-full'))
+    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status', 'select-profile', 'promote-full', 'select-tests'))
     parser.add_argument('--task', required=True)
     parser.add_argument('--suite')
     parser.add_argument('--input')
@@ -676,6 +742,9 @@ def main(argv=None):
         a.load_task(args.task)
         if args.command == 'candidate':
             value = candidate(args.task)
+        elif args.command == 'select-tests':
+            value = impact_selection(args.task, candidate(args.task), check_enrollment(args.task), a.ROOT)
+            value = {**value, 'digest': _hash(value)}
         elif args.command == 'run-tests':
             value = run_tests(args.task, args.suite)
         elif args.command == 'select-profile':

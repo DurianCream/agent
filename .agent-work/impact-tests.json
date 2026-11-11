@@ -1,0 +1,577 @@
+{
+  "schema_version": "1.0.0",
+  "periodic_full": "manual-before-release",
+  "suites": [
+    {
+      "id": "impact-document-integrity",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "impact_document_checks.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "codex-settings",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_codex_settings.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "context-checkpoint",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_context_checkpoint.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "legacy-memory",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_legacy_memory.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-workflow",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_workflow.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-policy",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_policy.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-integration",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_integration.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "controlctl",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_controlctl.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-verifier",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_verifier.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-store",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_store.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-rpc",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_rpc.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-publisher",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_publisher.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-executor",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_executor.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-contracts",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_contracts.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "p2-broker",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_p2_broker.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "contract",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_contract.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "agent-workspaces",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_agent_workspaces.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "repoctl",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_repoctl.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "work-scope",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_work_scope.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "repo-automation",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_repo_automation.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-contracts",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_contracts.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-gate-all",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_gate*.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "submission-profile",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_submission_profile.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-gate-impact",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_gate_impact.py",
+        "-v"
+      ]
+    },
+    {
+      "id": "control-gate-recovery",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_gate_recovery.py",
+        "-v"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "path": "runtime/sync_codex.py",
+      "suites": [
+        "codex-settings"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/context_checkpoint.py",
+      "suites": [
+        "context-checkpoint"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/legacy_memory.py",
+      "suites": [
+        "legacy-memory"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/control_workflow.py",
+      "suites": [
+        "control-workflow"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/control_policy.py",
+      "suites": [
+        "control-policy"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/control_integration.py",
+      "suites": [
+        "control-integration"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/controlctl.py",
+      "suites": [
+        "controlctl"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_verifier.py",
+      "suites": [
+        "p2-verifier"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_store.py",
+      "suites": [
+        "p2-store"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_rpc.py",
+      "suites": [
+        "p2-rpc"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_publisher.py",
+      "suites": [
+        "p2-publisher"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_executor.py",
+      "suites": [
+        "p2-executor"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_contracts.py",
+      "suites": [
+        "p2-contracts"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_broker.py",
+      "suites": [
+        "p2-broker"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/p2_sandbox_gate.py",
+      "suites": [
+        "p2-executor"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/agentctl.py",
+      "suites": [
+        "contract",
+        "agent-workspaces"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/repoctl.py",
+      "suites": [
+        "repoctl",
+        "work-scope"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/repo_automation.py",
+      "suites": [
+        "repo-automation"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/control_contracts.py",
+      "suites": [
+        "control-contracts"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/control_gate.py",
+      "suites": [
+        "control-gate-all"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/submission_profile.py",
+      "suites": [
+        "submission-profile"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/impact_tests.py",
+      "suites": [
+        "control-gate-impact"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "runtime/task_recovery.py",
+      "suites": [
+        "control-gate-recovery"
+      ],
+      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
+    },
+    {
+      "path": "modules/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "shared/skills/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "shared/knowledge/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "docs/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "evals/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": ".codex/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": ".agents/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "runtime/native-map.json",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    }
+  ]
+}

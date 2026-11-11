@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p1-impact-tests-20261111",
+  "saved_at": "2026-11-11T11:11:38+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "7d47df20340a9a59dba9e51231375e4617e78c9c",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M \"docs/P1-\\354\\240\\234\\354\\266\\234-\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M \"docs/\\354\\236\\221\\354\\227\\205-\\355\\214\\214\\354\\235\\264\\355\\224\\204\\353\\235\\274\\354\\235\\270.md\"\n M runtime/agentctl.py\n M runtime/control_gate.py\n M runtime/repo_automation.py\n M runtime/repoctl.py\n M runtime/submission_profile.py\n M runtime/tests/test_context_checkpoint.py\n M runtime/tests/test_control_gate.py\n M runtime/tests/test_repo_automation.py\n?? .agent-work/impact-tests.json\n?? .agent-work/tasks/p1-impact-tests-20261111/\n?? runtime/impact_tests.py\n?? runtime/task_recovery.py\n?? runtime/tests/impact_document_checks.py\n?? runtime/tests/test_control_gate_impact.py\n?? runtime/tests/test_control_gate_recovery.py",
+    "worktree_sha256": "2829ca60ac709a308886c6cab46d111985ec428662a6221e09d63b7a371b4adf"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p1-impact-tests-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T10:01:32+09:00",
+    "objective": "Implement fail-closed impact-based P1 test selection and bounded lifecycle recovery publication procedures.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Versioned explicit impact mapping selects documented suites with fail-closed full fallback, immutable enrollment, evidence, and manual full promotion.",
+        "required": true,
+        "verification_ids": [
+          "impact",
+          "full-p1",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Supported hash-bound ownership transfer and source-free closed-task record publication preserve historical records and publication gates.",
+        "required": true,
+        "verification_ids": [
+          "recovery",
+          "full-p1",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Selection examples are timed, full P1 passes, independent adversarial review accepts, and Korean documentation describes compatibility and periodic full testing.",
+        "required": true,
+        "verification_ids": [
+          "full-p1",
+          "independent-review",
+          "impact"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "P1 영향 기반 시험 선택과 해시 기반 후속 처리 CLI를 구현하고, 최종 전체 P1 92개 및 독립 검수를 통과했습니다.",
+    "work": [
+      "Risk tier: high. Gate selection and publication recovery can omit checks or publish incorrect content; fail-closed fallback and exact commit verification are retained.",
+      "Main: /root orchestrator, work/agents/p1-impact-tests-20261111/orchestrator/instance-cu8akf6y. Owner: /root/implementation coding, work/agents/p1-impact-tests-20261111/coding/instance-2i79tj2c. Checkout: repository root. No child delegation authorized.",
+      "Scope: repository/project multi; service agent-framework; environment development; issue p1-impact-tests. Acceptance criteria remain the initialized immutable three criteria.",
+      "Owned product files: .agent-work/impact-tests.json, docs/P1-제출-게시-검사-사용안내.md, docs/작업-파이프라인.md, runtime/agentctl.py, runtime/control_gate.py, runtime/impact_tests.py, runtime/repo_automation.py, runtime/repoctl.py, runtime/submission_profile.py, runtime/task_recovery.py, runtime/tests/impact_document_checks.py, runtime/tests/test_context_checkpoint.py, runtime/tests/test_control_gate.py, runtime/tests/test_control_gate_impact.py, runtime/tests/test_control_gate_recovery.py, runtime/tests/test_repo_automation.py",
+      "Milestones: architecture/ownership; implementation/targeted tests; full P1/evidence; independent adversarial review and affected repair. Escalate unexpected irreversible effects or repeated failures without new diagnostic hypothesis.",
+      "New committed impact policy capture only; existing enrollment remains full. Explicit mapping, protected/new/unmapped/unowned-dependency fallback, union selection, test/review digest binding and irreversible promotion.",
+      "Recovery CLI prepares a distinct gated successor; partial transfer requires saved candidate exact hash and closed-record-only mode prohibits product paths. Original records/snapshots stay unchanged; mirrored additive receipts bind both histories.",
+      "Local bare fixture seeding changed from push to fetch; actual publication tests still execute real commit/push. workspace-write sandbox execution not_run: this host session is unrestricted.",
+      "Recovery conditions: before publication retain scoped source edits and task evidence; do not reset unrelated changes. Failed real publication preserves pending commit for supported retry. Existing remote/branch/commit validation is unchanged.",
+      "Independent preliminary review found R1 shared-module fallback, R2 index-envelope validation and R3 incomplete-candidate anchor defects; repaired by same owner and verified with focused regressions. Exact evidence in repair-summary.md; final independent review accepted the exact candidate.",
+      "Final full P1: 92 passed, 548.197 seconds, original 600-second limit, candidate unchanged. Exact candidate 3cec3a570d2bdaef71b7389e3899b618aa2867cc43fb24389302e74e89a5d2fc. Partial/environment and lock-holder fixture repairs independently rechecked; final assessment remains evaluator-owned.",
+      "Independent final reviewer evaluator/review accepted candidate 3cec3a570d2bdaef71b7389e3899b618aa2867cc43fb24389302e74e89a5d2fc in runs/p1-impact-tests-20261111/evidence/review.json. All three acceptance criteria passed; review archive is an exact tracked copy. Reviewer owns final P1 assess; main owns subsequent submission/publication.",
+      "Optional workspace-write host execution remains not_run because this session is unrestricted; no sandbox capability was available. Preserve actual environment evidence at runs/p1-impact-tests-20261111/evidence/environment.json. This is a declared limitation, not a passed mandatory verification."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p1-impact-tests-20261111/implementation-notes.md",
+        "description": "구현 범위, 검증, 독립 검수 수리 및 한계",
+        "sha256": "54e55588d970dc9ff8f2f72b86aed7da8015c9c7e1f548b85147ab4527480f8b"
+      }
+    ],
+    "verification": [
+      {
+        "id": "impact",
+        "name": "명시 영향 선택과 빠른 suite",
+        "method": "실제 Git fixture 선택 및 실제 체크아웃 unittest",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-impact-tests-20261111/evidence/selection-examples.json",
+          "runs/p1-impact-tests-20261111/evidence/suite-timings.json",
+          "runs/p1-impact-tests-20261111/evidence/document-suite.log",
+          "runs/p1-impact-tests-20261111/evidence/runtime-module-suite.log"
+        ],
+        "notes": "선택 시간과 suite 시간을 구분; 기존 등록은 원래 전체 유지"
+      },
+      {
+        "id": "recovery",
+        "name": "복구 경계와 실제 local bare 게시",
+        "method": "소유권 이전/기록 전용/변조 거절 회귀 및 실제 커밋·push·remote 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-impact-tests-20261111/evidence/repair-summary.md",
+          "runs/p1-impact-tests-20261111/evidence/recovery-publication-final.log",
+          "runs/p1-impact-tests-20261111/evidence/verification-summary.json"
+        ],
+        "notes": "실제 local bare 게시와 hash/index/원기록 경계; 일부 fixture runner 출력은 stub. 최종 전체에도 포함."
+      },
+      {
+        "id": "full-p1",
+        "name": "최종 전체 P1",
+        "method": "control_gate run-tests p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-impact-tests-20261111/evidence/gate-test-0e4ec088932b4bb8b171870d1c3e737b.log",
+          "runs/p1-impact-tests-20261111/evidence/full-p1-final.json",
+          "runs/p1-impact-tests-20261111/evidence/verification-summary.json"
+        ],
+        "notes": "최종 고정 후보 92개 통과; 이전 timeout/중단/수리 기록 보존"
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 evaluator 최종 검수",
+        "method": "독립 실제 diff/증거/반례 검토",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-impact-tests-20261111/evidence/review.json"
+        ],
+        "notes": "evaluator/review가 정확한 최종 후보를 accepted로 판정했습니다. R1·R2·R3 및 partial 종료/lock-holder fixture 수리를 독립 재검증했고 기준 3개 모두 passed입니다."
+      },
+      {
+        "id": "legacy-profile",
+        "name": "기존 ordinary-prose 호환",
+        "method": "별도 기존 profile suite",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p1-impact-tests-20261111/evidence/legacy-profile.log",
+          "runs/p1-impact-tests-20261111/evidence/legacy-profile.json"
+        ],
+        "notes": "16개 통과; 변경 없는 분기 증거 재사용"
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "workspace-write 실행은 not_run입니다.",
+      "한 recovery 후속 작업은 원작업 하나만 처리하고 원래 hash anchor/로컬 기록이 필요합니다.",
+      "기록 전용 게시도 dirty 실행 dependency가 있으면 차단합니다.",
+      "보존된 측정 실패 중 atomic_json WinError5의 근본 원인은 미확인입니다."
+    ],
+    "next_actions": []
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-impact-tests"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-af45f083e3e34521aac03ab7008e1ef9",
+    "snapshot_digest": "sha256:06888e3529398b1a5779ba982dff020e5c07bfee9a5fad61ec114dea41b2696e",
+    "status": "review_pending",
+    "task_id": "p1-impact-tests-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "3c59d0d9e76437e7dd26ce2058fc4d9f3dcc7c16c1f263e98e2cb8635a9b9eb4"
+}

@@ -1,0 +1,118 @@
+test_changed_content_is_rejected (test_control_gate.DependencyRepresentationTests.test_changed_content_is_rejected) ... ok
+test_changed_mode_is_rejected (test_control_gate.DependencyRepresentationTests.test_changed_mode_is_rejected) ... ok
+test_changed_pinned_bytes_are_rejected (test_control_gate.DependencyRepresentationTests.test_changed_pinned_bytes_are_rejected) ... ok
+test_deleted_dependency_requires_committed_deletion (test_control_gate.DependencyRepresentationTests.test_deleted_dependency_requires_committed_deletion) ... ok
+test_missing_mode_binding_is_rejected (test_control_gate.DependencyRepresentationTests.test_missing_mode_binding_is_rejected) ... ok
+test_non_regular_git_object_is_rejected (test_control_gate.DependencyRepresentationTests.test_non_regular_git_object_is_rejected) ... ok
+test_normal_lf_commit_crlf_worktree_uses_canonical_match (test_control_gate.DependencyRepresentationTests.test_normal_lf_commit_crlf_worktree_uses_canonical_match) ... ok
+test_reviewed_changed_historic_crlf_commit (test_control_gate.DependencyRepresentationTests.test_reviewed_changed_historic_crlf_commit) ... ok
+test_reviewed_owned_historic_crlf_and_normal_content (test_control_gate.DependencyRepresentationTests.test_reviewed_owned_historic_crlf_and_normal_content) ... ok
+test_reviewed_owned_mode_change_rejected (test_control_gate.DependencyRepresentationTests.test_reviewed_owned_mode_change_rejected) ... ok
+test_reviewed_owned_postreview_raw_change_rejected (test_control_gate.DependencyRepresentationTests.test_reviewed_owned_postreview_raw_change_rejected) ... ok
+test_reviewed_owned_wrong_committed_bytes_rejected (test_control_gate.DependencyRepresentationTests.test_reviewed_owned_wrong_committed_bytes_rejected) ... ok
+test_stored_crlf_exact_raw_fallback (test_control_gate.DependencyRepresentationTests.test_stored_crlf_exact_raw_fallback) ... ok
+test_actual_commit_extra_path_rejected (test_control_gate.GateTests.test_actual_commit_extra_path_rejected) ... ok
+test_actual_commit_matches_seal (test_control_gate.GateTests.test_actual_commit_matches_seal) ... ok
+test_actual_commit_with_canonical_generated_records (test_control_gate.GateTests.test_actual_commit_with_canonical_generated_records) ... ok
+test_archive_exact_reviewed_copy_allowed (test_control_gate.GateTests.test_archive_exact_reviewed_copy_allowed) ... ok
+test_archive_requires_reviewed_bytes (test_control_gate.GateTests.test_archive_requires_reviewed_bytes) ... ok
+test_candidate_mutated_during_test_fails (test_control_gate.GateTests.test_candidate_mutated_during_test_fails) ... ok
+test_changed_artifact_invalidates (test_control_gate.GateTests.test_changed_artifact_invalidates) ... ok
+test_changed_companion_blocks (test_control_gate.GateTests.test_changed_companion_blocks) ... ok
+test_changed_product_invalidates (test_control_gate.GateTests.test_changed_product_invalidates) ... ok
+test_changed_result_invalidates (test_control_gate.GateTests.test_changed_result_invalidates) ... ok
+test_changed_test_log_invalidates (test_control_gate.GateTests.test_changed_test_log_invalidates) ... ok
+test_config_change_blocks (test_control_gate.GateTests.test_config_change_blocks) ... ok
+test_crlf_git_canonical_content (test_control_gate.GateTests.test_crlf_git_canonical_content) ... ok
+test_environment_metadata_change_invalidates (test_control_gate.GateTests.test_environment_metadata_change_invalidates) ... ok
+test_existing_fixture_dependency_mutation_invalidates (test_control_gate.GateTests.test_existing_fixture_dependency_mutation_invalidates) ... ok
+test_explicit_deny_policy_blocks_both_actions (test_control_gate.GateTests.test_explicit_deny_policy_blocks_both_actions) ... ok
+test_failed_exit_fails (test_control_gate.GateTests.test_failed_exit_fails) ... ok
+test_failed_selected_enrollment_remains_pending (test_control_gate.GateTests.test_failed_selected_enrollment_remains_pending) ... ok
+test_generated_json_payload_rejected_by_checkpoint_receipt (test_control_gate.GateTests.test_generated_json_payload_rejected_by_checkpoint_receipt) ... ok
+test_generated_payload_rejected_even_if_committed (test_control_gate.GateTests.test_generated_payload_rejected_even_if_committed) ... ok
+test_legacy_not_retroactively_enrolled (test_control_gate.GateTests.test_legacy_not_retroactively_enrolled) ... ok
+test_missing_companion_blocks (test_control_gate.GateTests.test_missing_companion_blocks) ... ok
+test_missing_ledger_blocks (test_control_gate.GateTests.test_missing_ledger_blocks) ... ok
+test_missing_review_blocks (test_control_gate.GateTests.test_missing_review_blocks) ... ok
+test_missing_tests_blocks (test_control_gate.GateTests.test_missing_tests_blocks) ... ok
+test_output_limit_fails (test_control_gate.GateTests.test_output_limit_fails) ... ok
+test_partial_result_requires_integrity_only (test_control_gate.GateTests.test_partial_result_requires_integrity_only) ... ok
+test_partial_submission_checkpoint_remains_available (test_control_gate.GateTests.test_partial_submission_checkpoint_remains_available) ... ok
+test_remote_change_blocks (test_control_gate.GateTests.test_remote_change_blocks) ... ok
+test_rerun_tests_requires_new_review (test_control_gate.GateTests.test_rerun_tests_requires_new_review) ... ok
+test_review_inconclusive_blocks (test_control_gate.GateTests.test_review_inconclusive_blocks) ... ok
+test_review_rework_blocks (test_control_gate.GateTests.test_review_rework_blocks) ... ok
+test_scope_change_blocks (test_control_gate.GateTests.test_scope_change_blocks) ... ok
+test_self_review_rejected (test_control_gate.GateTests.test_self_review_rejected) ... ok
+test_timeout_is_failed_evidence (test_control_gate.GateTests.test_timeout_is_failed_evidence) ... ok
+test_unicode_and_whitespace_committed_names (test_control_gate.GateTests.test_unicode_and_whitespace_committed_names) ... ok
+test_unowned_runtime_dependency_invalidates (test_control_gate.GateTests.test_unowned_runtime_dependency_invalidates) ... ok
+test_unselected_new_task_remains_legacy (test_control_gate.GateTests.test_unselected_new_task_remains_legacy) ... ok
+test_valid_gate_and_readonly_validation (test_control_gate.GateTests.test_valid_gate_and_readonly_validation) ... ok
+test_zero_tests_fail (test_control_gate.GateTests.test_zero_tests_fail) ... ok
+test_real_publication_accepts_mixed_stored_representations (test_control_gate.MixedPublicationTests.test_real_publication_accepts_mixed_stored_representations) ... ok
+test_document_selects_fast (test_control_gate_impact.ImpactTests.test_document_selects_fast) ... ok
+test_manual_full_is_irreversible (test_control_gate_impact.ImpactTests.test_manual_full_is_irreversible) ... ok
+test_missing_impact_review_rejected (test_control_gate_impact.ImpactTests.test_missing_impact_review_rejected) ... ok
+test_mixed_scopes_union (test_control_gate_impact.ImpactTests.test_mixed_scopes_union) ... ok
+test_module_selects_exact_tests (test_control_gate_impact.ImpactTests.test_module_selects_exact_tests) ... ok
+test_new_document_unmapped_deleted_shared_and_mapping_force_full (test_control_gate_impact.ImpactTests.test_new_document_unmapped_deleted_shared_and_mapping_force_full) ... ok
+test_protected_mapping_override_cannot_skip_full (test_control_gate_impact.ImpactTests.test_protected_mapping_override_cannot_skip_full) ... ok
+test_selected_execution_and_independent_review_are_bound (test_control_gate_impact.ImpactTests.test_selected_execution_and_independent_review_are_bound) ... ok
+test_shared_runtime_cluster_overrides_specific_suite_mapping (test_control_gate_impact.ImpactTests.test_shared_runtime_cluster_overrides_specific_suite_mapping) ... ok
+test_uncommitted_policy_does_not_enable_legacy (test_control_gate_impact.ImpactTests.test_uncommitted_policy_does_not_enable_legacy) ... ok
+test_unowned_dependency_forces_full (test_control_gate_impact.ImpactTests.test_unowned_dependency_forces_full) ... ok
+test_checkpoint_rendering_uses_explicit_saved_timestamp (test_control_gate_integration.GateIntegrationTests.test_checkpoint_rendering_uses_explicit_saved_timestamp) ... ok
+test_checkpoint_seal_receives_generated_bytes_not_file_reread (test_control_gate_integration.GateIntegrationTests.test_checkpoint_seal_receives_generated_bytes_not_file_reread) ... ok
+test_failed_configured_enrollment_retains_pending_marker (test_control_gate_integration.GateIntegrationTests.test_failed_configured_enrollment_retains_pending_marker) ... ok
+test_failed_submission_gate_writes_no_published_result (test_control_gate_integration.GateIntegrationTests.test_failed_submission_gate_writes_no_published_result) ... ok
+test_legacy_binding_does_not_enroll (test_control_gate_integration.GateIntegrationTests.test_legacy_binding_does_not_enroll) ... ok
+test_load_rejects_enrollment_failure (test_control_gate_integration.GateIntegrationTests.test_load_rejects_enrollment_failure) ... ok
+test_missing_gate_module_blocks_configured_init (test_control_gate_integration.GateIntegrationTests.test_missing_gate_module_blocks_configured_init) ... ok
+test_missing_gate_module_blocks_each_enrollment_signal (test_control_gate_integration.GateIntegrationTests.test_missing_gate_module_blocks_each_enrollment_signal) ... ok
+test_missing_gate_module_keeps_legacy_readable (test_control_gate_integration.GateIntegrationTests.test_missing_gate_module_keeps_legacy_readable) ... ok
+test_new_binding_enrolls_after_publication_baseline (test_control_gate_integration.GateIntegrationTests.test_new_binding_enrolls_after_publication_baseline) ... ok
+test_publication_gate_blocks_push_and_retry_reuses_commit (test_control_gate_integration.GateIntegrationTests.test_publication_gate_blocks_push_and_retry_reuses_commit) ... ok
+test_submission_persists_gate_only_after_sealed_validation (test_control_gate_integration.GateIntegrationTests.test_submission_persists_gate_only_after_sealed_validation) ... ok
+test_unknown_gate_exception_is_blocking_and_sanitized (test_control_gate_integration.GateIntegrationTests.test_unknown_gate_exception_is_blocking_and_sanitized) ... ok
+test_envelope_payload_and_version_are_rejected_for_every_mode (test_control_gate_recovery.RecoveryIndexEnvelopeTests.test_envelope_payload_and_version_are_rejected_for_every_mode) ... ok
+test_publish_records_only_actual_commit_and_remote (test_control_gate_recovery.RecoveryPublicationTests.test_publish_records_only_actual_commit_and_remote) ... ok
+test_publish_transfer_actual_commit_and_remote (test_control_gate_recovery.RecoveryPublicationTests.test_publish_transfer_actual_commit_and_remote) ... ok
+test_cancelled_records_supported (test_control_gate_recovery.RecoveryTests.test_cancelled_records_supported) ... ok
+test_candidate_file_tamper_cannot_replace_submitted_source (test_control_gate_recovery.RecoveryTests.test_candidate_file_tamper_cannot_replace_submitted_source) ... ok
+test_evidence_only_partial_submission_has_no_transfer_candidate (test_control_gate_recovery.RecoveryTests.test_evidence_only_partial_submission_has_no_transfer_candidate) ... ok
+test_failed_and_cancelled_records_supported (test_control_gate_recovery.RecoveryTests.test_failed_and_cancelled_records_supported) ... ok
+test_live_source_and_scope_mismatch_rejected (test_control_gate_recovery.RecoveryTests.test_live_source_and_scope_mismatch_rejected) ... ok
+test_other_index_change_still_blocks (test_control_gate_recovery.RecoveryTests.test_other_index_change_still_blocks) ... ok
+test_partial_submission_without_test_environment_keeps_file_anchor (test_control_gate_recovery.RecoveryTests.test_partial_submission_without_test_environment_keeps_file_anchor) ... ok
+test_records_only_excludes_sources_and_pins_index (test_control_gate_recovery.RecoveryTests.test_records_only_excludes_sources_and_pins_index) ... ok
+test_source_record_tamper_blocks (test_control_gate_recovery.RecoveryTests.test_source_record_tamper_blocks) ... ok
+test_transfer_requires_exact_hash_and_preserves_originals (test_control_gate_recovery.RecoveryTests.test_transfer_requires_exact_hash_and_preserves_originals) ... ok
+test_wrong_hash_and_unowned_path_rejected (test_control_gate_recovery.RecoveryTests.test_wrong_hash_and_unowned_path_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 92 tests in 543.181s
+
+OK
+IMPACT_EXAMPLE {"paths": ["docs/guide.md"], "suites": ["impact-document-integrity"], "selection_seconds": 0.564168999902904}
+IMPACT_EXAMPLE {"paths": ["docs/guide.md"], "suites": ["impact-document-integrity"], "selection_seconds": 0.5811727999243885}
+IMPACT_EXAMPLE {"paths": ["docs/guide.md", "runtime/context_checkpoint.py"], "suites": ["impact-document-integrity", "context-checkpoint"], "selection_seconds": 0.597699300153181}
+IMPACT_EXAMPLE {"paths": ["runtime/context_checkpoint.py"], "suites": ["context-checkpoint"], "selection_seconds": 0.567215499933809}
+IMPACT_EXAMPLE {"paths": ["docs/new.md"], "suites": ["unit"], "selection_seconds": 0.5839811000041664}
+IMPACT_EXAMPLE {"paths": ["unknown.txt"], "suites": ["unit"], "selection_seconds": 0.5410553999245167}
+IMPACT_EXAMPLE {"paths": ["runtime/agentctl.py"], "suites": ["unit"], "selection_seconds": 0.5674439000431448}
+IMPACT_EXAMPLE {"paths": [".agent-work/impact-tests.json"], "suites": ["unit"], "selection_seconds": 0.8362973001785576}
+IMPACT_EXAMPLE {"paths": ["docs/guide.md"], "suites": ["unit"], "selection_seconds": 0.8154933000914752}
+IMPACT_EXAMPLE {"paths": ["runtime/agentctl.py"], "suites": ["unit"], "selection_seconds": 0.5132637999486178}
+IMPACT_EXAMPLE {"paths": ["docs/guide.md"], "suites": ["impact-document-integrity"], "selection_seconds": 0.5984781000297517}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_contracts.py"], "suites": ["unit"], "selection_seconds": 0.6439497999381274}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_store.py"], "suites": ["unit"], "selection_seconds": 0.6465649998281151}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_verifier.py"], "suites": ["unit"], "selection_seconds": 0.6581344997975975}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_rpc.py"], "suites": ["unit"], "selection_seconds": 0.5544248998630792}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_broker.py"], "suites": ["unit"], "selection_seconds": 0.5644813999533653}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_executor.py"], "suites": ["unit"], "selection_seconds": 0.5774247001390904}
+IMPACT_EXAMPLE {"paths": ["runtime/p2_publisher.py"], "suites": ["unit"], "selection_seconds": 0.5598470999393612}
+IMPACT_EXAMPLE {"paths": ["runtime/control_policy.py"], "suites": ["unit"], "selection_seconds": 0.5750408000312746}
+IMPACT_EXAMPLE {"paths": ["runtime/legacy_memory.py"], "suites": ["unit"], "selection_seconds": 0.5472728998865932}
+IMPACT_EXAMPLE {"paths": ["docs/guide.md"], "suites": ["impact-document-integrity"], "selection_seconds": 0.5574796001892537}

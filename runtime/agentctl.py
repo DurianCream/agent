@@ -592,7 +592,7 @@ def submit(task_id, root=ROOT):
             artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
         # Revalidate sealed content before any published write.
         validate_result(task_id, root, result)
-        control_gate_call("check_submission", task_id, root, result=result, persist=True)
+        gate_submission = control_gate_call("check_submission", task_id, root, result=result, persist=True)
         text = report_text(result, task, snapshot, root)
         output = relative(root, f"outputs/{task_id}")
         require(output.is_dir(), "Task output directory is missing")
@@ -622,6 +622,8 @@ def submit(task_id, root=ROOT):
             "evidence": [{"path": name, "sha256": digest(relative(root, name, file=True).read_bytes())}
                          for name in sorted({name for check in result["verification"] for name in check["evidence"]})],
         }
+        if gate_submission and gate_submission.get("incomplete_candidate_sha256"):
+            task["submission"]["incomplete_candidate_sha256"] = gate_submission["incomplete_candidate_sha256"]
         write_json(run / "task.json", task)
         event(run, "submitted", status=result["status"])
     return {"task_id": task_id, "state": "submitted", "result_status": result["status"],

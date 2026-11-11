@@ -74,6 +74,9 @@ def track(task_id, paths, root=a.ROOT):
     with a.lock(run / '.publication.lock'):
         value = a.read_json(file)
         a.require(value['phase'] == 'begun', 'Cannot change a publishing/completed manifest')
+        if value.get('recovery', {}).get('kind') == 'records-only':
+            import control_gate as g
+            a.require(all(g._evidence_path(name, task_id) for name in paths), 'Records-only publication cannot track product files')
         for name in paths:
             a.relative(path, name)
             a.require(not name.startswith(('.agent-work/legacy/', '.agent-work/classifications/')),
@@ -110,6 +113,8 @@ def finish(task_id, root=a.ROOT):
                   'Only a submitted completed task can publish automatically')
         import legacy_memory
         legacy_memory.validate_publication(path, value)
+        import task_recovery
+        task_recovery.validate(task_id, root, value)
         head = r.git(path, 'rev-parse', 'HEAD')
         if value['phase'] == 'pushed':
             a.require(head == value['commit'], 'HEAD changed after publication')
@@ -131,8 +136,7 @@ def finish(task_id, root=a.ROOT):
             old_index = json.loads(old_text) if old_text else {'schema_version': '1.0.0', 'tasks': {}}
             def without_current(index):
                 return {**index, 'tasks': {key: item for key, item in index['tasks'].items() if key != task_id}}
-            a.require(without_current(current_index) == without_current(old_index),
-                      'Another task changed the shared index; publish separately')
+            task_recovery.check_index(task_id, root, value, current_index, old_index)
             rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
             for key, item in sorted(current_index['tasks'].items()):
                 rows.append(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}")

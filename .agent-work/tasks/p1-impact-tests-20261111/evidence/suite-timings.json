@@ -1,0 +1,43 @@
+[
+  {
+    "name": "document-suite",
+    "pattern": "impact_document_checks.py",
+    "argv": [
+      ".venv-controls/Scripts/python.exe",
+      "-I",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "runtime/tests",
+      "-p",
+      "impact_document_checks.py",
+      "-v"
+    ],
+    "elapsed_seconds": 2.7889340000692755,
+    "exit_code": 0,
+    "environment": "actual unrestricted Windows checkout, pinned gate Python 3.12.14 and exact runner flags; direct suite execution, fixture selection measured separately"
+  },
+  {
+    "name": "runtime-module-suite",
+    "pattern": "test_context_checkpoint.py",
+    "argv": [
+      ".venv-controls/Scripts/python.exe",
+      "-I",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "runtime/tests",
+      "-p",
+      "test_context_checkpoint.py",
+      "-v"
+    ],
+    "elapsed_seconds": 2.449856200022623,
+    "exit_code": 0,
+    "environment": "actual unrestricted Windows checkout, pinned gate Python 3.12.14 and exact runner flags; direct suite execution, fixture selection measured separately",
+    "retry_reason": "Prior run passed the lock-holder fix but observed WinError5 at pre-existing atomic_json/os.replace. Root cause unconfirmed. Failure log retained. Before retry only this test file was restored from LF to original CRLF; production code stayed byte-identical. The retry passed."
+  }
+]

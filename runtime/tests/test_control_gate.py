@@ -39,7 +39,10 @@ class GateFixture:
         r.git(self.root, 'config', 'user.name', 'Fixture')
         r.git(self.root, 'config', 'user.email', 'fixture@example.invalid')
         r.git(self.root, 'config', 'core.autocrlf', 'false')
-        (self.root / '.gitignore').write_text('runs/\noutputs/\n.venv-controls/\nwork/\n')
+        # Framework files support init/snapshot validation, but are not fixture product.
+        # Keep a small real tracked dependency to exercise candidate/commit binding,
+        # rather than repeat hundreds of unrelated support-asset Git lookups.
+        (self.root / '.gitignore').write_text('runs/\noutputs/\n.venv-controls/\nwork/\nshared/\ncore/\nmodules/\n')
         r.register('sample', self.root, self.root)
         r.git(self.root, 'remote', 'add', 'origin', 'https://example.invalid/repo.git')
         a.write_json(self.root / '.agent-work/automation.json', {
@@ -52,6 +55,8 @@ class GateFixture:
             'author': {'subject': 'author', 'session': 'author-session'}}
         a.write_json(self.root / g.CONFIG, self.profile)
         (self.root / 'product.txt').write_text('before\n')
+        (self.root / 'runtime').mkdir(exist_ok=True)
+        (self.root / 'runtime/fixture_shared.py').write_text('VALUE = 1\n')
         self.before_initial_commit()
         r.git(self.root, 'add', '--', '.')
         r.git(self.root, 'commit', '-q', '-m', 'baseline')
@@ -158,6 +163,12 @@ class GateTests(GateFixture, unittest.TestCase):
     def test_changed_product_invalidates(self):
         self.ready()
         (self.root / 'product.txt').write_text('changed')
+        with self.assertRaises(a.ContractError):
+            g.check_submission('gate-task', self.root)
+
+    def test_existing_fixture_dependency_mutation_invalidates(self):
+        self.ready()
+        (self.root / 'runtime/fixture_shared.py').write_text('VALUE = 2\n')
         with self.assertRaises(a.ContractError):
             g.check_submission('gate-task', self.root)
 

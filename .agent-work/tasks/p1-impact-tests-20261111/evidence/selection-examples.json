@@ -1,0 +1,117 @@
+[
+  {
+    "example": "document",
+    "paths": [
+      "docs/guide.md"
+    ],
+    "selection_seconds": 0.2573792999610305,
+    "selection": {
+      "mode": "impact",
+      "suites": [
+        {
+          "id": "impact-document-integrity",
+          "argv": [
+            "@project-python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "impact_document_checks.py",
+            "-v"
+          ]
+        }
+      ],
+      "reasons": [
+        {
+          "path": "docs/guide.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        }
+      ],
+      "mapping_sha256": "557cc973f892f8f894c445855318f55fd7de809b97dc40c4c6cbea232dad9c8a"
+    },
+    "environment": "isolated real Git fixture; production full suite ID; selector executed, suite execution measured separately in actual checkout"
+  },
+  {
+    "example": "runtime-module",
+    "paths": [
+      "runtime/context_checkpoint.py"
+    ],
+    "selection_seconds": 0.362342800013721,
+    "selection": {
+      "mode": "impact",
+      "suites": [
+        {
+          "id": "context-checkpoint",
+          "argv": [
+            "@project-python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "test_context_checkpoint.py",
+            "-v"
+          ]
+        }
+      ],
+      "reasons": [
+        {
+          "path": "runtime/context_checkpoint.py",
+          "reason": "Explicit owning module regression tests; protected/shared modules still force full selection.",
+          "suites": [
+            "context-checkpoint"
+          ]
+        }
+      ],
+      "mapping_sha256": "557cc973f892f8f894c445855318f55fd7de809b97dc40c4c6cbea232dad9c8a"
+    },
+    "environment": "isolated real Git fixture; production full suite ID; selector executed, suite execution measured separately in actual checkout"
+  },
+  {
+    "example": "mapping-change",
+    "paths": [
+      ".agent-work/impact-tests.json"
+    ],
+    "selection_seconds": 0.2581334998831153,
+    "selection": {
+      "mode": "full",
+      "suites": [
+        {
+          "id": "p1-regression",
+          "argv": [
+            "@project-python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "test_control_gate*.py",
+            "-v"
+          ]
+        }
+      ],
+      "reasons": [
+        {
+          "path": ".agent-work/impact-tests.json",
+          "reason": "mapping changed"
+        },
+        {
+          "path": ".agent-work/impact-tests.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        }
+      ],
+      "mapping_sha256": "557cc973f892f8f894c445855318f55fd7de809b97dc40c4c6cbea232dad9c8a"
+    },
+    "environment": "isolated real Git fixture; production full suite ID; selector executed, suite execution measured separately in actual checkout"
+  }
+]

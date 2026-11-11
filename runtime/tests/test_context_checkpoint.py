@@ -273,12 +273,15 @@ class CheckpointTests(unittest.TestCase):
         directory = hook.directory_for(self.root, self.input["session_id"])
         marker = directory / "lock-held"
         child = (
-            "import importlib.util,pathlib,sys,time\n"
+            "import importlib.util,os,pathlib,sys,time\n"
             "s=importlib.util.spec_from_file_location('lock_child',sys.argv[1])\n"
             "m=importlib.util.module_from_spec(s);s.loader.exec_module(m)\n"
             "with m.locked(pathlib.Path(sys.argv[2])) as acquired:\n"
-            " pathlib.Path(sys.argv[3]).write_text(str(acquired));time.sleep(30)\n")
-        process = subprocess.Popen([sys.executable, "-c", child, str(SOURCE / "runtime/context_checkpoint.py"),
+            " pathlib.Path(sys.argv[3]).write_text(str(acquired)+':'+str(os.getpid()));time.sleep(30)\n")
+        # Windows venv launchers have a different PID from the lock-holder.
+        # Kill/wait must target the actual interpreter for the release assertion.
+        interpreter = getattr(sys, "_base_executable", sys.executable) if os.name == "nt" else sys.executable
+        process = subprocess.Popen([interpreter, "-c", child, str(SOURCE / "runtime/context_checkpoint.py"),
                                     str(directory), str(marker)], stdout=subprocess.DEVNULL,
                                    stderr=subprocess.PIPE, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         try:
@@ -286,7 +289,7 @@ class CheckpointTests(unittest.TestCase):
             while not marker.exists() and process.poll() is None and time.monotonic() < deadline:
                 time.sleep(0.02)
             self.assertTrue(marker.exists(), process.stderr.read().decode() if process.poll() is not None else "Lock child timed out")
-            self.assertEqual(marker.read_text(), "True")
+            self.assertEqual(marker.read_text(), "True:" + str(process.pid))
             with hook.locked(directory) as acquired:
                 self.assertFalse(acquired)
             process.kill()

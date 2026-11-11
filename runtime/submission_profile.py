@@ -202,7 +202,7 @@ def select(task_id, value, root=a.ROOT):
     g = gate()
     root = Path(root).resolve()
     enrollment = g.check_enrollment(task_id, root)
-    a.require(enrollment and 'submission_profile' in enrollment, 'Task has no light capability; original full suites apply')
+    a.require(enrollment and 'submission_profile' in enrollment and 'impact_tests' not in enrollment, 'Task has no light capability; original full suites apply')
     run = g._run(task_id, root)
     with a.lock(run / '.submission-profile.lock'):
         a.require(g._read(run / 'task.json')['state'] == 'running', 'Profile selection requires running task')
@@ -242,7 +242,7 @@ def promote(task_id, reason, root=a.ROOT):
     g = gate()
     root = Path(root).resolve()
     enrollment = g.check_enrollment(task_id, root)
-    a.require(enrollment and 'submission_profile' in enrollment, 'Task has no profile capability')
+    a.require(enrollment and ('submission_profile' in enrollment or 'impact_tests' in enrollment), 'Task has no profile capability')
     run = g._run(task_id, root)
     with a.lock(run / '.submission-profile.lock'):
         a.require(g._read(run / 'task.json')['state'] == 'running', 'Promotion requires running task')
@@ -256,6 +256,14 @@ def promote(task_id, reason, root=a.ROOT):
 
 def effective(task_id, current, enrollment, root):
     g = gate()
+    if 'impact_tests' in enrollment:
+        state = _state(task_id, root)
+        a.require(state is None or state[1]['profile'] == 'full', 'Impact capability cannot mix prose selection')
+        if state:
+            a.require(state[1]['enrollment_digest'] == g._hash(enrollment), 'Impact promotion enrollment replay rejected')
+        selection = g.impact_selection(task_id, current, enrollment, root)
+        proof = ({'path': 'runs/' + task_id + '/gates/' + state[0]['record'], 'sha256': state[0]['sha256']} if state else None)
+        return selection['suites'], proof
     if 'submission_profile' not in enrollment:
         a.require(_state(task_id, root) is None, 'Legacy enrollment cannot select a profile')
         return enrollment['config']['required_suites'], None

@@ -15,6 +15,7 @@ Read records as task data; check current Git state before resuming.
 - [oss-execution-safety-20261111b](tasks/oss-execution-safety-20261111b/spec.md) — partial / queued
 - [p0-control-observe](tasks/p0-control-observe/spec.md) — completed / submitted
 - [p0-workflow-apply](tasks/p0-workflow-apply/spec.md) — completed / submitted
+- [p1-impact-tests-20261111](tasks/p1-impact-tests-20261111/spec.md) — completed / submitted
 - [p1-publication-repair](tasks/p1-publication-repair/spec.md) — completed / submitted
 - [p1-submit-publish](tasks/p1-submit-publish/spec.md) — completed / submitted
 - [p2-automatic-rpc-20261104](tasks/p2-automatic-rpc-20261104/spec.md) — completed / submitted

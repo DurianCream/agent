@@ -1,0 +1,392 @@
+{
+  "assessment": "accepted",
+  "reviewer": {
+    "subject": "evaluator",
+    "session": "review"
+  },
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p1-impact-tests"
+  },
+  "author": "/root/implementation; enrolled orchestrator/root",
+  "candidate_digest": "3cec3a570d2bdaef71b7389e3899b618aa2867cc43fb24389302e74e89a5d2fc",
+  "candidate_entries": [
+    {
+      "path": ".agent-work/impact-tests.json",
+      "state": "file",
+      "oid": "eec197c410619a260cc041faace4ddf6d2a8c5b2",
+      "mode": "100644",
+      "raw_sha256": "bf9a47e0e9aa769757538b7b1b39c343fb76a6c238c9c6872f731f49cbf34f33"
+    },
+    {
+      "path": "docs/P1-제출-게시-검사-사용안내.md",
+      "state": "file",
+      "oid": "b31c447e037621f2a820c418ee30caa26e54cea9",
+      "mode": "100644",
+      "raw_sha256": "9674f56aca6a8c064a7e7567729ead2fa87ffe8e972aca481282a8643415a9cb"
+    },
+    {
+      "path": "docs/작업-파이프라인.md",
+      "state": "file",
+      "oid": "a3b75d6d686dd524e7d0630285339a57b47e6234",
+      "mode": "100644",
+      "raw_sha256": "22a4a1f01c50d85d7a68a53e7c31efa97b19866f8af857691a9635f22984cd24"
+    },
+    {
+      "path": "runtime/agentctl.py",
+      "state": "file",
+      "oid": "2104e649ffb731973510306e03e81eaa52928215",
+      "mode": "100644",
+      "raw_sha256": "a43767f480a5051f341fa54fa9550089821e5b98ae076496a94d00d3463c7779"
+    },
+    {
+      "path": "runtime/control_gate.py",
+      "state": "file",
+      "oid": "4559d3aba52835a053b303340bd995658a89f2b1",
+      "mode": "100644",
+      "raw_sha256": "476cec7657bce944a9c1e3c29ae8347439e4c6fa166b9d9109ae8392577a1f19"
+    },
+    {
+      "path": "runtime/impact_tests.py",
+      "state": "file",
+      "oid": "b541fb0065c1735da7a17c71959ea30185a4b548",
+      "mode": "100644",
+      "raw_sha256": "d1b9ebc42c458984a2da548ba5176f61f8917cf1e0d687ac61e498deb49b48a2"
+    },
+    {
+      "path": "runtime/repo_automation.py",
+      "state": "file",
+      "oid": "20739a6b4b70593709bad49bbcc6a60f068eaaea",
+      "mode": "100644",
+      "raw_sha256": "d67a05cf871ef68ff7d510921d0b0cb4c2930467d35f2a13125e667fb4aefaba"
+    },
+    {
+      "path": "runtime/repoctl.py",
+      "state": "file",
+      "oid": "9290fabda712c85c7c1c00190ba448836bf775f2",
+      "mode": "100644",
+      "raw_sha256": "f3d6f1d12b6ac72cbda84a642ea4788cf1f1cef879bcbd3ea432c24e24b1809e"
+    },
+    {
+      "path": "runtime/submission_profile.py",
+      "state": "file",
+      "oid": "5994080aacb7839cd6d42138c83fce4fb05e6948",
+      "mode": "100644",
+      "raw_sha256": "e49ca75b7071953956d68fa6271af19368bc85045ca73673dc80500e3209d618"
+    },
+    {
+      "path": "runtime/task_recovery.py",
+      "state": "file",
+      "oid": "28da6e0f0ecce45841bec7322fa31d5fd49ffafa",
+      "mode": "100644",
+      "raw_sha256": "5ffb4951ae81afe1139aabcfe0508035720c098e98df1e0504a5766daf540e90"
+    },
+    {
+      "path": "runtime/tests/impact_document_checks.py",
+      "state": "file",
+      "oid": "b9b741ac5cd23f7579c8b8d5db078a8554b9fe55",
+      "mode": "100644",
+      "raw_sha256": "16f75e2bee7b9f5d6bef65b47cce493214174bf40447344629da94704a7a418f"
+    },
+    {
+      "path": "runtime/tests/test_context_checkpoint.py",
+      "state": "file",
+      "oid": "f1682468bebda095cc0d3518c9bf93562dc954b1",
+      "mode": "100644",
+      "raw_sha256": "4b24a40961d7b9c128ae6dec34b84440700576ba4f19ff83e83f7c0b997fb41f"
+    },
+    {
+      "path": "runtime/tests/test_control_gate.py",
+      "state": "file",
+      "oid": "b458d1dca804d8eb7b28a9ecdb593bc6dd8709ed",
+      "mode": "100644",
+      "raw_sha256": "499ba6a791d487332500e9855d56cc2b6fd9499b8b9428e739948f0bb78d21ea"
+    },
+    {
+      "path": "runtime/tests/test_control_gate_impact.py",
+      "state": "file",
+      "oid": "e75f4c5225343b150e7ebba0319d97f6572bcf7c",
+      "mode": "100644",
+      "raw_sha256": "43f2e5a2434665568c1b0ede20858775067f2054bc87359157757797ac87739c"
+    },
+    {
+      "path": "runtime/tests/test_control_gate_recovery.py",
+      "state": "file",
+      "oid": "f0dd9b985528f9c62c6bcb105993028748c599ea",
+      "mode": "100644",
+      "raw_sha256": "98a5b6170bb5bad81b48c6a5e95b573265975478ba071b108b0fabb132c2b7d4"
+    },
+    {
+      "path": "runtime/tests/test_repo_automation.py",
+      "state": "file",
+      "oid": "11b1487acf640d5eaa50cf4953eb1845bf79f2ae",
+      "mode": "100644",
+      "raw_sha256": "a4c083e1db0870e993c611c9c3e60167aed19cbdf4400eb29fa5ad23bc0dd760"
+    }
+  ],
+  "summary": "독립 검수 R1·R2·R3, 작성자의 partial 종료 회귀와 Windows lock-holder fixture 문제를 수정·재검증했습니다. 최종 16파일 후보의 전체 P1 92개와 pinned 문서 4개/context 29개가 통과했습니다. 미해결 중대 도입 결함은 없으며 중간 WinError5 관찰은 한계로 보존합니다.",
+  "criteria": [
+    {
+      "id": "criterion-1",
+      "outcome": "passed",
+      "basis": "명시 대응표, 새/미등록/공용/보호 경로 전체 fallback, 합집합, 후보·선택·독립평가 바인딩, 되돌릴 수 없는 전체 승격을 소스와 실제 Git fixture로 확인"
+    },
+    {
+      "id": "criterion-2",
+      "outcome": "passed",
+      "basis": "원제출의 후보 SHA anchor와 정확한 파일 hash를 검증하며 기록-only 소스 혼입, 다른 index 변경, envelope/후보 변조를 거부. 로컬 실제 commit/push 양성 증거와 원기록 불변 확인"
+    },
+    {
+      "id": "criterion-3",
+      "outcome": "passed",
+      "basis": "선택 예시와 별도 suite 시간, 전체 P1 92개 통과, 한국어 적용시점/정기 full/복구 제한 문서 확인"
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "major",
+      "issue": "Explicit shared-runtime full fallback omitted shared P2/control/legacy modules.",
+      "status": "repaired; 9 shared-module subcases independently passed",
+      "location": "runtime/impact_tests.py:PROTECTED",
+      "criterion": "criterion-1",
+      "evidence": "Initial source inspection: production P2/control/legacy imports share modules omitted from protected set; final independent affected_review.log tests nine concrete shared modules.",
+      "impact": "Shared changes could incorrectly select only a narrow suite.",
+      "reverification": "Explicit shared set expanded; all nine representative shared paths select full."
+    },
+    {
+      "id": "R2",
+      "severity": "major",
+      "issue": "Shared index comparison dropped envelope/schema protection; arbitrary top-level fields accepted.",
+      "status": "repaired; independent envelope rejection passed; canonical missing-index fallback inspected; author final positive finish evidence inspected",
+      "location": "runtime/task_recovery.py:check_index; runtime/control_gate.py:_check_generated",
+      "criterion": "criterion-2",
+      "evidence": "reviewer/preliminary_review-rerun.log accepted changed schema and added payload before repair; reviewer/affected_review.log rejects both after repair.",
+      "impact": "Generated shared index could carry unreviewed envelope data.",
+      "reverification": "Exact envelope/schema checked and empty baseline canonicalized; final actual local publication tests pass."
+    },
+    {
+      "id": "R3",
+      "severity": "major",
+      "issue": "Partial candidate proof was not anchored in source submission; changed product plus changed proof accepted.",
+      "status": "repaired; identical independent exploit now rejects at anchored source validation",
+      "location": "runtime/agentctl.py:submit; runtime/control_gate.py:check_submission; runtime/task_recovery.py:prepare",
+      "criterion": "criterion-2",
+      "evidence": "reviewer/recovery_proof_review.log replaced original product and unbound candidate proof without changing submitted task/result/snapshot; recovery_proof_after_fix.log rejects identical exploit.",
+      "impact": "Transfer could accept bytes never in original submitted candidate.",
+      "reverification": "Source submission anchors candidate-file SHA; candidate digest and exact Git/raw identity checked; partial_closure_review.log preserves rejection and positive transfer."
+    },
+    {
+      "id": "R4-owner",
+      "severity": "major",
+      "issue": "Owner found regression where partial closure required test environment/nonempty product.",
+      "status": "repaired; evaluator independently passed absent-runner partial then ownership transfer, evidence-only partial, anchor tamper rejection and positive transfer",
+      "location": "runtime/control_gate.py:_incomplete_candidate",
+      "criterion": "criterion-2",
+      "evidence": "Owner found partial submission incorrectly required runner; reviewer/partial_closure_review.log independently tests absent-runner closure and transfer plus evidence-only closure.",
+      "impact": "Incomplete work could no longer close when its test environment was unavailable.",
+      "reverification": "Minimal source identity captured without runner environment; completed guards unchanged; four focused cases pass."
+    },
+    {
+      "id": "O2-owner",
+      "severity": "major",
+      "issue": "Pinned Windows venv launcher PID was not actual lock-holder in existing process-kill fixture.",
+      "status": "repaired: same-version base interpreter used; PID equality added; original lock/kill/wait/reacquisition assertions retained; independent pinned test passed",
+      "location": "runtime/tests/test_context_checkpoint.py:test_os_lock_releases_after_process_is_forcefully_terminated",
+      "criterion": "criterion-3",
+      "evidence": "lock-fixture-original.log failure and base-interpreter success; reviewer/checkpoint_fixture_review.log independently passes under pinned Python 3.12.14.",
+      "impact": "Fixture killed Windows venv launcher rather than actual lock-holder and falsely failed release.",
+      "reverification": "Same-version base interpreter plus actual PID assertion; lock competition, kill/wait and reacquisition assertions preserved."
+    }
+  ],
+  "independent_executions": [
+    {
+      "log": "preliminary_review-rerun.log",
+      "tests": 9,
+      "seconds": 46.605,
+      "outcome": "passed",
+      "focus": "missing/failed evidence, reviewer conflict, missing enrollment, legacy compatibility, changed candidate, actual commit extra path/bytes, remote mismatch"
+    },
+    {
+      "log": "affected_review.log",
+      "tests": 2,
+      "seconds": 16.265,
+      "outcome": "passed",
+      "focus": "R1 shared full subcases and R2 envelope rejection"
+    },
+    {
+      "log": "selection_review.log",
+      "tests": 4,
+      "seconds": 44.556,
+      "outcome": "passed",
+      "focus": "document/module/full selection examples and post-review mapping mutation rejection"
+    },
+    {
+      "log": "fixture_review.log",
+      "tests": 4,
+      "seconds": 40.142,
+      "outcome": "passed",
+      "focus": "fixture optimization preserves old/new dependency mutation rejection and real commit checks"
+    },
+    {
+      "log": "recovery_proof_review.log",
+      "outcome": "confirmed R3 before repair"
+    },
+    {
+      "log": "recovery_proof_after_fix.log",
+      "outcome": "expected ContractError after repair"
+    },
+    {
+      "log": "partial_closure_review.log",
+      "tests": 4,
+      "seconds": 29.966,
+      "outcome": "passed",
+      "focus": "owner closure repair + R3 retained + missing environment transfer"
+    },
+    {
+      "log": "checkpoint_fixture_review.log",
+      "tests": 1,
+      "seconds": 0.109,
+      "outcome": "passed",
+      "focus": "pinned Python3.12.14 actual lock-holder killed and lock reacquired"
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/preliminary_review.py",
+      "sha256": "8869e4ba46db9c0a63941176905c8fdc25e3b23690fe653ef13d8f3cc0efcd7e"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/preliminary_review.log",
+      "sha256": "c2b87bab08bdf7ebbcfe4173893e4f390c9a786b53b4ada334244f43d1bf5f75"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/preliminary_review-rerun.log",
+      "sha256": "ae93e4710d7491e999bad054bef131c7b21c7ce66107a039c4f35fe2e34338b4"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/recovery_proof_review.py",
+      "sha256": "2686774ae98ab205c1d89f1c6c952f076e856a4e054a256f757fe491859ecac6"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/recovery_proof_review.log",
+      "sha256": "eebe13b882f81269f2decaccf9f7e1b55b1f83ed1a2ca87451156b5cb9afe97b"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/recovery_proof_after_fix.log",
+      "sha256": "1e52802c09d7f934efbc1d9afafbb27d039c3d069617a2d0f775919c0baaaacd"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/affected_review.py",
+      "sha256": "f095c803a572a4afce8bb300fb5d559df2a105b852a5fa5c92bd030b6f9c02bc"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/affected_review.log",
+      "sha256": "ae68563d858ede5aeaf7ae794f19938c8ef436740037002e12e506451a8514d6"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/selection_review.py",
+      "sha256": "adad85679592abb7b665a7953494e26aa29480b7972f9c62a49c08a9859edf0e"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/selection_review.log",
+      "sha256": "fc75844d1c0fbd860510cea40f993883bbb295207e7fd0ac7c96e2935a4a6928"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/fixture_review.py",
+      "sha256": "8a920fad506e7d2b999340fd28ae3357ad91596e2304119cf3932dd09748deb4"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/fixture_review.log",
+      "sha256": "c396cdae6598ad364d308a7933701fccc737200932cbdb458fae5b2307f1a443"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/partial_closure_review.py",
+      "sha256": "340f0e9c24cc6389c82ae3597f362508b34e316c3d946d7d53a3b2afbdaa0659"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/partial_closure_review.log",
+      "sha256": "377805ed5615ecf2dd3dfd9108913e1661bc3070a0e70f488404f3892690c5f9"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/checkpoint_fixture_review.py",
+      "sha256": "ae0110d46b75bd6a89aa2376fdb2242ff89719024d3920db4a5fb767814b9e4a"
+    },
+    {
+      "path": "runs/p1-impact-tests-20261111/evidence/reviewer/checkpoint_fixture_review.log",
+      "sha256": "24207972e131a4412b6d53042467e54e4f7889fe78c681406f9f1b4ae04f17f6"
+    }
+  ],
+  "author_evidence_inspected": [
+    "runs/p1-impact-tests-20261111/evidence/full-p1-final.json",
+    "runs/p1-impact-tests-20261111/evidence/gate-test-0e4ec088932b4bb8b171870d1c3e737b.log",
+    "runs/p1-impact-tests-20261111/evidence/recovery-publication-final.log",
+    "runs/p1-impact-tests-20261111/evidence/selection-examples.json",
+    "runs/p1-impact-tests-20261111/evidence/suite-timings.json",
+    "runs/p1-impact-tests-20261111/evidence/owner-handoff.json",
+    "outputs/p1-impact-tests-20261111/implementation-notes.md",
+    "runs/p1-impact-tests-20261111/evidence/test-ledger.json",
+    "runs/p1-impact-tests-20261111/evidence/runtime-module-suite-before-lock-fix.log",
+    "runs/p1-impact-tests-20261111/evidence/runtime-module-suite-transient-access-denied.log",
+    "runs/p1-impact-tests-20261111/evidence/runtime-module-suite.log",
+    "runs/p1-impact-tests-20261111/evidence/document-suite.log",
+    "runs/p1-impact-tests-20261111/evidence/legacy-profile.json"
+  ],
+  "full_p1": {
+    "record": "test-3d9997e01fc84cf9a26b425b57098347.json",
+    "tests_run": 92,
+    "exit_code": 0,
+    "candidate_unchanged": true,
+    "elapsed_seconds": 548.1967217999045,
+    "runtime": "pinned Python3.12.14; -I -B; original p1-regression and 600-second timeout"
+  },
+  "execution_notes": [
+    "First preliminary harness failed to construct suite due wrong test class; zero tests executed, corrected before real run.",
+    "PowerShell stderr redirection adds NativeCommandError wrappers to some logs; unittest final outcomes are OK.",
+    "Repeated cases are affected independent verification, not additional unique coverage.",
+    "Recovery positive publication tests use actual local bare Git commit/push and a stubbed test runner; final task full suite is actual execution."
+  ],
+  "fixture_optimization": "공통 fixture의 지원 파일은 snapshot에 유지하고 Git 제품 baseline만 줄였습니다. 실제 추적 runtime dependency와 기존 assertion/생산 관문/600초 제한을 유지하고 정상 커밋·추가 경로 및 dependency 변조 반례를 별도 재검증했습니다.",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.4",
+    "mode": "unrestricted Windows host; synthetic Git fixtures for adversarial cases"
+  },
+  "limitations": [
+    "workspace-write sandbox execution: not_run; 현재 호스트는 unrestricted입니다.",
+    "복구 양성 fixture는 실제 로컬 Git commit/push를 실행하지만 시험 프로세스 출력은 stub입니다. 이번 작업의 필수 전체 P1은 실제 실행입니다.",
+    "기존 등록은 full을 유지하며 새 정책 등록은 Git fixture로 검증했습니다. 게시 후 실제 저장소의 미래 작업 등록을 실행했다고 주장하지 않습니다.",
+    "후속 작업당 원작업 한 개의 복구만 지원하며 다른 미게시 index 항목은 계속 차단됩니다.",
+    "로컬 선언 reviewer identity/쓰기 가능한 기록은 인증·서명·OS 격리 보장이 아닙니다.",
+    "중간 pinned context 시험의 atomic_json/os.replace WinError5 한 번은 원인이 미확정입니다. 이후 관련 시험 파일 LF를 원래 CRLF로 복원하고 의미상 같은 시험을 재실행해 29개 통과했습니다. production 코드는 불변이며 동일 raw 후보 재시도라고 주장하지 않습니다."
+  ],
+  "publication_status": "실제 설정된 원격 게시 미실행; main의 정상 validate/submit/finish와 원격 확인 필요",
+  "re_review_triggers": [
+    "후보/정책/선택 기준/시험 또는 증거의 의미 변경",
+    "실제 게시 commit/경로/부모/원격 불일치"
+  ],
+  "gate_assessment": "결과 artifact/evidence 연결이 완료된 뒤 동일 reviewer가 독립 assess를 등록할 예정",
+  "p0_observation": {
+    "assessment_status": "complete",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": "accepted",
+    "executable": false,
+    "governance_recommendation": "not_required",
+    "mode": "observe",
+    "ok": true,
+    "phase": "workspace",
+    "reason_codes": [
+      "observed"
+    ],
+    "record_id": "obs-fe12d514d74c4581a59fa12e33e5083f",
+    "snapshot_digest": "sha256:06888e3529398b1a5779ba982dff020e5c07bfee9a5fad61ec114dea41b2696e",
+    "status": "observed",
+    "task_id": "p1-impact-tests-20261111"
+  },
+  "p0_disposition": "선택된 workspace 관찰의 범위·바인딩을 독립 assess로 확인했습니다. P0의 low는 설정된 workspace 선언이며 내용 검사가 아니므로 이번 변경의 high-risk 분류를 낮추지 않습니다. 기존 명시 사용자 범위와 로컬 검수·시험을 따르며 새로운 권한/정책 해석이 없어 governance_not_required로 기록했습니다. authority_verified/executable은 false이며 실제 게시 권한 증명이 아닙니다.",
+  "review_reuse": "고정된 영향 선택·복구·게시 guard의 앞선 독립 반례 증거는 재사용했고 바뀐 shared fixture/partial capture/lock-holder fixture만 집중 재검수했습니다. 최종 필수 전체 P1은 새 전체 후보 digest에 다시 실행되었습니다."
+}

@@ -1,0 +1,27 @@
+# Independent review repairs
+
+- R1: explicit shared/protected runtime paths now include P2 cluster, control policy/integration/workflow/CLI and legacy memory. No runtime/p2_* product file was edited. Regression uses nine existing baseline shared module paths and confirms protected/shared reason overrides individual mapping; 1 test / 9 subcases passed in 12.524 seconds.
+- R2: shared index requires exact schema_version/tasks envelope and version 1.0.0 for current and baseline values; only explicitly approved task entries may differ. Canonical absent-baseline fallback includes schema_version. Ordinary and records-only envelope injection, version change and missing-field subcases passed (1 test, 0.001 seconds).
+- R3: new partial submission anchors incomplete-candidate.json SHA256 in original task.submission. Transfer checks that anchor, candidate internal digest, original result SHA and exact owned file representation. Existing old submissions are not retroactively anchored. Changing candidate/product only, with and without changing internal candidate digest, is rejected; 1 test / 2 subcases passed in 8.711 seconds.
+
+Initial official full run started before these independently identified repairs. Its candidate is stale and its evidence must not be used for final submission. The final full run will cover the repaired candidate.
+
+Test process output in focused recovery publication fixtures is stubbed to exercise the gate protocol; actual local Git commits, bare remote pushes and post-push confirmations execute. Actual task P1 runs real unittest processes. No service is contacted by fixtures.
+
+After R3 repair, both positive publication cases passed again (2 tests, 118.799 seconds). These create the first index in a fresh Git baseline, commit and push to a real local bare remote, verify remote HEAD, and confirm original run files remain unchanged.
+
+Fixture optimization after timeout: copied shared/core/modules support assets remain available for real initialization/snapshot checks but are ignored in the protocol fixture Git product baseline. A tracked runtime/fixture_shared.py preserves the real dependency boundary; its mutation rejection test passed. Existing assertions remain intact. Independent reviewer reproduced four old/new dependency and actual-commit boundaries successfully. No product gate or enrolled timeout was weakened.
+
+Legacy ordinary-prose capability compatibility: 16 existing tests passed in 337.212 seconds (legacy-profile.log/json). This file is outside the required test_control_gate*.py pattern and was run once to cover the changed submission_profile branch.
+
+After fixture optimization the same two actual local publication cases passed in 109.346 seconds (recovery-publication-final.log/json). The first official run retained its timeout failure at the original 600-second bound; it also had a stale candidate because review repairs occurred during execution. The final full run is separate.
+
+Owner-found O1: partial submission without a test environment regressed because candidate capture used the completed candidate/environment path. Reproduction removed only fixture environment files and observed Missing file: .venv-controls/Scripts/python.exe. Capture now seals a dedicated incomplete-file candidate with original task/binding/base/enrollment digest and exact file SHA/OID/mode, still anchored in source task.submission. It does not require a runner and evidence-only ownership produces no transferable candidate. Both regression tests passed in 6.152 seconds.
+
+The second official full run was deliberately terminated at 360.379 seconds after O1 was confirmed, before modifying the candidate. Its actual runner identity was checked, its nonzero exit and partial output are retained (full-p1-superseded.json and referenced gate log). It is not passing or completed test evidence. No concurrent old full runner remains.
+
+Recovery supports one source per successor. Multiple changed closed-task index entries remain blocked unless the checkout has an isolated supported baseline for the selected source; manual record/index rewriting is not a recovery procedure.
+
+Owner-found O2: exact pinned-runner timing exposed an existing Windows venv process fixture failure (28/29 context tests passed). Original focused case failed, while launching the same-version base interpreter passed. Popen launcher PID differs from the actual child PID; a later tasklist probe did not find a persistent orphan, so the confirmed issue is kill/wait targeting the wrong process, not a claim of permanent leakage. Only test_context_checkpoint.py changed: direct Windows base-interpreter child and a child-PID/Popen-PID equality assertion. Production lock code and force-kill/reacquisition assertions remain unchanged. Pinned context suite now passes all 29 tests. Previous 92-test full P1 passed in 556.274 seconds before this fixture-only change; a new full run is required for the final candidate.
+
+Exact pinned runner measurement retained an additional observed WinError5 at the pre-existing atomic_json/os.replace test setup. Root cause is unconfirmed. The lock-holder assertion passed in that run. Before the passing retry, only the edited test file's original CRLF line endings were restored; production context_checkpoint.py was byte-identical, but the test file's raw bytes were not identical. Both failed and passing logs remain in runs evidence. Do not describe this as a confirmed sandbox defect or fabricate a same-raw-bytes comparison.
