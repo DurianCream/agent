@@ -1,0 +1,47 @@
+{
+  "case_id": "R01",
+  "subject_session_id": "01a1c941-28fd-7b31-ad34-cf082825c255",
+  "agent_path": "/root/knowledge_skill_owner/subject_r01",
+  "parent_session_id": "01a1c91e-60b2-7943-80eb-b186a8ac515d",
+  "fresh_fork_none": true,
+  "admin_wrapper_provenance": "Retained administrator plaintext matches predispatch hash; native host logs encrypt dispatched message, so exact plaintext equality cannot independently be recovered from native trace.",
+  "wrapper_utf8_bytes": 1337,
+  "wrapper_sha256": "1ab34af3578cffcf3af1cf40f070dfa0eb3e85457c1af996bb163fdecf1f7ba4",
+  "visible_new_task_prefix_utf8_bytes": 119,
+  "visible_new_task_prefix_sha256": "53ec96857bb83d8584773c21c210aaecdeafa88340c4c0ddb796cc2fe0fcdec1",
+  "tool_return_utf8_bytes": 40153,
+  "tool_return_sha256": "54c13cf26bd152c79d8c62abf53d51976f0c895171a2f6f73f3dd4dda18999b7",
+  "reconstructed_visible_input_utf8_bytes": 41609,
+  "independently_observed_input_lower_bound_utf8_bytes": 40272,
+  "visible_answer_utf8_bytes": 630,
+  "visible_answers": [
+    {
+      "phase": "final_answer",
+      "text": "결정: CedarCache의 즉시 도입은 보류합니다. 제공된 별 수만으로 기능 적합성이나 운영 안전성을 판단할 수 없습니다.\n\n용도·환경·필수 요구·제외 조건을 정한 뒤, 버전을 고정한 CedarCache·BirchCache와 현행 유지안을 기능, 라이선스, 유지보수, 보안, 운영, 대체·철수, 비용으로 비교해야 합니다. 현재 모두 미확인이고 이전 결정도 확인하지 못했습니다.\n\n실험은 `not_run`입니다. 판단을 바꿀 질문과 검증된 폐기 가능 환경이 확보될 때만 실행하며, 비교 근거 확보 시 재검토합니다.",
+      "utf8_bytes": 630,
+      "line": 22
+    }
+  ],
+  "tool_calls": [
+    {
+      "type": "custom_tool_call",
+      "name": "exec",
+      "call_id": "call_c7faeb9841474d74931615c5e481a254",
+      "argument_utf8_bytes": 349,
+      "argument_sha256": "e07d31a907673d120c62e83d594a71b70f62ec090d66dbe077cce16ed9fd1970",
+      "action": "Read frozen evaluation packet through exec_command",
+      "line": 14
+    }
+  ],
+  "tool_call_count": 1,
+  "tool_argument_utf8_bytes": 349,
+  "tool_output_truncated": true,
+  "native_host_user_blocks_excluded_utf8_bytes": 3476,
+  "native_host_exclusion": "Host-provenance AGENTS/environment and developer/system prompts excluded by frozen protocol; hidden reasoning not inspected/exported. Native total unknown.",
+  "trace_file_sha256": "6ced3ebd704bbd8c1e2d24e176e2c82bb5a49a83cd80764e17b816faafd0a067",
+  "case_complete": true,
+  "input_budget_pass": false,
+  "output_budget_pass": true,
+  "complete_case_prompt_visible_in_tool_return": true,
+  "full_packet_delivery_matches_plaintext_ignoring_final_newline": false
+}

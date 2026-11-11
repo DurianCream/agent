@@ -1,0 +1,30 @@
+{
+  "reason": "Initial combined v2 copied an unrelated unexecuted synthetic secret fixture from frozen v1, which matched current publication scanner. Narrow supplemental pack removes only redundant copies; original v1 unchanged. No scanner policy, escaping or allowlist changes.",
+  "executed_contract_local_snapshot": "work/agents/oss-rnd-behavior-20261111/skill-manager/instance-xu0sul25/executed-combined-contract.json",
+  "executed_contract_sha256": "2ff6272025cb8c80257d8d5cb18662331436e8e0df911424135d0edf182beaae",
+  "current_supplemental_contract": "evals/harness-behavior-v2.json",
+  "current_supplemental_contract_sha256": "40fb11c9476244f2098d57033100ac9ef1952a95a29c8dfb71da999e6d453a40",
+  "v1_sha256": "14ba686aac97865b4c958d09b61140c70968c3e0189e30a39fa02d7173016222",
+  "v1_bytes_unchanged": true,
+  "existing_case_count": 13,
+  "existing_cases_preserved_in_v1": true,
+  "selected_case_ids": [
+    "R01",
+    "R02",
+    "R03",
+    "R04"
+  ],
+  "selected_case_objects_equal": true,
+  "administration_equal": true,
+  "subject_reruns": 0,
+  "pre_repair_suite": {
+    "candidate_digest": "c95f01884e15a6a491da58ec98b5dfba30906aeb8686ce54b8f5075e4d738a21",
+    "receipt": "test-4b01e6c2ad1f4b9684cef38bb8b92694.json",
+    "outcome": "passed",
+    "tests_run": 108,
+    "elapsed_seconds": 767.051,
+    "valid_for_final_candidate": false
+  },
+  "required_rerun_reason": "Publication repair changes two owned product blobs; gate requires executed tests bound to the final candidate. Subject scenarios/criteria unchanged, so subject observations are reused without reruns.",
+  "raw_combined_snapshot_publication": "Not published; safe digests and selected-case equivalence proof only."
+}

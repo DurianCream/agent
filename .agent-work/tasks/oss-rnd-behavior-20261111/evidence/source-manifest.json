@@ -1,0 +1,46 @@
+{
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "utf8_bytes": 2970,
+      "sha256": "e63cb557f48b218ab95c92a899c71711fc6fbc5f0f6bca77f932b8606d7a822c"
+    },
+    {
+      "path": "shared/workflows/owner-led-delivery.md",
+      "utf8_bytes": 17381,
+      "sha256": "c707e63fad5fb067d6f09356e2394420c3962816a9e4558ed7352d62e57fff07"
+    },
+    {
+      "path": "registry.json",
+      "utf8_bytes": 932,
+      "sha256": "d89f7d0752f71158c7513e504134a1a8868c918629308903d8032c94aabea501"
+    },
+    {
+      "path": "modules/oss-rnd/module.json",
+      "utf8_bytes": 1612,
+      "sha256": "b75250ad181ac387156e234ee3c27d99f768e4dec5cf87163663c5a1b65aef9d"
+    },
+    {
+      "path": "modules/oss-rnd/instructions.md",
+      "utf8_bytes": 2617,
+      "sha256": "4f82dfa8337306b69ffab344c493d8652e3a7ff3a921a2ee503c2a448722321e"
+    },
+    {
+      "path": "shared/skills/oss-research/SKILL.md",
+      "utf8_bytes": 10682,
+      "sha256": "bfc4d2bb8f5760e24efd4291c0d3724cca1ee0e121c3ab42b506609a75faa78d"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "utf8_bytes": 2327,
+      "sha256": "530ab7098898733946978662e3d18ab5d1ebdab2988607516da385b7b060df3e"
+    },
+    {
+      "path": "shared/workflows/harness-delivery.md#delivery",
+      "utf8_bytes": 5469,
+      "sha256": "fe4dd28db8fb648bdd3e057508641593089b4764e1a14672149f0ddcbb46f518"
+    }
+  ],
+  "known_mandatory_workflow_overflow": true,
+  "native_host_prompts": "Excluded by fixed protocol; unknown byte count. No claim of total token or billing measurement."
+}

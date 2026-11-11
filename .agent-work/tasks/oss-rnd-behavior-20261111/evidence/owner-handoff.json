@@ -1,0 +1,42 @@
+{
+  "task_id": "oss-rnd-behavior-20261111",
+  "risk_tier": "normal",
+  "risk_reason": "Fictional read-only behavior observation; no real installation, infrastructure or authority change.",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-rnd-behavior-evaluation"
+  },
+  "owner": {
+    "agent": "/root/knowledge_skill_owner",
+    "workspace": "work/agents/oss-rnd-behavior-20261111/skill-manager/instance-xu0sul25"
+  },
+  "main": {
+    "agent": "/root",
+    "workspace": "work/agents/oss-rnd-behavior-20261111/orchestrator/instance-ud8qhueb"
+  },
+  "evaluator": {
+    "agent": "/root/lf_evaluator",
+    "workspace": "work/agents/oss-rnd-behavior-20261111/evaluator/instance-hl6d8f8h"
+  },
+  "owned_product_paths": [
+    "evals/harness-behavior-v2.json",
+    "evals/results/oss-rnd-behavior-20261111.json"
+  ],
+  "delegation_authorization": "Parent explicitly authorized exactly four fresh oss-rnd subjects, sequential fork_turns=none, one response each; no descendants or retries.",
+  "budget": "Four one-round fictional cases then independent judgment, one selected required regression suite, final review/publication.",
+  "preflight_decision": "Preserve mandatory readings and caps. Input overflow known before dispatch, so budget/overall fails retained; no fabricated pass.",
+  "administration_repair": "After R01/R02 truncated outer output, parent approved only predispatch transport clarification for not-yet-dispatched R03/R04. No reruns.",
+  "v1_bytes_unchanged": true,
+  "all_original_cases_unchanged": true,
+  "live_knowledge_index_unchanged": true,
+  "no_runtime_code_or_new_test_code_changes": true,
+  "subject_observation_source": "Independent lineage-filtered native messages/tool capture; encrypted administrator wrapper reconstructed from prehashed retained plaintext.",
+  "remaining": [
+    "Finish already running selected regression",
+    "Final independent aggregate/evidence assessment",
+    "Validate and submit; main publication"
+  ]
+}

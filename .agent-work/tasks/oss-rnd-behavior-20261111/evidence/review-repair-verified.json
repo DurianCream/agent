@@ -1,0 +1,22 @@
+{
+  "reviewer": {
+    "subject": "lf_evaluator",
+    "session": "/root/lf_evaluator"
+  },
+  "task_id": "oss-rnd-behavior-20261111",
+  "assessment": "accepted_publication_repair",
+  "finding_id": "BEH-003",
+  "status": "resolved_subject_to_final_candidate_gate",
+  "verified": {
+    "executed_combined_sha256": "2ff6272025cb8c80257d8d5cb18662331436e8e0df911424135d0edf182beaae",
+    "supplemental_sha256": "40fb11c9476244f2098d57033100ac9ef1952a95a29c8dfb71da999e6d453a40",
+    "selected_four_case_objects_equal": true,
+    "administration_equal": true,
+    "v1_bytes_equal_HEAD": true,
+    "original13cases_preserved_in_v1": true,
+    "aggregate_distinguishes_execution_and_publication_contracts": true,
+    "subject_reruns": 0
+  },
+  "scope": "Packaging only: R-only supplement with old cases retained in v1; no changed test prompts/criteria/caps, no escaping/allowlist/scanner edits.",
+  "remaining": "Final candidate mandatory suite and final artifact/result/assessment bindings; first passing suite applies only to pre-repair candidate."
+}

@@ -352,6 +352,19 @@
         "environment": "development",
         "issue": "oss-decision-knowledge"
       }
+    },
+    "oss-rnd-behavior-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T16:01:02+09:00",
+      "summary": "가상 oss-rnd 사례 네 건을 실제 실행하고 독립 판정해 게시 가능한 평가 기록을 완성했다. 의미·출력 예산은 4건 통과했지만 입력 예산 초과로 종합은 0건 통과·4건 실패다. 최종 후보의 필수 회귀 108개 검사와 독립 집계 검수를 통과했다.",
+      "path": "tasks/oss-rnd-behavior-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-rnd-behavior-evaluation"
+      }
     }
   }
 }

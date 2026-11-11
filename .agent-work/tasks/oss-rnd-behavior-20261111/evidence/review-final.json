@@ -1,0 +1,84 @@
+{
+  "assessment": "accepted",
+  "acceptance_scope": "Integrity, faithful reporting and publication readiness of the evaluation artifacts; NOT a claim that the4 behavior cases pass.",
+  "reviewer": {
+    "subject": "lf_evaluator",
+    "session": "/root/lf_evaluator"
+  },
+  "author": "/root/knowledge_skill_owner",
+  "task_id": "oss-rnd-behavior-20261111",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-rnd-behavior-evaluation"
+  },
+  "candidate_digest": "13b1e3b72a124d0f3d96ef3fa85f313949c8d0a6995dc404116c3907cdee3879",
+  "reviewed_product_paths": [
+    "evals/harness-behavior-v2.json",
+    "evals/results/oss-rnd-behavior-20261111.json"
+  ],
+  "criterion_outcomes": {
+    "original_cases_and_caps_preserved": "passed",
+    "four_fresh_once_subjects_independent_actual_judgments": "passed",
+    "no_prohibited_execution_or_runtime_test_edits": "passed",
+    "faithful_semantic_budget_and_time_results": "passed",
+    "final_required_regression": "passed",
+    "final_artifact_review": "passed",
+    "publication": "not_run"
+  },
+  "behavior_results": {
+    "semantic_passed": 4,
+    "input_budget_failed": 4,
+    "output_budget_passed": 4,
+    "overall_passed": 0,
+    "overall_failed": 4,
+    "subject_retries": 0
+  },
+  "findings_disposition": [
+    {
+      "id": "BEH-001",
+      "status": "accurately_reported_evaluation_failure",
+      "impact": "Required source alone exceeds16k input cap. No input pass claimed; no scope authorization to repair harness/caps."
+    },
+    {
+      "id": "BEH-002",
+      "status": "accurately_reported_administration_limit",
+      "impact": "R01/R02 mandatory source delivery truncated but case prompts complete; no complete-instruction claim. Remaining2 transport clarified before execution, no subjects rerun."
+    },
+    {
+      "id": "BEH-003",
+      "status": "resolved",
+      "impact": "Publication contract narrowed to4case supplement beside unchangedv1. Executed contract preserved locally and identical selected cases/admin proof published. No scanner policy/encoding exceptions; final candidate rerun108passed."
+    }
+  ],
+  "unresolved_artifact_defects": [],
+  "verification_basis": {
+    "independent": "Actual lineage-matched subject messages/tool calls captured; all commentary/final bytes and tool returns counted; aggregate matches captures/judgments. Final candidate/log hash/current contract provenance/archives independently compared. Static current scanner patterns found no matches in2product+22safe archive sources.",
+    "author_evidence": "Final full p1-regression108passed,774.403s unittest/779.587s wrapper, candidate unchanged. Initial candidate108passed767.051s retained as prior-only, total2calls1546.638s,108unique cases.",
+    "rerun_reason": "Confirmed packaging defect changed2owned product blobs; second mandatory suite bound new candidate. No evaluator duplicate suite or subject rerun."
+  },
+  "artifact_review": "Korean report explicitly separates semantic4passes/input4fails/overall4fails from regression pass; input reconstruction, native exclusions, truncation, transport change, admin confound and child surface all disclosed.",
+  "limits": [
+    "Encrypted native dispatch payload prevents independent recovery of wrapper plaintext; frozen administrator source used for reconstructed totals. Observed prefix+tool-return lowerbounds alone prove each input overrun.",
+    "Common no-install wrapper confounds attribution to role guidance; no host enforcement/isolation claim.",
+    "Native host prompts/hidden reasoning/billing excluded; not total token accounting.",
+    "Single fictional sample per case, no general reliability guarantee.",
+    "Original combined contract raw copy and native execution logs are local only; safe digests/fixtures/answers published.",
+    "Secret pattern preflight is not final committed-blob scan; cooperating finish must perform final publication validation.",
+    "Review identity and local receipts are cooperative declarations, not authenticated attestations."
+  ],
+  "pending_authorization": "Existing bounded user publication authorization; main must complete validated submit/finish and remote readback.",
+  "re_review_triggers": [
+    "Changed selected cases, product candidate, substantive claims, evidence bytes, artifact, gate policy or destination."
+  ],
+  "evidence": [
+    "runs/oss-rnd-behavior-20261111/evidence/review-aggregate-checks.json",
+    "runs/oss-rnd-behavior-20261111/evidence/review-case-judgments.json",
+    "runs/oss-rnd-behavior-20261111/evidence/review-repair-verified.json",
+    "runs/oss-rnd-behavior-20261111/evidence/p1-final-receipt.json",
+    "runs/oss-rnd-behavior-20261111/evidence/regression-summary.json",
+    "outputs/oss-rnd-behavior-20261111/behavior-report.ko.md"
+  ]
+}

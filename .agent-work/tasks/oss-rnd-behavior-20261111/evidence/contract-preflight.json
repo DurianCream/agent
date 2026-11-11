@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-11-11T06:16:57.168482+00:00",
+  "version": "2.0.0",
+  "v1_sha256": "14ba686aac97865b4c958d09b61140c70968c3e0189e30a39fa02d7173016222",
+  "v1_bytes_unchanged": true,
+  "original_case_count": 13,
+  "original_cases_unchanged": true,
+  "new_cases": [
+    "R01",
+    "R02",
+    "R03",
+    "R04"
+  ],
+  "caps_unchanged": {
+    "input_byte_cap": 16000,
+    "output_byte_cap": 800,
+    "rounds": 1
+  },
+  "reason": "Version 1 is frozen; compatible case extension is a new version preserving all original case values and administration."
+}

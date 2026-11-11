@@ -1,0 +1,47 @@
+{
+  "case_id": "R02",
+  "subject_session_id": "01a1c941-d1a8-7b11-9e49-4aab3882387d",
+  "agent_path": "/root/knowledge_skill_owner/subject_r02",
+  "parent_session_id": "01a1c91e-60b2-7943-80eb-b186a8ac515d",
+  "fresh_fork_none": true,
+  "admin_wrapper_provenance": "Retained administrator plaintext matches predispatch hash; native host logs encrypt dispatched message, so exact plaintext equality cannot independently be recovered from native trace.",
+  "wrapper_utf8_bytes": 1337,
+  "wrapper_sha256": "38c92aca517c64bb65bd7cb8ee63c1e95ab006719c8faf69b21a276800cb408f",
+  "visible_new_task_prefix_utf8_bytes": 119,
+  "visible_new_task_prefix_sha256": "f3e930a9e05dcb121507a7cda174abf369448d1433785e9b67c10f4a9a6cf6f8",
+  "tool_return_utf8_bytes": 40153,
+  "tool_return_sha256": "57862a9e9e54591e49660aac02ea4eb63c5fc0caeffa6b29405c6664b6b3081e",
+  "reconstructed_visible_input_utf8_bytes": 41609,
+  "independently_observed_input_lower_bound_utf8_bytes": 40272,
+  "visible_answer_utf8_bytes": 587,
+  "visible_answers": [
+    {
+      "phase": "final_answer",
+      "text": "CedarQueue v1.0의 도입을 권고할 수 없습니다.\n\n- 사실: 기능은 충족하지만, 확정된 라이선스는 상업 서비스 사용을 금지합니다. 고객에게 이용료를 받는 SaaS는 해당 금지 대상입니다.\n- 결정: 라이선스 필수 요건이 미충족이므로 현재 용도에는 도입을 거절합니다. 기능 충족으로 이 제외 조건을 상쇄할 수 없습니다.\n- 다음 단계: 상업 이용이 허용되는 대안을 검토합니다. 해당 SaaS 이용을 허용하는 별도 라이선스를 확보하면 재검토할 수 있습니다.",
+      "utf8_bytes": 587,
+      "line": 22
+    }
+  ],
+  "tool_calls": [
+    {
+      "type": "custom_tool_call",
+      "name": "exec",
+      "call_id": "call_40a299c9741b43e69b0fb36f0a550608",
+      "argument_utf8_bytes": 349,
+      "argument_sha256": "de97e57eded8786ea434cf9073108539a9290cf9479da06532d2edc718199889",
+      "action": "Read frozen evaluation packet through exec_command",
+      "line": 14
+    }
+  ],
+  "tool_call_count": 1,
+  "tool_argument_utf8_bytes": 349,
+  "tool_output_truncated": true,
+  "native_host_user_blocks_excluded_utf8_bytes": 3476,
+  "native_host_exclusion": "Host-provenance AGENTS/environment and developer/system prompts excluded by frozen protocol; hidden reasoning not inspected/exported. Native total unknown.",
+  "trace_file_sha256": "8f75a4f116964c3eac913ed671e2d79e5212ea4a4326603323f31c42e5ce6359",
+  "case_complete": true,
+  "input_budget_pass": false,
+  "output_budget_pass": true,
+  "complete_case_prompt_visible_in_tool_return": true,
+  "full_packet_delivery_matches_plaintext_ignoring_final_newline": false
+}

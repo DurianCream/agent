@@ -1,0 +1,19 @@
+{
+  "reason": "Original preflight wrapper_path names later revised only for not-yet-dispatched R03/R04; exact original bytes are preserved at these separate local paths. No rerun.",
+  "originals": [
+    {
+      "case_id": "R03",
+      "original_wrapper_preserved_at": "work/agents/oss-rnd-behavior-20261111/skill-manager/instance-xu0sul25/R03-wrapper-v1.txt",
+      "original_wrapper_sha256": "1ef1e32ecf80806f9c5c982a6f6f0da5fe1cc78582255483e2d7f166e5e29271",
+      "original_preflight": "runs/oss-rnd-behavior-20261111/evidence/dispatch-preflight.json",
+      "current_preflight": "runs/oss-rnd-behavior-20261111/evidence/dispatch-preflight-v2.json"
+    },
+    {
+      "case_id": "R04",
+      "original_wrapper_preserved_at": "work/agents/oss-rnd-behavior-20261111/skill-manager/instance-xu0sul25/R04-wrapper-v1.txt",
+      "original_wrapper_sha256": "0532e0c5536f037f3c014d8447e85c5fce65a3fdf91038b0535bfcd532fea7bc",
+      "original_preflight": "runs/oss-rnd-behavior-20261111/evidence/dispatch-preflight.json",
+      "current_preflight": "runs/oss-rnd-behavior-20261111/evidence/dispatch-preflight-v2.json"
+    }
+  ]
+}

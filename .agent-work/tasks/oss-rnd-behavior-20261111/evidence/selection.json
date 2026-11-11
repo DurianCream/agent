@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:\\Users\\dhyun\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "runtime/control_gate.py",
+    "select-tests",
+    "--task",
+    "oss-rnd-behavior-20261111"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.408,
+  "stdout": "{\"ok\": true, \"data\": {\"mode\": \"full\", \"suites\": [{\"id\": \"p1-regression\", \"argv\": [\"@project-python\", \"-m\", \"unittest\", \"discover\", \"-s\", \"runtime/tests\", \"-p\", \"test_control_gate*.py\", \"-v\"]}], \"reasons\": [{\"path\": \"evals/harness-behavior-v2.json\", \"reason\": \"new, deleted, or mode-changed file\", \"suites\": [\"p1-regression\"]}, {\"path\": \"evals/results/oss-rnd-behavior-20261111.json\", \"reason\": \"new, deleted, or mode-changed file\", \"suites\": [\"p1-regression\"]}], \"mapping_sha256\": \"d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6\", \"digest\": \"1bf273d7b55071be8ef95a6417ecab9eeef9a1683c06a6efea477fecf5535442\"}}\r\n",
+  "stderr": "",
+  "observed_at": "2026-11-11T06:42:48.780408+00:00"
+}

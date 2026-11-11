@@ -1,0 +1,24 @@
+{
+  "selected_mode": "full",
+  "selected_suites": [
+    "p1-regression"
+  ],
+  "selection_reason": "Both owned eval files are new files; exact current impact policy fallback, no mapping changes.",
+  "final_candidate_digest": "13b1e3b72a124d0f3d96ef3fa85f313949c8d0a6995dc404116c3907cdee3879",
+  "final_outcome": "passed",
+  "final_tests_run": 108,
+  "final_wrapper_elapsed_seconds": 779.587,
+  "final_unittest_elapsed_seconds": 774.403,
+  "prior_candidate_digest": "c95f01884e15a6a491da58ec98b5dfba30906aeb8686ce54b8f5075e4d738a21",
+  "prior_outcome": "passed",
+  "prior_tests_run": 108,
+  "prior_elapsed_seconds": 767.051,
+  "prior_valid_for_final_candidate": false,
+  "suite_invocations": 2,
+  "repeat_reason": "Confirmed publication packaging defect required narrowing v2 to supplemental R-only pack and updating execution/current contract provenance; changed product blobs require current candidate test evidence.",
+  "unique_regression_cases": 108,
+  "case_subject_invocations": 4,
+  "case_subject_retries": 0,
+  "total_wrapper_elapsed_seconds": 1546.638,
+  "regression_and_behavior_verdicts_distinct": true
+}

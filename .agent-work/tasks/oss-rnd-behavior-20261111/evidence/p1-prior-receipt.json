@@ -1,0 +1,55 @@
+{
+  "record": "test-4b01e6c2ad1f4b9684cef38bb8b92694.json",
+  "kind": "test",
+  "task_id": "oss-rnd-behavior-20261111",
+  "candidate_digest": "c95f01884e15a6a491da58ec98b5dfba30906aeb8686ce54b8f5075e4d738a21",
+  "suite_id": "p1-regression",
+  "suite_digest": "e171934673cfd3c4b7485d619c33ad64e8c655a5b0d112ffb149abd675e8f4be",
+  "created_at": "2026-11-11T06:38:43.397508+00:00",
+  "outcome": "passed",
+  "tests_run": 108,
+  "exit_code": 0,
+  "reason": null,
+  "candidate_unchanged": true,
+  "evidence": {
+    "path": "runs/oss-rnd-behavior-20261111/evidence/gate-test-3d9dbbd473794c888a4f48613cc290ec.log",
+    "sha256": "50a283778d5292cf419712d667c2abc9af42e13c631b4b7cc58261239d535a08"
+  },
+  "assurance": "local-executed-untrusted-candidate",
+  "impact_selection": {
+    "mode": "full",
+    "suites": [
+      {
+        "id": "p1-regression",
+        "argv": [
+          "@project-python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "runtime/tests",
+          "-p",
+          "test_control_gate*.py",
+          "-v"
+        ]
+      }
+    ],
+    "reasons": [
+      {
+        "path": "evals/harness-behavior-v2.json",
+        "reason": "new, deleted, or mode-changed file",
+        "suites": [
+          "p1-regression"
+        ]
+      },
+      {
+        "path": "evals/results/oss-rnd-behavior-20261111.json",
+        "reason": "new, deleted, or mode-changed file",
+        "suites": [
+          "p1-regression"
+        ]
+      }
+    ],
+    "mapping_sha256": "d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6"
+  }
+}

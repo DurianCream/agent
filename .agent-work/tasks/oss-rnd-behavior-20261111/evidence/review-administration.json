@@ -1,0 +1,42 @@
+{
+  "reviewer": {
+    "subject": "lf_evaluator",
+    "session": "/root/lf_evaluator"
+  },
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-rnd-behavior-evaluation",
+    "task_id": "oss-rnd-behavior-20261111"
+  },
+  "assessment": "administration_feasible_with_known_budget_failure",
+  "original_cases_unchanged": true,
+  "original_administration_unchanged": true,
+  "new_cases": [
+    "R01",
+    "R02",
+    "R03",
+    "R04"
+  ],
+  "known_required_workflow_bytes": 17381,
+  "input_cap": 16000,
+  "output_cap": 800,
+  "rounds": 1,
+  "budget_disposition": "Full supplied mandatory text alone exceeds input cap. Count before dispatch, execute once for semantic observation only, mark each input budget failed and overall case failed regardless of semantics. No cap waiver, excluded visible reads, or invented compliance.",
+  "protocol_interpretation": "Frozen protocol says above cap equals fail and requires counting before dispatch; it does not forbid a knowingly failing executed observation. Main explicitly selected honest known-overflow execution after informing user.",
+  "capture_method": "Identify exact fresh subject JSONL by native session_meta subagent agent_path and parent_thread_id; extract only those subject visible administered message/function-call/output records. Native host prompts and hidden reasoning excluded by protocol, with unknown count disclosed. Never infer zero tools from absence in final prose.",
+  "privacy": "No unrelated conversations or native/hidden instruction text published. Publish only bounded fixture prompts/output/action metadata and hashes; raw host logs remain local.",
+  "predispatch_constraints": [
+    "One fork_none fresh oss-rnd subject per case; no rubric or other answers.",
+    "Same administration wrapper and applicable source materials; no subject coaching or case-specific desired-answer hints.",
+    "No real installs/external code execution/file mutation; judge any actual prohibited action honestly.",
+    "No retry/repair of subject answers; semantic and byte judgments recorded independently."
+  ],
+  "limitations": [
+    "Actual subject traces not yet available; capture completeness must be verified after dispatch.",
+    "Role surface is fresh child, not standalone main; native host prompts outside measured budget.",
+    "This is administration review only, not prediction of subject result."
+  ]
+}
