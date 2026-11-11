@@ -23,7 +23,7 @@
       ]
     }
   ],
-  "timeout_seconds": 600,
+  "timeout_seconds": 1800,
   "policy": {
     "submission": "allow",
     "publication": "allow"

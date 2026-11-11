@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "records-only",
+  "source": "repository-lf-20261111",
+  "successor": "repository-lf-records-20261111",
+  "binding": {
+    "schema_version": "1.0.0",
+    "repository_id": "multi",
+    "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+    "task_id": "repository-lf-records-20261111",
+    "scope": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development",
+      "issue": "repository-lf-normalization"
+    }
+  },
+  "source_state": "submitted",
+  "source_result_status": "partial",
+  "source_task_sha256": "cb2ffa1740e4637093b3e83be032c55c10c77fc5dbbff3d8947a5d18130dd275",
+  "source_records": {
+    ".agent-work/tasks/repository-lf-20261111/spec.md": "ff5aeec76b81c8196fb2eb9b4db6901929d79714914846f42e289cb48b99452b",
+    ".agent-work/tasks/repository-lf-20261111/record.json": "2a52aae5bf44f4e586005168da0926b2c2744edeecd69972d1a4189a0701c091",
+    ".agent-work/tasks/repository-lf-20261111/report.ko.md": "65c20fedf96c101d0193483046f6992cdce5fdf22038b3eab90899ceb1dbfb13"
+  },
+  "source_index": {
+    "status": "partial",
+    "state": "submitted",
+    "saved_at": "2026-11-11T13:41:53+09:00",
+    "summary": "작업 진행 중.",
+    "path": "tasks/repository-lf-20261111/spec.md",
+    "scope": {
+      "project": "multi",
+      "service": "agent-framework",
+      "environment": "development",
+      "issue": "repository-lf-normalization"
+    }
+  },
+  "entries": []
+}

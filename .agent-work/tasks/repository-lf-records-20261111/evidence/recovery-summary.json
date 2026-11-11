@@ -1,0 +1,21 @@
+{
+  "objective": "Records-only closure of initial LF normalization attempt; does not claim normalization completion.",
+  "tier": "normal",
+  "reason": "Reversible record publication with supported recovery; no product change.",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-lf-normalization"
+  },
+  "owner": "/root/lf_owner",
+  "orchestrator": "/root",
+  "evaluator": "/root/lf_evaluator",
+  "initial_failure": "P1 configuration changed after enrollment: initial CRLF gates.json and automation.json hashes did not match LF checkout bytes.",
+  "source_template_limitation": "Result preparation hit Windows cp949 default decoding before writing result. A following submit command closed the existing partial template. No completed claim was made. Submitted source is preserved unchanged; this successor adds the missing explanation. Subsequent dependent commands check return codes and read UTF-8 explicitly.",
+  "recovery": "Owned .gitattributes and 14 EOL-only paths restored to exact HEAD; original control bytes restored for records-only closure. After this publication, final product task will initialize against LF control bytes. No frozen hashes/enrollments rewritten.",
+  "diagnostic_status": "Direct unbound P1 diagnostic intentionally stopped after 99.53 seconds to avoid tests across rollback; not passed and not gate evidence.",
+  "budget": "Two additional task cycles: records-only closure and fresh LF product task. Escalate any additional blocker.",
+  "no_product_changes": true
+}

@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi\\.venv-controls\\Scripts\\python.exe",
+    "-I",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "runtime/tests",
+    "-p",
+    "test_control_gate*.py",
+    "-v"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 99.53,
+  "gate_evidence": false,
+  "reason": "Direct diagnostic only: mandatory gate runner rejected changed raw configuration bytes before executing tests. Does not satisfy P1 submission/publication gate."
+}

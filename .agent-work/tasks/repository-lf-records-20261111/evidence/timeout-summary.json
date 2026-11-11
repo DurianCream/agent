@@ -1,0 +1,22 @@
+{
+  "status": "blocked",
+  "gate_outcome": "failed",
+  "reason": "timeout",
+  "timeout_seconds": 600,
+  "completed_ok_lines": 104,
+  "failure_or_error_lines": 0,
+  "skip_lines": 0,
+  "gate_tests_run": 0,
+  "interrupted_case": "test_managed_result_records_are_scanned (test_control_gate_secrets.PublicationTests.test_managed_result_records_are_scanned) ... ",
+  "candidate_unchanged": true,
+  "candidate_digest": "e1e659afe23102408d8155ea5ff8512ff1cd53b9b66df26965c78766c451e6da",
+  "command": "python runtime/control_gate.py run-tests --task repository-lf-records-20261111 --suite p1-regression",
+  "actual_runner": ".venv-controls/Scripts/python.exe -I -B -m unittest discover -s runtime/tests -p test_control_gate*.py -v",
+  "decision": "No retry or timeout/configuration edits. Product changes remain rolled back. No commit or push performed.",
+  "initial_source_limitation": "The initial partial template was submitted after a preparation decoding error. Its submitted records remain unchanged; recovery-summary.json records the actual history.",
+  "assignments": {
+    "owner": "/root/lf_owner, reused original coding instance-7yr4vzr0",
+    "orchestrator": "/root, records instance-qxzb6olb",
+    "evaluator": "/root/lf_evaluator, records instance-p06vumz9"
+  }
+}

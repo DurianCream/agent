@@ -1,0 +1,23 @@
+{
+  "product_paths": [
+    ".gitattributes",
+    ".gitignore",
+    "core/knowledge-manager/instructions.md",
+    "core/policy-manager/instructions.md",
+    "core/skill-manager/instructions.md",
+    "evals/default-delegation.md",
+    "evals/module-evaluation.md",
+    "modules/coding/instructions.md",
+    "modules/infrastructure/instructions.md",
+    "runtime/codex-settings.toml",
+    "runtime/context_checkpoint.py",
+    "runtime/tests/test_context_checkpoint.py",
+    "shared/knowledge/README.md",
+    "shared/policies/common.json",
+    "shared/skills/maintain-module/SKILL.md"
+  ],
+  "all_product_bytes_equal_original_head": true,
+  "control_restore": "Exact original CRLF representation restored solely to close failed attempt, not to claim normalized-candidate success. New final task will enroll after LF preparation.",
+  "snapshot_and_enrollment_edited": false,
+  "direct_diagnostic": "Stopped by owner after parent agreement; incomplete, not a passing gate proof."
+}

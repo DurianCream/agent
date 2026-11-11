@@ -1,0 +1,67 @@
+{
+  "assessment": "inconclusive",
+  "reviewer": {
+    "subject": "lf_evaluator",
+    "session": "/root/lf_evaluator"
+  },
+  "author": "/root/lf_owner",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-lf-normalization",
+    "task": "repository-lf-20261111"
+  },
+  "reviewed_head": "51376aadcd9f60f712200cdff56c8f939b4897b7",
+  "candidate_hashes": "review-independent-checks.json",
+  "criterion_outcomes": {
+    "global_lf_attributes": "passed",
+    "exact_eol_only_index_diff": "passed",
+    "historical_hash_preservation": "passed",
+    "adapter_clean": "passed",
+    "sync_doctor": "passed",
+    "formal_p1": "not_run",
+    "publication": "not_run"
+  },
+  "historical_count_independently_hashed": 317,
+  "historical_mismatches": [],
+  "normalized_evidence_mismatches_after_repair": [],
+  "findings": [
+    {
+      "id": "LF-REV-001",
+      "severity": "major",
+      "status": "open",
+      "location": "runtime/control_gate.py:186 and :198",
+      "evidence": "Gate status independently returns P1 configuration changed after enrollment. In-memory CRLF representation of both config files exactly reproduces enrollment hashes; current LF bytes equal HEAD.",
+      "impact": "Mandatory gate suite, candidate identity, assessment registration, validation and publication unavailable for this enrollment in final LF state.",
+      "reverification": "Supported fresh LF enrollment with full suite and independent review on final LF candidate, without rewriting historical hashes or bypassing gate."
+    },
+    {
+      "id": "LF-REV-002",
+      "severity": "minor",
+      "status": "resolved",
+      "location": "runs/repository-lf-20261111/evidence/normalization-audit.json normalized_sha256",
+      "evidence": "Initial audit carried pre-checkout hashes. Owner corrected current-task evidence, and all 14 values independently match LF index/worktree hashes.",
+      "impact": "Original audit candidate identity was stale; no product content defect found.",
+      "reverification": "Independent 14-file hash equality passed after repair."
+    }
+  ],
+  "recovery_analysis": {
+    "direct_successor": "Blocked: task_recovery.closed revalidates stale source enrollment, shared index ownership requires source recovery.",
+    "full_rollback_then_records_only": "Potential supported route, not executed by evaluator: genuinely abandon first candidate and restore exact pre-attempt product/control bytes, submit partial/cancelled record, use fresh CRLF-enrolled records-only successor and its full P1/review to publish attempt records. Only after that publication create a new task with LF config working bytes already established and validate final normalized candidate.",
+    "disallowed": "Do not validate a CRLF candidate and subsequently claim LF final-state acceptance under that same enrollment."
+  },
+  "limitations": [
+    "Owner sync/doctor and PowerShell parse logs inspected; not rerun because actual execution logs show success and no contradictory evidence.",
+    "Direct diagnostic unittest run is not formal enrolled P1 evidence.",
+    "No deployment or publication accepted.",
+    "Local identities and evidence are unauthenticated cooperative declarations."
+  ],
+  "evidence": [
+    "runs/repository-lf-20261111/evidence/review-independent-checks.json",
+    "runs/repository-lf-20261111/evidence/normalization-audit.json",
+    "runs/repository-lf-20261111/evidence/p1-receipt.json"
+  ],
+  "pending_authorization": "No new permission request; recovery must stay within existing scope and supported lifecycle."
+}

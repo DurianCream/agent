@@ -1,0 +1,109 @@
+{
+  "head": "51376aadcd9f60f712200cdff56c8f939b4897b7",
+  "index_paths": [
+    {
+      "path": ".gitignore",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "34defd322abd9b1baea3976311aaee6052117f25d9d2a054240e7c64ab7588fa"
+    },
+    {
+      "path": "core/knowledge-manager/instructions.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "35e4fe9febc2ee618b5f08c11e97e1218c2abfcb12f90840b0763d69c4909ee7"
+    },
+    {
+      "path": "core/policy-manager/instructions.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "11ce9b33a0d25b0831cca42e88e14ac9fce6a394378519cec3db7c2ddf532a18"
+    },
+    {
+      "path": "core/skill-manager/instructions.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "ba782646779cfa65b385f7a060e4bc7f3c3a3cff128427a564f5c0901852fd8d"
+    },
+    {
+      "path": "evals/default-delegation.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "63eb15c037879a02f8daf630003d110c97e84b0b38caa355804ada5d58403ead"
+    },
+    {
+      "path": "evals/module-evaluation.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "984b97f97529ad1184454196a59e588b2630e79fae31249bce0124ac24e18745"
+    },
+    {
+      "path": "modules/coding/instructions.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "fd4c9ccf4b2ad5671e9620938c06aefee5efe7709d727519f94d5f410f8cf826"
+    },
+    {
+      "path": "modules/infrastructure/instructions.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "803d78af35ddb7e5e0ae5b6c1cf51db7cf1608353fc4ce74db1079a90a33f86e"
+    },
+    {
+      "path": "runtime/codex-settings.toml",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "0420ae50da544b04efc31e86a1ef0d7ed6bb69e86c8a2755d78521f47e16c1dd"
+    },
+    {
+      "path": "runtime/context_checkpoint.py",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "ab98cbf6167278c5318c7050e8b1fd3bca63f5ca5592cafc18cb44f6f5763be1"
+    },
+    {
+      "path": "runtime/tests/test_context_checkpoint.py",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "4fea71f856fe5f4fdd9b2d00a278b3edc96d267f24357416d0fb07ef63ff9df9"
+    },
+    {
+      "path": "shared/knowledge/README.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "59292c16738af0f87b4961a03e621382515eeb532cc1dcbacdd2e80e4b8cbca3"
+    },
+    {
+      "path": "shared/policies/common.json",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "530ab7098898733946978662e3d18ab5d1ebdab2988607516da385b7b060df3e"
+    },
+    {
+      "path": "shared/skills/maintain-module/SKILL.md",
+      "only_crlf_to_lf": true,
+      "worktree_equal_index": true,
+      "sha256": "5a4a9986dacc76aee9aa235dffecb3caca7be66abfff90c61481fce93ee6088b"
+    }
+  ],
+  "cached_whitespace_ignored_empty": true,
+  "config_mismatch": [
+    {
+      "path": ".agent-work/gates.json",
+      "current": "e961161ee7cb1f4d0f0b5870125fd6474579c9e29c4659f6841d80b3ba7bdf4d",
+      "enrolled": "4b13bc3165abd8505542b6cc782a399b4ae5ea20aad72aa71882aff83cde3985",
+      "crlf_form_matches_enrolled": true,
+      "head_equals_worktree": true
+    },
+    {
+      "path": ".agent-work/automation.json",
+      "current": "0c37523d71c319ae31da67cc169106f49c1d22a1737730289075269b3ff01388",
+      "enrolled": "aa88837b7f11ca6bf40fa5c930e8c0dfbf76fd59c4d2f175e83035d619d131aa",
+      "crlf_form_matches_enrolled": true,
+      "head_equals_worktree": true
+    }
+  ],
+  "adapter_status": "",
+  "attributes": "* text=auto eol=lf\n/.codex/** text eol=lf\n/.agents/** text eol=lf\n/runtime/native-map.json text eol=lf\n",
+  "historical_diff_empty": true
+}

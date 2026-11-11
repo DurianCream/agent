@@ -1,0 +1,62 @@
+{
+  "assessment": "inconclusive",
+  "reviewer": {
+    "subject": "lf_evaluator",
+    "session": "/root/lf_evaluator"
+  },
+  "author": "/root/lf_owner",
+  "task_id": "repository-lf-records-20261111",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-lf-normalization"
+  },
+  "candidate_digest": "e1e659afe23102408d8155ea5ff8512ff1cd53b9b66df26965c78766c451e6da",
+  "reviewed_head": "51376aadcd9f60f712200cdff56c8f939b4897b7",
+  "criterion_outcomes": {
+    "supported_records_only_recovery": "passed",
+    "source_partial_preservation": "passed",
+    "product_rollback": "passed",
+    "mandatory_full_p1": "failed",
+    "publication": "not_run",
+    "final_lf_normalization": "not_run"
+  },
+  "findings": [
+    {
+      "id": "LF-REV-003",
+      "severity": "major",
+      "status": "open",
+      "location": "runs/repository-lf-records-20261111/evidence/gate-test-3d1a31a9a5874c0ba57479d081face8b.log",
+      "evidence": "Formal p1-regression receipt reports failed: timeout, candidate_unchanged true. Log hash verified. No unittest final summary.",
+      "impact": "Required P1 completion and publication acceptance unavailable.",
+      "reverification": "Complete unchanged full required suite within an authorized supported execution path, then independent assessment against exact final candidate."
+    }
+  ],
+  "observations": [
+    "Records-only successor accurately discloses initial source partial-template submission and aborted diagnostic run.",
+    "First candidate was rolled back: current .gitattributes has original three rules, index has no diff, no product diff remains. This review does not claim LF normalization complete.",
+    "Receipt tests_run=0 reflects missing parsed final summary after timeout; log contains completed test lines, so it must not be described as no tests executed."
+  ],
+  "checks": {
+    "log_hash_verified": true,
+    "observed_ok_lines": 104,
+    "observed_error_lines": [],
+    "has_final_summary": false
+  },
+  "evidence": [
+    "runs/repository-lf-records-20261111/evidence/review-records-checks.json",
+    "runs/repository-lf-records-20261111/evidence/p1-receipt.json",
+    "runs/repository-lf-records-20261111/evidence/recovery-summary.json"
+  ],
+  "limitations": [
+    "No product changes or gate/hash edits by evaluator.",
+    "No accepted gate assessment registered because full mandatory suite failed.",
+    "No commit or push accepted.",
+    "Historical initial normalization checks describe the rolled-back candidate only."
+  ],
+  "next_actions": [
+    "Preserve partial recovery evidence; report timeout and incomplete final normalization without success claims."
+  ]
+}

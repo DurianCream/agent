@@ -300,6 +300,32 @@
         "environment": "development",
         "issue": "publication-secret-scan"
       }
+    },
+    "repository-lf-20261111": {
+      "status": "partial",
+      "state": "submitted",
+      "saved_at": "2026-11-11T13:41:53+09:00",
+      "summary": "작업 진행 중.",
+      "path": "tasks/repository-lf-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "repository-lf-normalization"
+      }
+    },
+    "repository-lf-records-20261111": {
+      "status": "partial",
+      "state": "submitted",
+      "saved_at": "2026-11-11T13:55:31+09:00",
+      "summary": "필수 P1 전체 시험이 600초 제한에 걸려 중단되었습니다. 제품 변경은 원래 상태로 복구했고 커밋·푸시하지 않았습니다.",
+      "path": "tasks/repository-lf-records-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "repository-lf-normalization"
+      }
     }
   }
 }

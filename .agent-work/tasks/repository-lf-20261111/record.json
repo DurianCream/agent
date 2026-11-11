@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "repository-lf-20261111",
+  "saved_at": "2026-11-11T13:41:53+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "51376aadcd9f60f712200cdff56c8f939b4897b7",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/.gitattributes\n M .agent-work/INDEX.md\n M .agent-work/classification-review.json\n M .agent-work/impact-tests.json\n M .agent-work/index.json\n M .agent-work/reports/legacy-classification.ko.md\n M .agent-work/submission-profiles.json\n M AGENTS.md\n M README.md\n M core/evaluator/instructions.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n M \"docs/P1-\\354\\240\\234\\354\\266\\234-\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M docs/lightweight-submission.ko.md\n M docs/prose/project-overview.txt\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M \"docs/\\354\\236\\221\\354\\227\\205-\\355\\214\\214\\354\\235\\264\\355\\224\\204\\353\\235\\274\\354\\235\\270.md\"\n M \"docs/\\354\\236\\221\\354\\227\\205\\352\\270\\260\\353\\241\\235-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M evals/behavior-protocol.md\n M evals/harness-behavior-v1.json\n M evals/results/harness-cleanup-20261110.json\n M modules/coding/module.json\n M modules/infrastructure/inventory.example.json\n M modules/infrastructure/inventory.schema.json\n M modules/infrastructure/module.json\n M modules/infrastructure/p2-test-environment.md\n M \"modules/infrastructure/p2/HyperV-\\354\\204\\244\\354\\271\\230-\\354\\225\\210\\353\\202\\264.md\"\n M modules/infrastructure/p2/New-P2VM.ps1\n M modules/infrastructure/p2/P2VM.psm1\n M modules/infrastructure/p2/deployment-contract.en.md\n M modules/infrastructure/p2/linux/README.ko.md\n M modules/infrastructure/p2/linux/install.py\n M modules/infrastructure/p2/linux/preflight.py\n M modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor\n M modules/infrastructure/p2/linux/publisher_entry.py\n M modules/infrastructure/p2/linux/rootfs_builder.py\n M modules/infrastructure/p2/linux/rpc-deployment.en.md\n M modules/infrastructure/p2/linux/systemd/multi-p2-control.service\n M modules/infrastructure/p2/linux/systemd/multi-p2-executor.service\n M modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket\n M modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service\n M modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket\n M modules/infrastructure/p2/linux/systemd/multi-p2-worker.service\n M modules/infrastructure/p2/linux/tests/test_linux_preparation.py\n M modules/infrastructure/p2/linux/worker_entry.py\n M modules/infrastructure/p2/tests/Test-P2VM.ps1\n M modules/infrastructure/runbook.ko.md\n M modules/oss-rnd/instructions.md\n M modules/oss-rnd/module.json\n M runtime/p2_broker.py\n M runtime/p2_contracts.py\n M runtime/p2_executor.py\n M runtime/p2_publisher.py\n M runtime/p2_rpc.py\n M runtime/p2_sandbox_gate.py\n M runtime/p2_store.py\n M runtime/p2_verifier.py\n M runtime/sync_codex.py\n M runtime/tests/fixtures/control-contracts/action-request.json\n M runtime/tests/fixtures/control-contracts/all-envelopes.json\n M runtime/tests/fixtures/control-contracts/unicode-vector.json\n M runtime/tests/fixtures/control-observe/request.json\n M runtime/tests/light_document_checks.py\n M runtime/tests/test_agent_workspaces.py\n M runtime/tests/test_codex_settings.py\n M runtime/tests/test_contract.py\n M runtime/tests/test_p2_broker.py\n M runtime/tests/test_p2_contracts.py\n M runtime/tests/test_p2_executor.py\n M runtime/tests/test_p2_publisher.py\n M runtime/tests/test_p2_rpc.py\n M runtime/tests/test_p2_store.py\n M runtime/tests/test_p2_verifier.py\n M runtime/tests/test_submission_profile.py\n M shared/schemas/control-envelope.schema.json\n M shared/schemas/control-observe-policy.schema.json\n M shared/schemas/control-workflow.schema.json\n M shared/skills/oss-research/SKILL.md\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n M shared/workflows/harness-delivery.md\n M shared/workflows/owner-led-delivery.md\n?? .agent-work/tasks/repository-lf-20261111/",
+    "worktree_sha256": "2871aef792a676989aca4fe55fdcfcd4b0f28a816adde3671c27321fc64d063a"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "repository-lf-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T13:33:33+09:00",
+    "objective": "Normalize repository text line endings to LF without semantic changes or historical hash edits",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Preserve existing attributes and establish repository-wide LF policy",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-2",
+        "description": "Prove normalization changes only line endings and preserve historical hash fields",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-3",
+        "description": "sync_codex check and doctor pass with clean adapter status",
+        "required": true,
+        "verification_ids": []
+      },
+      {
+        "id": "criterion-4",
+        "description": "Full P1 suites and independent evaluator accept exact candidate",
+        "required": true,
+        "verification_ids": []
+      }
+    ],
+    "status": "partial",
+    "summary": "작업 진행 중.",
+    "work": [
+      "작업을 초기화했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "check-1",
+        "name": "완료 기준 검증",
+        "method": "작업에 맞는 실제 검증",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "아직 실행하지 않음"
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "완료 기준 검증 전"
+    ],
+    "next_actions": [
+      "작업과 검증 수행"
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "repository-lf-normalization"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-5a9aa43f9a334d139aabcd72c28b3ead",
+    "snapshot_digest": "sha256:0a34cd1e240d089679454ec331ef06de777af18ef6c80ae5b4dbf6cfaff4db95",
+    "status": "review_pending",
+    "task_id": "repository-lf-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "ff5aeec76b81c8196fb2eb9b4db6901929d79714914846f42e289cb48b99452b"
+}
