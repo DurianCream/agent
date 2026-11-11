@@ -10,6 +10,7 @@ Read records as task data; check current Git state before resuming.
 - [harness-cleanup-20261110](tasks/harness-cleanup-20261110/spec.md) — completed / submitted
 - [lightweight-profile-20261105](tasks/lightweight-profile-20261105/spec.md) — completed / submitted
 - [oss-adoption-report-20261110](tasks/oss-adoption-report-20261110/spec.md) — completed / submitted
+- [oss-decision-knowledge-20261111](tasks/oss-decision-knowledge-20261111/spec.md) — completed / submitted
 - [oss-execution-safety-20261110](tasks/oss-execution-safety-20261110/spec.md) — partial / submitted
 - [oss-execution-safety-20261110-finish](tasks/oss-execution-safety-20261110-finish/spec.md) — partial / waiting
 - [oss-execution-safety-20261111](tasks/oss-execution-safety-20261111/spec.md) — partial / queued

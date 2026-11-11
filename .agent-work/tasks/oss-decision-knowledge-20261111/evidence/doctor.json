@@ -1,0 +1,12 @@
+{
+  "command": [
+    "C:\\Users\\dhyun\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "runtime/agentctl.py",
+    "doctor"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.164,
+  "stdout": "{\"ok\": true, \"command\": \"doctor\", \"data\": {\"modules\": 8, \"skills\": 5, \"result_contract\": \"1.0.0\", \"runtime_version\": \"0.3.0\", \"execution\": \"host\", \"schema_validation\": \"repository-supported-keywords\"}, \"errors\": []}\r\n",
+  "stderr": "",
+  "observed_at": "2026-11-11T05:41:40.048696+00:00"
+}

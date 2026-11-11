@@ -25,11 +25,11 @@
     ".codex/agents/evaluator.toml": "50aac46726f01d606c3df57113e87e3c2f501be4248e85f798b8becd767efb9e",
     ".codex/agents/coding.toml": "be1150756158f3b3dabfbba244bf451745aabb44632922b87c9d50d7b5aeec5c",
     ".codex/agents/infrastructure.toml": "7cda28a74f03a5f46c5e1b3bdc5ff70b26e1223d7702c94477a93b0031d470b1",
-    ".codex/agents/oss-rnd.toml": "162e6a1a8f665575edca90f376add830670146b27d3ccb9e910fc617314df6f2",
+    ".codex/agents/oss-rnd.toml": "acac30e136c991ba3fe1debef4c20fe8b51a300df5705326893d150e2ec45953",
     ".codex/config.toml": "26857a855b5c6463c2a9e6cdd5e1d3c92cac319b3bfee9da37a1ba170ac65cbb",
     ".agents/skills/submit-result/SKILL.md": "6a308a43425af0b114eb75b3bc299ca37c6a9d2c6d8fa2377b6b16c84c2f9fa7",
     ".agents/skills/maintain-module/SKILL.md": "ebd39ed4ac81a11a1c796bbddeac9c657de45e00bd1c640e1e20ba696a10baba",
-    ".agents/skills/oss-research/SKILL.md": "828beed9bdd23f8c785afbe82dec4b988d67641baa0dd2994376d6a911d29be8",
+    ".agents/skills/oss-research/SKILL.md": "7194bbf4f83e661af7652d2180f8eff56cba04bd379e97e7e4bd54d780b21c2d",
     ".agents/skills/harness-delivery/SKILL.md": "bd684df235a81f98dd63bb4aa0e65ac198102288e3ed9620848e27457fec933c",
     ".agents/skills/infrastructure-environment/SKILL.md": "f7a1f35a5f85d1a3c004104d787740a16baae1338e7701e56e1a62154374fc5c",
     ".codex/hooks.json": "927678dba838dcc084771f579f6914c881422e90c30e1dfcf0b21bba2b68e64a"

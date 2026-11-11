@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:\\Users\\dhyun\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "runtime/control_gate.py",
+    "select-tests",
+    "--task",
+    "oss-decision-knowledge-20261111"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.765,
+  "stdout": "{\"ok\": true, \"data\": {\"mode\": \"impact\", \"suites\": [{\"id\": \"impact-document-integrity\", \"argv\": [\"@project-python\", \"-m\", \"unittest\", \"discover\", \"-s\", \"runtime/tests\", \"-p\", \"impact_document_checks.py\", \"-v\"]}], \"reasons\": [{\"path\": \".agents/skills/oss-research/SKILL.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \".codex/agents/oss-rnd.toml\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"modules/oss-rnd/adoption-report.ko.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"modules/oss-rnd/module.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"runtime/native-map.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"shared/skills/oss-research/SKILL.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"shared/skills/skills.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}], \"mapping_sha256\": \"d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6\", \"digest\": \"cb0acec5f88b8ab2b7749d64c6ca80e8aad28d2d253c5dbe08f0947d2752cac6\"}}\r\n",
+  "stderr": "",
+  "observed_at": "2026-11-11T05:42:29.352792+00:00"
+}

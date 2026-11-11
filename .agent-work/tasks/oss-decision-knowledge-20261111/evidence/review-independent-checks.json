@@ -1,0 +1,34 @@
+{
+  "candidate_digest": "210b6388c7e8e14625a046d275b7e2ca0d563227a24e3b44649bf5c73db9267d",
+  "candidate_matches_receipt": true,
+  "owned_paths": [
+    ".agents/skills/oss-research/SKILL.md",
+    ".codex/agents/oss-rnd.toml",
+    "modules/oss-rnd/adoption-report.ko.md",
+    "modules/oss-rnd/module.json",
+    "runtime/native-map.json",
+    "shared/skills/oss-research/SKILL.md",
+    "shared/skills/skills.json"
+  ],
+  "claimed_hash_mismatches": [],
+  "knowledge_index_equals_head": true,
+  "knowledge_schema_rules_unchanged": true,
+  "log_sha256_match": true,
+  "test_summary": [
+    "Ran 4 tests in 1.812s",
+    "OK"
+  ],
+  "suite_selected": [
+    "impact-document-integrity"
+  ],
+  "selection_mode": "impact",
+  "selection_equals_receipt": true,
+  "suite_invocation_count": 1,
+  "elapsed_wrapper_seconds": 6.887,
+  "no_full_fallback": true,
+  "test_files_changed": [],
+  "runtime_changes": [
+    "runtime/native-map.json"
+  ],
+  "skill_line_count": 64
+}

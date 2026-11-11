@@ -339,6 +339,19 @@
         "environment": "development",
         "issue": "repository-lf-normalization"
       }
+    },
+    "oss-decision-knowledge-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T14:52:32+09:00",
+      "summary": "오픈소스 도입 검토의 이전 결정 조회와 완료 결론 기록 절차를 추가했다. 스킬 1.3.0과 모듈 0.4.0·어댑터를 반영했으며 영향 범위 suite 4개 검사와 독립 검수를 통과했다.",
+      "path": "tasks/oss-decision-knowledge-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-decision-knowledge"
+      }
     }
   }
 }

@@ -1,0 +1,37 @@
+{
+  "method": "Owner source walkthrough; no new executable test or live index write.",
+  "cases": [
+    {
+      "case": "Empty live index",
+      "observed": "Report must state no applicable prior decision; add only completed reviewed adoption conclusion. Current change report is not an adoption assessment, so live index remains empty."
+    },
+    {
+      "case": "Same project and canonical repository; overdue or superseded",
+      "observed": "Prior-decision section cites ID/dates/status; current evidence rechecked, original entry retained."
+    },
+    {
+      "case": "Similar name or different project",
+      "observed": "Verified upstream identity and scope required; no automatic authority transfer or supersession across scope."
+    },
+    {
+      "case": "Unreadable index/source",
+      "observed": "Limitation reported; not silently treated as empty history."
+    },
+    {
+      "case": "Duplicate write retry",
+      "observed": "Same stable ID and identical content causes no append; conflicting entry reconciled rather than overwritten."
+    },
+    {
+      "case": "Sensitive internal endpoint in evidence",
+      "observed": "Excluded from statement and sources; sanitized accessible report reference used."
+    },
+    {
+      "case": "Calendar month end",
+      "observed": "Six/three calendar months preserve zone, clamp missing day to destination month end; early evidence-based review recorded."
+    },
+    {
+      "case": "Unfinished experiment or report-only hypothetical",
+      "observed": "No live decision entry; task evidence/report only."
+    }
+  ]
+}

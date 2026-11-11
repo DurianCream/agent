@@ -1,0 +1,16 @@
+{
+  "command": [
+    "C:\\Users\\dhyun\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "runtime/control_gate.py",
+    "run-tests",
+    "--task",
+    "oss-decision-knowledge-20261111",
+    "--suite",
+    "impact-document-integrity"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 6.887,
+  "stdout": "{\"ok\": true, \"data\": {\"record\": \"test-5fc40d82e1254ba08a7010bf077607a0.json\", \"kind\": \"test\", \"task_id\": \"oss-decision-knowledge-20261111\", \"candidate_digest\": \"210b6388c7e8e14625a046d275b7e2ca0d563227a24e3b44649bf5c73db9267d\", \"suite_id\": \"impact-document-integrity\", \"suite_digest\": \"19e4886a3d7e223a4c613f039aaf941498c5bae248c1cf1c2c37cb4e7322dac8\", \"created_at\": \"2026-11-11T05:43:11.682956+00:00\", \"outcome\": \"passed\", \"tests_run\": 4, \"exit_code\": 0, \"reason\": null, \"candidate_unchanged\": true, \"evidence\": {\"path\": \"runs/oss-decision-knowledge-20261111/evidence/gate-test-b578599e5f264f72b3a3b43e225f4094.log\", \"sha256\": \"592d05c9f7b88baab1461043a478165dc595424eaf530b37ac9ff5728f0b7293\"}, \"assurance\": \"local-executed-untrusted-candidate\", \"impact_selection\": {\"mode\": \"impact\", \"suites\": [{\"id\": \"impact-document-integrity\", \"argv\": [\"@project-python\", \"-m\", \"unittest\", \"discover\", \"-s\", \"runtime/tests\", \"-p\", \"impact_document_checks.py\", \"-v\"]}], \"reasons\": [{\"path\": \".agents/skills/oss-research/SKILL.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \".codex/agents/oss-rnd.toml\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"modules/oss-rnd/adoption-report.ko.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"modules/oss-rnd/module.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"runtime/native-map.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"shared/skills/oss-research/SKILL.md\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}, {\"path\": \"shared/skills/skills.json\", \"reason\": \"Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.\", \"suites\": [\"impact-document-integrity\"]}], \"mapping_sha256\": \"d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6\"}}}\r\n",
+  "stderr": "",
+  "observed_at": "2026-11-11T05:43:12.276714+00:00"
+}

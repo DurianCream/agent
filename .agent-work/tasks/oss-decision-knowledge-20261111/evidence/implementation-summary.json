@@ -1,0 +1,226 @@
+{
+  "task_id": "oss-decision-knowledge-20261111",
+  "author": "/root/knowledge_skill_owner",
+  "risk_tier": "normal",
+  "reason": "Recoverable agent workflow behavior; no runtime, schema, host permission or gate changes.",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-decision-knowledge"
+  },
+  "main": {
+    "agent": "/root",
+    "workspace": "work/agents/oss-decision-knowledge-20261111/orchestrator/instance-ckm0hqcc"
+  },
+  "owner": {
+    "agent": "/root/knowledge_skill_owner",
+    "workspace": "work/agents/oss-decision-knowledge-20261111/skill-manager/instance-ftuauf3z"
+  },
+  "evaluator_workspace": "work/agents/oss-decision-knowledge-20261111/evaluator/instance-9x7431jo",
+  "owned_product_paths": [
+    "shared/skills/oss-research/SKILL.md",
+    "shared/skills/skills.json",
+    "modules/oss-rnd/module.json",
+    "modules/oss-rnd/adoption-report.ko.md",
+    ".agents/skills/oss-research/SKILL.md",
+    ".codex/agents/oss-rnd.toml",
+    "runtime/native-map.json"
+  ],
+  "candidate_digest": "210b6388c7e8e14625a046d275b7e2ca0d563227a24e3b44649bf5c73db9267d",
+  "candidate_hashes": {
+    "shared/skills/oss-research/SKILL.md": "bfc4d2bb8f5760e24efd4291c0d3724cca1ee0e121c3ab42b506609a75faa78d",
+    "shared/skills/skills.json": "5639fa0976fe7ba24c7e2287b545de74653e0064b7bdc49d511c3ce73e32b43c",
+    "modules/oss-rnd/module.json": "b75250ad181ac387156e234ee3c27d99f768e4dec5cf87163663c5a1b65aef9d",
+    "modules/oss-rnd/adoption-report.ko.md": "5e28cae9237379a6156618e694a3ac8f3d9a6ac60c2212e46abb5f46fbba47af",
+    ".agents/skills/oss-research/SKILL.md": "7194bbf4f83e661af7652d2180f8eff56cba04bd379e97e7e4bd54d780b21c2d",
+    ".codex/agents/oss-rnd.toml": "acac30e136c991ba3fe1debef4c20fe8b51a300df5705326893d150e2ec45953",
+    "runtime/native-map.json": "82b8b494bfa67b451faed8562f3aa98884fa9d17b0ab0110278d299092fde8a0"
+  },
+  "compatibility": "Existing fields and snapshots retained; skill 1.2.0 to 1.3.0, oss-rnd module 0.3.0 to 0.4.0; exact index scope declaration is not OS authority.",
+  "knowledge_index_unchanged": true,
+  "knowledge_index_sha256": "d389d9dddef2ec1e53b8f573b445a9ae0089ac5ed05cd951206f9d2a1e67403f",
+  "no_new_tests": true,
+  "no_runtime_code_changes": true,
+  "no_past_reports_migrated": true,
+  "budget": "One implementation, required selected suite, independent review; repair and affected rerun only for concrete findings.",
+  "stop_conditions": [
+    "unexpected product changes",
+    "missing required evidence or environment",
+    "new consequential effect"
+  ],
+  "selection": {
+    "mode": "impact",
+    "suites": [
+      {
+        "id": "impact-document-integrity",
+        "argv": [
+          "@project-python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "runtime/tests",
+          "-p",
+          "impact_document_checks.py",
+          "-v"
+        ]
+      }
+    ],
+    "reasons": [
+      {
+        "path": ".agents/skills/oss-research/SKILL.md",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": ".codex/agents/oss-rnd.toml",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": "modules/oss-rnd/adoption-report.ko.md",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": "modules/oss-rnd/module.json",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": "runtime/native-map.json",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": "shared/skills/oss-research/SKILL.md",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      },
+      {
+        "path": "shared/skills/skills.json",
+        "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+        "suites": [
+          "impact-document-integrity"
+        ]
+      }
+    ],
+    "mapping_sha256": "d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6",
+    "digest": "cb0acec5f88b8ab2b7749d64c6ca80e8aad28d2d253c5dbe08f0947d2752cac6"
+  },
+  "suite_receipt": {
+    "record": "test-5fc40d82e1254ba08a7010bf077607a0.json",
+    "kind": "test",
+    "task_id": "oss-decision-knowledge-20261111",
+    "candidate_digest": "210b6388c7e8e14625a046d275b7e2ca0d563227a24e3b44649bf5c73db9267d",
+    "suite_id": "impact-document-integrity",
+    "suite_digest": "19e4886a3d7e223a4c613f039aaf941498c5bae248c1cf1c2c37cb4e7322dac8",
+    "created_at": "2026-11-11T05:43:11.682956+00:00",
+    "outcome": "passed",
+    "tests_run": 4,
+    "exit_code": 0,
+    "reason": null,
+    "candidate_unchanged": true,
+    "evidence": {
+      "path": "runs/oss-decision-knowledge-20261111/evidence/gate-test-b578599e5f264f72b3a3b43e225f4094.log",
+      "sha256": "592d05c9f7b88baab1461043a478165dc595424eaf530b37ac9ff5728f0b7293"
+    },
+    "assurance": "local-executed-untrusted-candidate",
+    "impact_selection": {
+      "mode": "impact",
+      "suites": [
+        {
+          "id": "impact-document-integrity",
+          "argv": [
+            "@project-python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "impact_document_checks.py",
+            "-v"
+          ]
+        }
+      ],
+      "reasons": [
+        {
+          "path": ".agents/skills/oss-research/SKILL.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": ".codex/agents/oss-rnd.toml",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "modules/oss-rnd/adoption-report.ko.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "modules/oss-rnd/module.json",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "runtime/native-map.json",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "shared/skills/oss-research/SKILL.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "shared/skills/skills.json",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        }
+      ],
+      "mapping_sha256": "d2aad4400df080c34f8f30a804f66fa735117052471ad91ace904e353857f4c6"
+    }
+  },
+  "suite_invocations": 1,
+  "elapsed_seconds": 6.887,
+  "optional_quick_validate": {
+    "outcome": "not_run",
+    "reason": "PyYAML unavailable in system and existing project interpreter; both launch attempts failed before validation. No dependency installed."
+  },
+  "remaining": [
+    "Independent semantic review and assessment",
+    "validate and submit",
+    "main final publication/readback"
+  ]
+}
