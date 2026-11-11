@@ -274,6 +274,19 @@
         "environment": "development",
         "issue": "p1-impact-tests"
       }
+    },
+    "cancelled-records-20261111": {
+      "status": "partial",
+      "state": "running",
+      "saved_at": "2026-11-11T11:46:41+09:00",
+      "summary": "원작업 명세 해시 불일치로 지원 CLI의 기록 전용 게시 준비가 차단되었다. 원기록과 제품 파일은 수정하지 않았다.",
+      "path": "tasks/cancelled-records-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "oss-execution-safety"
+      }
     }
   }
 }

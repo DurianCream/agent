@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "cancelled-records-20261111",
+  "saved_at": "2026-11-11T11:46:41+09:00",
+  "task_state": "running",
+  "git": {
+    "branch": "main",
+    "head": "bb33fd05bc33079a6d0decbacc6fe6b5ed7f375e",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/index.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n?? .agent-work/tasks/cancelled-records-20261111/",
+    "worktree_sha256": "f693294f1b5c1d16f976874e8393d65a142bbadf16bbc35e4a5fd7462329fa55"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "cancelled-records-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T11:42:51+09:00",
+    "objective": "Publish only preserved cancelled task records using supported recovery lifecycle",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Publish only oss-execution-safety-20261111b closed records and required follow-up records without source changes, with mandatory tests and independent review",
+        "required": true,
+        "verification_ids": [
+          "prepare-records"
+        ]
+      }
+    ],
+    "status": "partial",
+    "summary": "원작업 명세 해시 불일치로 지원 CLI의 기록 전용 게시 준비가 차단되었다. 원기록과 제품 파일은 수정하지 않았다.",
+    "work": [
+      "고위험: 닫힌 작업 기록의 외부 게시이므로 해시 보존과 독립 검수를 유지한다.",
+      "coding 담당 /root/owner가 할당 작업 디렉터리에서 지원 prepare-records-only CLI를 1회 실행했다.",
+      "원작업은 이미 cancelled이며 보존된 저장 기록은 queued이다. 명세의 현재 해시와 기록에 저장된 해시가 다르다.",
+      "원기록을 재생성하는 checkpoint와 직접 파일 수정은 수행하지 않았다. 후속 작업의 진단 증거만 보존한다.",
+      "독립 evaluator /root/reviewer가 차단 원인을 재현했다. 검수 수용 범위는 진단과 보존 판단이며 구현·게시 완료를 의미하지 않는다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "prepare-records",
+        "name": "닫힌 기록 전용 게시 준비",
+        "method": "지원 repoctl prepare-records-only CLI 1회 실행",
+        "outcome": "failed",
+        "evidence": [
+          "runs/cancelled-records-20261111/evidence/prerequisite-blocker.json"
+        ],
+        "notes": "Source specification changed without checkpoint"
+      },
+      {
+        "id": "mandatory-tests",
+        "name": "P1 필수 시험",
+        "method": "후보 준비 후 게이트 시험",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "지원 CLI의 후보 준비 단계가 차단되어 실행하지 않았다."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 검수",
+        "method": "별도 evaluator의 차단 원인 검수",
+        "outcome": "passed",
+        "evidence": [
+          "runs/cancelled-records-20261111/evidence/prerequisite-review.md"
+        ],
+        "notes": "독립 evaluator가 해시 계산과 source_records 호출 재현으로 차단 진단 및 원기록 보존 판단을 accepted했다. 구현 완료 또는 게시 승인이 아니다."
+      },
+      {
+        "id": "publication",
+        "name": "제출 및 게시",
+        "method": "agentctl submit 및 repoctl finish",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "선행 기록 준비 차단으로 실행하지 않았다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "선행 기록 전용 게시가 완료되지 않았다.",
+      "제품 파일 변경, 필수 시험, 커밋 및 푸시는 수행하지 않았다. 독립 검수는 차단 진단만 대상으로 했다."
+    ],
+    "next_actions": [
+      "원기록을 보존하며 지원되는 복구 방법 또는 작업 순서 예외를 확인한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "oss-execution-safety"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": null,
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "ownership_empty"
+    ],
+    "record_id": "obs-046931e3257d44eabcad297c5ca0cb45",
+    "snapshot_digest": null,
+    "status": "not_ready",
+    "task_id": "cancelled-records-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "83247ea0e55d7be9ecd3505cde6c20b1d8665d901889c3beb79703cf6dcecd09"
+}
