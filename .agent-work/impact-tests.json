@@ -351,6 +351,20 @@
         "test_control_gate_recovery.py",
         "-v"
       ]
+    },
+    {
+      "id": "publication-secrets",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test_control_gate_secrets.py",
+        "-v"
+      ]
     }
   ],
   "rules": [
@@ -478,7 +492,8 @@
     {
       "path": "runtime/repo_automation.py",
       "suites": [
-        "repo-automation"
+        "repo-automation",
+        "publication-secrets"
       ],
       "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
     },
@@ -572,6 +587,27 @@
         "impact-document-integrity"
       ],
       "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed."
+    },
+    {
+      "path": "runtime/secret_scan.py",
+      "suites": [
+        "publication-secrets"
+      ],
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
+    },
+    {
+      "path": "runtime/tests/test_control_gate_secrets.py",
+      "suites": [
+        "publication-secrets"
+      ],
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
+    },
+    {
+      "path": ".agent-work/secret-scan-allowlist.json",
+      "suites": [
+        "publication-secrets"
+      ],
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
     }
   ]
 }

@@ -287,6 +287,19 @@
         "environment": "development",
         "issue": "oss-execution-safety"
       }
+    },
+    "publication-secret-scan-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T12:55:04+09:00",
+      "summary": "두 게시 경로의 비밀값 차단 검사를 구현하고 최종 필수 시험 및 독립 검수를 통과했다. 기존 승인된 제출·게시 절차로 적용한다.",
+      "path": "tasks/publication-secret-scan-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "publication-secret-scan"
+      }
     }
   }
 }

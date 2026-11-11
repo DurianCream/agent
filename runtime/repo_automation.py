@@ -7,6 +7,7 @@ from pathlib import Path
 
 import agentctl as a
 import repoctl as r
+import secret_scan
 
 
 def policy(path):
@@ -152,6 +153,7 @@ def finish(task_id, root=a.ROOT):
             a.write_json(file, value)
             r.git(path, '--literal-pathspecs', 'add', '--', *changed)
             a.require(staged_paths(path) == changed, 'Index contains unexpected files; publication stopped')
+            secret_scan.scan_index(path, changed)
             try:
                 r.git(path, 'commit', '-m', 'Complete task ' + task_id)
             except Exception:
@@ -176,6 +178,7 @@ def finish(task_id, root=a.ROOT):
         observation = r._optional_observation(task_id, root, phase='publication', commit=value['commit'])
         remote = remote_head(path, settings)
         a.require(remote in (value['base_head'], value['commit']), 'Remote changed; refusing history rewrite')
+        secret_scan.scan_commit(path, value['commit'], value['base_head'], value['staged_paths'])
         if remote != value['commit']:
             r.git(path, 'push', settings['remote'], value['commit'] + ':refs/heads/' + settings['branch'])
         a.require(remote_head(path, settings) == value['commit'], 'Remote confirmation failed')
