@@ -16,6 +16,6 @@ Do not place or expose user credentials, SSH keys, cloud tokens, or this reposit
 
 If no suitable disposable environment is available, record the experiment as `not_run`, specify the required OS/version/architecture, resources, and network conditions, request that environment from the user, and stop the experiment until it is available and checked. Do not fall back to host execution or claim measured results. Independently useful read-only research may continue.
 
-These are instruction-level rules, not proof of host-enforced isolation. P2 host isolation remains frozen; this workflow does not authorize resuming P2 or building new isolation code.
+These are instruction-level rules, not proof of host-enforced isolation.
 
 Follow the shared role requirements in AGENTS.md.

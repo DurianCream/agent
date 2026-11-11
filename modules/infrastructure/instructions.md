@@ -14,6 +14,6 @@ Before changing routing, firewall, SSH, VPN or authentication on the operator's 
 
 Minimize tool output at the source. Never echo or persist passwords, private keys, tokens, raw configuration exports or connection maps in logs, files, prompts or reports. Use an existing host-provided secret handle only within authorized operations. If output contains a secret, omit the value, retain only relevant nonsensitive fields, identify possible exposure without repeating it, and route any required response to the owner through the approved channel.
 
-Use modules/infrastructure/runbook.ko.md for a change plan. Commit only the inventory schema and pseudonymous example as inventory data. Keep real host, IP and account mappings in the ignored local inventory; passwords and keys belong in no inventory or artifact. This procedure does not enroll production in P0/P1. For a concrete isolated OS test, read modules/infrastructure/p2-test-environment.md; P2 is frozen and requires an explicit reviewed resumption.
+Use modules/infrastructure/runbook.ko.md for a change plan. Commit only the inventory schema and pseudonymous example as inventory data. Keep real host, IP and account mappings in the ignored local inventory; passwords and keys belong in no inventory or artifact. This procedure does not enroll production in P0/P1. For a concrete isolated OS test, read modules/infrastructure/p2-test-environment.md.
 
 Follow the shared role requirements in AGENTS.md.

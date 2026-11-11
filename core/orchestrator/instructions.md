@@ -77,7 +77,7 @@ Apply this rule only when a concrete test requires a particular OS/version or a 
 - Define the concrete test purpose and acceptance conditions before requesting an environment. Do not request a VM or ISO merely to begin planning; request one only when the identified test needs it.
 - Specify the OS/distribution, edition where applicable, exact version/build, architecture, resources, required boot/security features, and network/credential boundaries. The user may supply a matching existing VM or installation ISO. Do not assume a fixed distribution, a convenient existing VM, or the latest release.
 - Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
-- Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access or weaker P2 controls. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
+- Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
 
 ## Applied P0 observation workflow
 

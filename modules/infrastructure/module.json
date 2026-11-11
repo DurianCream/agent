@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "infrastructure",
   "name": "Infrastructure",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Work on IaC, cloud, runtime, deployment, and operations foundations.",
@@ -56,7 +56,7 @@
     },
     {
       "id": "infrastructure-environment",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "path": "modules/infrastructure/p2-test-environment.md"
     }
   ],

@@ -15,10 +15,7 @@ PROTECTED = ('AGENTS.md', '.agent-work/gates.json', CONFIG, 'shared/schemas/*',
              'runtime/submission_profile.py', 'runtime/agentctl.py', 'runtime/repoctl.py',
              'runtime/repo_automation.py', 'runtime/task_recovery.py', 'runtime/control_contracts.py',
              'runtime/control_policy.py', 'runtime/control_integration.py', 'runtime/control_workflow.py',
-             'runtime/controlctl.py', 'runtime/legacy_memory.py',
-             'runtime/p2_contracts.py', 'runtime/p2_store.py', 'runtime/p2_verifier.py',
-             'runtime/p2_rpc.py', 'runtime/p2_broker.py', 'runtime/p2_executor.py',
-             'runtime/p2_publisher.py', 'runtime/p2_sandbox_gate.py')
+             'runtime/controlctl.py', 'runtime/legacy_memory.py')
 
 def gate():
     import control_gate

@@ -1,5 +1,0 @@
-abi <abi/4.0>,
-include <tunables/global>
-profile multi-p2-bwrap-rpc /opt/multi-p2/bin/bwrap-rpc flags=(unconfined) {
-  userns,
-}

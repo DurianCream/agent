@@ -365,6 +365,19 @@
         "environment": "development",
         "issue": "oss-rnd-behavior-evaluation"
       }
+    },
+    "p2-archive-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T17:23:31+09:00",
+      "summary": "P2 보관·삭제와 승인된 기존 시험 기대값 정정을 완료하고 독립 검수를 통과했습니다. 제출 시점의 게시 준비를 완료했으며 실제 커밋·원격 푸시는 후속 finish에서 확인합니다.",
+      "path": "tasks/p2-archive-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p2-archive-removal"
+      }
     }
   }
 }

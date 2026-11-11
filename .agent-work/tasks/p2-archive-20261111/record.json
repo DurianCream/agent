@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p2-archive-20261111",
+  "saved_at": "2026-11-11T17:23:31+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "be951b467e5b830c6ad25cd47352e609a76a2bb8",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/impact-tests.json\n M .agent-work/index.json\n M .agents/skills/infrastructure-environment/SKILL.md\n M .agents/skills/oss-research/SKILL.md\n M .codex/agents/infrastructure.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M AGENTS.md\n M README.md\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M modules/infrastructure/instructions.md\n M modules/infrastructure/module.json\n M modules/infrastructure/p2-test-environment.md\n D \"modules/infrastructure/p2/HyperV-\\354\\204\\244\\354\\271\\230-\\354\\225\\210\\353\\202\\264.md\"\n D modules/infrastructure/p2/New-P2VM.ps1\n D modules/infrastructure/p2/P2VM.psm1\n D modules/infrastructure/p2/deployment-contract.en.md\n D modules/infrastructure/p2/linux/README.ko.md\n D modules/infrastructure/p2/linux/install.py\n D modules/infrastructure/p2/linux/preflight.py\n D modules/infrastructure/p2/linux/profiles/multi-p2-bwrap-rpc.apparmor\n D modules/infrastructure/p2/linux/publisher_entry.py\n D modules/infrastructure/p2/linux/rootfs_builder.py\n D modules/infrastructure/p2/linux/rpc-deployment.en.md\n D modules/infrastructure/p2/linux/systemd/multi-p2-control.service\n D modules/infrastructure/p2/linux/systemd/multi-p2-executor.service\n D modules/infrastructure/p2/linux/systemd/multi-p2-executor.socket\n D modules/infrastructure/p2/linux/systemd/multi-p2-publisher.service\n D modules/infrastructure/p2/linux/systemd/multi-p2-publisher.socket\n D modules/infrastructure/p2/linux/systemd/multi-p2-worker.service\n D modules/infrastructure/p2/linux/tests/test_linux_preparation.py\n D modules/infrastructure/p2/linux/worker_entry.py\n D modules/infrastructure/p2/tests/Test-P2VM.ps1\n M modules/oss-rnd/instructions.md\n M modules/oss-rnd/module.json\n M runtime/impact_tests.py\n M runtime/native-map.json\n D runtime/p2_broker.py\n D runtime/p2_contracts.py\n D runtime/p2_executor.py\n D runtime/p2_publisher.py\n D runtime/p2_rpc.py\n D runtime/p2_sandbox_gate.py\n D runtime/p2_store.py\n D runtime/p2_verifier.py\n M runtime/tests/test_contract.py\n M runtime/tests/test_control_gate_impact.py\n D runtime/tests/test_p2_broker.py\n D runtime/tests/test_p2_contracts.py\n D runtime/tests/test_p2_executor.py\n D runtime/tests/test_p2_publisher.py\n D runtime/tests/test_p2_rpc.py\n D runtime/tests/test_p2_store.py\n D runtime/tests/test_p2_verifier.py\n M shared/skills/oss-research/SKILL.md\n M shared/skills/skills.json\n?? .agent-work/tasks/p2-archive-20261111/",
+    "worktree_sha256": "bace63cbccaa364e51ada7480e4c9832b847dea8ecbdd72c5e1ef876ef5b638b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p2-archive-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T16:23:46+09:00",
+    "objective": "Archive frozen P2 and remove its implementation with approved reference cleanup",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Archive tag pushed before deletion with restoration instructions",
+        "required": true,
+        "verification_ids": [
+          "archive"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Remove P2 files and approved references while preserving common schemas P0 and historical records",
+        "required": true,
+        "verification_ids": [
+          "scope"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Preserve protected and unmapped full-suite selection; full mandatory suites pass",
+        "required": true,
+        "verification_ids": [
+          "selection",
+          "tests",
+          "coverage-resolution"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Version pins and adapters consistent; sync check and doctor pass",
+        "required": true,
+        "verification_ids": [
+          "checks"
+        ]
+      },
+      {
+        "id": "criterion-5",
+        "description": "Independent adversarial review accepted and reviewed commit pushed",
+        "required": true,
+        "verification_ids": [
+          "review-publication"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "P2 보관·삭제와 승인된 기존 시험 기대값 정정을 완료하고 독립 검수를 통과했습니다. 제출 시점의 게시 준비를 완료했으며 실제 커밋·원격 푸시는 후속 finish에서 확인합니다.",
+    "work": [
+      "고위험 변경: 동결된 격리 코드 삭제와 보호 경로 시험 대상 정리. 보관 태그를 먼저 원격에 게시하여 복원 지점을 확보했습니다.",
+      "coding 담당 /root/p2_owner가 정확한 파일 목록을 등록하고 35개 P2 전용 파일을 삭제했습니다.",
+      "공용 스키마·P0·과거 기록은 보존했고 일반 OS·VM 지침의 파일명과 등록을 유지했습니다.",
+      "모듈 3개와 스킬 2개의 패치 버전 및 생성 어댑터를 갱신했습니다.",
+      "로컬 Windows Python 환경에서 기존 시험 및 실제 선택 함수를 사용합니다. VM 배포는 수행하지 않습니다.",
+      "제품 파일 기준 순감소 7,313줄이며 runtime P2 구현 3,206줄·시험 1,504줄을 포함합니다. runtime 시험 정의 513→373개, P2 Linux 준비 시험 정의 42개를 별도로 삭제했습니다.",
+      "기존 control_policy·legacy_memory·agentctl 보호 경로 검증을 유지했고 P2 경로 8개 재등장 및 미등록 경로 8개가 전체 시험을 선택함을 기존 fixture로 확인했습니다.",
+      "최초 p1 실행 도중 일반 VM 경계 문장 보존 편집으로 후보가 달라져 해당 실행을 중단·보존하고 동결 후보에 대해 필수 suite만 재실행했습니다.",
+      "공용 control-envelope 스키마의 P2 열거형과 일반 VM 지침의 기존 파일명·등록 참조는 승인에 따라 그대로 유지했습니다.",
+      "사용자 범위 확장 승인에 따라 test_contract.py의 기존 skill 수 기대값 한 곳만 3에서 5로 정정했습니다. 새 시험은 추가하지 않았습니다.",
+      "전체 runtime 실행에서 372개는 통과했고 기존 기대값 불일치 1개가 실패했습니다. 해당 실패는 보관 태그에서도 재현했고, 정정 후 정확한 시험 1개가 통과했습니다. 영향을 받지 않은 372개 증거를 재사용하며 새 전체 실행 통과로 표현하지 않습니다.",
+      "최종 후보 바인딩을 위해 필수 p1-regression을 다시 실행했습니다. 최초 중단 실행·정정 전 통과 실행·전체 실행의 기존 실패 증거는 보존했습니다.",
+      "별도 evaluator가 최종 후보를 accepted로 판정했고 기존 기대값 결함 P2-E1의 해결을 독립 실행으로 확인했습니다. P0 관찰도 accepted·observed·ok:true입니다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p2-archive-20261111/deletion-summary.json",
+        "description": "삭제 파일 목록·줄 수·시험 수와 시간·보존 참조·보관 태그 및 복원 명령 결과",
+        "sha256": "3a40fab0ab2761e60d3ac3a84f3b6447f66dcf75ed62d4cfce758a8a128b7f2f"
+      }
+    ],
+    "verification": [
+      {
+        "id": "archive",
+        "name": "삭제 전 보관 태그",
+        "method": "git 원격 태그 peeled commit과 삭제 전 HEAD 비교",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/owner-plan.json"
+        ],
+        "notes": "archive/p2-20261111 → be951b467e5b830c6ad25cd47352e609a76a2bb8"
+      },
+      {
+        "id": "scope",
+        "name": "삭제 범위 및 보존 대상",
+        "method": "정확한 Git diff·AST 메서드 수·남은 참조 검사",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/change-summary.json",
+          "runs/p2-archive-20261111/evidence/static-test-counts.json",
+          "runs/p2-archive-20261111/evidence/change-summary-contractfix.json"
+        ],
+        "notes": "공용 스키마·P0·과거 기록을 변경하지 않았습니다."
+      },
+      {
+        "id": "selection",
+        "name": "전체 시험 선택 유지",
+        "method": "기존 ImpactTests fixture/selection 재사용",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/selection.json",
+          "runs/p2-archive-20261111/evidence/unmapped-selection.json"
+        ],
+        "notes": "재등장 및 기존 미등록 P2 경로 8개씩 모두 full입니다."
+      },
+      {
+        "id": "checks",
+        "name": "동기화·등록 검증",
+        "method": "sync_codex --check 및 agentctl doctor",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/sync-check.json",
+          "runs/p2-archive-20261111/evidence/doctor.json"
+        ],
+        "notes": "모두 ok:true. 이후 변경은 기존 시험 assertion 한 곳뿐이므로 등록·어댑터 검증 증거를 재사용합니다."
+      },
+      {
+        "id": "tests",
+        "name": "최종 후보의 필수 p1 회귀 시험",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/test-summary-contractfix.json",
+          "runs/p2-archive-20261111/evidence/p1-contractfix.json"
+        ],
+        "notes": "full 선택 및 candidate_unchanged=true인 최종 후보의 실제 시험입니다."
+      },
+      {
+        "id": "coverage-resolution",
+        "name": "전체 실행의 기존 실패 수정 및 영향 검증",
+        "method": "기존 전체 실행의 영향 없는 372개 통과 증거 재사용 및 수정된 정확한 기존 시험 1개 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/test-summary-contractfix.json",
+          "runs/p2-archive-20261111/evidence/full-runtime.json",
+          "runs/p2-archive-20261111/evidence/baseline-contract.json",
+          "runs/p2-archive-20261111/evidence/contractfix-targeted.json"
+        ],
+        "notes": "이전 전체 실행은 373개 중 실패 1개였고 그 실패 기록은 보존했습니다. 승인된 한 줄 정정 후 해당 시험 통과. 새 전체 실행을 수행하거나 통과했다고 주장하지 않습니다."
+      },
+      {
+        "id": "review-publication",
+        "name": "독립 검수 및 게시 준비",
+        "method": "별도 evaluator의 최종 후보 재검수와 현재 P0 관찰 평가 및 승인된 게시 경로 확인",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p2-archive-20261111/evidence/evaluator-rereview.json",
+          "runs/p2-archive-20261111/evidence/evaluator-p0-result.json",
+          "runs/p2-archive-20261111/evidence/evaluator-contractfix.json"
+        ],
+        "notes": "독립 검수 accepted, P2-E1 해결, 현재 P0 observed/ok:true. 실제 커밋·푸시는 이 제출 결과에 선행했다고 주장하지 않으며 main의 후속 finish와 원격 확인으로 완료합니다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "modules/infrastructure/p2 아래 ignored 캐시 10개는 사용자 승인에 따라 유지했습니다. Git 추적 P2 파일 삭제는 완료했습니다.",
+      "이 결과의 제출 준비 시점에는 실제 커밋·푸시를 아직 수행하지 않았습니다. 후속 finish의 영수증과 최종 사용자 보고에서 원격 커밋을 확인합니다."
+    ],
+    "next_actions": [
+      "evaluator가 변경 동결된 최종 결과에 P1 assessment를 등록",
+      "main이 validate/submit/finish를 수행하고 실제 커밋·원격 푸시 결과를 확인"
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p2-archive-removal"
+  },
+  "observation": {
+    "assessment_status": "none",
+    "authority_verified": false,
+    "decision": "allow",
+    "evaluator_assessment": null,
+    "executable": false,
+    "governance_recommendation": null,
+    "ok": false,
+    "phase": "workspace",
+    "reason_codes": [
+      "review_pending"
+    ],
+    "record_id": "obs-fe3ab1f4cb354f58918466bad656c119",
+    "snapshot_digest": "sha256:467cc4245f63379e143feb434adadf1de5656cb208a27d3c1d42106e43b3fcf8",
+    "status": "review_pending",
+    "task_id": "p2-archive-20261111",
+    "mode": "observe"
+  },
+  "spec_sha256": "cc211b2253abbaba00466a2b89121a139cc069cbed26f06f4c02ec276717165c"
+}
