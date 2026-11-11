@@ -378,6 +378,19 @@
         "environment": "development",
         "issue": "p2-archive-removal"
       }
+    },
+    "p0-removal-investigation-20261111": {
+      "status": "partial",
+      "state": "running",
+      "saved_at": "2026-11-11T17:39:53+09:00",
+      "summary": "P0 관찰 기능은 P1 공유 환경과 생성 기록 연결을 분리하면 제거 가능하다. 제품 변경 없이 6항목 조사와 참조 목록을 작성했고 별도 evaluator의 독립 검수를 통과했다. 보고서 전용 게시 후보는 P1이 거부하여 게시 완료 상태는 아니다.",
+      "path": "tasks/p0-removal-investigation-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-removal-investigation"
+      }
     }
   }
 }
