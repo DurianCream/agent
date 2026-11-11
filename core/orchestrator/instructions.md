@@ -48,7 +48,7 @@ Keep `policy-manager` as the governance role and `evaluator` as the independent 
 - Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; selected new tasks additionally use the P1 cooperating lifecycle gate described below. Trusted execution authorization, trusted signed test attestations and non-bypassable enforcement require later implementation.
 - In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
 
-For Applied P0 observation workflow, P1 cooperating submission and publication gates, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
+For P1 cooperating submission and publication gates, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
 
 ## Host Boundaries and Results
 
@@ -79,22 +79,6 @@ Apply this rule only when a concrete test requires a particular OS/version or a 
 - Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
 - Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
 
-## Applied P0 observation workflow
-
-For repositories selected by `.agent-work/observation.json`, bound task checkpoints and owned-path registration invoke P0 workspace observation through the configured project observer environment. Publication observation occurs only after a real commit is recorded and before an already-authorized push. These are selected lifecycle observations, not interception of every tool or a P1 authorization gate.
-
-Read the returned observation summary. Before relying on it, run `python runtime/control_integration.py status --task <task-id>`; the standard-library launcher selects the configured observer environment. Distinguish not selected, no owned paths yet, missing environment, failed invocation, stale input and pending assessments from a completed observation. Never report an unavailable observation as passed.
-
-When governance interpretation is needed under the existing routing rules, provide the actual immutable record, exact scope, snapshot/policy digests, declared authorization provenance and limitations to policy-manager. Reuse an unchanged current assessment where appropriate; do not add repeated approval requests to ordinary work or exact standing Git publication.
-
-After the specialist work, ask an independent evaluator to inspect the actual observation and governance assessment where applicable. Both roles record their own assessments using the workflow command and its documented schema. Do not prefill their verdicts or invent reviewer identities. Declared identity checks are local consistency checks, not authentication.
-
-If scope, target, owned content, policy or freshness changes, refresh observation and re-assess the affected conclusions. An evaluator can accept the correctness of a denied or review-needed observation without permitting the underlying action. Hold affected consequential work when authority remains unresolved, while separately authorized diagnostics can continue.
-
-If a cached record is invalid after a known implementation change or corruption, inspect the failure first. Use `python runtime/control_integration.py observe --task <task-id> --refresh` only to create a new observation from current valid inputs; preserve the prior record and supersession trace, and obtain new applicable assessments. Refresh is not an approval override or a way to reuse an invalid verdict.
-
-Keep review evidence as immutable task-owned snapshots. A later publication observation must not overwrite the evidence sealed at submission or imply a prior workspace assessment authorized the new commit. Publish only explicit task-owned bounded records, not raw inputs, prompts, credentials or machine-local interpreter maps.
-
 ## P1 cooperating submission and publication gates
 
 Select P1 only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate profile. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
@@ -103,7 +87,7 @@ Before submission, assemble the exact candidate, mandatory check evidence and an
 
 Use `python runtime/control_gate.py candidate --task <task-id>` to inspect the current review subject. Run each configured suite with `python runtime/control_gate.py run-tests --task <task-id> --suite <suite-id>`. Ask the independent evaluator to register its own assessment, then inspect `python runtime/control_gate.py status --task <task-id>` before the ordinary validate, submit and finish commands. Settle product documentation before testing and review. These test runs capture local execution evidence; they do not provide an isolated trusted runner.
 
-Keep the reviewed candidate boundary explicit. Generated reports and lifecycle records must follow the gate's documented deterministic sealing rules; they cannot become an unreviewed arbitrary-content exception. P0 observation freshness and P1 review validity are separate: an expired P0 observation is not current authority, while P1 review validity depends on its own pinned content and policy checks.
+Keep the reviewed candidate boundary explicit. Generated reports and lifecycle records must follow the gate's documented deterministic sealing rules; they cannot become an unreviewed arbitrary-content exception. P1 review validity depends on its pinned content and policy checks.
 
 Before publication, require the cooperating finish path to compare the real commit, parent, exact changed-path set, committed content and authorized destination with the sealed submission. Preserve a pending commit after failure and retry the same bounded publication after resolving the cause. Exact standing publication authorization does not require another human prompt.
 

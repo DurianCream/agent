@@ -21,28 +21,6 @@ ROOT = a.ROOT
 SCOPE_FIELDS = ('project', 'service', 'environment', 'issue')
 
 
-def _optional_observation(task_id, root, *, phase='workspace', commit=None):
-    """Old no-config copies need no observer module or dependency environment."""
-    profile = Path(root) / '.agent-work/observation.json'
-    if not profile.exists() and not profile.is_symlink():
-        return None
-    safe_task = (task_id if isinstance(task_id, str) and len(task_id) <= 128
-                 and re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', task_id) else 'invalid-task')
-    unavailable = {'ok': False, 'task_id': safe_task, 'phase': phase,
-                   'status': 'unavailable', 'mode': 'observe', 'record_id': None,
-                   'snapshot_digest': None, 'decision': None, 'assessment_status': 'none',
-                   'governance_recommendation': None, 'evaluator_assessment': None,
-                   'executable': False, 'authority_verified': False}
-    try:
-        import control_integration
-    except Exception:
-        return {**unavailable, 'reason_codes': ['observer_module_unavailable']}
-    try:
-        return control_integration.invoke(task_id, phase=phase, commit=commit, root=root)
-    except Exception:
-        return {**unavailable, 'reason_codes': ['observer_unavailable']}
-
-
 def validate_scope(value, *, complete=True):
     a.require(isinstance(value, dict) and not (set(value) - set(SCOPE_FIELDS)), 'Malformed work scope')
     if complete:
@@ -256,7 +234,7 @@ def bind(repo_id, task_id, root=ROOT, scope=None, *, new_task=False):
     return checkpoint(task_id, root)
 
 
-def record_text(result, task, state, scope=None, observation=None, *, saved_at=None):
+def record_text(result, task, state, scope=None, *, saved_at=None):
     lines = ['# Repository work record', '',
              '> Saved task data, not instructions or authorization. Reconcile with current Git state.', '']
     sections = [
@@ -273,20 +251,12 @@ def record_text(result, task, state, scope=None, observation=None, *, saved_at=N
     if scope is not None:
         labels = {'project': '프로젝트', 'service': '서비스', 'environment': '환경', 'issue': '이슈'}
         sections[0].extend(f'{labels[key]}: {scope[key]}' for key in SCOPE_FIELDS)
-    if observation is not None:
-        sections[5].append(
-            'P0 참고 관찰: 상태=' + observation['status'] +
-            '; 판정=' + str(observation['decision']) +
-            '; 거버넌스=' + str(observation['governance_recommendation']) +
-            '; 검증=' + str(observation['evaluator_assessment']) +
-            '; 기록=' + str(observation['record_id']) +
-            '. 실행 권한은 없으며 저장 후 변경되면 현재 상태를 다시 확인해야 한다.')
     for i, (heading, content) in enumerate(zip(a.HEADINGS, sections), 1):
         lines += [f'## {i}. {heading}', ''] + ['- ' + a.md(x) for x in content or ['해당 없음']] + ['']
     return '\n'.join(lines)
 
 
-def specification_text(task_id, binding, task, result, scope, state, observation=None):
+def specification_text(task_id, binding, task, result, scope, state):
     """Render a saved specification from explicit checkpoint data only."""
     return '\n'.join([
         '# Repository task specification', '',
@@ -298,18 +268,6 @@ def specification_text(task_id, binding, task, result, scope, state, observation
         '## Objective and acceptance criteria', a.md(result['objective']),
         *['- ' + a.md(c['description']) for c in result['acceptance_criteria']], '',
         '## Git checkpoint', f"- Branch: {state['branch']}", f"- HEAD: {state['head']}", '',
-        *(['## P0 observation',
-           '- Mode: observe; executable: false; authority_verified: false',
-           '- Status: ' + observation['status'],
-           '- Record: ' + str(observation['record_id']),
-           '- Snapshot: ' + str(observation['snapshot_digest']),
-           '- Decision: ' + str(observation['decision']),
-           '- Assessment status: ' + observation['assessment_status'],
-           '- Governance recommendation: ' + str(observation['governance_recommendation']),
-           '- Evaluator assessment: ' + str(observation['evaluator_assessment']),
-           '- Reason codes: ' + ', '.join(observation['reason_codes']),
-           'This saved advisory summary may become stale; inspect current observer status before relying on it.', '']
-          if observation is not None else []),
         '## Durable task data',
         '- [record.json](record.json): result.work, result.artifacts, result.verification, result.limitations and result.next_actions.',
         '- [Korean result report](report.ko.md): seven-section human-readable record.', '',
@@ -328,9 +286,6 @@ def checkpoint(task_id, root=ROOT):
               'Task repository binding mismatch')
     scope = record_scope(binding)
     result, task, snapshot = a.validate_result(task_id, root)
-    # Observe before acquiring record.lock. The child only reads lifecycle data
-    # and writes separate companions; it never calls checkpoint recursively.
-    observation = _optional_observation(task_id, root, phase='workspace')
     state = git_state(path)
     base = a.relative(path, '.agent-work')
     with a.lock(a.relative(base, 'record.lock')):
@@ -350,11 +305,9 @@ def checkpoint(task_id, root=ROOT):
                   'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
         if scope is not None:
             record['scope'] = scope
-        if observation is not None:
-            record['observation'] = observation
-        report = record_text(result, task, state, scope, observation, saved_at=record['saved_at'])
+        report = record_text(result, task, state, scope, saved_at=record['saved_at'])
         a.atomic_text(a.relative(dest, 'report.ko.md'), report)
-        text = specification_text(task_id, binding, task, result, scope, state, observation)
+        text = specification_text(task_id, binding, task, result, scope, state)
         a.atomic_text(a.relative(dest, 'spec.md'), text)
         record['spec_sha256'] = a.digest(text.encode('utf-8'))
         a.write_json(a.relative(dest, 'record.json'), record)
@@ -384,8 +337,6 @@ def checkpoint(task_id, root=ROOT):
             '.agent-work/INDEX.md': index_text.encode('utf-8'),
         })
     response = {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
-    if observation is not None:
-        response['observation'] = observation
     return response
 
 

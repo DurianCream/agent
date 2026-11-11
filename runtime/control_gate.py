@@ -624,7 +624,7 @@ def _check_generated(task_id, root, enrollment, actual):
     record = _read(a.relative(root, folder + 'record.json', file=True))
     keys = {'schema_version', 'repository_id', 'repository_uuid', 'task_id', 'saved_at',
             'task_state', 'git', 'result', 'source_root', 'notice', 'scope', 'spec_sha256'}
-    a.require(set(record) in (keys, keys | {'observation'}) and record['schema_version'] == '1.0.0',
+    a.require(set(record) == keys and record['schema_version'] == '1.0.0',
               'P1 generated record fields changed')
     a.require(all(record[k] == binding[k] for k in ('repository_id', 'repository_uuid', 'task_id', 'scope')) and
               record['task_state'] == task['state'] and record['result'] == result and
@@ -636,12 +636,11 @@ def _check_generated(task_id, root, enrollment, actual):
               state['head'] == enrollment['base_head'] and state['branch'] == enrollment['publication_policy']['branch'] and
               state['origin'] == enrollment['publication_policy']['expected_url'], 'P1 generated Git checkpoint mismatch')
     datetime.fromisoformat(record['saved_at'])
-    observation = record.get('observation')
-    expected_spec = r.specification_text(task_id, binding, task, result, binding['scope'], state, observation)
+    expected_spec = r.specification_text(task_id, binding, task, result, binding['scope'], state)
     spec = a.relative(root, folder + 'spec.md', file=True).read_text(encoding='utf-8')
     a.require(spec == expected_spec and record['spec_sha256'] == a.digest(spec.encode('utf-8')),
               'P1 specification is not the canonical generated record')
-    expected_report = r.record_text(result, task, state, binding['scope'], observation, saved_at=record['saved_at'])
+    expected_report = r.record_text(result, task, state, binding['scope'], saved_at=record['saved_at'])
     a.require(a.relative(root, folder + 'report.ko.md', file=True).read_text(encoding='utf-8') == expected_report,
               'P1 report is not the canonical generated record')
     index = _read(a.relative(root, '.agent-work/index.json', file=True))

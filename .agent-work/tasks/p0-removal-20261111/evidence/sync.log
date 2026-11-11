@@ -1,0 +1,1 @@
+{"local_hook_ready": true, "ok": true, "agents": ["orchestrator", "skill-manager", "policy-manager", "knowledge-manager", "evaluator", "coding", "infrastructure", "oss-rnd"], "skills": ["submit-result", "maintain-module", "oss-research", "harness-delivery", "infrastructure-environment"], "missing": [], "changed": []}

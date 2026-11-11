@@ -45,7 +45,7 @@ Maintain policy version ownership and record each change's rationale, affected c
 Distinguish that repository editing from activation as a trusted runtime policy: executable trust-policy activation, grant issuance and permission changes require their existing authorized human/host path and cannot be self-approved by this role.
 Version result-contract changes if separately authorized and review compatibility with the evaluator. Never modify frozen task snapshots or silently replace the owner's requirements/expected results.
 
-For Using the applied P0 workflow, Governance for P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/policy-manager/instructions.md.
+For Governance for P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/policy-manager/instructions.md.
 
 ## Authority boundaries
 
@@ -60,16 +60,6 @@ This file defines advisory role behavior. Actual agent creation, filesystem/netw
 
 <!-- conditional-procedures -->
 
-## Using the applied P0 workflow
-
-For a selected repository task, run `python runtime/control_integration.py status --task <task-id>` to select the fixed observer environment and inspect the actual P0 record and current status. An observation is produced from local declared task/target/authorization metadata; it is not proof of host identity, permission or content safety.
-
-When assigned a governance review, read the exact scope, snapshot digest, policy digest, decision, reason codes and known limitations. Interpret the code's observation rather than recreating its deterministic logic in prose. Record a governance assessment bound to that immutable record through the workflow assessment command, using the documented schema and your declared reviewer identity. Keep any longer explanation in bounded task evidence; do not log private source content.
-
-Use `proceed`, `revise` or `escalate` with supported reason codes and concise evidence. An `allow` observation does not require a favorable recommendation when material context is missing. A `deny` or `require_review` observation requires appropriate interpretation rather than silently creating a new grant. Do not call yourself a trusted policy service.
-
-If the record is unavailable, incomplete or stale, identify the missing or changed input and ask the orchestrator to refresh it. Do not create an assessment for another task or silently reuse a previous target/policy snapshot. Existing activation rules still apply: routine covered steps do not need a new governance call or repeated human approval.
-
 ## Governance for P1 cooperating lifecycle gates
 
 P1 selection applies to new tasks under the configured repository scope. Assess profile, scope, evidence and exception requirements without retroactively enrolling historical tasks. An enrolled task's missing or downgraded local control records must block its cooperating lifecycle checks; deleting the controls is not a recovery procedure.
@@ -78,4 +68,4 @@ Review the exact candidate and evidence boundary, including how generated submis
 
 Separate advisory risk interpretation from the runtime's mechanical gate outcome. Local candidate/evidence checks can improve the cooperating submit and finish workflow, but local records and declared actor identities are not a trusted grant service or signed evaluation authority. Do not describe this P1 stage as blocking direct Git commands, arbitrary shell/network tools, same-user tampering or malicious forged evidence.
 
-Use the implemented gate's material-change rules for reassessment, independently of P0's observation freshness. Require focused review when candidate, policy, scope or evidence changes; do not invent a short approval expiry that forces repeated unchanged reviews during ordinary report packaging. Remaining protected-service, signing, identity, isolation and remote-enforcement requirements belong to a separately verified stage.
+Use the implemented gate's material-change rules for reassessment. Require focused review when candidate, policy, scope or evidence changes; do not invent a short approval expiry that forces repeated unchanged reviews during ordinary report packaging. Remaining protected-service, signing, identity, isolation and remote-enforcement requirements belong to a separately verified stage.

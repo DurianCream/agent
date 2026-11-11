@@ -1,0 +1,303 @@
+{
+  "product_files_changed": 48,
+  "files_deleted": 23,
+  "files_modified": 25,
+  "lines_added": 79,
+  "lines_deleted": 7514,
+  "test_definitions_before": 380,
+  "test_definitions_after": 234,
+  "test_definition_reduction": 146,
+  "test_definitions_removed": 148,
+  "test_definitions_added": 2,
+  "new_product_files": [],
+  "changes": [
+    {
+      "path": ".agent-work/impact-tests.json",
+      "added": 0,
+      "deleted": 105,
+      "removed": false
+    },
+    {
+      "path": ".agent-work/observation.json",
+      "added": 0,
+      "deleted": 22,
+      "removed": true
+    },
+    {
+      "path": ".codex/agents/evaluator.toml",
+      "added": 2,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": ".codex/agents/infrastructure.toml",
+      "added": 2,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": ".codex/agents/orchestrator.toml",
+      "added": 2,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": ".codex/agents/policy-manager.toml",
+      "added": 2,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": "AGENTS.md",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "README.md",
+      "added": 0,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": "core/evaluator/instructions.md",
+      "added": 2,
+      "deleted": 12,
+      "removed": false
+    },
+    {
+      "path": "core/evaluator/module.json",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "core/orchestrator/instructions.md",
+      "added": 2,
+      "deleted": 18,
+      "removed": false
+    },
+    {
+      "path": "core/orchestrator/module.json",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "core/policy-manager/instructions.md",
+      "added": 2,
+      "deleted": 12,
+      "removed": false
+    },
+    {
+      "path": "core/policy-manager/module.json",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "docs/P0-실행통제-사용안내.md",
+      "added": 0,
+      "deleted": 114,
+      "removed": true
+    },
+    {
+      "path": "docs/P1-제출-게시-검사-사용안내.md",
+      "added": 3,
+      "deleted": 3,
+      "removed": false
+    },
+    {
+      "path": "docs/디렉터리-구조와-역할.md",
+      "added": 1,
+      "deleted": 5,
+      "removed": false
+    },
+    {
+      "path": "modules/infrastructure/instructions.md",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "modules/infrastructure/module.json",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "runtime/control-requirements.txt",
+      "added": 0,
+      "deleted": 12,
+      "removed": true
+    },
+    {
+      "path": "runtime/control_contracts.py",
+      "added": 0,
+      "deleted": 436,
+      "removed": true
+    },
+    {
+      "path": "runtime/control_gate.py",
+      "added": 3,
+      "deleted": 4,
+      "removed": false
+    },
+    {
+      "path": "runtime/control_integration.py",
+      "added": 0,
+      "deleted": 349,
+      "removed": true
+    },
+    {
+      "path": "runtime/control_policy.py",
+      "added": 0,
+      "deleted": 177,
+      "removed": true
+    },
+    {
+      "path": "runtime/control_workflow.py",
+      "added": 0,
+      "deleted": 726,
+      "removed": true
+    },
+    {
+      "path": "runtime/controlctl.py",
+      "added": 0,
+      "deleted": 81,
+      "removed": true
+    },
+    {
+      "path": "runtime/impact_tests.py",
+      "added": 1,
+      "deleted": 3,
+      "removed": false
+    },
+    {
+      "path": "runtime/native-map.json",
+      "added": 4,
+      "deleted": 4,
+      "removed": false
+    },
+    {
+      "path": "runtime/repo_automation.py",
+      "added": 3,
+      "deleted": 10,
+      "removed": false
+    },
+    {
+      "path": "runtime/repoctl.py",
+      "added": 4,
+      "deleted": 53,
+      "removed": false
+    },
+    {
+      "path": "runtime/tests/fixtures/control-contracts/action-request.json",
+      "added": 0,
+      "deleted": 54,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/fixtures/control-contracts/all-envelopes.json",
+      "added": 0,
+      "deleted": 445,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/fixtures/control-contracts/unicode-vector.json",
+      "added": 0,
+      "deleted": 15,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/fixtures/control-observe/context.json",
+      "added": 0,
+      "deleted": 49,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/fixtures/control-observe/request.json",
+      "added": 0,
+      "deleted": 46,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_control_contracts.py",
+      "added": 0,
+      "deleted": 327,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_control_gate_impact.py",
+      "added": 2,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": "runtime/tests/test_control_gate_integration.py",
+      "added": 37,
+      "deleted": 2,
+      "removed": false
+    },
+    {
+      "path": "runtime/tests/test_control_integration.py",
+      "added": 0,
+      "deleted": 488,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_control_policy.py",
+      "added": 0,
+      "deleted": 299,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_control_workflow.py",
+      "added": 0,
+      "deleted": 584,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_controlctl.py",
+      "added": 0,
+      "deleted": 175,
+      "removed": true
+    },
+    {
+      "path": "runtime/tests/test_submission_profile.py",
+      "added": 1,
+      "deleted": 1,
+      "removed": false
+    },
+    {
+      "path": "shared/policies/execution-controls.observe.json",
+      "added": 0,
+      "deleted": 23,
+      "removed": true
+    },
+    {
+      "path": "shared/schemas/control-envelope.schema.json",
+      "added": 0,
+      "deleted": 1472,
+      "removed": true
+    },
+    {
+      "path": "shared/schemas/control-observation.schema.json",
+      "added": 0,
+      "deleted": 143,
+      "removed": true
+    },
+    {
+      "path": "shared/schemas/control-observe-policy.schema.json",
+      "added": 0,
+      "deleted": 423,
+      "removed": true
+    },
+    {
+      "path": "shared/schemas/control-workflow.schema.json",
+      "added": 0,
+      "deleted": 804,
+      "removed": true
+    }
+  ]
+}

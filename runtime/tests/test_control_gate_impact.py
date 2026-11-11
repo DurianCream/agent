@@ -25,7 +25,7 @@ class ImpactTests(GateFixture, unittest.TestCase):
         (self.root/'runtime/context_checkpoint.py').write_text('before\n')
         (self.root/'runtime/agentctl.py').write_text('before\n')
         (self.root/'unknown.txt').write_text('before\n')
-        for module in ('control_policy', 'legacy_memory'):
+        for module in ('repoctl', 'legacy_memory'):
             (self.root/('runtime/'+module+'.py')).write_text('before\n')
 
     def selection(self, names):
@@ -111,7 +111,7 @@ class ImpactTests(GateFixture, unittest.TestCase):
             g.assess('gate-task',value,self.root)
 
     def test_shared_runtime_cluster_overrides_specific_suite_mapping(self):
-        for module in ('control_policy', 'legacy_memory'):
+        for module in ('repoctl', 'legacy_memory'):
             name = 'runtime/' + module + '.py'
             with self.subTest(module=module):
                 selected = self.selection([name])

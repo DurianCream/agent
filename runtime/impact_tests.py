@@ -13,9 +13,7 @@ PROTECTED = ('AGENTS.md', '.agent-work/gates.json', CONFIG, 'shared/schemas/*',
              'runtime/secret_scan.py', '.agent-work/secret-scan-allowlist.json',
              'shared/workflows/*', 'runtime/control_gate.py', 'runtime/impact_tests.py',
              'runtime/submission_profile.py', 'runtime/agentctl.py', 'runtime/repoctl.py',
-             'runtime/repo_automation.py', 'runtime/task_recovery.py', 'runtime/control_contracts.py',
-             'runtime/control_policy.py', 'runtime/control_integration.py', 'runtime/control_workflow.py',
-             'runtime/controlctl.py', 'runtime/legacy_memory.py')
+             'runtime/repo_automation.py', 'runtime/task_recovery.py', 'runtime/legacy_memory.py')
 
 def gate():
     import control_gate

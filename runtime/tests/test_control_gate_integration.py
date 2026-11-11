@@ -60,11 +60,11 @@ class GateIntegrationTests(unittest.TestCase):
         binding = a.read_json(run / 'repository.json')
         self.assertEqual((folder / 'spec.md').read_text(encoding='utf-8'),
             r.specification_text('auto-task', binding, task, record['result'],
-                record['scope'], record['git'], record.get('observation')))
+                record['scope'], record['git']))
         with mock.patch.object(a, 'now', side_effect=AssertionError('Renderer must be pure')):
             self.assertEqual((folder / 'report.ko.md').read_text(encoding='utf-8'),
                 r.record_text(record['result'], task, record['git'], record['scope'],
-                    record.get('observation'), saved_at=record['saved_at']))
+                    saved_at=record['saved_at']))
 
     def test_checkpoint_seal_receives_generated_bytes_not_file_reread(self):
         gate = self.fake_gate()
@@ -176,6 +176,41 @@ class GateIntegrationTests(unittest.TestCase):
         self.assertEqual(completed['commit'], saved['commit'])
         self.assertEqual(completed['gate']['status'], 'passed')
         self.assertEqual(auto.remote_head(self.path, saved['policy']), saved['commit'])
+
+    def test_new_lifecycle_records_only_include_gate_metadata(self):
+        gate = self.fake_gate()
+        self.bind()
+        self.own_file()
+        tracked = auto.track('auto-task', ['owned [literal].txt'], self.root)
+        checkpoint = r.checkpoint('auto-task', self.root)
+        self.complete()
+        published = auto.finish('auto-task', self.root)
+        folder = self.path / '.agent-work/tasks/auto-task'
+        for value in (tracked, checkpoint, published, a.read_json(folder / 'record.json')):
+            self.assertNotIn('observation', value)
+        self.assertFalse((self.root / 'runs/auto-task/observations').exists())
+        self.assertEqual(published['phase'], 'pushed')
+        self.assertEqual(auto.remote_head(self.path, published['policy']), published['commit'])
+        gate.seal_checkpoint.assert_called()
+        gate.check_submission.assert_called()
+        gate.check_publication.assert_called_once()
+
+    def test_resume_preserves_historical_extra_metadata_and_specification(self):
+        self.bind()
+        folder = self.path / '.agent-work/tasks/auto-task'
+        record = a.read_json(folder / 'record.json')
+        # Simulate a saved historical extension; resuming must not re-render it.
+        record['observation'] = {'status': 'review_pending', 'decision': 'allow'}
+        specification = (folder / 'spec.md').read_text(encoding='utf-8')
+        specification += '\n## Historical advisory summary\nSaved unchanged.\n'
+        (folder / 'spec.md').write_text(specification, encoding='utf-8')
+        record['spec_sha256'] = a.digest(specification.encode('utf-8'))
+        a.write_json(folder / 'record.json', record)
+        before = {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()}
+        resumed = r.resume('sample', 'auto-task', self.root, scope=record['scope'])
+        self.assertEqual(resumed['record'], record)
+        self.assertEqual(resumed['spec'], specification)
+        self.assertEqual(before, {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()})
 
 
 if __name__ == '__main__':

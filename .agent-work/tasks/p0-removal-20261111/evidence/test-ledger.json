@@ -1,0 +1,503 @@
+{
+  "checks": {
+    "boundary": {
+      "check": "boundary",
+      "argv": [
+        "<repository>\\.venv-controls\\Scripts\\python.exe",
+        "-I",
+        "-B",
+        "runtime/tests/test_control_gate_integration.py",
+        "-v",
+        "GateIntegrationTests.test_new_lifecycle_records_only_include_gate_metadata",
+        "GateIntegrationTests.test_resume_preserves_historical_extra_metadata_and_specification"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.541,
+      "evidence": "runs/p0-removal-20261111/evidence/boundary.log"
+    },
+    "broader": {
+      "check": "broader",
+      "argv": [
+        "<repository>\\.venv-controls\\Scripts\\python.exe",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,unittest; sys.path.insert(0,'runtime/tests'); unittest.main(module=None)",
+        "-v",
+        "test_contract",
+        "test_agent_workspaces",
+        "test_repoctl",
+        "test_work_scope",
+        "test_repo_automation",
+        "test_submission_profile",
+        "test_codex_settings",
+        "test_context_checkpoint",
+        "test_legacy_memory"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 463.061,
+      "evidence": "runs/p0-removal-20261111/evidence/broader.log"
+    },
+    "mandatory": {
+      "check": "mandatory",
+      "argv": [
+        "python (host controller)",
+        "-B",
+        "runtime/control_gate.py",
+        "run-tests",
+        "--task",
+        "p0-removal-20261111",
+        "--suite",
+        "p1-regression"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 849.513,
+      "evidence": "runs/p0-removal-20261111/evidence/mandatory.log"
+    },
+    "sync": {
+      "check": "sync",
+      "argv": [
+        "python (host controller)",
+        "-B",
+        "runtime/sync_codex.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.113,
+      "evidence": "runs/p0-removal-20261111/evidence/sync.log"
+    },
+    "doctor": {
+      "check": "doctor",
+      "argv": [
+        "python (host controller)",
+        "-B",
+        "runtime/agentctl.py",
+        "doctor"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.167,
+      "evidence": "runs/p0-removal-20261111/evidence/doctor.log"
+    },
+    "selection": {
+      "check": "selection",
+      "argv": [
+        "python (host controller)",
+        "-B",
+        "runtime/control_gate.py",
+        "select-tests",
+        "--task",
+        "p0-removal-20261111"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.185,
+      "evidence": "runs/p0-removal-20261111/evidence/selection.log"
+    }
+  },
+  "mandatory_result": {
+    "record": "test-48d8fedcb8084903aa1e116bc08434f2.json",
+    "kind": "test",
+    "task_id": "p0-removal-20261111",
+    "candidate_digest": "d5cea859b5d9e54efb9d2cbef8e839dad763a2ee03dd7594fd7e8d1aba26e06b",
+    "suite_id": "p1-regression",
+    "suite_digest": "e171934673cfd3c4b7485d619c33ad64e8c655a5b0d112ffb149abd675e8f4be",
+    "created_at": "2026-11-11T09:11:44.407985+00:00",
+    "outcome": "passed",
+    "tests_run": 110,
+    "exit_code": 0,
+    "reason": null,
+    "candidate_unchanged": true,
+    "evidence": {
+      "path": "runs/p0-removal-20261111/evidence/gate-test-3ca281853fdf4379aad46bbcf6860a04.log",
+      "sha256": "7856d01f51e5261bc1c310b20d9f5df2fb11b033cf842be3a4d404548e4f27fc"
+    },
+    "assurance": "local-executed-untrusted-candidate",
+    "impact_selection": {
+      "mode": "full",
+      "suites": [
+        {
+          "id": "p1-regression",
+          "argv": [
+            "@project-python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "runtime/tests",
+            "-p",
+            "test_control_gate*.py",
+            "-v"
+          ]
+        }
+      ],
+      "reasons": [
+        {
+          "path": ".agent-work/impact-tests.json",
+          "reason": "mapping changed"
+        },
+        {
+          "path": ".agent-work/impact-tests.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": ".agent-work/observation.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": ".codex/agents/evaluator.toml",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": ".codex/agents/infrastructure.toml",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": ".codex/agents/orchestrator.toml",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": ".codex/agents/policy-manager.toml",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "AGENTS.md",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "README.md",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/evaluator/instructions.md",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/evaluator/module.json",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/orchestrator/instructions.md",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/orchestrator/module.json",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/policy-manager/instructions.md",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "core/policy-manager/module.json",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "docs/P0-실행통제-사용안내.md",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "docs/P1-제출-게시-검사-사용안내.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "docs/디렉터리-구조와-역할.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "modules/infrastructure/instructions.md",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "modules/infrastructure/module.json",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "runtime/control-requirements.txt",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/control_contracts.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/control_gate.py",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/control_integration.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/control_policy.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/control_workflow.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/controlctl.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/impact_tests.py",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/native-map.json",
+          "reason": "Registry, adapter, result contract and document integrity checks; semantic impact remains independently reviewed.",
+          "suites": [
+            "impact-document-integrity"
+          ]
+        },
+        {
+          "path": "runtime/repo_automation.py",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/repoctl.py",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/fixtures/control-contracts/action-request.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/fixtures/control-contracts/all-envelopes.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/fixtures/control-contracts/unicode-vector.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/fixtures/control-observe/context.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/fixtures/control-observe/request.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_contracts.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_gate_impact.py",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_gate_integration.py",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_integration.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_policy.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_control_workflow.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_controlctl.py",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "runtime/tests/test_submission_profile.py",
+          "reason": "unmapped path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "shared/policies/execution-controls.observe.json",
+          "reason": "new, deleted, or mode-changed file",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "shared/schemas/control-envelope.schema.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "shared/schemas/control-observation.schema.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "shared/schemas/control-observe-policy.schema.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        },
+        {
+          "path": "shared/schemas/control-workflow.schema.json",
+          "reason": "protected or shared runtime path",
+          "suites": [
+            "p1-regression"
+          ]
+        }
+      ],
+      "mapping_sha256": "e8736b93f6bfd6bbf6e8d6d5629cfbe3de0952ed465383c21d84d98aedda2cfb"
+    }
+  },
+  "distinct_final_test_cases": 227,
+  "early_boundary_cases_repeated_in_final_suite": 2,
+  "independent_generated_record_cases_repeated_by_evaluator": 3,
+  "attempts": [
+    {
+      "kind": "named-module invocation",
+      "outcome": "failed before loading real tests",
+      "elapsed_seconds": 0.116,
+      "reason": "Isolated Python -I omits cwd from named-module lookup; fixed command to direct existing test script. No product defect."
+    },
+    {
+      "kind": "initial mandatory suite",
+      "outcome": "interrupted, incomplete; not counted as passed",
+      "elapsed_seconds": 83.932,
+      "reason": "Independent finding P0-D1 required existing fixture repair; exact child stopped before wasting full obsolete run. Original gate failure/log preserved."
+    },
+    {
+      "kind": "final mandatory suite",
+      "outcome": "passed",
+      "elapsed_seconds": 849.513
+    }
+  ],
+  "new_tests": 2,
+  "deleted_test_definitions": 148,
+  "net_definition_reduction": 146,
+  "notes": "Final mandatory and broader suites are disjoint. Early boundary and independent canonical checks repeat final P1 cases; do not count as unique coverage. Static test definitions differ from executed case counts."
+}

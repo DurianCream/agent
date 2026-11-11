@@ -59,62 +59,6 @@
       ]
     },
     {
-      "id": "control-workflow",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_control_workflow.py",
-        "-v"
-      ]
-    },
-    {
-      "id": "control-policy",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_control_policy.py",
-        "-v"
-      ]
-    },
-    {
-      "id": "control-integration",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_control_integration.py",
-        "-v"
-      ]
-    },
-    {
-      "id": "controlctl",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_controlctl.py",
-        "-v"
-      ]
-    },
-    {
       "id": "contract",
       "argv": [
         "@project-python",
@@ -181,20 +125,6 @@
         "runtime/tests",
         "-p",
         "test_repo_automation.py",
-        "-v"
-      ]
-    },
-    {
-      "id": "control-contracts",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_control_contracts.py",
         "-v"
       ]
     },
@@ -292,34 +222,6 @@
       "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
     },
     {
-      "path": "runtime/control_workflow.py",
-      "suites": [
-        "control-workflow"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
-      "path": "runtime/control_policy.py",
-      "suites": [
-        "control-policy"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
-      "path": "runtime/control_integration.py",
-      "suites": [
-        "control-integration"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
-      "path": "runtime/controlctl.py",
-      "suites": [
-        "controlctl"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
       "path": "runtime/agentctl.py",
       "suites": [
         "contract",
@@ -340,13 +242,6 @@
       "suites": [
         "repo-automation",
         "publication-secrets"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
-      "path": "runtime/control_contracts.py",
-      "suites": [
-        "control-contracts"
       ],
       "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
     },

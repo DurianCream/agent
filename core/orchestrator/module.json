@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "orchestrator",
   "name": "Orchestrator",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Interpret requests, select modules, coordinate dependencies, and integrate results.",

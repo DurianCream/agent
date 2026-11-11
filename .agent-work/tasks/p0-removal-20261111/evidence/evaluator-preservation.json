@@ -1,0 +1,18 @@
+{
+  "baseline_file_count": 3247,
+  "changed_or_missing": [],
+  "environment_new_files": [],
+  "environment_removed_files": [],
+  "product_added": [],
+  "added_test_definitions": [
+    [
+      "runtime/tests/test_control_gate_integration.py",
+      "test_new_lifecycle_records_only_include_gate_metadata"
+    ],
+    [
+      "runtime/tests/test_control_gate_integration.py",
+      "test_resume_preserves_historical_extra_metadata_and_specification"
+    ]
+  ],
+  "removed_test_definitions_count": 148
+}

@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "p0-removal-20261111",
+  "saved_at": "2026-11-11T18:19:53+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "1af99b354cb54f7e48e2b7f7159ee4b28843029f",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/impact-tests.json\n M .agent-work/index.json\n D .agent-work/observation.json\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/policy-manager.toml\n M AGENTS.md\n M README.md\n M core/evaluator/instructions.md\n M core/evaluator/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/instructions.md\n M core/policy-manager/module.json\n D \"docs/P0-\\354\\213\\244\\355\\226\\211\\355\\206\\265\\354\\240\\234-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M \"docs/P1-\\354\\240\\234\\354\\266\\234-\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M modules/infrastructure/instructions.md\n M modules/infrastructure/module.json\n D runtime/control-requirements.txt\n D runtime/control_contracts.py\n M runtime/control_gate.py\n D runtime/control_integration.py\n D runtime/control_policy.py\n D runtime/control_workflow.py\n D runtime/controlctl.py\n M runtime/impact_tests.py\n M runtime/native-map.json\n M runtime/repo_automation.py\n M runtime/repoctl.py\n D runtime/tests/fixtures/control-contracts/action-request.json\n D runtime/tests/fixtures/control-contracts/all-envelopes.json\n D runtime/tests/fixtures/control-contracts/unicode-vector.json\n D runtime/tests/fixtures/control-observe/context.json\n D runtime/tests/fixtures/control-observe/request.json\n D runtime/tests/test_control_contracts.py\n M runtime/tests/test_control_gate_impact.py\n M runtime/tests/test_control_gate_integration.py\n D runtime/tests/test_control_integration.py\n D runtime/tests/test_control_policy.py\n D runtime/tests/test_control_workflow.py\n D runtime/tests/test_controlctl.py\n M runtime/tests/test_submission_profile.py\n D shared/policies/execution-controls.observe.json\n D shared/schemas/control-envelope.schema.json\n D shared/schemas/control-observation.schema.json\n D shared/schemas/control-observe-policy.schema.json\n D shared/schemas/control-workflow.schema.json\n?? .agent-work/tasks/p0-removal-20261111/",
+    "worktree_sha256": "be7377d2c84d39dc35894c34a875841160d5839c2f3cf3e48f0ea423feb62ab7"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "p0-removal-20261111",
+    "module": {
+      "id": "coding",
+      "version": "0.1.6"
+    },
+    "created_at": "2026-11-11T17:51:05+09:00",
+    "objective": "Remove P0 observation atomically per investigation 1af99b3 while preserving P1, environment and historical records",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Remove scoped P0 implementation documentation configuration fixtures and tests with no new product files and at most three new tests",
+        "required": true,
+        "verification_ids": [
+          "scope"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Preserve P1 and legacy record readability without rewriting history or changing .venv-controls",
+        "required": true,
+        "verification_ids": [
+          "preserve",
+          "tests"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Exhaustive active string reference audit sync check doctor mandatory suites and independent evaluator pass",
+        "required": true,
+        "verification_ids": [
+          "scope",
+          "structure",
+          "tests",
+          "independent"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Publish exact reviewed candidate and report deletion test suite timing and commit evidence",
+        "required": true,
+        "verification_ids": [
+          "independent",
+          "tests",
+          "structure"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "P0 관찰 기능 전체 제거 후보의 구현·검증·독립 검수를 완료했습니다. P1·가상환경·과거 기록을 보존했고 정상 제출·게시 단계로 인계합니다.",
+    "work": [
+      "조사 1~5단계를 단일 후보로 구현: 제품 23개 삭제·25개 수정, 7514행 삭제·79행 추가, 신규 제품 0개.",
+      "정적 시험 정의 148개 삭제·2개 추가로 380→234(순감소146). 기존 P1 파일에 새 기록 lifecycle 및 과거 기록 resume 경계만 추가.",
+      "P1 신규 생성 기록에서 observation만 제거했으며 기존 게시 결정·canonical·seal·원격·비밀값 검사를 유지. 실제 과거 기록 읽기와 3247개 보호 파일 해시를 검증.",
+      "전체 P1 및 관련 공통 회귀117개, sync check, doctor 통과. 삭제된 P0 suite는 기존 규칙의 full fallback으로 대체되어 enrollment 수정 없이 검증.",
+      "독립 P0-D1: P1 시험의 오래된 control_policy fixture를 유지되는 repoctl로 교체하고 최종 필수시험으로 재검증.",
+      "별도 evaluator가 최종 후보와 보고서를 accepted로 검수했고 P0-D1 해결을 확인했다. 정확한 바이트로 게시 근거 사본을 준비했다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/p0-removal-20261111/report.md",
+        "description": "P0 제거 범위·정확한 삭제 목록·시험·참조 감사·보존 결과 보고서",
+        "sha256": "08e02b026cfd4d2a1c50e2b2a76e209cd97334ce58dbcda8e12137210598789d"
+      }
+    ],
+    "verification": [
+      {
+        "id": "scope",
+        "name": "삭제 범위와 참조 감사",
+        "method": "Git diff/AST 정적 정의 집계, hidden/no-ignore 및 395개 키·심볼 재검색",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p0-removal-20261111/evidence/change-statistics.json",
+          "runs/p0-removal-20261111/evidence/reference-audit.json"
+        ],
+        "notes": "삭제 대상 활성 실행 참조0. 범용 controls/observation 및 역사 호환 회귀 키는 분리해 보존."
+      },
+      {
+        "id": "preserve",
+        "name": "환경·역사·공통 계약 보존",
+        "method": "3247개 파일 SHA-256 비교와 실제 과거 scope의 repoctl.resume",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p0-removal-20261111/evidence/preservation-check.json",
+          "runs/p0-removal-20261111/evidence/historical-readback.json"
+        ],
+        "notes": ".venv-controls1128개,역사2118개,현재 enrollment ledger1개 불변. result.schema1.0.0 유지."
+      },
+      {
+        "id": "tests",
+        "name": "필수 P1·관련 공통 회귀",
+        "method": "기존 full 선택의 p1-regression 및 관련9개 suite를 -I -B 환경에서 실제 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p0-removal-20261111/evidence/test-ledger.json",
+          "runs/p0-removal-20261111/evidence/gate-test-3ca281853fdf4379aad46bbcf6860a04.log",
+          "runs/p0-removal-20261111/evidence/broader.log"
+        ],
+        "notes": "최종 고유 case 227개. 초기2경계·독립3case는 중복. 실패한 로더 호출과 중단시도는 통과수 제외."
+      },
+      {
+        "id": "structure",
+        "name": "어댑터·registry·선택 결과",
+        "method": "sync_codex --check, agentctl doctor, control_gate select-tests",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p0-removal-20261111/evidence/sync.log",
+          "runs/p0-removal-20261111/evidence/doctor.log",
+          "runs/p0-removal-20261111/evidence/selection.log"
+        ],
+        "notes": "full p1-regression 선택. 고정 enrollment/gates 정책 변경 없음."
+      },
+      {
+        "id": "independent",
+        "name": "독립 evaluator 최종 검수",
+        "method": "별도 세션의 참조·보존·P1 생성 기록 경계 검수 및 own gate assessment",
+        "outcome": "passed",
+        "evidence": [
+          "runs/p0-removal-20261111/evidence/evaluator-review.md"
+        ],
+        "notes": "별도 evaluator의 최종 연구/구현 검수 accepted; P0-D1 해결. own P1 assessment 및 실제 finish는 이 결과 고정 후 수행."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "로컬 협력형 P1 검사는 OS 격리·서명·신원 인증을 보증하지 않는다.",
+      "실제 커밋·원격 푸시는 최종 평가·제출 후 main finish에서 확인한다.",
+      "활성 참조 검색은 Git 객체·vendor 본문·work 임시 복제본·bytecode와 역사 기록을 분리했다."
+    ],
+    "next_actions": [
+      "evaluator가 고정된 결과의 own P1 assessment 등록 후 main이 validate/submit/finish와 원격 확인 수행"
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-observation-removal"
+  },
+  "spec_sha256": "9f37a37ac3dee6d713cc92241153fd80d3cbde2106bea1c1fb83f9e59cada694"
+}

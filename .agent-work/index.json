@@ -391,6 +391,19 @@
         "environment": "development",
         "issue": "p0-removal-investigation"
       }
+    },
+    "p0-removal-20261111": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-11T18:19:53+09:00",
+      "summary": "P0 관찰 기능 전체 제거 후보의 구현·검증·독립 검수를 완료했습니다. P1·가상환경·과거 기록을 보존했고 정상 제출·게시 단계로 인계합니다.",
+      "path": "tasks/p0-removal-20261111/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "p0-observation-removal"
+      }
     }
   }
 }

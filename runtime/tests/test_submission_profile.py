@@ -277,7 +277,7 @@ class ProfileTests(unittest.TestCase):
 
     def test_unknown_root_and_workflow_configuration_rejected(self):
         self.initialize()
-        for name in ('build.json', '.agent-work/observation.json', 'docs/prose/unowned.txt'):
+        for name in ('build.json', '.agent-work/unknown-workflow.json', 'docs/prose/unowned.txt'):
             file = self.root / name
             file.write_text('{}\n')
             with self.subTest(path=name), self.assertRaisesRegex(a.ContractError, 'unchanged control'):

@@ -1,0 +1,64 @@
+{
+  "task": "p0-removal-20261111",
+  "scope": {
+    "repository": "multi",
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "p0-observation-removal"
+  },
+  "risk_tier": "high",
+  "reason": "Removing execution-observation integration touches P1 generated-record interfaces; full gate and independent review retained.",
+  "author": "/root/p0_owner",
+  "workspace": "work/agents/p0-removal-20261111/coding/instance-7t10mgu7",
+  "orchestrator": {
+    "agent": "/root",
+    "workspace": "work/agents/p0-removal-20261111/orchestrator/instance-hvmsaz3b"
+  },
+  "evaluator": {
+    "agent": "/root/p0_evaluator",
+    "workspace": "work/agents/p0-removal-20261111/evaluator/instance-lb2pxy92"
+  },
+  "ownership": "Exact 48 product files in publication manifest; output report and author task evidence; evaluator evidence owned by evaluator. Exact reviewed archive copies will be created under task/evidence.",
+  "authorization": "User-requested report stages 1-5 as one candidate; preserve P1, environment name/content, result contract and history; at most 3 new tests, no new product files; stop for unexpected executable behavior changes.",
+  "environment": {
+    "os": "Windows",
+    "controller_python": "3.14.4",
+    "test_environment": ".venv-controls existing unchanged interpreter with -I -B and inherited PYTHONDONTWRITEBYTECODE=1"
+  },
+  "preflight": "Existing impact fallback chooses pinned full p1-regression; enrollment, gates config and policy unmodified. No new external access or credentials.",
+  "budget": "Initial preflight, atomic implementation, boundary checks, full required suite plus broader relevant common regression, independent review; reruns only affected change/failure.",
+  "source_candidate_digest": "d5cea859b5d9e54efb9d2cbef8e839dad763a2ee03dd7594fd7e8d1aba26e06b",
+  "actual_changes": "23 deletions, 25 modifications, zero new product files, 2 added tests and 148 removed test definitions.",
+  "repairs": [
+    {
+      "id": "P0-D1",
+      "location": "runtime/tests/test_control_gate_impact.py",
+      "cause": "Stale deleted module name in protected-cluster fixture",
+      "repair": "Use retained repoctl fixture; same test semantics and no runtime behavior change",
+      "status": "independently resolved; final mandatory suite passed"
+    },
+    {
+      "id": "P0-D2",
+      "change": "Separate 2118 historical files and one current enrollment ledger within unchanged total3247; report/evidence labels only",
+      "status": "independently resolved"
+    }
+  ],
+  "checks": {
+    "sync": "passed",
+    "doctor": "passed",
+    "boundary": "2 passed in 8.541 seconds",
+    "reference_audit": "0 retired operational references; generic control/observation references categorized",
+    "preservation": "3247 hashes unchanged:1128 environment,2118 historical,1 current enrollment ledger",
+    "mandatory": "passed 110 tests in 849.513 seconds",
+    "broader": "passed 117 tests in 463.061 seconds",
+    "independent_boundary": "3 canonical generated-record tests passed in evaluator session"
+  },
+  "limitations": "Static counts are not executed test counts. Actual commit/push pending parent lifecycle after review. Historic current-generation rendering removed, but saved-record resume remains byte-preserving.",
+  "recovery": "No environment or history rollback needed; return reviewed source changes through normal Git only if requested. No deployment credentials or migration.",
+  "remaining": [
+    "Evaluator own P1 assessment binds frozen result",
+    "Parent validate submit finish and remote readback"
+  ],
+  "report_sha256": "08e02b026cfd4d2a1c50e2b2a76e209cd97334ce58dbcda8e12137210598789d"
+}

@@ -1,0 +1,5 @@
+﻿{
+    "command":  ".venv-controls/Scripts/python.exe -I -B -m unittest discover -s runtime/tests -p test_control_gate.py -k generated -v",
+    "exit_code":  0,
+    "seconds":  38.679809
+}

@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "infrastructure",
   "name": "Infrastructure",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Work on IaC, cloud, runtime, deployment, and operations foundations.",

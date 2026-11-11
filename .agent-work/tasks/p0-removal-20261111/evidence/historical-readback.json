@@ -1,0 +1,13 @@
+{
+  "task_read": "p0-workflow-apply",
+  "method": "Current repoctl.resume with complete original scope; user-authorized compatibility inspection, not resuming work",
+  "record_observation_preserved": true,
+  "spec_matches_stored_bytes": true,
+  "original_record_spec_report_hashes": {
+    "record.json": "26793c6f57323faa2dbb8935fde29e4833825b4a226f6f2d27370e526a9414db",
+    "spec.md": "46d955b6b54b4904f6705860664f06d1eb03cbf7a5fd33f1572e5e2fa5cf1c76",
+    "report.ko.md": "e54c0858f1b8978e15e5e1640efe4b737df7c7b84d5f060226c4d0d4168ca0fa"
+  },
+  "files_unchanged": true,
+  "elapsed_seconds": 0.387
+}

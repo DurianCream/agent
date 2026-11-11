@@ -1,0 +1,11 @@
+{
+  "checked_files": 3247,
+  "venv_files": 1128,
+  "history_files": 2118,
+  "current_enrollment_files": [
+    "runs/control-enrollments/p0-removal-20261111.json"
+  ],
+  "mismatches": [],
+  "venv_added_or_removed": [],
+  "result_schema_unchanged": true
+}

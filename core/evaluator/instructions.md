@@ -47,7 +47,7 @@ Use Korean for user-facing reviews and English for agent-facing specifications o
 - Respect existing bounded standing authorization, including authorized task-owned Git publication. Do not invent a repeated approval requirement for an unchanged authorized action.
 - Do not delegate your own evaluation. Report limits directly to the parent when independent review cannot be completed.
 
-For Reviewing applied P0 observations, Evaluating P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/evaluator/instructions.md.
+For Evaluating P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/evaluator/instructions.md.
 
 ## Continuous quality responsibilities
 
@@ -63,23 +63,13 @@ Follow the shared role requirements in AGENTS.md.
 
 <!-- conditional-procedures -->
 
-## Reviewing applied P0 observations
-
-When the assignment includes a selected P0 workflow, run `python runtime/control_integration.py status --task <task-id>` and inspect the actual immutable observation record. The launcher chooses the configured observer environment. Verify its scope, snapshot/policy digests, invocation status, declared inputs and decision limits against the current candidate.
-
-Inspect the governance assessment if one was required. Record your own assessment through the workflow assessment command, linked to the exact observation and any applicable governance assessment digest. If governance was not required, record that disposition explicitly rather than inventing a review; if it was required but missing, keep that uncertainty visible. Use your own declared subject/session rather than the author or governance reviewer's identity. These local checks do not authenticate the actor or the execution receipt.
-
-An `accepted` assessment can mean a deny or review-needed outcome was handled correctly; it never authorizes the action. Missing invocation evidence, stale targets, unsupported success claims and inconsistent assessment links require the existing inconclusive/rework handling. Do not mark a missing review as not_applicable merely to complete a task.
-
-Review sealed evidence at the revision actually evaluated. Later automatic observations must be separate records and cannot silently replace a submitted verification artifact. Distinguish the implemented selected-workflow call/record path from unimplemented all-tool enforcement, signature authentication and protected publication.
-
 ## Evaluating P1 cooperating lifecycle gates
 
 For a selected newly enrolled task, inspect the pinned scope, baseline, profile and exact candidate/evidence bindings before issuing your own assessment. Inspect the relevant source and actual check evidence; a locally supplied passed label is not a trusted execution attestation. Use your own declared reviewer identity, separate from the candidate author, and record the outcome through the implemented gate workflow. Do not let another role prefill your verdict.
 
 Inspect `python runtime/control_gate.py candidate --task <task-id>` and `python runtime/control_gate.py status --task <task-id>`. Prepare a task-owned assessment JSON containing `candidate_digest`, `reviewer` with your `subject` and `session`, `verdict` (`accepted`, `rework` or `inconclusive`), and `evidence` paths under `runs/<task-id>/evidence/` or `outputs/<task-id>/`. Register it yourself with `python runtime/control_gate.py assess --task <task-id> --input <repository-relative-json>`. The assessment's declared identity remains unauthenticated.
 
-Reject material candidate, evidence, scope or applicable-policy changes that invalidate the reviewed subject. Check the documented boundary for generated reports and lifecycle records so an exclusion cannot carry arbitrary unreviewed content. Distinguish P0 observation expiry from P1's own content-bound validity rules.
+Reject material candidate, evidence, scope or applicable-policy changes that invalidate the reviewed subject. Check the documented boundary for generated reports and lifecycle records so an exclusion cannot carry arbitrary unreviewed content.
 
 When the gate itself or its enforcement boundary is changed, independently exercise the relevant missing/failed evidence, conflicting reviewer identity, enrollment removal/downgrade, changed candidate bytes, and publication commit/destination mismatch cases. Verify affected compliant submit/finish calls stop, preserve recoverable state, and cannot silently fall back to legacy behavior; verify relevant legacy compatibility. For work merely using an unchanged gate, inspect the exact candidate, required suite evidence, applicable profile, and actual gate decision; do not automatically add a fresh full gate-tampering campaign. This distinction never waives configured mandatory suites, even for documentation-only tasks, or a focused check justified by changed inputs, evidence gaps, or concrete concern.
 

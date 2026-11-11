@@ -96,9 +96,7 @@ def track(task_id, paths, root=a.ROOT):
                 value['paths'].append(name)
         value['paths'].sort()
         a.write_json(file, value)
-    # Refresh advisory workspace state after the ownership lock is released.
-    observation = r._optional_observation(task_id, root, phase='workspace')
-    return {**value, 'observation': observation} if observation is not None else value
+    return value
 
 
 def finish(task_id, root=a.ROOT):
@@ -169,13 +167,9 @@ def finish(task_id, root=a.ROOT):
             a.write_json(file, value)
         # P1 checks the real created/retried commit before any remote effect.
         # A failure preserves phase=committed, so a retry cannot make a duplicate
-        # completion commit. P0 remains separate advisory observation.
+        # completion commit.
         gate = a.control_gate_call('check_publication', task_id, root,
                                   commit=value['commit'], publication=value)
-        # A real created/retried commit is available here. This is observation,
-        # not an authorization gate: existing publication checks remain in force.
-        # The child only acquires its own observations lock, never this lock.
-        observation = r._optional_observation(task_id, root, phase='publication', commit=value['commit'])
         remote = remote_head(path, settings)
         a.require(remote in (value['base_head'], value['commit']), 'Remote changed; refusing history rewrite')
         secret_scan.scan_commit(path, value['commit'], value['base_head'], value['staged_paths'])
@@ -184,8 +178,7 @@ def finish(task_id, root=a.ROOT):
         a.require(remote_head(path, settings) == value['commit'], 'Remote confirmation failed')
         value.update(phase='pushed', pushed_at=a.now())
         a.write_json(file, value)
-        response = {**value, 'observation': observation} if observation is not None else value
-        return {**response, 'gate': gate} if gate is not None else response
+        return {**value, 'gate': gate} if gate is not None else value
 
 
 def startup(repo_id=None, task_id=None, root=a.ROOT, cwd=None, scope=None):
