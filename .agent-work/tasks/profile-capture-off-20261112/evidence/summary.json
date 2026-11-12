@@ -1,0 +1,79 @@
+{
+  "checks": [
+    {
+      "id": "required-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task profile-capture-off-20261112 --suite p1-regression",
+      "metrics": {
+        "tests": 113
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/gate-test-23e1ecbea71743579ace51c0e78e92a8.log",
+          "sha256": "2056e654944413c32f88f3e6db0a895245993071f593a61c57bbc2d5f111e63b"
+        }
+      ]
+    },
+    {
+      "id": "profile-regression",
+      "result": "passed",
+      "command": "python -X utf8 -m unittest discover -s runtime/tests -p test_submission_profile.py -v",
+      "metrics": {
+        "tests": 16
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/profile-tests.log",
+          "sha256": "948509ec6e7cb4c0da349d739a10d8f79748bf0d12c73e23f40294191fb5832a"
+        }
+      ]
+    },
+    {
+      "id": "invariants",
+      "result": "passed",
+      "command": "Hash comparison, existing test assertions, partial validate and git diff --check",
+      "metrics": {
+        "test_functions_before": 238,
+        "test_functions_after": 238,
+        "production_runtime_lines_delta": -4
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/verification.json",
+          "sha256": "4a107c025ed8541f4c068ff45639e8cc0ebcf768e25430e5c3eae3c2e311d650"
+        },
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/diff-check.json",
+          "sha256": "e9c11d59e803fac347161987a73e5846ac5f8e1dfd2f007a07347a35ddebf63f"
+        }
+      ]
+    },
+    {
+      "id": "independent-review",
+      "result": "passed",
+      "command": "Independent source/evidence review and 10 existing focused tests; see review-focused-tests.json for exact invocation",
+      "metrics": {
+        "tests": 10,
+        "confirmed_findings": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/independent-review.ko.md",
+          "sha256": "2a0fe26363039896fc904408d72f0ce5667d8ea8b6e0a7a1ec8c1a942f00e35c"
+        },
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/review-focused-tests.log",
+          "sha256": "416eec6d5cd0bef564c772accf42727cc399e86e8ada4842153753b9b19d4792"
+        },
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/review-focused-tests.json",
+          "sha256": "81ec40f871a6614b501ec174c51b6d4bfb86fa4120008458f97b05b9d22d8fd2"
+        },
+        {
+          "path": "runs/profile-capture-off-20261112/evidence/review-source-checks.json",
+          "sha256": "505ae981958e45164e7e2a72bb97ddfd081a66c13c7afa28995572467cc47d88"
+        }
+      ]
+    }
+  ]
+}

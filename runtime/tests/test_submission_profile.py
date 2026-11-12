@@ -63,7 +63,7 @@ class ProfileTests(unittest.TestCase):
         self.task = 'profile-task'
         self.run = self.root / 'runs' / self.task
 
-    def initialize(self, cli=False):
+    def initialize(self, cli=False, legacy=True):
         if cli:
             self.cli('runtime/agentctl.py', 'init', '--module', 'coding', '--task', self.task,
                      '--objective', 'Improve ordinary prose', '--criterion', 'Reviewed prose edit', '--repo', 'sample',
@@ -73,6 +73,20 @@ class ProfileTests(unittest.TestCase):
             a.init_task('coding', self.task, 'Improve ordinary prose', ['Reviewed prose edit'], self.root)
             r.bind('sample', self.task, self.root, scope={**self.profile['selector'], 'issue': 'prose'}, new_task=True)
             a.transition(self.task, 'running', self.root)
+        if legacy:
+            # Synthetic pre-capture-removal registration, solely inside this
+            # disposable fixture. Production enroll no longer creates it.
+            enrollment = a.read_json(self.run / 'controls.json')
+            enrollment['schema_version'] = p.ENROLLMENT_VERSION
+            enrollment['submission_profile'] = p.capture(self.root, enrollment['base_head'])
+            digest = g._hash(enrollment)
+            a.write_json(self.run / 'controls.json', enrollment)
+            a.write_json(self.root / 'runs/control-enrollments' / (self.task + '.json'),
+                         {'digest': digest, 'enrollment': enrollment})
+            task = a.read_json(self.run / 'task.json')
+            task['control_enrollment'] = digest
+            a.write_json(self.run / 'task.json', task)
+            self.assertEqual(g.check_enrollment(self.task, self.root), enrollment)
         auto.track(self.task, [self.doc], self.root)
         (self.root / self.doc).write_text('A clear and friendly project overview.\n', encoding='utf-8')
         (self.run / 'evidence/review.txt').write_text('Synthetic fixture review: wording only; no control or behavioral effects.\n')
@@ -254,8 +268,9 @@ class ProfileTests(unittest.TestCase):
         (self.root / p.CONFIG).unlink()
         r.git(self.root, 'add', '--', p.CONFIG)
         r.git(self.root, 'commit', '-q', '-m', 'Legacy baseline without capability')
-        self.initialize()
+        self.initialize(legacy=False)
         self.assertEqual(g.check_enrollment(self.task, self.root)['schema_version'], g.VERSION)
+        self.assertNotIn('submission_profile', g.check_enrollment(self.task, self.root))
         a.write_json(self.root / p.CONFIG, {'schema_version': p.VERSION, 'profile': p.PROFILE, 'paths': [self.doc]})
         with self.assertRaisesRegex(a.ContractError, 'no light capability'): self.choose()
         self.execute('unit'); self.review()
@@ -325,14 +340,17 @@ class ProfileTests(unittest.TestCase):
         with self.assertRaisesRegex(a.ContractError, 'ledger'):
             g.check_enrollment(self.task, self.root)
 
-    def test_unknown_committed_profile_version_fails_new_enrollment(self):
+    def test_unknown_committed_profile_version_does_not_enable_new_enrollment(self):
         config = a.read_json(self.root / p.CONFIG); config['schema_version'] = '9.0.0'
         a.write_json(self.root / p.CONFIG, config)
         r.git(self.root, 'add', '--', p.CONFIG)
         r.git(self.root, 'commit', '-q', '-m', 'Unsupported profile version')
-        with self.assertRaisesRegex(a.ContractError, 'Unsupported submission profile'):
-            self.initialize()
-        self.assertEqual(a.read_json(self.run / 'task.json')['control_enrollment'], 'pending')
+        self.initialize(cli=True, legacy=False)
+        enrollment = g.check_enrollment(self.task, self.root)
+        self.assertEqual(enrollment['schema_version'], g.VERSION)
+        self.assertNotIn('submission_profile', enrollment)
+        with self.assertRaisesRegex(a.ContractError, 'no light capability'):
+            self.choose()
 
     def test_companion_deletion_or_version_change_cannot_downgrade(self):
         self.initialize(); self.choose()

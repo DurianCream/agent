@@ -201,6 +201,26 @@
   ],
   "rules": [
     {
+      "path": "README.md",
+      "suites": ["impact-document-integrity"],
+      "reason": "Document integrity checks validate the owned README text; independent review covers meaning."
+    },
+    {
+      "path": "core/*",
+      "suites": ["impact-document-integrity"],
+      "reason": "Registry doctor, generated adapter consistency and document integrity checks validate core manifests and instructions."
+    },
+    {
+      "path": "registry.json",
+      "suites": ["impact-document-integrity"],
+      "reason": "The suite runs registry doctor to validate the actual registry and module contracts, plus document integrity."
+    },
+    {
+      "path": "shared/policies/*",
+      "suites": ["impact-document-integrity"],
+      "reason": "Registry doctor validates linked policy schemas and pinned versions; document integrity checks cover owned policy text."
+    },
+    {
       "path": "runtime/sync_codex.py",
       "suites": [
         "codex-settings"

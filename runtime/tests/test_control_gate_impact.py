@@ -19,6 +19,10 @@ class ImpactTests(GateFixture, unittest.TestCase):
     def before_initial_commit(self):
         source = Path(a.__file__).resolve().parents[1]
         a.write_json(self.root / impact.CONFIG, a.read_json(source / impact.CONFIG))
+        # Even a committed old profile policy must not enable fresh capture.
+        a.write_json(self.root / sp.CONFIG, {'schema_version': sp.VERSION, 'profile': sp.PROFILE, 'paths': []})
+        (self.root/'README.md').write_text('Before\n')
+        r.git(self.root, 'add', '-f', '--', 'core/orchestrator/instructions.md', 'shared/policies/common.json')
         (self.root/'docs').mkdir()
         (self.root/'docs/guide.md').write_text('Before\n')
         (self.root/'runtime').mkdir(exist_ok=True)
@@ -42,7 +46,14 @@ class ImpactTests(GateFixture, unittest.TestCase):
         return selected
 
     def test_document_selects_fast(self):
-        self.assertEqual([s['id'] for s in self.selection(['docs/guide.md'])['suites']],['impact-document-integrity'])
+        enrollment = g.check_enrollment('gate-task', self.root)
+        self.assertIn('impact_tests', enrollment)
+        self.assertNotIn('submission_profile', enrollment)
+        for name in ('docs/guide.md', 'README.md', 'core/orchestrator/instructions.md', 'registry.json', 'shared/policies/common.json'):
+            original = (self.root/name).read_bytes()
+            with self.subTest(path=name):
+                self.assertEqual([s['id'] for s in self.selection([name])['suites']], ['impact-document-integrity'])
+            (self.root/name).write_bytes(original)
 
     def test_module_selects_exact_tests(self):
         self.assertEqual([s['id'] for s in self.selection(['runtime/context_checkpoint.py'])['suites']],['context-checkpoint'])

@@ -140,10 +140,6 @@ def enroll(task_id, root=a.ROOT):
              'publication_policy': publication['policy'], 'publication_policy_sha256': publication['policy_sha256'],
              'config': profile, 'config_sha256': a.digest(config.read_bytes()),
              'created_at': _now(), 'nonce': uuid.uuid4().hex}
-    capability = sp.capture(root, publication['base_head'])
-    if capability is not None:
-        value['schema_version'] = sp.ENROLLMENT_VERSION
-        value['submission_profile'] = capability
     impact_capability = impact.capture(root, publication['base_head'])
     if impact_capability is not None:
         value['schema_version'] = impact.ENROLLMENT_VERSION
