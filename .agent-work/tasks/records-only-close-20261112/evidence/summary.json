@@ -1,0 +1,70 @@
+{
+  "checks": [
+    {
+      "id": "reproduction",
+      "result": "passed",
+      "command": "python work/agents/records-only-close-20261112/coding/instance-3h_p16t_/reproduce.py",
+      "metrics": {
+        "conflicts": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112/evidence/reproduction.json",
+          "sha256": "1789fac88652069f6039c8e07f48364ff37e8223d9e72bc549a4a71c8d449676"
+        }
+      ]
+    },
+    {
+      "id": "mandatory",
+      "result": "failed",
+      "command": "python runtime/control_gate.py run-tests --task records-only-close-20261112 --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "failed": 1,
+        "exit_code": 1,
+        "seconds": 920.388
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112/evidence/gate-test-50ad9696cf00429cbdbdd3a449e3d499.log",
+          "sha256": "2e70aeea9a543afb5bbdcd28e358604c303d1a3aeca57094d26f04e0c8caffc2"
+        }
+      ]
+    },
+    {
+      "id": "implementation",
+      "result": "passed",
+      "command": "AST test-function comparison; sync_codex.py --write/--check; git diff --check",
+      "metrics": {
+        "new_test_functions": 0,
+        "product_files": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112/evidence/test-function-counts.json",
+          "sha256": "d7bbbb33b43e66d5e65cfb161d15295f362d14001c2623ab6eca545c105ba547"
+        },
+        {
+          "path": "runs/records-only-close-20261112/evidence/code.diff",
+          "sha256": "0c1cbb7068c5c7ff3dd646c0745aa3e76c800ccb4d449ff0cb8c53c7fcd199da"
+        },
+        {
+          "path": "runs/records-only-close-20261112/evidence/implementation-notes.md",
+          "sha256": "5678c47e5759f1b280b195c3a612a4699098b51e2f6ef360ea18528c71511c83"
+        }
+      ]
+    },
+    {
+      "id": "review-publication",
+      "result": "not_run",
+      "command": "Independent review and normal validate/submit/finish stopped by user constraint after required test failure",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112/evidence/implementation-notes.md",
+          "sha256": "5678c47e5759f1b280b195c3a612a4699098b51e2f6ef360ea18528c71511c83"
+        }
+      ]
+    }
+  ]
+}
