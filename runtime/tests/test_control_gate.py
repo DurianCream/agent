@@ -229,6 +229,13 @@ class GateTests(GateFixture, unittest.TestCase):
 
     def test_changed_test_log_invalidates(self):
         execution = self.execute(); self.review()
+        proof_file = self.run / 'gates' / execution['record']
+        original = proof_file.read_bytes()
+        proof = a.read_json(proof_file); proof['profile_digest'] = None
+        a.write_json(proof_file, proof)
+        with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile proof is unsupported'):
+            g.check_submission('gate-task', self.root)
+        proof_file.write_bytes(original)
         (self.root / execution['evidence']['path']).write_text('fake passed')
         with self.assertRaisesRegex(a.ContractError, 'evidence bytes changed'):
             g.check_submission('gate-task', self.root)
@@ -260,7 +267,29 @@ class GateTests(GateFixture, unittest.TestCase):
             g.check_enrollment('gate-task', self.root)
 
     def test_changed_companion_blocks(self):
-        value = a.read_json(self.run / 'controls.json'); value['mode'] = 'observe'
+        original = a.read_json(self.run / 'controls.json')
+        for old_value in (None, False, {}, 'unexpected'):
+            value = copy.deepcopy(original); value['submission_profile'] = old_value
+            a.write_json(self.run / 'controls.json', value)
+            with self.subTest(old_value=old_value), mock.patch.object(g.impact, 'capture', side_effect=AssertionError('Must reject before validation')):
+                with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile enrollment is unsupported'):
+                    g.check_enrollment('gate-task', self.root)
+        value = copy.deepcopy(original); value['schema_version'] = '0.2.0'
+        a.write_json(self.run / 'controls.json', value)
+        with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile enrollment is unsupported'):
+            g.check_enrollment('gate-task', self.root)
+        a.write_json(self.run / 'controls.json', original)
+        taskfile = self.run / 'task.json'; task = a.read_json(taskfile)
+        a.write_json(taskfile, {**task, 'submission_profile_state': None})
+        with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile state is unsupported'):
+            g.check_enrollment('gate-task', self.root)
+        a.write_json(taskfile, task)
+        for obsolete in (self.run / 'submission-profile-state.json', self.run / 'gates/profile-old.json'):
+            obsolete.parent.mkdir(exist_ok=True); obsolete.write_text('not parsed')
+            with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile state is unsupported'):
+                g.check_enrollment('gate-task', self.root)
+            obsolete.unlink()
+        value = copy.deepcopy(original); value['mode'] = 'observe'
         a.write_json(self.run / 'controls.json', value)
         with self.assertRaises(a.ContractError):
             g.check_enrollment('gate-task', self.root)

@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "profile-removal-20261112b",
+  "saved_at": "2026-11-12T14:56:03+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "2eaadfc7b73648cf8787c8312b6764b73c4d6bd5",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/impact-tests.json\n M .agents/skills/harness-delivery/SKILL.md\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n D docs/lightweight-submission.ko.md\n M modules/coding/module.json\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/control_gate.py\n M runtime/impact_tests.py\n M runtime/native-map.json\n D runtime/submission_profile.py\n D runtime/tests/light_document_checks.py\n M runtime/tests/test_control_gate.py\n M runtime/tests/test_control_gate_impact.py\n D runtime/tests/test_submission_profile.py\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n M shared/workflows/harness-delivery.md\n M shared/workflows/owner-led-delivery.md\n?? .agent-work/tasks/blob-digest-20261112/\n?? .agent-work/tasks/profile-into-impact-20261112/\n?? .agent-work/tasks/profile-into-impact-20261112b/\n?? .agent-work/tasks/profile-into-impact-20261112c/\n?? .agent-work/tasks/profile-removal-20261112b/",
+    "worktree_sha256": "eff203c7cf331876f280a3f10ee8d74815097b20e99499db2b77c05c6b1dc41b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "profile-removal-20261112b",
+    "module": {
+      "id": "coding",
+      "version": "0.1.8"
+    },
+    "created_at": "2026-11-12T14:29:08+09:00",
+    "objective": "Reapply reviewed profile removal product changes while retaining owned-deletion candidate stability fix",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Own enrollment has no submission_profile and zero profile state files exist",
+        "required": true,
+        "verification_ids": [
+          "scope",
+          "mandatory-tests",
+          "focused",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Only approved backup product changes reapplied with candidate-dependency fix preserved and historical records untouched",
+        "required": true,
+        "verification_ids": [
+          "scope",
+          "mandatory-tests",
+          "focused",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Required full tests and independent evaluation pass with no new test functions",
+        "required": true,
+        "verification_ids": [
+          "scope",
+          "mandatory-tests",
+          "focused",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Normal publication readiness and Korean comparison workflow fail-closed metrics report verified",
+        "required": true,
+        "verification_ids": [
+          "scope",
+          "independent-review",
+          "publication-readiness"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "승인된 백업의 제품 33개만 재적용하고 현재 삭제 후보 안정성 수정과 회귀를 보존했다. 현재 후보의 필수 113개 시험, 실제 로컬 삭제 게시와 독립 평가를 통과했다. 정상 제출·게시 후보를 확정했으며 실제 origin/main 결과는 main의 finish와 원격 확인에서 보고한다.",
+    "work": [
+      "고위험: 승인된 프로필 제거를 현재 삭제 후보 안정성 수정 위에 재적용한다.",
+      "Main /root owns routing and publication; accountable specialist /root/owner implements/tests/repairs, no delegation. Scope multi/agent-framework/development/profile-removal-reapply. Checkout is framework root. Owner scratch work/agents/profile-removal-20261112b/coding/instance-453pw6ll; main scratch work/agents/profile-removal-20261112b/orchestrator/instance-29mbvqcy; evaluator /root/review uses instance-vejeuw9a. All 33 exact product paths including native-map are tracked before edits. Milestones: exact authorized patch/scope invariants; focused deletion publication and current validation; full bound suite; independent review and sealing. Stop on scope expansion, real-task validation/publication block, or AGENTS/schema need. Preserve prior records and backup.",
+      "test_control_gate.py는 충돌 없는 3-way merge와 메서드 AST 비교로 두 변경 집합을 보존했다. native-map 원문 차이는 LF/CRLF만이며 Git blob·JSON 동등성을 확인한 뒤 범위 내로 판단했고 제품 수정은 추가하지 않았다.",
+      "독립 평가자 /root/review는 work/agents/profile-removal-20261112b/evaluator/instance-vejeuw9a에서 제품 수정 없이 검수했다. 기존 시험 12개가 통과했고 정확한 승인 범위·줄끝 표현 동등성·보존한 수정·355개 해시·workflow 전후·현재 필수 증거를 확인하여 accepted로 판정했다. 확인된 결함은 없다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/profile-removal-20261112b/implementation.ko.md",
+        "description": "승인 범위 재적용·전후 문장·fail-closed·현재 시험 보고서",
+        "sha256": "f5b9501dde13e2e402eae21ccd7cf8c7753bc5fc605b8b9fb0665d82adb93752"
+      }
+    ],
+    "verification": [
+      {
+        "id": "scope",
+        "name": "전제·승인 백업 범위·보호 기록",
+        "method": "등록/state 계수,33경로 비교,3-way/AST 검증,Git-clean 및 보호 해시 대조",
+        "outcome": "passed",
+        "evidence": [
+          "runs/profile-removal-20261112b/evidence/scope-verification.json",
+          "runs/profile-removal-20261112b/evidence/integration.json",
+          "runs/profile-removal-20261112b/evidence/verification.json"
+        ],
+        "notes": "native-map은 원문 줄끝만 다르며 Git blob/JSON 동일. 과거 작업 기록 제외."
+      },
+      {
+        "id": "mandatory-tests",
+        "name": "현재 후보 필수 전체 시험",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/profile-removal-20261112b/evidence/gate-test-36e6416300e44265b655fc025fa6f04e.log"
+        ],
+        "notes": "113 tests, candidate unchanged; 이전 proof 재사용 없음."
+      },
+      {
+        "id": "focused",
+        "name": "삭제 게시·거부·변조·영향 선택",
+        "method": "기존6개 시험을 현재 후보에서 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/profile-removal-20261112b/evidence/focused.log"
+        ],
+        "notes": "전후 digest 동일과 실제 로컬 Git push/readback 확인."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 평가",
+        "method": "별도 evaluator의 정확한 제품·증거 검수와 기존 시험 12개 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/profile-removal-20261112b/evidence/independent-review.ko.md",
+          "runs/profile-removal-20261112b/evidence/review-focused-tests.log",
+          "runs/profile-removal-20261112b/evidence/review-source-checks.json"
+        ],
+        "notes": "accepted, 확인된 결함 없음. 현재 후보의 새로운 증거를 검수했으며 실제 origin/main 게시 성공을 의미하지 않는다."
+      },
+      {
+        "id": "publication-readiness",
+        "name": "정상 제출·게시 준비",
+        "method": "현재 등록 partial validate, 현재 후보 필수 시험, 실제 로컬 삭제 게시와 독립 검수",
+        "outcome": "passed",
+        "evidence": [
+          "runs/profile-removal-20261112b/evidence/independent-review.ko.md",
+          "runs/profile-removal-20261112b/evidence/scope-verification.json",
+          "runs/profile-removal-20261112b/evidence/verification.json"
+        ],
+        "notes": "정상 lifecycle에 제출할 구현 준비 확인이다. 최종 completed validate·submit·finish 및 origin/main·backup readback은 봉인 후 main이 실행한다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "필수 fail-closed 키·기존 부정 단언 5개 참조와 일반 docs/prose 설명문은 승인 범위대로 보존했다. 모든 문자열이 문자 그대로 0개라고 주장하지 않는다.",
+      "native-map은 backup LF와 작업 트리 CRLF의 표현 차이가 있으나 원문 해시 두 개·정규화 bytes·JSON·Git blob 동등성을 확인했다.",
+      "fixture runner와 reviewer 신원은 mock/선언이며 실제 Git 게시 검증과 구별한다. 과거 작업 재개·이관·재봉인·기록 복원·backup 수정은 not_run이다. 실제 origin/main 게시 결과는 후속 main의 정상 finish와 원격 확인에서 보고한다."
+    ],
+    "next_actions": [
+      "독립 평가자가 최종 result·summary를 assess에 결합한 뒤 main이 정상 checkpoint·validate·submit·finish와 원격·backup·실제 커밋 제품 비교를 수행한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "profile-removal-reapply"
+  },
+  "spec_sha256": "cff901d8af546ac6af805698d56613ba0f1e6ddb643663037b225f41f977164c"
+}

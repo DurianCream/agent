@@ -16,7 +16,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import agentctl as a
-import submission_profile as sp
 import impact_tests as impact
 
 VERSION = '0.1.0'
@@ -156,13 +155,20 @@ def check_enrollment(task_id, root=a.ROOT):
     root = Path(root).resolve()
     run = _run(task_id, root)
     task = _read(a.relative(run, 'task.json', file=True))
+    a.require('submission_profile_state' not in task and
+              not a.relative(run, 'submission-profile-state.json').exists() and
+              not any(a.relative(run, 'gates').glob('profile-*.json')),
+              'Legacy submission profile state is unsupported; start a new task')
     companion = a.relative(run, 'controls.json')
     ledger = a.relative(root, 'runs/control-enrollments/' + task_id + '.json')
     if not (companion.exists() or ledger.exists() or 'control_enrollment' in task):
         return None
     a.require(companion.is_file() and ledger.is_file() and 'control_enrollment' in task,
               'P1 enrollment is missing or downgraded')
-    value, stored = _read(companion), _read(ledger)
+    value = _read(companion)
+    a.require('submission_profile' not in value and value.get('schema_version') != '0.2.0',
+              'Legacy submission profile enrollment is unsupported; start a new task')
+    stored = _read(ledger)
     a.require(stored == {'digest': _hash(value), 'enrollment': value} and
               task['control_enrollment'] == _hash(value), 'P1 enrollment differs from local ledger')
     expected_keys = {'schema_version', 'mode', 'assurance', 'task_id', 'binding', 'base_head',
@@ -171,11 +177,8 @@ def check_enrollment(task_id, root=a.ROOT):
     if value.get('schema_version') == impact.ENROLLMENT_VERSION:
         expected_keys.add('impact_tests')
         a.require(value['impact_tests'] == impact.capture(root, value['base_head']), 'Impact capture differs from baseline')
-    if value.get('schema_version') == sp.ENROLLMENT_VERSION or (value.get('schema_version') == impact.ENROLLMENT_VERSION and 'submission_profile' in value):
-        expected_keys.add('submission_profile')
-        sp.validate_capture(value, root)
     a.require(set(value) == expected_keys, 'Invalid P1 enrollment fields')
-    a.require(value['schema_version'] in (VERSION, sp.ENROLLMENT_VERSION, impact.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
+    a.require(value['schema_version'] in (VERSION, impact.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
               value['assurance'] == 'local-cooperating-cli' and value['task_id'] == task_id,
               'Invalid P1 enrollment')
     _profile(value['config'])
@@ -327,10 +330,8 @@ def candidate(task_id, root=a.ROOT):
     source_names = set(filter(None, _git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z', raw=True).split('\0')))
     # Owned deletions must remain in the inventory after Git removes their index entries.
     source_names.update(product)
-    if 'submission_profile' in enrollment:
-        source_names.update(filter(None, _git(root, 'ls-tree', '-r', '--name-only', '-z', enrollment['base_head'], raw=True).split('\0')))
     for name in sorted(source_names):
-        if ('submission_profile' in enrollment and sp.protected(name)) or name.startswith(('runtime/', 'shared/', 'core/', 'modules/', '.codex/', '.agents/')) or name in ('registry.json', 'AGENTS.md', '.gitattributes', '.gitignore'):
+        if name.startswith(('runtime/', 'shared/', 'core/', 'modules/', '.codex/', '.agents/')) or name in ('registry.json', 'AGENTS.md', '.gitattributes', '.gitignore'):
             safe = a.relative(root, name)
             if not safe.exists():
                 dependencies.append({'path': name, 'sha256': None, 'mode': None})
@@ -363,15 +364,14 @@ def _append(run, prefix, value):
 
 
 def impact_selection(task_id, current, enrollment, root):
-    state = sp._state(task_id, root)
-    return impact.select(current, enrollment, root, forced=bool(state and state[1]['profile'] == 'full'))
+    return impact.select(current, enrollment, root)
 
 
 def run_tests(task_id, suite_id, root=a.ROOT):
     root = Path(root).resolve()
     before = candidate(task_id, root)
     enrollment = check_enrollment(task_id, root)
-    suites, profile_proof = sp.effective(task_id, before, enrollment, root)
+    suites = impact_selection(task_id, before, enrollment, root)['suites']
     suite = next((s for s in suites if s['id'] == suite_id), None)
     a.require(suite is not None, 'Unknown mandatory P1 suite')
     executable = a.relative(root, '.venv-controls/Scripts/python.exe' if os.name == 'nt'
@@ -430,8 +430,6 @@ def run_tests(task_id, suite_id, root=a.ROOT):
              'exit_code': code, 'reason': reason, 'candidate_unchanged': before == after,
              'evidence': {'path': log.relative_to(root).as_posix(), 'sha256': a.digest(log_bytes)},
              'assurance': 'local-executed-untrusted-candidate'}
-    if profile_proof is not None:
-        value['profile_digest'] = profile_proof['sha256']
     if 'impact_tests' in enrollment:
         value['impact_selection'] = impact_selection(task_id, before, enrollment, root)
     record = _append(run, 'test', value)
@@ -491,14 +489,13 @@ def _proofs(task_id, current, root, review_required=True):
         if value.get('candidate_digest') == current['digest']:
             a.require(value.get('task_id') == task_id, 'P1 evidence task mismatch')
             records.append((file.name, value))
-    suites, profile_proof = sp.effective(task_id, current, enrollment, root)
-    selected = [profile_proof] if profile_proof is not None else []
+    suites = impact_selection(task_id, current, enrollment, root)['suites']
+    selected = []
     for suite in suites:
         matching = [(n, v) for n, v in records if v.get('kind') == 'test' and v.get('suite_id') == suite['id']]
         a.require(matching, 'P1 mandatory test evidence missing: ' + suite['id'])
         name, proof = max(matching, key=lambda row: (row[1]['created_at'], row[0]))
-        a.require(proof.get('profile_digest') == (profile_proof['sha256'] if profile_proof else None),
-                  'P1 test profile approval changed')
+        a.require('profile_digest' not in proof, 'Legacy submission profile proof is unsupported')
         a.require(proof['suite_digest'] == _hash(suite) and proof['outcome'] == 'passed' and
                   proof['exit_code'] == 0 and type(proof.get('tests_run')) is int and proof['tests_run'] > 0 and
                   proof['candidate_unchanged'] is True,
@@ -718,11 +715,10 @@ def check_publication(task_id, root=a.ROOT, commit=None, publication=None):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status', 'select-profile', 'promote-full', 'select-tests'))
+    parser.add_argument('command', choices=('candidate', 'run-tests', 'assess', 'status', 'select-tests'))
     parser.add_argument('--task', required=True)
     parser.add_argument('--suite')
     parser.add_argument('--input')
-    parser.add_argument('--reason')
     args = parser.parse_args(argv)
     try:
         a.load_task(args.task)
@@ -733,10 +729,6 @@ def main(argv=None):
             value = {**value, 'digest': _hash(value)}
         elif args.command == 'run-tests':
             value = run_tests(args.task, args.suite)
-        elif args.command == 'select-profile':
-            value = sp.select(args.task, _read(a.relative(a.ROOT, args.input, file=True)))
-        elif args.command == 'promote-full':
-            value = sp.promote(args.task, args.reason)
         elif args.command == 'assess':
             value = assess(args.task, _read(a.relative(a.ROOT, args.input, file=True)))
         else:

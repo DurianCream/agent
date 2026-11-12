@@ -12,7 +12,7 @@ CONFIG = '.agent-work/impact-tests.json'
 PROTECTED = ('AGENTS.md', '.agent-work/gates.json', CONFIG, 'shared/schemas/*',
              'runtime/secret_scan.py', '.agent-work/secret-scan-allowlist.json',
              'shared/workflows/*', 'runtime/control_gate.py', 'runtime/impact_tests.py',
-             'runtime/submission_profile.py', 'runtime/agentctl.py', 'runtime/repoctl.py',
+             'runtime/agentctl.py', 'runtime/repoctl.py',
              'runtime/repo_automation.py', 'runtime/task_recovery.py', 'runtime/legacy_memory.py',
              'runtime/task_evidence.py', '.agent-work/evidence-policy.json')
 

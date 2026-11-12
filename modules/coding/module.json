@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "coding",
   "name": "Coding",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "kind": "domain",
   "lifecycle": "experimental",
   "description": "Implement, modify, test, and review code.",
@@ -48,12 +48,12 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.5.1",
+      "version": "1.6.0",
       "path": "shared/skills/submit-result/SKILL.md"
     },
     {
       "id": "harness-delivery",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "path": "shared/workflows/harness-delivery.md"
     }
   ],

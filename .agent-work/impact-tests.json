@@ -143,20 +143,6 @@
       ]
     },
     {
-      "id": "submission-profile",
-      "argv": [
-        "@project-python",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "runtime/tests",
-        "-p",
-        "test_submission_profile.py",
-        "-v"
-      ]
-    },
-    {
       "id": "control-gate-impact",
       "argv": [
         "@project-python",
@@ -202,22 +188,30 @@
   "rules": [
     {
       "path": "README.md",
-      "suites": ["impact-document-integrity"],
+      "suites": [
+        "impact-document-integrity"
+      ],
       "reason": "Document integrity checks validate the owned README text; independent review covers meaning."
     },
     {
       "path": "core/*",
-      "suites": ["impact-document-integrity"],
+      "suites": [
+        "impact-document-integrity"
+      ],
       "reason": "Registry doctor, generated adapter consistency and document integrity checks validate core manifests and instructions."
     },
     {
       "path": "registry.json",
-      "suites": ["impact-document-integrity"],
+      "suites": [
+        "impact-document-integrity"
+      ],
       "reason": "The suite runs registry doctor to validate the actual registry and module contracts, plus document integrity."
     },
     {
       "path": "shared/policies/*",
-      "suites": ["impact-document-integrity"],
+      "suites": [
+        "impact-document-integrity"
+      ],
       "reason": "Registry doctor validates linked policy schemas and pinned versions; document integrity checks cover owned policy text."
     },
     {
@@ -269,13 +263,6 @@
       "path": "runtime/control_gate.py",
       "suites": [
         "control-gate-all"
-      ],
-      "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
-    },
-    {
-      "path": "runtime/submission_profile.py",
-      "suites": [
-        "submission-profile"
       ],
       "reason": "Explicit owning module regression tests; protected/shared modules still force full selection."
     },

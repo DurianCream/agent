@@ -12,15 +12,12 @@ import control_gate as g
 import impact_tests as impact
 import repoctl as r
 import repo_automation as auto
-import submission_profile as sp
 from test_control_gate import GateFixture
 
 class ImpactTests(GateFixture, unittest.TestCase):
     def before_initial_commit(self):
         source = Path(a.__file__).resolve().parents[1]
         a.write_json(self.root / impact.CONFIG, a.read_json(source / impact.CONFIG))
-        # Even a committed old profile policy must not enable fresh capture.
-        a.write_json(self.root / sp.CONFIG, {'schema_version': sp.VERSION, 'profile': sp.PROFILE, 'paths': []})
         (self.root/'README.md').write_text('Before\n')
         r.git(self.root, 'add', '-f', '--', 'core/orchestrator/instructions.md', 'shared/policies/common.json')
         (self.root/'docs').mkdir()
@@ -72,12 +69,12 @@ class ImpactTests(GateFixture, unittest.TestCase):
     def test_protected_mapping_override_cannot_skip_full(self):
         self.assertEqual(self.selection(['runtime/agentctl.py'])['mode'],'full')
 
-    def test_manual_full_is_irreversible(self):
+    def test_forced_full_preserves_required_suites(self):
         self.selection(['docs/guide.md'])
-        sp.promote('gate-task','Periodic release full regression',self.root)
-        self.assertEqual(g.impact_selection('gate-task',g.candidate('gate-task',self.root),g.check_enrollment('gate-task',self.root),self.root)['mode'],'full')
-        with self.assertRaises(a.ContractError):
-            sp.promote('gate-task','Cannot downgrade or reset',self.root)
+        enrollment = g.check_enrollment('gate-task', self.root)
+        selected = impact.select(g.candidate('gate-task', self.root), enrollment, self.root, forced=True)
+        self.assertEqual(selected['mode'], 'full')
+        self.assertEqual(selected['suites'], enrollment['config']['required_suites'])
 
     def test_missing_impact_review_rejected(self):
         current=g.candidate('gate-task',self.root)

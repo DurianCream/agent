@@ -1,0 +1,95 @@
+{
+  "checks": [
+    {
+      "id": "scope",
+      "result": "passed",
+      "command": "Compare33 approved paths, retained candidate fix/test ASTs,355 protected hashes, backup ref, current validate/doctor/sync and scoped rg searches",
+      "metrics": {
+        "product_paths": 33,
+        "protected_files": 355,
+        "active_reference_matches": 5
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-removal-20261112b/evidence/scope-verification.json",
+          "sha256": "3c46a2724ec4ece8e463bb0352f02a3ee86304957be2388179092375eb017bfa"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/integration.json",
+          "sha256": "5e2349526473dc503163a486c9d14d92e4677a55a42040c0be768823bfa9a3f5"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/verification.json",
+          "sha256": "6ead4689a186a9b7f9ef10d3cc323dc0fee9754bcadf87cc137b8cc3d3fa7a4d"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/workflow-sentence-changes.json",
+          "sha256": "1f65392fb5f91968b78ec7559a89b4822b0e6fd7075a3c9f9355cd966f025ab8"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/all-references.txt",
+          "sha256": "2f0d93e78e8d64c7f980c12672dbe8968753422ce7dcd74e3134641a67da7dd8"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/active-references.txt",
+          "sha256": "bec8059ce3820ac02d4fb5b293b4ecf8672d2373df9af47c43dd47190d8cf3ba"
+        }
+      ]
+    },
+    {
+      "id": "mandatory-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task profile-removal-20261112b --suite p1-regression",
+      "metrics": {
+        "tests": 113
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-removal-20261112b/evidence/gate-test-36e6416300e44265b655fc025fa6f04e.log",
+          "sha256": "a7ccdbe5313e9cceee1e4b5feabf5ed38b69798b88d95b1818bd6310dfb5fa37"
+        }
+      ]
+    },
+    {
+      "id": "focused",
+      "result": "passed",
+      "command": "Existing6 focused deletion-publication, legacy rejection, mutation and impact tests",
+      "metrics": {
+        "tests": 6
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-removal-20261112b/evidence/focused.log",
+          "sha256": "b14f2d4b40630e80d4c59fd668465a13d4aa8958b79751bf13039ea72be6e642"
+        }
+      ]
+    },
+    {
+      "id": "independent-review",
+      "result": "passed",
+      "command": "Independent exact-scope, representation, workflow and current-evidence review plus 12 existing focused tests; see review-focused-tests.json",
+      "metrics": {
+        "tests": 12,
+        "confirmed_findings": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/profile-removal-20261112b/evidence/independent-review.ko.md",
+          "sha256": "fd373dd9d8a04eb6977466399427054c124e4918663db1555a1b5c48ec8463b6"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/review-focused-tests.log",
+          "sha256": "f61c1a2eabd118cb051ce01201c80df56489c89a84b1c969f488c1e79add094b"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/review-focused-tests.json",
+          "sha256": "ef790ac4705b5718d676ab64588d015767bf74341304ab6576402047fee2f334"
+        },
+        {
+          "path": "runs/profile-removal-20261112b/evidence/review-source-checks.json",
+          "sha256": "a77d6a3da8360ced453a8efd91b612854ed9fc73ed07556e62f67d8b3ede9aac"
+        }
+      ]
+    }
+  ]
+}

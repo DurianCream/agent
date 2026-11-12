@@ -56,7 +56,7 @@ Use actual host agent-creation capabilities. Select the registered profile if su
 
 If tools are unavailable, higher instructions prohibit delegation, or execution fails irrecoverably, stop repeated creation attempts and explain why. Complete feasible work while recording delegation or independent review as not_run. Do not report a role as complete without its result.
 
-For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. A lightweight runtime submission profile is unsupported and requires a separate scoped request. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.
+For artifact tasks, apply submit-result with the current init/validate/submit/checkpoint/finish lifecycle at every tier. Store results in outputs/<task-id>/ and state/evidence in runs/<task-id>/. Children return intermediate findings to the parent; generate the complete seven-section Korean result.md from result.json, while final chat may be brief. Required checks use committed impact-scope selection. Apply revised routing to future tasks; do not change in-progress criteria, started snapshots, or previously submitted reports. This procedure revision uses its pre-change controls and independent review.
 
 Follow the shared role requirements in AGENTS.md.
 
@@ -81,9 +81,9 @@ Apply this rule only when a concrete test requires a particular OS/version or a 
 
 ## Cooperating publication checks
 
-Select publication checks only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate profile. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
+Select publication checks only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate configuration. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
 
-Before submission, assemble the exact candidate, mandatory check evidence and an independent evaluator's assessment. The gate must validate their content bindings and applicable profile. Missing, malformed, failed, inconclusive, rework, mismatched or materially stale evidence blocks the selected lifecycle action. Fix the cause and reassess affected content; do not delete enrollment, disable the selected gate or copy an old favorable verdict to finish.
+Before submission, assemble the exact candidate, mandatory check evidence and an independent evaluator's assessment. The gate must validate their content bindings and applicable impact selection. Missing, malformed, failed, inconclusive, rework, mismatched or materially stale evidence blocks the selected lifecycle action. Fix the cause and reassess affected content; do not delete enrollment, disable the selected gate or copy an old favorable verdict to finish.
 
 Use `python runtime/control_gate.py candidate --task <task-id>` to inspect the current review subject. Run each configured suite with `python runtime/control_gate.py run-tests --task <task-id> --suite <suite-id>`. Ask the independent evaluator to register its own assessment, then inspect `python runtime/control_gate.py status --task <task-id>` before the ordinary validate, submit and finish commands. Settle product documentation before testing and review. These test runs capture local execution evidence; they do not provide an isolated trusted runner.
 
