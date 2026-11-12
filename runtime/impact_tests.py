@@ -82,21 +82,46 @@ def changed_dependencies(current, enrollment, root, owned):
             yield item['path']
 
 
+META = set('*?[')
+
 def _discover(suite):
+    """Return (argv without the pattern, pattern) for a unittest discover suite."""
     argv = suite['argv']
-    if 'discover' not in argv or '-s' not in argv or '-p' not in argv:
+    if 'discover' not in argv or '-p' not in argv or argv.index('-p') + 1 >= len(argv):
         return None
-    return argv[argv.index('-s') + 1], argv[argv.index('-p') + 1]
+    i = argv.index('-p') + 1
+    return tuple(argv[:i] + argv[i + 1:]), argv[i]
+
+def _covers(broad, narrow):
+    """Sound, deliberately narrow test that every file `narrow` collects, `broad` also collects."""
+    if broad == narrow:
+        return True
+    if not META & set(narrow):
+        return fnmatch.fnmatchcase(narrow, broad)
+    # Only a single-star literal pattern A*B is compared against another pattern.
+    if broad.count('*') != 1 or META & (set(broad) - {'*'}):
+        return False
+    head, tail = broad.split('*')
+    first = min(narrow.index(c) for c in META if c in narrow)
+    last = max(narrow.rindex(c) for c in META if c in narrow)
+    return narrow[:first].startswith(head) and narrow[last + 1:].endswith(tail)
 
 def _merge(suites):
-    """Keep order; drop a suite whose discover pattern a kept suite already covers."""
+    """Keep order; drop a suite another listed suite with the same command already collects."""
     kept = []
-    for suite in suites:
-        scope = _discover(suite)
+    for index, suite in enumerate(suites):
         if any(s['id'] == suite['id'] for s in kept):
             continue
-        if scope and any(_discover(s) and _discover(s)[0] == scope[0] and
-                         fnmatch.fnmatchcase(scope[1], _discover(s)[1]) for s in kept):
+        mine = _discover(suite)
+        def redundant(other_index, other):
+            theirs = _discover(other)
+            if other_index == index or not mine or not theirs or theirs[0] != mine[0]:
+                return False
+            if not _covers(theirs[1], mine[1]):
+                return False
+            # Equal coverage keeps the earlier suite.
+            return not _covers(mine[1], theirs[1]) or other_index < index
+        if any(redundant(j, other) for j, other in enumerate(suites)):
             continue
         kept.append(suite)
     return kept
@@ -108,7 +133,8 @@ def select(current, enrollment, root):
     if captured is None:
         return {'mode': 'full', 'suites': required, 'reasons': [{'path': '*', 'reason': 'legacy enrollment'}]}
     config = captured['config']
-    # Fallback really runs everything: required gate suites plus every mapped suite.
+    # Fallback runs required gate suites plus every configured suite; the
+    # configured catch-all discover suite also collects newly added test files.
     full = _merge(list(required) + list(config['suites']))
     reasons, ids, fallback, protected = [], set(), False, False
     if g._blob(root, CONFIG) != captured['baseline_blob']:

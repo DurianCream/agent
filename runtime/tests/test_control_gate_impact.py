@@ -1,5 +1,6 @@
 """Selection boundaries use real Git baselines and production enrollment/selection."""
 import copy
+import fnmatch
 import json
 import sys
 import time
@@ -77,11 +78,21 @@ class ImpactTests(GateFixture, unittest.TestCase):
 
     def test_forced_full_preserves_required_suites(self):
         # Fallback runs the required suites plus every mapped suite, without duplicate discovery.
-        selected = self.selection(['unknown.txt'])
+        selected = self.selection(['runtime/tests/test_new.py'])
         self.assertEqual(selected['mode'], 'full')
-        self.assertEqual([s['id'] for s in selected['suites']],
-                         ['unit', 'impact-document-integrity', 'codex-settings', 'context-checkpoint', 'legacy-memory',
-                          'contract', 'agent-workspaces', 'repoctl', 'work-scope', 'repo-automation', 'control-gate-all'])
+        self.assertEqual([s['id'] for s in selected['suites']], ['unit', 'impact-document-integrity', 'all-runtime-tests'])
+        # The fallback must collect a brand-new test module name.
+        patterns = [s['argv'][s['argv'].index('-p') + 1] for s in selected['suites'] if '-p' in s['argv']]
+        self.assertTrue(any(fnmatch.fnmatchcase('test_new.py', p) for p in patterns))
+        # Pattern overlap is only treated as coverage when it is provably so.
+        def suite(i, p): return {'id': i, 'argv': ['@project-python', '-m', 'unittest', 'discover', '-s', 'd', '-p', p]}
+        # test_?.py is a subset of test_*.py, so only the broader suite stays.
+        self.assertEqual([s['id'] for s in impact._merge([suite('one', 'test_?.py'), suite('star', 'test_*.py')])], ['star'])
+        self.assertEqual([s['id'] for s in impact._merge([suite('one', 'test_?.py'), suite('lit', 'test_ab.py')])], ['one', 'lit'])
+        self.assertEqual([s['id'] for s in impact._merge([suite('gate', 'test_gate*.py'), suite('all', 'test*.py'), suite('lit', 'test_x.py')])], ['all'])
+        self.assertEqual([s['id'] for s in impact._merge([suite('a', 'test*.py'), suite('b', 'test*.py')])], ['a'])
+        other = suite('other', 'test_x.py'); other['argv'][5] = 'elsewhere'
+        self.assertEqual([s['id'] for s in impact._merge([suite('all', 'test*.py'), other])], ['all', 'other'])
 
     def test_missing_impact_review_rejected(self):
         current=g.candidate('gate-task',self.root)

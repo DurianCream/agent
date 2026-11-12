@@ -183,6 +183,20 @@
         "test_control_gate_secrets.py",
         "-v"
       ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "argv": [
+        "@project-python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/tests",
+        "-p",
+        "test*.py",
+        "-v"
+      ]
     }
   ],
   "rules": [
