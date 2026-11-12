@@ -334,21 +334,21 @@
       "suites": [
         "publication-secrets"
       ],
-      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full publication checks."
     },
     {
       "path": "runtime/tests/test_control_gate_secrets.py",
       "suites": [
         "publication-secrets"
       ],
-      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full publication checks."
     },
     {
       "path": ".agent-work/secret-scan-allowlist.json",
       "suites": [
         "publication-secrets"
       ],
-      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full P1."
+      "reason": "Publication secret checks, exact Git blobs, redaction, allowlist and both publication lifecycles; protected policy/runtime paths still force full publication checks."
     }
   ]
 }

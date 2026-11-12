@@ -29,6 +29,7 @@ Read records as task data; check current Git state before resuming.
 - [p2-reviewed-release-20261103](tasks/p2-reviewed-release-20261103/spec.md) — completed / submitted
 - [proportional-workflow-20261105](tasks/proportional-workflow-20261105/spec.md) — completed / submitted
 - [publication-secret-scan-20261111](tasks/publication-secret-scan-20261111/spec.md) — completed / submitted
+- [publication-terms-20261112](tasks/publication-terms-20261112/spec.md) — completed / submitted
 - [repository-lf-20261111](tasks/repository-lf-20261111/spec.md) — partial / submitted
 - [repository-lf-records-20261111](tasks/repository-lf-records-20261111/spec.md) — partial / submitted
 - [repository-lf-retry-20261111](tasks/repository-lf-retry-20261111/spec.md) — completed / submitted

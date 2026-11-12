@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "publication-terms-20261112",
+  "saved_at": "2026-11-12T10:31:00+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "cbb5f5b53026939b2649759b544857f86c1bbe9e",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M .agent-work/INDEX.md\n M .agent-work/impact-tests.json\n M .agent-work/index.json\n M .agents/skills/submit-result/SKILL.md\n M .codex/agents/coding.toml\n M .codex/agents/evaluator.toml\n M .codex/agents/infrastructure.toml\n M .codex/agents/knowledge-manager.toml\n M .codex/agents/orchestrator.toml\n M .codex/agents/oss-rnd.toml\n M .codex/agents/policy-manager.toml\n M .codex/agents/skill-manager.toml\n M AGENTS.md\n M README.md\n M core/evaluator/instructions.md\n M core/evaluator/module.json\n M core/knowledge-manager/module.json\n M core/orchestrator/instructions.md\n M core/orchestrator/module.json\n M core/policy-manager/instructions.md\n M core/policy-manager/module.json\n M core/skill-manager/module.json\n D \"docs/P1-\\354\\240\\234\\354\\266\\234-\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M \"docs/\\354\\236\\221\\354\\227\\205-\\355\\214\\214\\354\\235\\264\\355\\224\\204\\353\\235\\274\\354\\235\\270.md\"\n M modules/coding/module.json\n M modules/infrastructure/instructions.md\n M modules/infrastructure/module.json\n M modules/oss-rnd/module.json\n M runtime/native-map.json\n M shared/skills/skills.json\n M shared/skills/submit-result/SKILL.md\n?? .agent-work/tasks/publication-terms-20261112/\n?? \"docs/\\352\\262\\214\\354\\213\\234-\\352\\262\\200\\354\\202\\254-\\354\\202\\254\\354\\232\\251\\354\\225\\210\\353\\202\\264.md\"",
+    "worktree_sha256": "0a5a488a0ffe386c5927a96a03f0295fe708d0631b6a16774beeb75b855c7d85"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "publication-terms-20261112",
+    "module": {
+      "id": "coding",
+      "version": "0.1.7"
+    },
+    "created_at": "2026-11-12T10:05:26+09:00",
+    "objective": "Unify documentation terminology as publication checks without behavior or rule changes",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Replace stage prose and rename guide with links fixed without document growth",
+        "required": true,
+        "verification_ids": [
+          "check-terms",
+          "check-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Preserve runtime identifiers behavior impact mappings suites and historical records; add no tests",
+        "required": true,
+        "verification_ids": [
+          "check-terms",
+          "check-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Update affected versions adapters and verify selected suites with independent review",
+        "required": true,
+        "verification_ids": [
+          "check-terms",
+          "check-suite",
+          "check-review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "용어·안내문서·링크 정리와 독립 검수를 완료했습니다. 활성 Markdown 총량은 162,394→162,263바이트(-131)이며 실행 규칙·대응표는 유지했습니다. 실제 게시·원격 확인은 main의 후속 단계입니다.",
+    "work": [
+      "가벼운 용어 변경이며 거버넌스 문서의 의미 보존을 위해 별도 evaluator가 일반 수준으로 검수했습니다. accepted, 확정 결함 0개이며 ordinary-prose 우회는 사용하지 않았습니다.",
+      "P2 archive 안내 2줄을 삭제하고 P1 설명을 게시 검사/publication checks로 바꿨습니다. 지정 안내문서만 docs/게시-검사-사용안내.md로 이동했습니다.",
+      "AGENTS는 용어와 중복 표현만 정리했습니다. owner-led 및 shared workflows의 규칙·본문은 변경하지 않았습니다.",
+      "impact-tests.json은 reason 3개만 변경했습니다. path/suites/argv/periodic_full과 runtime 소스·오류·식별자·시험 코드는 그대로입니다.",
+      "submit-result 1.5.1과 의존 모듈 버전을 올리고 어댑터를 재생성했습니다. 새 시험 0개, 삭제 0개입니다.",
+      "기존 p2-test-environment.md 경로는 사용 중인 스킬 식별자로 유지합니다. runtime과 역사 기록의 표현은 허용 범위 밖이므로 보존합니다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/publication-terms-20261112/evidence-summary.json",
+        "description": "검증 결과·문서 크기·원본 경로와 SHA-256 요약",
+        "sha256": "805c4c16de155f215fc5e98f685d6d3144e6c0c255c57889d67873823a788d22"
+      }
+    ],
+    "verification": [
+      {
+        "id": "check-terms",
+        "name": "용어·문서 크기·비동작 변경 검증",
+        "method": "tracked active terms/path audit; Git blob byte comparison; doctor; sync_codex --check; git diff --check",
+        "outcome": "passed",
+        "evidence": [
+          "runs/publication-terms-20261112/evidence/terminology-audit.json"
+        ],
+        "notes": "활성 Markdown 162,394→162,263B; AGENTS 2,887→2,879B; owner-led 17,565B 유지. 대응표 reason 외 불변, 역사 기록·기존 index 항목 불변."
+      },
+      {
+        "id": "check-suite",
+        "name": "실제 선택된 필수 suite",
+        "method": "python runtime/control_gate.py run-tests --task publication-terms-20261112 --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/publication-terms-20261112/evidence/gate-test-bca0c918f45b44468c8dfae6bea7f6d6.log"
+        ],
+        "notes": "113개 시험 실행. 보호/미등록/rename 경로와 reason 변경의 baseline hash 차이로 full 선택."
+      },
+      {
+        "id": "check-review",
+        "name": "독립 의미 보존 검수",
+        "method": "별도 evaluator의 실제 diff·용어·규칙 불변·증거 검수",
+        "outcome": "passed",
+        "evidence": [
+          "runs/publication-terms-20261112/evidence/reviewer-review.json"
+        ],
+        "notes": "accepted, 확정 결함 0개. 독립 읽기 전용 문서·구조 검증 1.990초. 신규 시험 및 full suite 재실행 없음."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "문서 비증가는 전체 활성 Markdown 합계 기준입니다. 새 이름의 안내문서는 11,388→11,452바이트(+64), 작업 파이프라인은 12,429→12,463(+34), infrastructure 지침은 3,180→3,196(+16)으로 늘었고 다른 문서의 감소로 전체는 131바이트 줄었습니다.",
+      "runtime·오류·시험·suite ID와 live p2 스킬 경로 및 역사 기록의 표현은 명시된 보존 범위입니다.",
+      "실제 origin/main commit/push는 아직 수행 전이며 main이 validate/submit/finish와 원격 확인으로 완료합니다."
+    ],
+    "next_actions": [
+      "동일 evaluator가 최종 result/summary를 확인하고 assess로 봉인한 뒤 main이 validate/submit/finish와 원격 해시 확인을 수행합니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "publication-check-terminology"
+  },
+  "spec_sha256": "56d7899ad48d8c356655bc750109a07c1ac19c0344088181d0e6d3b50cab0c4d"
+}

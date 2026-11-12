@@ -16,6 +16,6 @@ Read registry.json, the selected module.json and the unconditional entry of inst
 - For delegated, artifact, module or adapter changes, read the applicable section in shared/workflows/harness-delivery.md#delivery. Use shared/skills/submit-result/SKILL.md for artifacts. Preserve frozen snapshots and task enrollment.
 - Before edits and at meaningful progress, follow shared/workflows/harness-delivery.md#publication for bound init, exact ownership and checkpoint. Before final delivery apply its validate, submit and finish rules for the enrolled repository, honoring explicit user publication exceptions. Ordinary conversation needs no artifact or empty commit.
 - When a fresh PostToolUse context reading exceeds 80%, follow shared/workflows/harness-delivery.md#recovery. For legacy classification or import use shared/workflows/harness-delivery.md#legacy.
-- Use each selected role's linked detailed procedure when its P1 or host-test conditions apply.
+- Use selected roles' linked procedures for publication checks or host-test conditions.
 
 See README.md for Korean usage guidance.

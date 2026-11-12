@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "check-terms",
+      "result": "passed",
+      "command": "tracked active terms/path audit; Git blob byte comparison; doctor; sync_codex --check; git diff --check",
+      "metrics": {
+        "document_bytes_before": 162394,
+        "document_bytes_after": 162263,
+        "tests_added": 0,
+        "tests_deleted": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/publication-terms-20261112/evidence/terminology-audit.json",
+          "sha256": "89d63b0a1c0fb25061d42805f8bb580e40ba48a01f3f5114ad7bd2985dd6b650"
+        }
+      ]
+    },
+    {
+      "id": "check-suite",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task publication-terms-20261112 --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "elapsed_seconds": 819.259
+      },
+      "evidence": [
+        {
+          "path": "runs/publication-terms-20261112/evidence/gate-test-bca0c918f45b44468c8dfae6bea7f6d6.log",
+          "sha256": "ee0868dffbdede4b3f91266ab665612410a71d08164d03cd3456d3aab8ae8b8a"
+        }
+      ]
+    },
+    {
+      "id": "check-review",
+      "result": "passed",
+      "command": "independent read-only diff, document-byte, identifier, mapping, version and evidence audit",
+      "metrics": {
+        "confirmed_findings": 0,
+        "elapsed_seconds": 1.99,
+        "tests_added": 0,
+        "suite_reruns": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/publication-terms-20261112/evidence/reviewer-review.json",
+          "sha256": "372c6b70d15e08e33b56e719ef87c95ddb8f410e4a35763a0c18a6d44dceaee9"
+        }
+      ]
+    }
+  ]
+}

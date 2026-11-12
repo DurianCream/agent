@@ -45,10 +45,10 @@ Keep `policy-manager` as the governance role and `evaluator` as the independent 
 - The specialist produces the candidate and evidence. An evaluator who did not author that candidate returns `accepted`, `rework`, or `inconclusive`, with per-criterion outcomes and actionable findings. These labels are separate from the common result status and do not create an execution grant.
 - Resolve disagreement using the cited requirement, evidence, and accountable authority; do not use majority voting or treat one agent's favorable answer as permission to bypass another unresolved material finding. Stop only the affected consequential action while authorized, non-sensitive diagnostics can continue.
 - Bind both assessments to their reviewed scope, candidate, policy, and evidence references. Changed targets, scope, material artifacts, policy, or evidence invalidate affected conclusions and trigger focused reassessment.
-- Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; selected new tasks additionally use the P1 cooperating lifecycle gate described below. Trusted execution authorization, trusted signed test attestations and non-bypassable enforcement require later implementation.
+- Runtime/host checks remain independent of role recommendations. Current CLI validation checks record structure, referenced evidence, hashes and bounded publication; selected new tasks also use the publication checks below. Trusted execution authorization, trusted signed test attestations and non-bypassable enforcement require later implementation.
 - In the final result, distinguish the agent recommendation, actual human/host authorization, observed runtime decision, and tests that ran. Do not claim a proposed control or unexecuted check was enforced.
 
-For P1 cooperating submission and publication gates, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
+For Cooperating publication checks, read the matching section of the conditional appendix in core/orchestrator/instructions.md.
 
 ## Host Boundaries and Results
 
@@ -79,15 +79,15 @@ Apply this rule only when a concrete test requires a particular OS/version or a 
 - Bind the request to the exact work scope. Verify image provenance/hash or the supplied VM's identity, then independently verify the actual guest OS/version and required features. Do not infer them from a filename or VM label, silently reuse another task's environment, or substitute different security settings.
 - Keep the disposable test target separate from the trusted controller, verifier and publisher boundary. Changing the test OS does not authorize credential exposure, host access. Preserve existing authorization and ask only for missing requirements needed for the concrete test.
 
-## P1 cooperating submission and publication gates
+## Cooperating publication checks
 
-Select P1 only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate profile. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
+Select publication checks only through the repository's configured new-task enrollment path. Preserve the task's pinned repository identity, four-field scope, baseline and gate profile. A task that began before activation remains legacy; never edit its snapshot or relabel it enforced. Demonstrate activation using a newly enrolled task.
 
 Before submission, assemble the exact candidate, mandatory check evidence and an independent evaluator's assessment. The gate must validate their content bindings and applicable profile. Missing, malformed, failed, inconclusive, rework, mismatched or materially stale evidence blocks the selected lifecycle action. Fix the cause and reassess affected content; do not delete enrollment, disable the selected gate or copy an old favorable verdict to finish.
 
 Use `python runtime/control_gate.py candidate --task <task-id>` to inspect the current review subject. Run each configured suite with `python runtime/control_gate.py run-tests --task <task-id> --suite <suite-id>`. Ask the independent evaluator to register its own assessment, then inspect `python runtime/control_gate.py status --task <task-id>` before the ordinary validate, submit and finish commands. Settle product documentation before testing and review. These test runs capture local execution evidence; they do not provide an isolated trusted runner.
 
-Keep the reviewed candidate boundary explicit. Generated reports and lifecycle records must follow the gate's documented deterministic sealing rules; they cannot become an unreviewed arbitrary-content exception. P1 review validity depends on its pinned content and policy checks.
+Keep the reviewed candidate boundary explicit. Generated reports and lifecycle records must follow the gate's documented deterministic sealing rules; they cannot become an unreviewed arbitrary-content exception. Review validity depends on its pinned content and policy checks.
 
 Before publication, require the cooperating finish path to compare the real commit, parent, exact changed-path set, committed content and authorized destination with the sealed submission. Preserve a pending commit after failure and retry the same bounded publication after resolving the cause. Exact standing publication authorization does not require another human prompt.
 

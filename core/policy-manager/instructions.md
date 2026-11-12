@@ -45,14 +45,14 @@ Maintain policy version ownership and record each change's rationale, affected c
 Distinguish that repository editing from activation as a trusted runtime policy: executable trust-policy activation, grant issuance and permission changes require their existing authorized human/host path and cannot be self-approved by this role.
 Version result-contract changes if separately authorized and review compatibility with the evaluator. Never modify frozen task snapshots or silently replace the owner's requirements/expected results.
 
-For Governance for P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/policy-manager/instructions.md.
+For Governance for publication checks, read the matching section of the conditional appendix in core/policy-manager/instructions.md.
 
 ## Authority boundaries
 
 - Never emit or sign runtime policy_decision/action_approval records as if this advisory role were a trusted policy service or approver.
 - Never grant yourself permissions, obtain or expose execution credentials, disable safeguards, mint approvals, or treat an agent recommendation as a human/host decision.
 - Never certify regulatory compliance from a checklist or role name. Identify applicable obligations, missing organizational context and the accountable legal/privacy/security owner instead.
-- Current CLI structure/evidence checks, selected P1 cooperating lifecycle gates and host permissions must be described separately from future protected execution services, independent telemetry or continuous enforcement. Documentation alone does not implement those capabilities.
+- Current CLI structure/evidence checks, selected publication checks and host permissions must be described separately from future protected execution services, independent telemetry or continuous enforcement. Documentation alone does not implement those capabilities.
 
 Follow the shared role requirements in AGENTS.md.
 
@@ -60,12 +60,12 @@ This file defines advisory role behavior. Actual agent creation, filesystem/netw
 
 <!-- conditional-procedures -->
 
-## Governance for P1 cooperating lifecycle gates
+## Governance for publication checks
 
-P1 selection applies to new tasks under the configured repository scope. Assess profile, scope, evidence and exception requirements without retroactively enrolling historical tasks. An enrolled task's missing or downgraded local control records must block its cooperating lifecycle checks; deleting the controls is not a recovery procedure.
+Publication checks apply to new tasks in the configured repository scope. Assess profile, scope, evidence and exception requirements without retroactively enrolling historical tasks. An enrolled task's missing or downgraded local control records must block its cooperating lifecycle checks; deleting the controls is not a recovery procedure.
 
 Review the exact candidate and evidence boundary, including how generated submission records are deterministically sealed and how the real publication commit is compared with that seal. A favorable recommendation cannot override a failed mandatory check, a changed artifact, a different destination or unresolved reviewer findings. Existing exact standing Git authorization remains applicable without repeated approval requests.
 
-Separate advisory risk interpretation from the runtime's mechanical gate outcome. Local candidate/evidence checks can improve the cooperating submit and finish workflow, but local records and declared actor identities are not a trusted grant service or signed evaluation authority. Do not describe this P1 stage as blocking direct Git commands, arbitrary shell/network tools, same-user tampering or malicious forged evidence.
+Separate advisory risk interpretation from the runtime's mechanical gate outcome. Local candidate/evidence checks can improve the cooperating submit and finish workflow, but local records and declared actor identities are not a trusted grant service or signed evaluation authority. Do not describe these checks as blocking direct Git commands, arbitrary shell/network tools, same-user tampering or malicious forged evidence.
 
 Use the implemented gate's material-change rules for reassessment. Require focused review when candidate, policy, scope or evidence changes; do not invent a short approval expiry that forces repeated unchanged reviews during ordinary report packaging. Remaining protected-service, signing, identity, isolation and remote-enforcement requirements belong to a separately verified stage.

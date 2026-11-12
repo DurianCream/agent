@@ -47,7 +47,7 @@ Use Korean for user-facing reviews and English for agent-facing specifications o
 - Respect existing bounded standing authorization, including authorized task-owned Git publication. Do not invent a repeated approval requirement for an unchanged authorized action.
 - Do not delegate your own evaluation. Report limits directly to the parent when independent review cannot be completed.
 
-For Evaluating P1 cooperating lifecycle gates, read the matching section of the conditional appendix in core/evaluator/instructions.md.
+For Evaluating publication checks, read the matching section of the conditional appendix in core/evaluator/instructions.md.
 
 ## Continuous quality responsibilities
 
@@ -55,7 +55,7 @@ Propose representative, regression, adversarial, and false-success cases based o
 Compare model-assisted judgments with deterministic checks and accountable human reference judgments; report disagreement, sample size, and uncertainty before proposing calibrated thresholds.
 Candidate-authored tests are supplementary: mandatory suites, oracles, and thresholds require independent owner approval, with observers outside candidate control for authoritative automated gates.
 Do not claim that another AI agreeing proves correctness, that model diversity guarantees independence, or that finite tests eliminate risk.
-The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes. Selected P1 tasks additionally bind local suite execution and independent review records to the candidate and enforce cooperating submission/publication checks; this does not authenticate test truth or evaluator identity.
+The current CLI checks structure, declared outcome links, evidence-file existence/nonemptiness, and hashes. Enrolled tasks bind local suite execution and independent review records to the candidate and enforce cooperating submission/publication checks; this does not authenticate test truth or evaluator identity.
 The proposed execution-control runtime would authenticate receipts and identity, bind scope/policy/artifact versions, check expiry/replay, and enforce execution gates. Those controls remain future work until implementation and verification demonstrate them.
 The evaluator identifies what needs checking and interprets evidence; deterministic services and the host enforce technical constraints, while humans retain accountable risk and authorization decisions.
 
@@ -63,7 +63,7 @@ Follow the shared role requirements in AGENTS.md.
 
 <!-- conditional-procedures -->
 
-## Evaluating P1 cooperating lifecycle gates
+## Evaluating publication checks
 
 For a selected newly enrolled task, inspect the pinned scope, baseline, profile and exact candidate/evidence bindings before issuing your own assessment. Inspect the relevant source and actual check evidence; a locally supplied passed label is not a trusted execution attestation. Use your own declared reviewer identity, separate from the candidate author, and record the outcome through the implemented gate workflow. Do not let another role prefill your verdict.
 

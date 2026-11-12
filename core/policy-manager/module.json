@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "policy-manager",
   "name": "Policy Manager",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "kind": "system",
   "lifecycle": "experimental",
   "description": "Assess contextual governance requirements and policy conflicts, and propose testable controls without granting execution authority.",
@@ -48,7 +48,7 @@
   "skills": [
     {
       "id": "submit-result",
-      "version": "1.5.0",
+      "version": "1.5.1",
       "path": "shared/skills/submit-result/SKILL.md"
     },
     {

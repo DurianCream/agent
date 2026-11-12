@@ -417,6 +417,19 @@
         "environment": "development",
         "issue": "compact-task-evidence"
       }
+    },
+    "publication-terms-20261112": {
+      "status": "completed",
+      "state": "submitted",
+      "saved_at": "2026-11-12T10:31:00+09:00",
+      "summary": "용어·안내문서·링크 정리와 독립 검수를 완료했습니다. 활성 Markdown 총량은 162,394→162,263바이트(-131)이며 실행 규칙·대응표는 유지했습니다. 실제 게시·원격 확인은 main의 후속 단계입니다.",
+      "path": "tasks/publication-terms-20261112/spec.md",
+      "scope": {
+        "project": "multi",
+        "service": "agent-framework",
+        "environment": "development",
+        "issue": "publication-check-terminology"
+      }
     }
   }
 }
