@@ -10,10 +10,24 @@ import control_gate as g
 import repoctl as r
 import repo_automation as auto
 import task_recovery as recovery
+import task_evidence
 from test_control_gate import GateFixture
 
 class RecoveryTests(GateFixture,unittest.TestCase):
+    def before_initial_commit(self):
+        a.write_json(self.root/task_evidence.CONFIG,task_evidence.POLICY)
+
+    def compact_summary(self, task_id, evidence):
+        name='.agent-work/tasks/'+task_id+'/evidence/summary.json'
+        summary={'checks':[{'id':'fixture','result':'passed','command':'Recovery lifecycle fixture',
+                           'metrics':{},'evidence':[{'path':evidence,'sha256':a.digest((self.root/evidence).read_bytes())}]}]}
+        a.write_json(self.root/name,summary)
+        a.write_json(self.root/('runs/'+task_id+'/evidence/summary.json'),summary)
+        auto.track(task_id,[name],self.root)
+
     def successor(self, status='partial', cancelled=False):
+        if task_evidence.enabled(self.root,a.read_json(self.run/'publication.json')):
+            self.compact_summary('gate-task','runs/gate-task/evidence/check.txt')
         result=a.read_json(self.run/'result.json');result['status']=status;result['limitations']=['Incomplete']
         a.write_json(self.run/'result.json',result)
         if cancelled:
@@ -21,17 +35,21 @@ class RecoveryTests(GateFixture,unittest.TestCase):
             r.checkpoint('gate-task',self.root)
         else:
             a.submit('gate-task',self.root)
+            r.checkpoint('gate-task',self.root)
         a.init_task('coding','followup','Follow up',['Verify recovery'],self.root)
         r.bind('sample','followup',self.root,scope={**self.profile['selector'],'issue':'gate'},new_task=True)
         a.transition('followup','running',self.root)
-        self.originals={str(p.relative_to(self.root)):p.read_bytes() for p in self.run.rglob('*') if p.is_file()}
+        folders=(self.run,self.root/'.agent-work/tasks/gate-task')
+        self.originals={str(p.relative_to(self.root)):p.read_bytes() for folder in folders for p in folder.rglob('*') if p.is_file()}
         return self.root/'runs/followup'
 
     def test_transfer_requires_exact_hash_and_preserves_originals(self):
         target=self.successor()
         receipt=recovery.prepare('followup','gate-task',['product.txt'],self.root)
         self.assertEqual(receipt['kind'],'transfer')
-        self.assertEqual(len(receipt['receipts']),2)
+        self.assertNotIn('receipts',receipt)
+        self.assertFalse((self.root/'.agent-work/tasks/gate-task/recovery').exists())
+        self.assertFalse((self.root/'.agent-work/tasks/followup/recovery').exists())
         for name,raw in self.originals.items(): self.assertEqual((self.root/name).read_bytes(),raw)
         current=g.candidate('followup',self.root)
         self.assertIn('product.txt',{e['path'] for e in current['candidate']['entries']})
@@ -68,6 +86,21 @@ class RecoveryTests(GateFixture,unittest.TestCase):
     def test_source_record_tamper_blocks(self):
         target=self.successor()
         recovery.prepare('followup','gate-task',root=self.root)
+        publication=a.read_json(target/'publication.json')
+        folder=self.root/'.agent-work/tasks/gate-task'
+        unexpected=folder/'unexpected.txt';unexpected.write_text('extra record')
+        with self.assertRaisesRegex(a.ContractError,'exactly four files'):
+            recovery.validate('followup',self.root,publication)
+        unexpected.unlink()
+        report=folder/'report.ko.md';original=report.read_bytes()
+        report.write_bytes(b'x'*(task_evidence.POLICY['file_bytes']+1))
+        with self.assertRaisesRegex(a.ContractError,'exceeds 65536'):
+            recovery.validate('followup',self.root,publication)
+        report.write_bytes(original)
+        raw=self.run/'evidence/check.txt';original=raw.read_bytes();raw.write_text('changed raw evidence')
+        with self.assertRaisesRegex(a.ContractError,'Submitted evidence was changed'):
+            recovery.validate('followup',self.root,publication)
+        raw.write_bytes(original)
         (self.root/'.agent-work/tasks/gate-task/report.ko.md').write_text('tampered')
         with self.assertRaisesRegex(a.ContractError,'records changed'):
             g.candidate('followup',self.root)
@@ -134,6 +167,7 @@ class RecoveryPublicationTests(RecoveryTests):
     # Run only the two additional end-to-end cases in this class.
     def before_initial_commit(self):
         import subprocess
+        super().before_initial_commit()
         self.remote = self.root/'work/remote.git'
         self.remote.parent.mkdir(exist_ok=True)
         subprocess.run(['git','init','-q','--bare',str(self.remote)],check=True)
@@ -144,14 +178,15 @@ class RecoveryPublicationTests(RecoveryTests):
     def after_initial_commit(self):
         r.git(self.remote,'fetch',str(self.root),'refs/heads/main:refs/heads/main')
 
-    def publish_successor(self, transfer=False):
+    def publish_successor(self, transfer=False, status='partial', cancelled=False):
         import io
         import subprocess
         from unittest import mock
-        target=self.successor()
+        target=self.successor(status,cancelled)
         recovery.prepare('followup','gate-task',['product.txt'] if transfer else None,self.root)
         result=a.read_json(target/'result.json')
         evidence=target/'evidence/review.txt';evidence.write_text('Fixture independent evaluation evidence')
+        self.compact_summary('followup','runs/followup/evidence/review.txt')
         result.update(status='completed',summary='Recovery verified',limitations=[],next_actions=[])
         artifact=self.root/'outputs/followup/recovery.txt';artifact.write_text('Recovery lifecycle fixture')
         result['artifacts']=[{'path':'outputs/followup/recovery.txt','description':'Recovery fixture result','sha256':None}]
@@ -166,18 +201,29 @@ class RecoveryPublicationTests(RecoveryTests):
         def dispatch(argv,**kw): return Process() if '.venv-controls' in argv[0] else original(argv,**kw)
         with mock.patch.object(g.subprocess,'Popen',side_effect=dispatch):
             g.run_tests('followup','unit',self.root)
-        g.assess('followup',{'candidate_digest':g.candidate('followup',self.root)['digest'],'reviewer':{'subject':'independent','session':'independent-session'},'verdict':'accepted','evidence':['runs/followup/evidence/review.txt','outputs/followup/recovery.txt']},self.root)
+        g.assess('followup',{'candidate_digest':g.candidate('followup',self.root)['digest'],'reviewer':{'subject':'independent','session':'independent-session'},'verdict':'accepted','evidence':['runs/followup/evidence/review.txt','outputs/followup/recovery.txt','runs/followup/evidence/summary.json']},self.root)
         a.submit('followup',self.root)
         published=auto.finish('followup',self.root)
         self.assertEqual(published['phase'],'pushed')
         self.assertEqual(auto.remote_head(self.root,published['policy']),published['commit'])
         actual=set(r.git(self.root,'diff-tree','--no-commit-id','--name-only','-r','-z',published['commit'],strip=False).split('\0'))-{''}
         self.assertEqual('product.txt' in actual,transfer)
+        records={'.agent-work/tasks/'+task+'/'+name for task in ('gate-task','followup') for name in task_evidence.FILES}
+        self.assertEqual(actual,records | ({'product.txt'} if transfer else set()))
+        for task in ('gate-task','followup'):
+            publication=a.read_json(self.root/('runs/'+task+'/publication.json'))
+            task_evidence.validate(self.root,task,publication,commit=published['commit'])
         for name,raw in self.originals.items(): self.assertEqual((self.root/name).read_bytes(),raw)
         return published
 
     def test_publish_records_only_actual_commit_and_remote(self):
         self.publish_successor()
+        for status,cancelled in (('failed',False),('partial',True)):
+            with self.subTest(status=status,cancelled=cancelled):
+                fixture=RecoveryPublicationTests('test_publish_records_only_actual_commit_and_remote')
+                fixture.setUp()
+                try: fixture.publish_successor(status=status,cancelled=cancelled)
+                finally: fixture.doCleanups()
 
     def test_publish_transfer_actual_commit_and_remote(self):
         self.publish_successor(transfer=True)

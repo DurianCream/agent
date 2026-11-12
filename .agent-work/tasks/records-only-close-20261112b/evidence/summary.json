@@ -1,0 +1,115 @@
+{
+  "checks": [
+    {
+      "id": "patch",
+      "result": "passed",
+      "command": "git apply work/records-only-close-20261112.patch; exact additional assertion and immutable input comparisons",
+      "metrics": {
+        "immutable_files": 34,
+        "additional_assertions": 1,
+        "new_test_functions": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112b/evidence/patch-and-assertion.json",
+          "sha256": "175b106b63cf340891f279a76d95c5b7843090049786ae6325a6c94465cd69e4"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/immutable-inputs.json",
+          "sha256": "6769a9a5b834c3ee92079a8d3cda476dd6a3bf5f64c015dd2c7e7ff8b6aea37f"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/preservation-check.json",
+          "sha256": "dcaa67cdd556b4d94bdfc244ea8ad97d4961c2676db0371c2db4619fd6bf72b1"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/candidate.diff",
+          "sha256": "7309b85b9562f1ea40c9dbf89507e9bb540c4567edcadc58952ba20d24d3d88d"
+        }
+      ]
+    },
+    {
+      "id": "focused",
+      "result": "passed",
+      "command": "project Python -m unittest runtime.tests.test_control_gate_recovery.RecoveryTests.test_source_record_tamper_blocks -v",
+      "metrics": {
+        "tests": 1,
+        "exit_code": 0,
+        "seconds": 14.484
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112b/evidence/focused.log",
+          "sha256": "1165ad950e9803d6bbdc1a37999a08d5761a5073b39407cbca921f60ff813ee1"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/focused.json",
+          "sha256": "35171dc52097a026b51f2e9f391b87cb9d1625aab056449d0ce2354a7e574db2"
+        }
+      ]
+    },
+    {
+      "id": "mandatory",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task records-only-close-20261112b --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "exit_code": 0,
+        "seconds": 858.241
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112b/evidence/gate-test-56035225b17e49b9b2e1801d29e9b487.log",
+          "sha256": "80322bd5fb13b225a324c4e62a9e38912d5ca0d4bbfb7e8762936eb8eb224c59"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/implementation-notes.md",
+          "sha256": "1c21aa0dc9fac7cfed406d8759c6b510146ddbd4a15089a5da55da867587790b"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/product-hashes.json",
+          "sha256": "8ed00e406c5737b1097077e8e4fe2519fd57467fde3299118d3ecc5589d21c3f"
+        }
+      ]
+    },
+    {
+      "id": "independent-review",
+      "result": "passed",
+      "command": "Historical accepted independent source/evidence review and eleven boundary tests before final validation failure; current stop records are not reassessed",
+      "metrics": {
+        "tests": 11,
+        "exit_code": 0,
+        "seconds": 64.46,
+        "confirmed_findings": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112b/evidence/independent-review.ko.md",
+          "sha256": "3fc2034efceedb6f5a6a87964d8f463108d4d39d9435f6e995fa770c95714824"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/independent-checks.json",
+          "sha256": "49cfa95a4232abe002499408792821eaaaee08e3dde79ce0b4fcacfb9d45f8a1"
+        },
+        {
+          "path": "runs/records-only-close-20261112b/evidence/independent-tests.log",
+          "sha256": "d54611ca758a3d6a44d26a666a080fd94e584e7c6c67083039ac305bd29a5d38"
+        }
+      ]
+    },
+    {
+      "id": "final-validation",
+      "result": "failed",
+      "command": "python runtime/agentctl.py validate records-only-close-20261112b",
+      "metrics": {
+        "exit_code": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/records-only-close-20261112b/evidence/final-validation.json",
+          "sha256": "0626f9cde80d910b8acbf2154abeb795f4499ec209b4285c12877ec0f4d02b97"
+        }
+      ]
+    }
+  ]
+}

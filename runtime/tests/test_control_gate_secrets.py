@@ -14,6 +14,7 @@ import agentctl as a
 import repoctl as r
 import repo_automation as auto
 import secret_scan as scan
+import task_evidence
 import test_repo_automation as automation_fixture
 import test_control_gate_recovery as recovery_fixture
 
@@ -223,15 +224,11 @@ class RecordsOnlyTests(recovery_fixture.RecoveryPublicationTests):
             result = a.read_json(self.run / 'result.json')
             result['summary'] = fake()
             a.write_json(self.run / 'result.json', result)
-        target = super().successor(*args, **kwargs)
-        if getattr(self, 'inject_canary', False):
-            # The fixture calls the low-level submit API; explicitly perform
-            # its CLI checkpoint so the preserved record contains our canary.
-            r.checkpoint('gate-task', self.root)
-        return target
+        return super().successor(*args, **kwargs)
 
     def test_records_only_secret_blocks_with_preserved_source(self):
         self.inject_canary = True
+        self.assertTrue(task_evidence.enabled(self.root,a.read_json(self.run/'publication.json')))
         base = r.git(self.root, 'rev-parse', 'HEAD')
         with self.assertRaises(a.ContractError) as caught: self.publish_successor()
         self.assertIn('.agent-work/tasks/gate-task/', str(caught.exception))
@@ -269,6 +266,8 @@ class RecordsOnlyTests(recovery_fixture.RecoveryPublicationTests):
         actual = set(r.git(self.root, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
                            published['commit'], strip=False).split('\0')) - {''}
         self.assertNotIn('product.txt', actual)
+        self.assertEqual(actual,{'.agent-work/tasks/'+task+'/'+name
+                                 for task in ('gate-task','followup') for name in task_evidence.FILES})
         for name, raw in self.originals.items(): self.assertEqual((self.root / name).read_bytes(), raw)
 
 

@@ -114,7 +114,7 @@ def finish(task_id, root=a.ROOT):
         import legacy_memory
         legacy_memory.validate_publication(path, value)
         import task_recovery
-        task_recovery.validate(task_id, root, value)
+        recovered = task_recovery.validate(task_id, root, value)
         head = r.git(path, 'rev-parse', 'HEAD')
         if value['phase'] == 'pushed':
             a.require(head == value['commit'], 'HEAD changed after publication')
@@ -157,6 +157,9 @@ def finish(task_id, root=a.ROOT):
         # A failure preserves phase=committed, so a retry cannot make a duplicate
         # completion commit.
         task_evidence.validate(path, task_id, value, commit=value['commit'])
+        for source in recovered:
+            source_run, _, _ = context(source, root)
+            task_evidence.validate(path, source, a.read_json(source_run / 'publication.json'), commit=value['commit'])
         gate = a.control_gate_call('check_publication', task_id, root,
                                   commit=value['commit'], publication=value)
         remote = remote_head(path, settings)
