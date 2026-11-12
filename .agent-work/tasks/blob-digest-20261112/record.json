@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "blob-digest-20261112",
+  "saved_at": "2026-11-12T11:45:07+09:00",
+  "task_state": "running",
+  "git": {
+    "branch": "main",
+    "head": "0eb9fafcd009e574165ca26e77f50271df7b2762",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "?? .agent-work/tasks/blob-digest-20261112/",
+    "worktree_sha256": "87010852d6f731bbdc0c6ac91a20dfec7085408798644963606833e7a2694ce9"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "blob-digest-20261112",
+    "module": {
+      "id": "coding",
+      "version": "0.1.8"
+    },
+    "created_at": "2026-11-12T11:41:03+09:00",
+    "objective": "Investigate file digest migration and stop before format changes",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Classify digest calls and establish historical compatibility before edits",
+        "required": true,
+        "verification_ids": [
+          "inventory"
+        ]
+      }
+    ],
+    "status": "partial",
+    "summary": "사전 조사 완료: 결과 스키마 및 기록 형식 변경이 필요하여 코드 변경 전에 중단했다.",
+    "work": [
+      "실제 digest 호출 70곳을 파일 내용 36, 생성 문자열 7, 정책·봉인 27로 분류했다.",
+      "저장 필드 문자열 참조와 과거 기록 재검증 경로를 조사했다.",
+      "Risk: high; reason: publication integrity and historical digest compatibility. Owner: /root/owner; checkout: multi; main workspace: work/agents/blob-digest-20261112/orchestrator/instance-q_ou05l_; owner workspace: work/agents/blob-digest-20261112/coding/instance-0woh9bkq; ownership: investigation report and task-local evidence/result only; no product edits."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/blob-digest-20261112/investigation.ko.md",
+        "description": "호출 분류 및 호환성 조사 보고서",
+        "sha256": null
+      }
+    ],
+    "verification": [
+      {
+        "id": "inventory",
+        "name": "호출 및 호환성 조사",
+        "method": "AST 호출 계수, 문자열 참조 검색, 스키마 대조, git rev-parse --show-object-format",
+        "outcome": "passed",
+        "evidence": [
+          "runs/blob-digest-20261112/evidence/digest-calls.json",
+          "runs/blob-digest-20261112/evidence/hash-reference-locations.txt"
+        ],
+        "notes": "70호출 및 Git SHA-1과 결과 스키마의 64자리 SHA-256 제약을 확인했다."
+      },
+      {
+        "id": "execution",
+        "name": "구현·필수 시험·게시",
+        "method": "사용자의 사전 중단 조건 확인",
+        "outcome": "not_run",
+        "evidence": [],
+        "notes": "스키마 및 기록 형식 변경이 필요하여 코드 변경 전에 중단했다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "구현, 회귀 시험, origin/main 게시는 실행하지 않았다.",
+      "독립 평가 결과는 별도 평가 세션에서 기록한다."
+    ],
+    "next_actions": [
+      "해시 종류와 blob OID의 명시적 기록 방식 및 과거 값 분기를 별도 승인 범위에서 결정해야 한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "blob-digest"
+  },
+  "spec_sha256": "bd734872a28cb4514da4c1baf304580a94ab382dd1ba2fec6b419b27982489b6"
+}
