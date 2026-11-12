@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "candidate-deleted-deps-20261112",
+  "saved_at": "2026-11-12T14:27:36+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "cb1d675ff17df58083ac6e5c93df5f9ba0f39777",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "M runtime/control_gate.py\n M runtime/tests/test_control_gate.py\n?? .agent-work/tasks/blob-digest-20261112/\n?? .agent-work/tasks/candidate-deleted-deps-20261112/\n?? .agent-work/tasks/profile-into-impact-20261112/\n?? .agent-work/tasks/profile-into-impact-20261112b/\n?? .agent-work/tasks/profile-into-impact-20261112c/",
+    "worktree_sha256": "662847ceda6f57ad372b3b86ef587f52573b7bcb821e20682080568c289bb8da"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "candidate-deleted-deps-20261112",
+    "module": {
+      "id": "coding",
+      "version": "0.1.8"
+    },
+    "created_at": "2026-11-12T14:02:00+09:00",
+    "objective": "Stabilize candidate dependencies across owned file deletion commits without weakening publication checks",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Reproduce owned-deletion candidate digest mismatch and confirm reported cause",
+        "required": true,
+        "verification_ids": [
+          "reproduction",
+          "mandatory-tests",
+          "invariants",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Exclude owned product paths from dependency inventory while retaining entries and unowned deletion checks",
+        "required": true,
+        "verification_ids": [
+          "authorized-alternative",
+          "mandatory-tests",
+          "invariants",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Existing tests prove deletion digest stability and publication; required full suites and independent review pass",
+        "required": true,
+        "verification_ids": [
+          "reproduction",
+          "mandatory-tests",
+          "invariants",
+          "independent-review"
+        ]
+      },
+      {
+        "id": "criterion-4",
+        "description": "Normal publication readiness and Korean report preserve historical records backup branch and security checks",
+        "required": true,
+        "verification_ids": [
+          "invariants",
+          "independent-review",
+          "publication-readiness"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "소유 runtime 삭제의 커밋 전후 후보 불안정을 재현하고, 사용자 허용 범위의 더 작은 소유 경로 합집합 한 줄로 수정했다. 실제 로컬 게시·필수 113개 시험과 독립 평가를 통과했으며 정상 제출·게시 후보를 확정했다. 실제 origin/main 결과는 main의 finish와 원격 확인에서 보고한다.",
+    "work": [
+      "고위험: 검수 후보·봉인·게시 결합의 안정성을 수정한다.",
+      "Main /root coordinates and publishes; owner /root/owner reproduces, implements and tests without delegation. Scope multi/agent-framework/development/candidate-deleted-deps. Root is the shared framework checkout. Owner scratch work/agents/candidate-deleted-deps-20261112/coding/instance-dcqt9rji; main scratch work/agents/candidate-deleted-deps-20261112/orchestrator/instance-aix6tciz. Milestones: real disposable reproduction before edits; minimal repair/focused checks; required full suite; independent evaluation and affected repair. Stop if cause differs, real-task validation/publication fails, or AGENTS/workflows/result schema changes are required. Preserve previous records and backup ref.",
+      "소유 경로 제외안은 기존 profile 소비자의 전체 집합 조건과 충돌해 사용하지 않았다. 더 작은 합집합 대안으로 기존 표현·소비자·게시 검사를 유지했다. fixture mkdir 오류는 같은 owner가 수정하고 해당 시험만 재실행했다.",
+      "초기화 때 기록한 criterion-2는 `Exclude owned product paths from dependency inventory while retaining entries and unowned deletion checks`라는 특정 구현을 명시했다. 실제 구현은 소유 경로를 제외하지 않는다. 사용자 원요청이 더 작고 안전한 대안을 명시적으로 허용했으므로, 전체 집합을 요구하는 기존 profile 소비자를 보존하면서 같은 삭제 안정성과 검증 경계를 달성하는 합집합 대안을 적용했다. 동결된 criterion 문구·스냅샷은 수정하지 않았으며 문자 그대로의 제외 구현을 통과했다고 주장하지 않는다. 이 차이와 대안의 동등한 목표 충족을 독립 평가에서 확인한다.",
+      "독립 평가자 /root/review는 work/agents/candidate-deleted-deps-20261112/evaluator/instance-es2cifxi에서 제품 수정 없이 검수하고 기존 시험 13개를 실행해 통과했다. REV-01 minor는 초기 criterion-2의 특정 구현 문구와 허용 대안 사이의 차이이며, 소유 경로 제외를 구현하지 않았음을 명시하고 사용자 원요청의 대안 허용으로 목표 충족을 검토했다. 미해결 제품 결함은 없다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/candidate-deleted-deps-20261112/implementation.ko.md",
+        "description": "삭제 후보 재현·한 줄 수정·실제 로컬 게시 검증 보고서",
+        "sha256": "4d18e56076b713ae682b3a2bf8ceb2a8346a73f59587d2a4c1d30b6693e14e40"
+      }
+    ],
+    "verification": [
+      {
+        "id": "reproduction",
+        "name": "변경 전 실제 재현",
+        "method": "disposable Git fixture에서 production candidate와 실제 커밋 전후 비교",
+        "outcome": "passed",
+        "evidence": [
+          "runs/candidate-deleted-deps-20261112/evidence/reproduction.json"
+        ],
+        "notes": "예상한 dependencies-only digest 변화 확인."
+      },
+      {
+        "id": "mandatory-tests",
+        "name": "필수 전체 시험 및 수정 후 실제 로컬 게시",
+        "method": "control_gate run-tests --suite p1-regression",
+        "outcome": "passed",
+        "evidence": [
+          "runs/candidate-deleted-deps-20261112/evidence/gate-test-0c7fd9e1eca04d018e37f19cdd59a7c4.log",
+          "runs/candidate-deleted-deps-20261112/evidence/repaired-local-publication.log"
+        ],
+        "notes": "113 tests; before/after digest 동일, 로컬 bare remote push/readback 확인."
+      },
+      {
+        "id": "invariants",
+        "name": "소비자·보호 파일·현재 등록·경계 검증",
+        "method": "소스 소비자 대조, 기존 시험, 해시·backup ref·현재 partial validate 비교",
+        "outcome": "passed",
+        "evidence": [
+          "runs/candidate-deleted-deps-20261112/evidence/verification.json",
+          "runs/candidate-deleted-deps-20261112/evidence/focused.log"
+        ],
+        "notes": "초기 fixture setup 실패 1개는 수정 후 영향 재실행으로 해결; raw log 보존."
+      },
+      {
+        "id": "independent-review",
+        "name": "독립 평가",
+        "method": "별도 evaluator 소스·증거·허용 대안 검수와 기존 시험 13개 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/candidate-deleted-deps-20261112/evidence/independent-review.ko.md",
+          "runs/candidate-deleted-deps-20261112/evidence/review-focused-tests.log",
+          "runs/candidate-deleted-deps-20261112/evidence/review-source-checks.json"
+        ],
+        "notes": "accepted. REV-01 문구 차이는 공개한 허용 대안으로 처리했으며 문자 그대로의 제외를 수행했다고 주장하지 않는다. 실제 원격 게시 성공을 의미하지 않는다."
+      },
+      {
+        "id": "authorized-alternative",
+        "name": "사용자가 허용한 더 작은 대안",
+        "method": "원요청의 대안 허용과 profile 소비자 전체 집합 조건, 실제 삭제 안정성·게시 시험의 대응 검토",
+        "outcome": "passed",
+        "evidence": [
+          "outputs/candidate-deleted-deps-20261112/implementation.ko.md",
+          "runs/candidate-deleted-deps-20261112/evidence/verification.json"
+        ],
+        "notes": "criterion-2의 동결 원문은 소유 경로 제외를 명시하지만 실제 구현은 제외하지 않고 합집합으로 유지한다. 원요청의 명시적 더 작고 안전한 대안 허용을 적용했다. 문자 그대로의 제외 구현을 수행했다고 주장하지 않으며 스냅샷·기준 문구를 바꾸지 않았다."
+      },
+      {
+        "id": "publication-readiness",
+        "name": "정상 제출·게시 준비",
+        "method": "현재 등록 partial validate, 필수 후보 결합 시험, 실제 로컬 삭제 게시 및 독립 검수",
+        "outcome": "passed",
+        "evidence": [
+          "runs/candidate-deleted-deps-20261112/evidence/independent-review.ko.md",
+          "runs/candidate-deleted-deps-20261112/evidence/verification.json"
+        ],
+        "notes": "완료된 구현 후보의 정상 게시 준비 확인이다. 최종 completed validate·submit·finish와 origin/main readback은 봉인 후 main이 실행한다."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "criterion-2의 동결 문구와 달리 소유 경로를 제외하지 않았다. 사용자 원요청이 허용한 더 작고 안전한 합집합 대안으로 같은 목표와 검증 경계를 충족했으며 원문·스냅샷은 보존했다.",
+      "fixture의 runner proof와 reviewer identity는 mock/선언이며 실제 Git commit·push/readback과 구별한다.",
+      "프로필 제거 재적용, 과거 작업 재개·재봉인·게시 재시도, backup 수정은 범위 밖이라 not_run이다. 실제 origin/main 게시 결과는 후속 main의 정상 finish와 원격 확인에서 보고한다."
+    ],
+    "next_actions": [
+      "독립 평가자가 최종 result·summary를 assess에 결합한 뒤 main이 정상 checkpoint·validate·submit·finish와 원격 확인을 수행한다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "candidate-deleted-deps"
+  },
+  "spec_sha256": "ca23cb9ac94dd8186391e3e7f3bd752f94836e18848cb452cf93496491dae8d7"
+}

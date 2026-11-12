@@ -325,6 +325,8 @@ def candidate(task_id, root=a.ROOT):
         index_modes[name] = mode
     native_modes = os.name != 'nt' and _git(root, 'config', '--get', 'core.filemode', optional=True) == 'true'
     source_names = set(filter(None, _git(root, 'ls-files', '--cached', '--others', '--exclude-standard', '-z', raw=True).split('\0')))
+    # Owned deletions must remain in the inventory after Git removes their index entries.
+    source_names.update(product)
     if 'submission_profile' in enrollment:
         source_names.update(filter(None, _git(root, 'ls-tree', '-r', '--name-only', '-z', enrollment['base_head'], raw=True).split('\0')))
     for name in sorted(source_names):

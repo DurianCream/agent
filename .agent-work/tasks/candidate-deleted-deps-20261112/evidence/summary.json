@@ -1,0 +1,85 @@
+{
+  "checks": [
+    {
+      "id": "reproduction",
+      "result": "passed",
+      "command": "Production candidate before/after real disposable Git deletion commit before edits",
+      "metrics": {
+        "changed_fields": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/reproduction.json",
+          "sha256": "6db98cb6de992d4406e696d8766e21c6e858a1a33961a6f4a4610e72c5dcb0dc"
+        }
+      ]
+    },
+    {
+      "id": "mandatory-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task candidate-deleted-deps-20261112 --suite p1-regression",
+      "metrics": {
+        "tests": 113
+      },
+      "evidence": [
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/gate-test-0c7fd9e1eca04d018e37f19cdd59a7c4.log",
+          "sha256": "d25427822e13e34bb3204c339bc823c66d2ba9e7c1bef0e42c5f8d21317880c5"
+        }
+      ]
+    },
+    {
+      "id": "invariants-and-repair",
+      "result": "passed",
+      "command": "Existing focused tests, repaired local publication case, baseline hashes, backup ref and current partial validate",
+      "metrics": {
+        "initial_passed": 4,
+        "initial_fixture_errors": 1,
+        "affected_rerun_passed": 1,
+        "protected_files": 200
+      },
+      "evidence": [
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/verification.json",
+          "sha256": "3ed5ba06970ea59bee58ae185291daa05afa94b67da1dc3913ead98bc0556051"
+        },
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/focused.log",
+          "sha256": "5c7733ea7122fdeac5e067dc83f33bb06773d6e70d15360d0a6bde794933d17b"
+        },
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/repaired-local-publication.log",
+          "sha256": "32eace1817875685b013cbd0bf7ca0b65c8cec2e2a9305b8a74ceac218cc06d7"
+        }
+      ]
+    },
+    {
+      "id": "independent-review",
+      "result": "passed",
+      "command": "Independent source/evidence/authorized-alternative review and 13 existing focused tests; exact invocation in review-focused-tests.json",
+      "metrics": {
+        "tests": 13,
+        "minor_criterion_wording_findings": 1,
+        "unresolved_product_defects": 0
+      },
+      "evidence": [
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/independent-review.ko.md",
+          "sha256": "44a326d07a2ff7274ecee6eda350c2d3c455427dcc560761f61494b19ee52ee5"
+        },
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/review-focused-tests.log",
+          "sha256": "bc0a6138bd14b69db2010a7d09f56b17b397a07d569079acfccc918b115c23df"
+        },
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/review-focused-tests.json",
+          "sha256": "8d2e231cd2f8f52f1ccc6cdc4b52b5460c88240029af76d7c34a197c0e6b1633"
+        },
+        {
+          "path": "runs/candidate-deleted-deps-20261112/evidence/review-source-checks.json",
+          "sha256": "6eda98c7859432b38d53ad408a795a7fe0f8d1b41fa4971722b5cd8eced70a86"
+        }
+      ]
+    }
+  ]
+}

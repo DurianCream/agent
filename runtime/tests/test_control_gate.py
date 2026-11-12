@@ -161,14 +161,30 @@ class GateTests(GateFixture, unittest.TestCase):
                 'evidence': ['outputs/gate-task/artifact.txt']}, self.root)
 
     def test_changed_product_invalidates(self):
+        auto.track('gate-task', ['runtime/fixture_shared.py'], self.root)
         self.ready()
-        (self.root / 'product.txt').write_text('changed')
-        with self.assertRaises(a.ContractError):
-            g.check_submission('gate-task', self.root)
+        current = g.candidate('gate-task', self.root)
+        self.assertNotIn('product.txt', {d['path'] for d in current['candidate']['dependencies']})
+        for name in ('product.txt', 'runtime/fixture_shared.py'):
+            file = self.root / name; original = file.read_bytes()
+            file.write_text('changed')
+            with self.subTest(path=name), self.assertRaises(a.ContractError):
+                g.check_submission('gate-task', self.root)
+            file.write_bytes(original)
 
     def test_existing_fixture_dependency_mutation_invalidates(self):
         self.ready()
-        (self.root / 'runtime/fixture_shared.py').write_text('VALUE = 2\n')
+        file = self.root / 'runtime/fixture_shared.py'
+        original = file.read_bytes()
+        file.write_text('VALUE = 2\n')
+        with self.assertRaises(a.ContractError):
+            g.check_submission('gate-task', self.root)
+        file.write_bytes(original)
+        file.unlink()
+        current = g.candidate('gate-task', self.root)
+        self.assertIn({'path': 'runtime/fixture_shared.py', 'sha256': None, 'mode': None},
+                      current['candidate']['dependencies'])
+        self.assertNotIn('runtime/fixture_shared.py', {e['path'] for e in current['candidate']['entries']})
         with self.assertRaises(a.ContractError):
             g.check_submission('gate-task', self.root)
 
@@ -405,17 +421,44 @@ class GateTests(GateFixture, unittest.TestCase):
 
 class MixedPublicationTests(GateFixture, unittest.TestCase):
     def before_initial_commit(self):
+        self.remote = self.root / 'work/remote.git'
+        self.remote.parent.mkdir(exist_ok=True)
+        subprocess.run(['git', 'init', '-q', '--bare', str(self.remote)], check=True)
+        r.git(self.root, 'remote', 'set-url', 'origin', str(self.remote))
+        policy = a.read_json(self.root / '.agent-work/automation.json')
+        policy['expected_url'] = str(self.remote)
+        a.write_json(self.root / '.agent-work/automation.json', policy)
         (self.root / 'runtime/legacy.py').write_bytes(b'legacy = 1\r\n')
         (self.root / 'runtime/normalized.py').write_bytes(b'normalized = 1\n')
 
     def after_initial_commit(self):
+        r.git(self.remote, 'fetch', str(self.root), 'refs/heads/main:refs/heads/main')
         r.git(self.root, 'config', 'core.autocrlf', 'true')
         (self.root / 'runtime/normalized.py').write_bytes(b'normalized = 1\r\n')
 
     def test_real_publication_accepts_mixed_stored_representations(self):
         self.assertNotEqual(g._blob(self.root, 'runtime/legacy.py'), g._blob(self.root, 'runtime/legacy.py', 'HEAD'))
         self.assertEqual(g._blob(self.root, 'runtime/normalized.py'), g._blob(self.root, 'runtime/normalized.py', 'HEAD'))
-        GateTests.test_actual_commit_with_canonical_generated_records(self)
+        name = 'runtime/fixture_shared.py'
+        auto.track('gate-task', [name], self.root)
+        (self.root / name).unlink()
+        before = g.candidate('gate-task', self.root)
+        tombstone = {'path': name, 'sha256': None, 'mode': None}
+        self.assertIn(tombstone, before['candidate']['dependencies'])
+        self.assertEqual(next(e for e in before['candidate']['entries'] if e['path'] == name),
+                         {'path': name, 'state': 'deleted', 'raw_sha256': None})
+        self.ready(); a.submit('gate-task', self.root)
+        published = auto.finish('gate-task', self.root)
+        after = g.candidate('gate-task', self.root)
+        self.assertEqual(after, before)
+        self.assertIn(tombstone, after['candidate']['dependencies'])
+        self.assertEqual(published['phase'], 'pushed')
+        self.assertEqual(published['gate']['status'], 'passed')
+        self.assertEqual(auto.remote_head(self.root, published['policy']), published['commit'])
+        self.assertEqual(g._blob(self.root, name, published['commit'])['state'], 'deleted')
+        print('OWNED_DELETION_PUBLICATION ' + json.dumps({'before_digest': before['digest'],
+              'after_digest': after['digest'], 'commit': published['commit'],
+              'phase': published['phase'], 'remote_confirmed': True, 'deleted_path': name}))
 
 
 class DependencyRepresentationTests(unittest.TestCase):
