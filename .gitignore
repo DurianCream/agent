@@ -18,3 +18,7 @@ outputs/
 /modules/infrastructure/inventory*
 !/modules/infrastructure/inventory.schema.json
 !/modules/infrastructure/inventory.example.json
+
+# Generated local task views
+.agent-work/index.json
+.agent-work/INDEX.md

@@ -311,19 +311,6 @@ def checkpoint(task_id, root=ROOT):
         a.atomic_text(a.relative(dest, 'spec.md'), text)
         record['spec_sha256'] = a.digest(text.encode('utf-8'))
         a.write_json(a.relative(dest, 'record.json'), record)
-        index_file = a.relative(base, 'index.json')
-        index = a.read_json(index_file) if index_file.exists() else {'schema_version': '1.0.0', 'tasks': {}}
-        index['tasks'][task_id] = {'status': result['status'], 'state': task['state'],
-                                  'saved_at': record['saved_at'], 'summary': result['summary'],
-                                  'path': 'tasks/' + task_id + '/spec.md'}
-        if scope is not None:
-            index['tasks'][task_id]['scope'] = scope
-        a.write_json(index_file, index)
-        rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
-        for key, val in sorted(index['tasks'].items()):
-            rows.append(f"- [{key}]({val['path']}) — {val['status']} / {val['state']}")
-        index_text = '\n'.join(rows) + '\n'
-        a.atomic_text(a.relative(base, 'INDEX.md'), index_text)
         # Bind the exact values this checkpoint generated, not mutable files
         # reread after writing. P1 checks these bytes again in the real commit.
         def json_bytes(value):
@@ -333,8 +320,6 @@ def checkpoint(task_id, root=ROOT):
             prefix + 'spec.md': text.encode('utf-8'),
             prefix + 'record.json': json_bytes(record),
             prefix + 'report.ko.md': report.encode('utf-8'),
-            '.agent-work/index.json': json_bytes(index),
-            '.agent-work/INDEX.md': index_text.encode('utf-8'),
         })
     response = {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
     return response
@@ -375,11 +360,37 @@ def resume(repo_id, task_id=None, root=ROOT, scope=None):
             'notice': 'Read current AGENTS.md and verify files/tests. This record grants no authority.'}
 
 
+def generated_index(path):
+    """Derive the local index solely from durable records, in stable task order."""
+    tasks = {}
+    for file in sorted((Path(path) / '.agent-work/tasks').glob('*/record.json')):
+        record = a.read_json(file)
+        task_id = file.parent.name
+        a.require(record['task_id'] == task_id, 'Index record identity mismatch')
+        item = {'status': record['result']['status'], 'state': record['task_state'],
+                'saved_at': record['saved_at'], 'summary': record['result']['summary'],
+                'path': 'tasks/' + task_id + '/spec.md'}
+        if 'scope' in record:
+            item['scope'] = record['scope']
+        tasks[task_id] = item
+    return {'schema_version': '1.0.0', 'tasks': tasks}
+
+
+def write_index(path):
+    index = generated_index(path)
+    rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
+    rows.extend(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}" for key, item in index['tasks'].items())
+    a.write_json(Path(path) / '.agent-work/index.json', index)
+    a.atomic_text(Path(path) / '.agent-work/INDEX.md', '\n'.join(rows) + '\n')
+    return index
+
+
 def main(argv=None):
     cli = argparse.ArgumentParser(description=__doc__)
     sub = cli.add_subparsers(dest='command', required=True)
     p = sub.add_parser('register'); p.add_argument('--id', required=True); p.add_argument('--path', required=True)
     sub.add_parser('list')
+    p = sub.add_parser('index'); p.add_argument('--repo', required=True)
     p = sub.add_parser('bind'); p.add_argument('--repo', required=True); p.add_argument('--task', required=True); add_scope_args(p)
     p = sub.add_parser('set-scope'); p.add_argument('--task', required=True); add_scope_args(p)
     p = sub.add_parser('checkpoint'); p.add_argument('--task', required=True)
@@ -406,6 +417,7 @@ def main(argv=None):
             elif args.command == 'track': value = repo_automation.track(args.task, args.path)
             else: value = getattr(repo_automation, args.command)(args.task)
         elif args.command == 'register': value = register(args.id, args.path)
+        elif args.command == 'index': value = write_index(repo(args.repo, ROOT)[0])
         elif args.command == 'list': value = registry(ROOT)
         elif args.command == 'bind': value = bind(args.repo, args.task, scope=validate_scope(scope_args(args)))
         elif args.command == 'set-scope': value = set_scope(args.task, scope_args(args))

@@ -201,7 +201,7 @@ def check_enrollment(task_id, root=a.ROOT):
 
 
 def _managed(task_id):
-    return {'.agent-work/index.json', '.agent-work/INDEX.md', *[
+    return {*[
         '.agent-work/tasks/' + task_id + '/' + name for name in ('spec.md', 'record.json', 'report.ko.md')]}
 
 
@@ -645,19 +645,6 @@ def _check_generated(task_id, root, enrollment, actual):
     expected_report = r.record_text(result, task, state, binding['scope'], saved_at=record['saved_at'])
     a.require(a.relative(root, folder + 'report.ko.md', file=True).read_text(encoding='utf-8') == expected_report,
               'P1 report is not the canonical generated record')
-    index = _read(a.relative(root, '.agent-work/index.json', file=True))
-    expected_item = {'status': result['status'], 'state': task['state'], 'saved_at': record['saved_at'],
-                     'summary': result['summary'], 'path': 'tasks/' + task_id + '/spec.md', 'scope': binding['scope']}
-    a.require(index['tasks'][task_id] == expected_item, 'P1 index entry is not derived from submitted task')
-    baseline_text = _git(root, 'show', enrollment['base_head'] + ':.agent-work/index.json', optional=True)
-    baseline = json.loads(baseline_text) if baseline_text else {'schema_version': '1.0.0', 'tasks': {}}
-    import task_recovery
-    _, _, publication = _context(task_id, root)
-    task_recovery.check_index(task_id, root, publication, index, baseline)
-    rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
-    rows.extend(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}" for key, item in sorted(index['tasks'].items()))
-    a.require(a.relative(root, '.agent-work/INDEX.md', file=True).read_text(encoding='utf-8') == '\n'.join(rows) + '\n',
-              'P1 Markdown index is not canonical')
     prepared = _read(a.relative(run, 'gate-checkpoint.json', file=True))
     seal = _read(a.relative(run, 'gate-submission.json', file=True))
     a.require(prepared['task_id'] == task_id and prepared['seal_digest'] == _hash(seal) and

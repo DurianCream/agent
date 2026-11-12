@@ -80,16 +80,16 @@ class RecoveryTests(GateFixture,unittest.TestCase):
         a.write_json(target/'repository.json',binding)
         with self.assertRaises(a.ContractError):recovery.prepare('followup','gate-task',root=self.root)
 
-    def test_other_index_change_still_blocks(self):
+    def test_generated_source_entry_remains_pinned(self):
         target=self.successor()
         recovery.prepare('followup','gate-task',root=self.root)
         pub=a.read_json(target/'publication.json')
-        index=a.read_json(self.root/'.agent-work/index.json')
-        baseline={'schema_version':'1.0.0','tasks':{}}
-        recovery.check_index('followup',self.root,pub,index,baseline)
-        index['tasks']['unrelated']={'status':'partial'}
-        with self.assertRaisesRegex(a.ContractError,'Another task'):
-            recovery.check_index('followup',self.root,pub,index,baseline)
+        self.assertEqual(recovery.validate('followup',self.root,pub), {'gate-task'})
+        file=self.root/'.agent-work/tasks/gate-task/record.json'
+        record=a.read_json(file);record['result']['summary']='tampered'
+        a.write_json(file,record)
+        with self.assertRaisesRegex(a.ContractError,'records changed'):
+            recovery.validate('followup',self.root,pub)
 
     def test_candidate_file_tamper_cannot_replace_submitted_source(self):
         self.successor()
@@ -189,14 +189,17 @@ for _name in list(vars(RecoveryTests)):
 
 
 class RecoveryIndexEnvelopeTests(unittest.TestCase):
-    def test_envelope_payload_and_version_are_rejected_for_every_mode(self):
-        from unittest import mock
-        for sources in (set(), {'closed-task'}):
-            with mock.patch.object(recovery, 'validate', return_value=sources):
-                baseline = {'schema_version':'1.0.0', 'tasks':{}}
-                for invalid in ({**baseline, 'payload':'unreviewed'}, {**baseline, 'schema_version':'2.0.0'}, {'tasks':{}}):
-                    with self.subTest(sources=sources, invalid=invalid):
-                        with self.assertRaisesRegex(a.ContractError,'index envelope'):
-                            recovery.check_index('followup',Path('.'),{},invalid,baseline)
-                        with self.assertRaisesRegex(a.ContractError,'index envelope'):
-                            recovery.check_index('followup',Path('.'),{},baseline,invalid)
+    def test_generated_index_ignores_cache_and_rejects_record_identity_mismatch(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            file=root/'.agent-work/tasks/task/record.json';file.parent.mkdir(parents=True)
+            a.write_json(root/'.agent-work/index.json', {'payload':'unreviewed'})
+            record={'task_id':'task','task_state':'submitted','saved_at':'fixed','result':{'status':'partial','summary':'saved'}}
+            a.write_json(file,record)
+            index=r.generated_index(root)
+            self.assertEqual(set(index), {'schema_version','tasks'})
+            self.assertEqual(index['tasks']['task'], {'status':'partial','state':'submitted','saved_at':'fixed','summary':'saved','path':'tasks/task/spec.md'})
+            record['task_id']='wrong';a.write_json(file,record)
+            with self.assertRaisesRegex(a.ContractError,'identity mismatch'):
+                r.generated_index(root)

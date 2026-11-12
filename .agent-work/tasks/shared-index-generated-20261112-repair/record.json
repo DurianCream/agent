@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "shared-index-generated-20261112-repair",
+  "saved_at": "2026-11-12T11:33:47+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "38ca357dd1488e903925be4f29c6b5f51c9fc055",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "D .agent-work/INDEX.md\n D .agent-work/index.json\n M .gitignore\n M README.md\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M runtime/control_gate.py\n M runtime/repo_automation.py\n M runtime/repoctl.py\n M runtime/submission_profile.py\n M runtime/task_recovery.py\n M runtime/tests/test_control_gate_integration.py\n M runtime/tests/test_control_gate_recovery.py\n M runtime/tests/test_repo_automation.py\n?? .agent-work/tasks/shared-index-generated-20261112-repair/\n?? .agent-work/tasks/shared-index-generated-20261112/",
+    "worktree_sha256": "b42c8b50108bac718e50d76b2664b43a5f6390aa8de327942ca8c329d8edfcac"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "shared-index-generated-20261112-repair",
+    "module": {
+      "id": "coding",
+      "version": "0.1.8"
+    },
+    "created_at": "2026-11-12T11:15:37+09:00",
+    "objective": "Publish record-derived shared index and repair pre-existing scanner false positive without altering submitted source task",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Record-derived index, exact preserved publication protections, required tests and independent review, normal origin/main publication; original task frozen",
+        "required": true,
+        "verification_ids": [
+          "implementation",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "원본 제출 기록을 보존한 후속 작업에서 공유 인덱스 생성 전환과 게시 검사 오탐 수리를 검증했습니다.",
+    "work": [
+      "고위험 게시·복구 경계 변경: 원본 기록은 동결하고 새 scoped task에서 정확 소유 파일만 복원·재적용했습니다.",
+      "기존 runtime/task_recovery.py:69의 검사 오탐은 지역 식별자 변경만 적용했습니다. 스캐너·allowlist·원격·브랜치·커밋/후보 검사는 변경하지 않았습니다.",
+      "변경 파일과 삭제 검사 대체 근거는 산출물 보고서 및 owner-handoff에 기록했습니다. 과거 기록·AGENTS.md·shared/workflows·결과 스키마·agentctl digest는 변경하지 않습니다.",
+      "새 후보 필수 full p1-regression 113건 통과(후보 변화 없음). 관련 코드가 그대로인 추가 자동게시7·repoctl7·submission-profile16 및 이전 독립15건 증거는 원 실행과 재사용 근거를 명시했습니다.",
+      "원본 동결 파일52개 전부 해시 보존. 정의 시험 수는 최초 저장소 대비 +1이며 후속 작업에서 새 시험 추가는 없습니다.",
+      "not_run: 정기 전체 모듈 시험은 영향 범위 선택 대상 밖입니다. 실제 origin/main 게시는 제출 뒤 main이 수행하며 정상 scanner를 포함한 경로를 유지합니다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/shared-index-generated-20261112-repair/변경-보고서.md",
+        "description": "변경 파일, 제거 검사 대체 근거, 시험 및 후속 수리 보고서",
+        "sha256": "827dc41a9f3c271f561ad5f7253c6f4f566afcac3dce514ca6000579a3690760"
+      }
+    ],
+    "verification": [
+      {
+        "id": "implementation",
+        "name": "새 후보 필수 시험 및 기존 증거 검증",
+        "method": "새 p1-regression113 실행, 동일 코드 추가 증거는 재사용 표시",
+        "outcome": "passed",
+        "evidence": [
+          "runs/shared-index-generated-20261112-repair/evidence/summary.json",
+          "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md"
+        ],
+        "notes": "새 mandatory 113건 763.853초, candidate_unchanged=true. 반복·재사용을 고유 시험 수로 더하지 않음."
+      },
+      {
+        "id": "review",
+        "name": "후속 독립 검수 및 원본 보존",
+        "method": "별도 evaluator 소스·AST·실제 blob 검사·원본52개 보존",
+        "outcome": "passed",
+        "evidence": [
+          "runs/shared-index-generated-20261112-repair/evidence/review-source.md",
+          "runs/shared-index-generated-20261112-repair/evidence/review-repair-check.json",
+          "runs/shared-index-generated-20261112-repair/evidence/preservation.json"
+        ],
+        "notes": "미해결 소스 결함 없음. 최종 assess는 이 결과와 요약에 결합하며 actual 게시 결과는 main이 확인."
+      }
+    ],
+    "sources": [],
+    "limitations": [],
+    "next_actions": [
+      "최종 독립 평가를 봉인한 뒤 main이 validate/submit/finish 및 origin/main 원격 일치를 확인합니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "shared-index-generated-repair"
+  },
+  "spec_sha256": "7ca65cce99d1ff3350f71d3540f9b8ef60ca8fdeb43b48337c882ed9fc0ef9cf"
+}

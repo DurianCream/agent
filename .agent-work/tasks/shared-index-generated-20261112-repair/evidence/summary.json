@@ -1,0 +1,188 @@
+{
+  "checks": [
+    {
+      "id": "mandatory",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task shared-index-generated-20261112-repair --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "invocations": 1,
+        "elapsed_seconds": 763.853
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/gate-test-dcf49dce7f95434188d2a314d10ac390.log",
+          "sha256": "76373476a92640c99740b3cce1a036e1012a9fb51e0ff4d5447a2a58af32c56c"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/gate-final-run.log",
+          "sha256": "3907497b122fe5bcdbf1e7f8cb8347bca98ce35a01159d875200f657c6061c4a"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/selection.json",
+          "sha256": "351d6f422ab8f849cdda4ef6202f7b61432f30866291255f175186fbc6b307d0"
+        }
+      ]
+    },
+    {
+      "id": "reused-automation",
+      "result": "passed",
+      "command": "Reuse unchanged relevant source/test evidence from shared-index-generated-20261112: python -m unittest discover -s runtime/tests -p test_repo_automation.py -v",
+      "metrics": {
+        "tests": 7,
+        "new_invocations": 0,
+        "reused": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-automation.log",
+          "sha256": "09c63408204b8bf6e0918da561febf2c72b205075f2192fd39f87bec006b9efa"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "reused-repoctl",
+      "result": "passed",
+      "command": "Reuse unchanged relevant source/test evidence from shared-index-generated-20261112: python -m unittest discover -s runtime/tests -p test_repoctl.py -v",
+      "metrics": {
+        "tests": 7,
+        "new_invocations": 0,
+        "reused": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-repoctl.log",
+          "sha256": "5ec89b44c02844f0e662eaa3c7dd83c051bec93a1776928c6fa6db165f796790"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "reused-profile",
+      "result": "passed",
+      "command": "Reuse unchanged relevant source/test evidence from shared-index-generated-20261112: python -m unittest discover -s runtime/tests -p test_submission_profile.py -v",
+      "metrics": {
+        "tests": 16,
+        "new_invocations": 0,
+        "reused": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-profile.log",
+          "sha256": "745e42e19b44d7a3a2945f17ef8b95e1461ceaf3b18d246ae2def85744598b20"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "independent-repair",
+      "result": "passed",
+      "command": "Independent source, NAME-only AST equivalence, frozen-original hashes and actual blob scan_index verification",
+      "metrics": {
+        "original_files": 52,
+        "product_files": 13
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/review-source.md",
+          "sha256": "4dc8b1316caee7e01f89f7d1af98b567940db2ad6bc8c68c9ef2eea281c98229"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/review-repair-check.json",
+          "sha256": "57bbc869e88f74db0a5e87a179755e0fcd045286b1b282e96c6f8915934db3d1"
+        }
+      ]
+    },
+    {
+      "id": "reused-independent-tests",
+      "result": "passed",
+      "command": "Reuse original evaluator15 unchanged-semantic cases; fresh mandatory suite checks repaired source",
+      "metrics": {
+        "tests": 15,
+        "new_invocations": 0,
+        "reused": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-review-gate-tests.log",
+          "sha256": "b38414db5b91b5f3b1f79a0a55f32319fca27942896742c58684049116925e6c"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-review-additional-gates.log",
+          "sha256": "5f97cd5aaf8b31b4490292fa266ba2ca65950d8e6335254f90df0f4ff2d10d46"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-review-regression.log",
+          "sha256": "bbbf76b3ee630468881ddcb8b46cbd57fa2a20bf756c123131df653feb2fb350"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "scanner-and-preservation",
+      "result": "passed",
+      "command": "Real disposable Git index secret_scan.scan_index on owned products; original frozen artifacts hash check",
+      "metrics": {
+        "original_files": 52,
+        "net_new_tests": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/preflight-product.txt",
+          "sha256": "6f60ea0c7d173d9f04e83e7b8a08107f882b4bf607a6f0e23d29166d3db97297"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/preservation.json",
+          "sha256": "231d4137f8720c7a47867df71ffc25a9d53216a63040b538ed01f476d6befd6c"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "reused-generation",
+      "result": "passed",
+      "command": "Reuse unchanged generator byte-stability and original Markdown row check",
+      "metrics": {
+        "reused": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/reused-generator-check.txt",
+          "sha256": "04d805ae48dba8570b84cc243a4a4a295c33cb20bc3f5e4bcadef46e5cded46f"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    },
+    {
+      "id": "periodic-full",
+      "result": "not_run",
+      "command": "All-module periodic suite not selected; fresh full p1-regression113 required cases ran",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112-repair/evidence/owner-handoff.md",
+          "sha256": "bcf9c964e03c02f04e5dffa9710049164bef6a9a5cc9d788db02370ca5d454ae"
+        }
+      ]
+    }
+  ]
+}

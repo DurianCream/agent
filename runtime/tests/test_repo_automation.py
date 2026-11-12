@@ -108,15 +108,41 @@ class AutomationTests(unittest.TestCase):
         r.git(self.path, 'commit', '-m', 'Unrelated local work')
         with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
 
-    def test_other_task_shared_index_change_rejected(self):
+    def test_generated_index_is_local_and_deterministic(self):
         self.bind(); self.own_file(); self.complete()
-        file = self.path / '.agent-work/index.json'
-        data = a.read_json(file)
-        data['tasks']['another-task'] = {'status': 'partial', 'state': 'running', 'saved_at': a.now(),
-                                        'summary': 'Other work', 'path': 'tasks/another-task/spec.md'}
-        a.write_json(file, data)
-        with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
-        self.assertEqual(auto.staged_paths(self.path), [])
+        expected = r.generated_index(self.path)
+        self.assertEqual(expected, r.write_index(self.path))
+        self.assertEqual(expected, r.generated_index(self.path))
+        (self.path / '.agent-work/index.json').write_text('stale cache')
+        result = auto.finish('auto-task', self.root)
+        self.assertEqual(result['phase'], 'pushed')
+        for name in ('index.json', 'INDEX.md'):
+            self.assertIsNone(r.git(self.path, 'cat-file', '-e', 'HEAD:.agent-work/' + name, optional=True))
+
+    def test_closed_partial_does_not_block_next_publication(self):
+        self.bind()
+        a.transition('auto-task', 'running', self.root)
+        result_file = self.root / 'runs/auto-task/result.json'
+        result = a.read_json(result_file); result['status'] = 'partial'
+        a.write_json(result_file, result)
+        a.submit('auto-task', self.root)
+        preserved = (self.path / '.agent-work/tasks/auto-task/record.json').read_bytes()
+        a.init_task('coding', 'next-task', 'Next task', ['Publish'], self.root)
+        r.bind('sample', 'next-task', self.root, scope={'project':'test-project','service':'test-service','environment':'test','issue':'next'})
+        a.transition('next-task', 'running', self.root)
+        result = a.read_json(self.root / 'runs/next-task/result.json')
+        output = self.root / 'outputs/next-task/done.txt'; output.write_text('done')
+        evidence = self.root / 'runs/next-task/evidence/check.txt'; evidence.write_text('passed')
+        result.update(status='completed', summary='Done', limitations=[], next_actions=[])
+        result['artifacts'] = [{'path':'outputs/next-task/done.txt','description':'Result','sha256':None}]
+        result['verification'] = [{'id':'check','name':'Check','method':'Local lifecycle','outcome':'passed','evidence':['runs/next-task/evidence/check.txt'],'notes':''}]
+        result['acceptance_criteria'][0]['verification_ids'] = ['check']
+        a.write_json(self.root / 'runs/next-task/result.json', result)
+        a.submit('next-task', self.root)
+        published = auto.finish('next-task', self.root)
+        self.assertEqual(published['phase'], 'pushed')
+        self.assertEqual(auto.remote_head(self.path, published['policy']), published['commit'])
+        self.assertEqual((self.path / '.agent-work/tasks/auto-task/record.json').read_bytes(), preserved)
 
     def test_remote_ahead_and_changed_destination_rejected(self):
         self.bind(); self.own_file(); self.complete()

@@ -131,20 +131,6 @@ def finish(task_id, root=a.ROOT):
             owned = sorted(set(value['paths'] + ['.agent-work/automation.json'] + [
                 '.agent-work/tasks/' + task_id + '/' + name
                 for name in ('spec.md', 'record.json', 'report.ko.md')]))
-            # Publish shared indexes only when every other task entry is unchanged.
-            current_index = a.read_json(a.relative(path, '.agent-work/index.json', file=True))
-            old_text = r.git(path, 'show', value['base_head'] + ':.agent-work/index.json', optional=True)
-            old_index = json.loads(old_text) if old_text else {'schema_version': '1.0.0', 'tasks': {}}
-            def without_current(index):
-                return {**index, 'tasks': {key: item for key, item in index['tasks'].items() if key != task_id}}
-            task_recovery.check_index(task_id, root, value, current_index, old_index)
-            rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
-            for key, item in sorted(current_index['tasks'].items()):
-                rows.append(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}")
-            expected_index = '\n'.join(rows) + '\n'
-            a.require(a.relative(path, '.agent-work/INDEX.md', file=True).read_text(encoding='utf-8') == expected_index,
-                      'Shared Markdown index differs from the canonical task index')
-            owned = sorted(set(owned + ['.agent-work/index.json', '.agent-work/INDEX.md']))
             for name in owned:
                 a.relative(path, name)
             changed = sorted(set(dirty_paths(path)) & set(owned))

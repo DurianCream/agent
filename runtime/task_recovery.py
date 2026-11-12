@@ -28,15 +28,15 @@ def source_records(source, root):
     a.require(all(record[k] == binding[k] for k in ('repository_id', 'repository_uuid', 'task_id', 'scope')), 'Source record identity mismatch')
     a.require(record['spec_sha256'] == hashes[prefix + 'spec.md'], 'Source specification changed without checkpoint')
     # Historical records are never regenerated, even if cancellation occurred later.
-    index = a.read_json(path / '.agent-work/index.json')['tasks'].get(source)
+    index = r.generated_index(path)['tasks'].get(source)
     expected = {'status': record['result']['status'], 'state': record['task_state'], 'saved_at': record['saved_at'],
                 'summary': record['result']['summary'], 'path': 'tasks/' + source + '/spec.md', 'scope': record['scope']}
     a.require(index == expected, 'Source index does not match preserved record')
     return hashes, index
 
 
-def receipt_paths(source, target, token):
-    return ['.agent-work/tasks/' + task + '/recovery/' + token + '.json' for task in (source, target)]
+def receipt_paths(source, target, receipt_id):
+    return ['.agent-work/tasks/' + task + '/recovery/' + receipt_id + '.json' for task in (source, target)]
 
 
 def prepare(task_id, source, paths=None, root=a.ROOT):
@@ -66,11 +66,11 @@ def prepare(task_id, source, paths=None, root=a.ROOT):
             a.require(not name.startswith(('.agent-work/', 'runs/', 'outputs/', '.git/')) and name in oldpub['paths'] and name in bypath, 'Transfer path is not original owned product')
             a.require(g._reviewed_blob(path, name) == bypath[name], 'Transfer file differs from original candidate: ' + name)
             entries.append(bypath[name])
-    token = uuid.uuid4().hex
+    receipt_id = uuid.uuid4().hex
     receipt = {'schema_version':'1.0.0', 'kind':mode, 'source':source, 'successor':task_id,
                'binding':binding, 'source_state':oldtask['state'], 'source_result_status':a.read_json(oldrun/'result.json')['status'], 'source_task_sha256':a.digest((oldrun/'task.json').read_bytes()),
                'source_records':hashes, 'source_index':index, 'entries':entries}
-    names = receipt_paths(source, task_id, token)
+    names = receipt_paths(source, task_id, receipt_id)
     with a.lock(a.relative(path, '.agent-work/recovery.lock')):
         value = a.read_json(run / 'publication.json')
         a.require(value['phase'] == 'begun' and not value.get('recovery'), 'Recovery manifest is already prepared/closed')
@@ -120,15 +120,3 @@ def validate(task_id, root, publication):
         # permitted, but must pass the successor candidate tests and independent seal.
         a.require({e['path'] for e in recovery['entries']} <= set(publication['paths']), 'Transferred ownership missing')
     return {source}
-
-
-def check_index(task_id, root, publication, current, baseline):
-    for index in (current, baseline):
-        a.require(type(index) is dict and set(index) == {'schema_version', 'tasks'} and index['schema_version'] == '1.0.0' and type(index['tasks']) is dict, 'Shared index envelope changed or invalid')
-    a.require({k:v for k,v in current.items() if k != 'tasks'} == {k:v for k,v in baseline.items() if k != 'tasks'}, 'Shared index envelope changed')
-    sources = validate(task_id, root, publication)
-    excluded = sources | {task_id}
-    a.require({k:v for k,v in current['tasks'].items() if k not in excluded} ==
-              {k:v for k,v in baseline['tasks'].items() if k not in excluded}, 'Another task changed the shared index; publish separately')
-    for source in sources:
-        a.require(current['tasks'][source] == publication['recovery']['source_index'], 'Recovered index changed')

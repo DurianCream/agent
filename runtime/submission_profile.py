@@ -67,8 +67,6 @@ def validate_capture(enrollment, root):
 def protected(name):
     # Unknown source/configuration is protected, not inferred safe by extension.
     # Durable records are data and still use existing exact publication checks.
-    if name in ('.agent-work/index.json', '.agent-work/INDEX.md'):
-        return False
     if name.startswith(('.agent-work/tasks/', '.agent-work/classifications/', '.agent-work/legacy/')):
         return False
     return True

@@ -76,7 +76,8 @@ class GateIntegrationTests(unittest.TestCase):
         with mock.patch.object(a, 'atomic_text', side_effect=tamper_after_write):
             self.bind()
         files = gate.seal_checkpoint.call_args.kwargs['files']
-        self.assertEqual(len(files), 5)
+        self.assertEqual(set(files), {'.agent-work/tasks/auto-task/' + name
+                                      for name in ('spec.md', 'record.json', 'report.ko.md')})
         self.assertTrue(all(type(value) is bytes for value in files.values()))
         name = '.agent-work/tasks/auto-task/spec.md'
         self.assertNotEqual(files[name], (self.path / name).read_bytes())

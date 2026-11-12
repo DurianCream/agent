@@ -9,7 +9,7 @@
 - [디렉터리 구조와 에이전트 역할](docs/디렉터리-구조와-역할.md)
 - 에이전트 시작 규칙: AGENTS.md
 - 역할 목록: registry.json
-- 작업 기록: [.agent-work/INDEX.md](.agent-work/INDEX.md)
+- 작업 기록: [.agent-work/tasks/](.agent-work/tasks/) (`python runtime/repoctl.py index --repo multi`)
 
 Python 3.11 이상과 Git이 필요합니다. 처음 clone한 뒤 python runtime/sync_codex.py --write와 python runtime/agentctl.py doctor를 실행하세요. 모델·호스트 기능과 훅 지원은 실행 환경에 따라 달라집니다.
 
