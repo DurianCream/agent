@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "shared-index-generated-20261112",
+  "saved_at": "2026-11-12T11:13:04+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "38ca357dd1488e903925be4f29c6b5f51c9fc055",
+    "origin": "https://github.com/DurianCream/private.git",
+    "status": "D .agent-work/INDEX.md\n D .agent-work/index.json\n M .gitignore\n M README.md\n M \"docs/\\353\\224\\224\\353\\240\\211\\355\\204\\260\\353\\246\\254-\\352\\265\\254\\354\\241\\260\\354\\231\\200-\\354\\227\\255\\355\\225\\240.md\"\n M runtime/control_gate.py\n M runtime/repo_automation.py\n M runtime/repoctl.py\n M runtime/submission_profile.py\n M runtime/task_recovery.py\n M runtime/tests/test_control_gate_integration.py\n M runtime/tests/test_control_gate_recovery.py\n M runtime/tests/test_repo_automation.py\n?? .agent-work/tasks/shared-index-generated-20261112/",
+    "worktree_sha256": "60363bb5686d8e5e8f03614770cbf7453c6de4d8d6036a88d38086a08ee0853c"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "shared-index-generated-20261112",
+    "module": {
+      "id": "coding",
+      "version": "0.1.8"
+    },
+    "created_at": "2026-11-12T10:48:38+09:00",
+    "objective": "Generate shared task index from records without publication deadlocks",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Deterministic generated index, preserved publication security, required tests and independent review, normal origin/main publication",
+        "required": true,
+        "verification_ids": [
+          "implementation",
+          "review"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "공유 인덱스를 record.json에서 생성하는 로컬 조회 자료로 전환했습니다.",
+    "work": [
+      "고위험: 게시·복구 검사 변경이며 정상 검수 게시로 되돌릴 수 있습니다. coding 담당 구현 및 evaluator 독립 검수를 적용합니다.",
+      "변경 파일: runtime/repoctl.py, repo_automation.py, task_recovery.py, control_gate.py, submission_profile.py, tests/test_repo_automation.py, tests/test_control_gate_recovery.py, tests/test_control_gate_integration.py, .gitignore, README.md, docs/디렉터리-구조와-역할.md 및 공유 인덱스 두 파일 추적 삭제.",
+      "공유 인덱스 비교·Markdown 일치·공유 봉인을 제거했습니다. 복구 원본 불변성은 기존 validate의 spec/record/report 해시와 생성 항목의 복구 영수증 비교가 보장합니다. 후보·커밋 일치, 후보 봉인, 원격·브랜치, 비밀값 검사는 유지합니다.",
+      "생성기는 기존 PROTECTED 대상 repoctl.py에 두었습니다. 스키마 enum·대응표·문서를 문자열 검색했으며 추가 스키마 수정이 필요하지 않았습니다. 과거 기록과 agentctl digest는 변경하지 않았습니다.",
+      "시험: 필수113, 자동게시7, 복구14, repoctl7, submission-profile16 통과. 독립15건 통과. 초기 필수 실행은 R1 수정 전 취소하여 not_run으로 남겼으며 최종 안정 후보 실행을 통과했습니다. 정기 전체 시험은 영향 선택 대상 밖으로 not_run입니다."
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/shared-index-generated-20261112/변경-보고서.md",
+        "description": "변경 파일·삭제 검사와 대체 근거·시험 및 not_run 보고서",
+        "sha256": "4dd177e403427e706da5bfef6c6be7075c4916d3fe3a9f2ec3dca3511f724838"
+      }
+    ],
+    "verification": [
+      {
+        "id": "implementation",
+        "name": "구현 및 필수 검사",
+        "method": "영향 선택 full p1-regression 113건, 자동 게시7, 복구14, repoctl7, submission-profile16. 중복은 고유 범위로 합산하지 않음.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/shared-index-generated-20261112/evidence/summary.json",
+          "runs/shared-index-generated-20261112/evidence/owner-handoff.md"
+        ],
+        "notes": "정의 시험 순증가 +1; 초기 필수 실행 취소 후 R1 수리된 안정 후보에서 최종 실행 1회 통과."
+      },
+      {
+        "id": "review",
+        "name": "독립 적대적 검수",
+        "method": "별도 evaluator 소스 검사 및 15건 독립 실행",
+        "outcome": "passed",
+        "evidence": [
+          "runs/shared-index-generated-20261112/evidence/review-source.md"
+        ],
+        "notes": "R1 기존 봉인 단언 수정 재확인; 미해결 결함 없음. 최종 assess는 이 결과와 요약에 결합."
+      }
+    ],
+    "sources": [],
+    "limitations": [],
+    "next_actions": [
+      "검수 봉인 뒤 validate/submit/finish로 origin/main 게시 및 원격 커밋 일치를 확인합니다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "shared-index-generated"
+  },
+  "spec_sha256": "253ab56b7b6d59bd84466e70d5a553d546cf8dd607e2a90a6cb6c2b571db688e"
+}

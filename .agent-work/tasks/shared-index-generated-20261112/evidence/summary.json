@@ -1,0 +1,158 @@
+{
+  "checks": [
+    {
+      "id": "mandatory",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task shared-index-generated-20261112 --suite p1-regression",
+      "metrics": {
+        "tests": 113,
+        "invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/gate-test-ef60f48f6e8d4bb0afe1dac5fa2da1d6.log",
+          "sha256": "d71d4c1bb9df4b47c34a74796570b5f9dcfdc7f37fc9db9f689092d065c0fd71"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/gate-final-run.log",
+          "sha256": "260a562ddb4a7dd6c41f3df015a287213b58154bf1a9749bece6aa5074372f89"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/selection.json",
+          "sha256": "351d6f422ab8f849cdda4ef6202f7b61432f30866291255f175186fbc6b307d0"
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "result": "passed",
+      "command": "python -m unittest discover -s runtime/tests -p test_repo_automation.py -v",
+      "metrics": {
+        "tests": 7,
+        "invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/automation.log",
+          "sha256": "09c63408204b8bf6e0918da561febf2c72b205075f2192fd39f87bec006b9efa"
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "result": "passed",
+      "command": "python -m unittest discover -s runtime/tests -p test_control_gate_recovery.py -v",
+      "metrics": {
+        "tests": 14,
+        "invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/recovery.log",
+          "sha256": "30dd78fb69618f4dc24e6b2bb6f7c63f83ed549e476c91b92a6d9229d872f5ac"
+        }
+      ]
+    },
+    {
+      "id": "repoctl",
+      "result": "passed",
+      "command": "python -m unittest discover -s runtime/tests -p test_repoctl.py -v",
+      "metrics": {
+        "tests": 7,
+        "invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/repoctl.log",
+          "sha256": "5ec89b44c02844f0e662eaa3c7dd83c051bec93a1776928c6fa6db165f796790"
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "result": "passed",
+      "command": "python -m unittest discover -s runtime/tests -p test_submission_profile.py -v",
+      "metrics": {
+        "tests": 16,
+        "invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/profile.log",
+          "sha256": "745e42e19b44d7a3a2945f17ef8b95e1461ceaf3b18d246ae2def85744598b20"
+        }
+      ]
+    },
+    {
+      "id": "independent",
+      "result": "passed",
+      "command": "Independent adversarial source review and selected gate/regression execution",
+      "metrics": {
+        "tests": 15,
+        "findings_closed": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/review-source.md",
+          "sha256": "903ac90cfc74f4aa154ec1da9269ab2f0f240f47ac4b15fe19a086647b150986"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/review-gate-tests.log",
+          "sha256": "b38414db5b91b5f3b1f79a0a55f32319fca27942896742c58684049116925e6c"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/review-additional-gates.log",
+          "sha256": "5f97cd5aaf8b31b4490292fa266ba2ca65950d8e6335254f90df0f4ff2d10d46"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/review-regression.log",
+          "sha256": "bbbf76b3ee630468881ddcb8b46cbd57fa2a20bf756c123131df653feb2fb350"
+        }
+      ]
+    },
+    {
+      "id": "generation",
+      "result": "passed",
+      "command": "Deterministic local rendering, exact row separator and source record checks",
+      "metrics": {
+        "net_new_tests": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/generator-check.txt",
+          "sha256": "04d805ae48dba8570b84cc243a4a4a295c33cb20bc3f5e4bcadef46e5cded46f"
+        },
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/owner-handoff.md",
+          "sha256": "9fa2f8ea580217c54c6c94d74b659f157b20600f1014d6f682a4aa4131d6a5de"
+        }
+      ]
+    },
+    {
+      "id": "initial-cancelled",
+      "result": "not_run",
+      "command": "Initial p1-regression cancelled after stale seal assertion R1; final stable candidate rerun is mandatory proof",
+      "metrics": {
+        "cancelled_invocations": 1
+      },
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/owner-handoff.md",
+          "sha256": "9fa2f8ea580217c54c6c94d74b659f157b20600f1014d6f682a4aa4131d6a5de"
+        }
+      ]
+    },
+    {
+      "id": "periodic-full",
+      "result": "not_run",
+      "command": "Periodic all-module suite not selected by baseline impact policy; required full p1-regression executed",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/shared-index-generated-20261112/evidence/owner-handoff.md",
+          "sha256": "9fa2f8ea580217c54c6c94d74b659f157b20600f1014d6f682a4aa4131d6a5de"
+        }
+      ]
+    }
+  ]
+}
