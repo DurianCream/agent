@@ -98,8 +98,9 @@ def _covers(broad, narrow):
         return True
     if not META & set(narrow):
         return fnmatch.fnmatchcase(narrow, broad)
-    # Only a single-star literal pattern A*B is compared against another pattern.
-    if broad.count('*') != 1 or META & (set(broad) - {'*'}):
+    # Only a single-star literal pattern A*B is compared against another
+    # pattern, and never against one with a character class.
+    if '[' in narrow or broad.count('*') != 1 or META & (set(broad) - {'*'}):
         return False
     head, tail = broad.split('*')
     first = min(narrow.index(c) for c in META if c in narrow)
@@ -108,6 +109,9 @@ def _covers(broad, narrow):
 
 def _merge(suites):
     """Keep order; drop a suite another listed suite with the same command already collects."""
+    for suite in suites:
+        a.require(all(other['argv'] == suite['argv'] for other in suites if other['id'] == suite['id']),
+                  'Suite id names different commands: ' + suite['id'])
     kept = []
     for index, suite in enumerate(suites):
         if any(s['id'] == suite['id'] for s in kept):

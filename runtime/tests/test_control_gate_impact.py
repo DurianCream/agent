@@ -91,6 +91,10 @@ class ImpactTests(GateFixture, unittest.TestCase):
         self.assertEqual([s['id'] for s in impact._merge([suite('one', 'test_?.py'), suite('lit', 'test_ab.py')])], ['one', 'lit'])
         self.assertEqual([s['id'] for s in impact._merge([suite('gate', 'test_gate*.py'), suite('all', 'test*.py'), suite('lit', 'test_x.py')])], ['all'])
         self.assertEqual([s['id'] for s in impact._merge([suite('a', 'test*.py'), suite('b', 'test*.py')])], ['a'])
+        self.assertEqual([s['id'] for s in impact._merge([suite('cls', 'test_[ab].py'), suite('odd', 'test_*].py')])], ['cls', 'odd'])
+        clash = {'id': 'all', 'argv': ['@project-python', '-m', 'unittest', 'runtime.tests.test_contract']}
+        with self.assertRaisesRegex(a.ContractError, 'different commands'):
+            impact._merge([clash, suite('lit', 'test_x.py'), suite('all', 'test*.py')])
         other = suite('other', 'test_x.py'); other['argv'][5] = 'elsewhere'
         self.assertEqual([s['id'] for s in impact._merge([suite('all', 'test*.py'), other])], ['all', 'other'])
 
