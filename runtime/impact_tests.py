@@ -9,9 +9,12 @@ import agentctl as a
 VERSION = '1.0.0'
 ENROLLMENT_VERSION = '0.3.0'
 CONFIG = '.agent-work/impact-tests.json'
-PROTECTED = ('AGENTS.md', '.agent-work/gates.json', CONFIG, 'shared/schemas/*',
+# Protected paths always add the gate's required suites to their mapped suites.
+# Agent instruction documents (AGENTS.md, shared/workflows) are mapped to the
+# document suite instead: the gate suites do not exercise their text.
+PROTECTED = ('.agent-work/gates.json', CONFIG, 'shared/schemas/*',
              'runtime/secret_scan.py', '.agent-work/secret-scan-allowlist.json',
-             'shared/workflows/*', 'runtime/control_gate.py', 'runtime/impact_tests.py',
+             'runtime/control_gate.py', 'runtime/impact_tests.py',
              'runtime/agentctl.py', 'runtime/repoctl.py',
              'runtime/repo_automation.py', 'runtime/task_recovery.py', 'runtime/legacy_memory.py',
              'runtime/task_evidence.py', '.agent-work/evidence-policy.json')
@@ -79,16 +82,35 @@ def changed_dependencies(current, enrollment, root, owned):
             yield item['path']
 
 
-def select(current, enrollment, root, *, forced=False):
+def _discover(suite):
+    argv = suite['argv']
+    if 'discover' not in argv or '-s' not in argv or '-p' not in argv:
+        return None
+    return argv[argv.index('-s') + 1], argv[argv.index('-p') + 1]
+
+def _merge(suites):
+    """Keep order; drop a suite whose discover pattern a kept suite already covers."""
+    kept = []
+    for suite in suites:
+        scope = _discover(suite)
+        if any(s['id'] == suite['id'] for s in kept):
+            continue
+        if scope and any(_discover(s) and _discover(s)[0] == scope[0] and
+                         fnmatch.fnmatchcase(scope[1], _discover(s)[1]) for s in kept):
+            continue
+        kept.append(suite)
+    return kept
+
+def select(current, enrollment, root):
     g = gate()
-    full = enrollment['config']['required_suites']
+    required = enrollment['config']['required_suites']
     captured = enrollment.get('impact_tests')
     if captured is None:
-        return {'mode': 'full', 'suites': full, 'reasons': [{'path': '*', 'reason': 'legacy enrollment'}]}
+        return {'mode': 'full', 'suites': required, 'reasons': [{'path': '*', 'reason': 'legacy enrollment'}]}
     config = captured['config']
-    reasons, ids, fallback = [], set(), forced
-    if forced:
-        reasons.append({'path': '*', 'reason': 'irreversible manual full promotion'})
+    # Fallback really runs everything: required gate suites plus every mapped suite.
+    full = _merge(list(required) + list(config['suites']))
+    reasons, ids, fallback, protected = [], set(), False, False
     if g._blob(root, CONFIG) != captured['baseline_blob']:
         fallback = True
         reasons.append({'path': CONFIG, 'reason': 'mapping changed'})
@@ -96,28 +118,39 @@ def select(current, enrollment, root, *, forced=False):
     for item in entries:
         name = item['path']
         baseline = g._blob(root, name, enrollment['base_head'])
-        if any(fnmatch.fnmatchcase(name, p) for p in PROTECTED):
-            reason, chosen = 'protected or shared runtime path', None
-        elif item['state'] != 'file' or baseline['state'] != 'file' or item.get('mode') != baseline.get('mode'):
-            reason, chosen = 'new, deleted, or mode-changed file', None
+        matches = [r for r in config['rules'] if fnmatch.fnmatchcase(name, r['path'])]
+        mapped = sorted({s for r in matches for s in r['suites']})
+        new = baseline['state'] != 'file'
+        guarded = False
+        if item['state'] != 'file' or (not new and item.get('mode') != baseline.get('mode')):
+            reason, chosen = 'deleted or mode-changed file', None
+        elif new and (item.get('mode') != '100644' or name.startswith('runtime/tests/')):
+            # A new test module can change what a discover pattern collects.
+            reason, chosen = 'new executable or test file', None
+        elif any(fnmatch.fnmatchcase(name, p) for p in PROTECTED):
+            protected = guarded = True
+            reason, chosen = 'protected path: required suites plus mapped suites', mapped
+        elif not matches:
+            reason, chosen = 'unmapped path', None
         else:
-            matches = [r for r in config['rules'] if fnmatch.fnmatchcase(name, r['path'])]
-            if not matches:
-                reason, chosen = 'unmapped path', None
-            else:
-                chosen = sorted({s for r in matches for s in r['suites']})
-                reason = '; '.join(r['reason'] for r in matches)
-        reasons.append({'path': name, 'reason': reason, 'suites': chosen or [s['id'] for s in full]})
+            chosen = mapped
+            reason = ('new file; ' if new else '') + '; '.join(r['reason'] for r in matches)
         if chosen is None:
             fallback = True
         else:
             ids.update(chosen)
+        listed = [s['id'] for s in required] if guarded else []
+        reasons.append({'path': name, 'reason': reason,
+                        'suites': [s['id'] for s in full] if chosen is None else listed + chosen})
     # Any changed dependency outside ownership is uncertain: do not skip its tests.
     owned = {e['path'] for e in entries}
     for name in changed_dependencies(current, enrollment, root, owned):
         fallback = True
         reasons.append({'path': name, 'reason': 'changed unowned dependency'})
-    suites = full if fallback else [s for s in config['suites'] if s['id'] in ids]
+    if fallback:
+        suites = full
+    else:
+        suites = _merge((list(required) if protected else []) + [s for s in config['suites'] if s['id'] in ids])
     a.require(suites, 'Impact selection cannot be empty')
     return {'mode': 'full' if fallback else 'impact', 'suites': suites, 'reasons': reasons,
             'mapping_sha256': captured['baseline_sha256']}

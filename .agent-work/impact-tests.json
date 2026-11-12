@@ -187,6 +187,27 @@
   ],
   "rules": [
     {
+      "path": "AGENTS.md",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Agent instruction text; document integrity checks cover it and independent review covers meaning."
+    },
+    {
+      "path": "shared/workflows/*",
+      "suites": [
+        "impact-document-integrity"
+      ],
+      "reason": "Workflow instruction text; document integrity checks cover it and independent review covers meaning."
+    },
+    {
+      "path": "shared/schemas/*",
+      "suites": [
+        "contract"
+      ],
+      "reason": "Result and task schemas are exercised by the contract suite; protected status adds the gate suites."
+    },
+    {
       "path": "README.md",
       "suites": [
         "impact-document-integrity"
