@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -45,8 +46,9 @@ class AutomationTests(unittest.TestCase):
     def bind(self):
         r.bind('sample', 'auto-task', self.root, scope={'project': 'test-project', 'service': 'test-service', 'environment': 'test', 'issue': 'publish'})
 
-    def complete(self):
-        a.transition('auto-task', 'running', self.root)
+    def complete(self, submit=True):
+        if a.read_json(self.root / 'runs/auto-task/task.json')['state'] != 'running':
+            a.transition('auto-task', 'running', self.root)
         output = self.root / 'outputs/auto-task/output.txt'; output.write_text('done')
         evidence = self.root / 'runs/auto-task/evidence/check.txt'; evidence.write_text('passed')
         file = self.root / 'runs/auto-task/result.json'
@@ -57,7 +59,8 @@ class AutomationTests(unittest.TestCase):
                                    'evidence': ['runs/auto-task/evidence/check.txt'], 'notes': ''}]
         result['acceptance_criteria'][0]['verification_ids'] = ['check']
         a.write_json(file, result)
-        a.submit('auto-task', self.root)
+        if submit:
+            a.submit('auto-task', self.root)
 
     def own_file(self, name='owned [literal].txt'):
         (self.path / name).write_text('owned', encoding='utf-8')
@@ -98,7 +101,7 @@ class AutomationTests(unittest.TestCase):
         with mock.patch.object(r, 'git', side_effect=fail_push):
             with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
         receipt = a.read_json(self.root / 'runs/auto-task/publication.json')
-        self.assertEqual(receipt['phase'], 'committed')
+        self.assertEqual(receipt['phase'], 'indexed')
         self.assertEqual(auto.finish('auto-task', self.root)['commit'], receipt['commit'])
 
     def test_unrelated_local_commit_rejected(self):
@@ -143,6 +146,100 @@ class AutomationTests(unittest.TestCase):
         self.assertEqual(published['phase'], 'pushed')
         self.assertEqual(auto.remote_head(self.path, published['policy']), published['commit'])
         self.assertEqual((self.path / '.agent-work/tasks/auto-task/record.json').read_bytes(), preserved)
+
+    def test_interrupted_phases_resume_to_one_commit(self):
+        """Stop after each saved phase, disturb the checkout, then resume from saved bytes."""
+        real_update = auto._update_ref
+        def update_then_crash(*args):
+            real_update(*args)
+            raise a.ContractError('crash after ref update')
+        stops = {'prepared': ('_install', a.ContractError('stop')),
+                 'submitted': ('_update_ref', update_then_crash),
+                 'committed': ('_sync_index', a.ContractError('stop'))}
+        for phase, (name, effect) in stops.items():
+            with self.subTest(phase=phase):
+                fixture = AutomationTests('test_interrupted_phases_resume_to_one_commit')
+                fixture.setUp()
+                try:
+                    fixture.resume_after(phase, name, effect)
+                finally:
+                    fixture.doCleanups()
+
+    def resume_after(self, phase, name, effect):
+        (self.path / 'unrelated.txt').write_text('user work')
+        self.bind(); self.own_file('a[1].txt'); self.own_file('owned l.txt')
+        a.transition('auto-task', 'running', self.root)
+        (self.path / 'owned l.txt').unlink()  # Owned, then reverted: not in the commit.
+        self.complete_running()
+        with mock.patch.object(auto, name, side_effect=effect):
+            with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
+        saved = a.read_json(self.root / 'runs/auto-task/publication.json')
+        self.assertEqual(saved['phase'], phase)
+        evidence = self.root / 'runs/auto-task/evidence/check.txt'
+        evidence.write_text('changed after review')
+        with self.assertRaisesRegex(a.ContractError, 'changed'): auto.finish('auto-task', self.root)
+        evidence.write_text('passed')
+        if phase == 'prepared':
+            r.git(self.path, 'add', '--', 'unrelated.txt')
+            with self.assertRaisesRegex(a.ContractError, 'staged'): auto.finish('auto-task', self.root)
+            r.git(self.path, 'rm', '-q', '--cached', '--', 'unrelated.txt')
+        published = auto.finish('auto-task', self.root)
+        self.assertEqual((published['phase'], published['commit']), ('pushed', saved['commit']))
+        self.assertEqual(auto.remote_head(self.path, published['policy']), saved['commit'])
+        self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), saved['commit'])
+        self.assertEqual(auto.staged_paths(self.path), [])
+        self.assertEqual(r.git(self.path, 'status', '--porcelain', '--', 'unrelated.txt'), '?? unrelated.txt')
+        names = set(r.git(self.path, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
+                          saved['commit'], strip=False).split('\0')) - {''}
+        self.assertIn('a[1].txt', names)
+        self.assertNotIn('owned l.txt', names)
+        self.assertEqual(a.read_json(self.root / 'runs/auto-task/task.json')['state'], 'submitted')
+
+    def complete_running(self):
+        """Finish submits a running task itself."""
+        AutomationTests.complete(self, submit=False)
+
+    def test_pushed_publication_rejects_moved_remote_or_local(self):
+        self.bind(); self.own_file(); self.complete()
+        published = auto.finish('auto-task', self.root)
+        r.git(self.path, 'update-ref', 'refs/heads/main', published['base_head'], published['commit'])
+        with self.assertRaisesRegex(a.ContractError, 'Local branch moved'): auto.finish('auto-task', self.root)
+        r.git(self.path, 'update-ref', 'refs/heads/main', published['commit'], published['base_head'])
+        r.git(self.path, 'push', '-q', '--force', 'origin', published['base_head'] + ':refs/heads/main')
+        with self.assertRaisesRegex(a.ContractError, 'Remote'): auto.finish('auto-task', self.root)
+
+    def test_lock_owner_states_and_unlock(self):
+        self.bind()
+        lock = self.path / '.agent-work/publication.lock'
+        child = subprocess.run([sys.executable, '-c', 'import os; print(os.getpid())'], capture_output=True, text=True, check=True)
+        own = a.process_start(os.getpid())
+        cases = [({'pid': os.getpid(), 'start': own}, 'alive'),
+                 ({'pid': os.getpid(), 'start': 'reused'}, 'dead'),
+                 ({'pid': int(child.stdout), 'start': None}, 'dead'),
+                 ('', 'incomplete')]
+        for content, expected in cases:
+            with self.subTest(expected=expected):
+                lock.write_text(content if type(content) is str else json.dumps(content), encoding='utf-8')
+                self.assertEqual(a.lock_state(lock), expected)
+                with self.assertRaisesRegex(a.ContractError, 'Another operation holds'):
+                    auto.finish('auto-task', self.root)
+                if expected in ('alive', 'incomplete'):
+                    with self.assertRaisesRegex(a.ContractError, 'may still be running'):
+                        auto.unlock('auto-task', self.root)
+                    self.assertTrue(lock.exists())
+                else:
+                    self.assertEqual(auto.unlock('auto-task', self.root)['removed'][0]['owner'], 'dead')
+                    self.assertFalse(lock.exists())
+                lock.unlink(missing_ok=True)
+        lock.write_text(json.dumps({'pid': 4242, 'start': None}), encoding='utf-8')
+        with mock.patch.object(a, 'process_start', return_value=None):  # e.g. OpenProcess access denied
+            self.assertEqual(a.lock_state(lock), 'alive')
+        lock.write_text('', encoding='utf-8')
+        os.utime(lock, (1, 1))
+        self.assertEqual(a.lock_state(lock), 'abandoned')
+        self.assertEqual(auto.unlock('auto-task', self.root)['removed'], [{'lock': 'publication.lock', 'scope': 'repository', 'owner': 'abandoned'}])
+        events = (self.root / 'runs/auto-task/events.jsonl').read_text(encoding='utf-8')
+        self.assertEqual(events.count('"unlock"'), 3)
 
     def test_remote_ahead_and_changed_destination_rejected(self):
         self.bind(); self.own_file(); self.complete()

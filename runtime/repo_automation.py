@@ -1,7 +1,9 @@
 """Opt-in startup and task-scoped publication; no force push or history rewrite."""
 from __future__ import annotations
 
+import base64
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -100,77 +102,302 @@ def track(task_id, paths, root=a.ROOT):
     return value
 
 
+PHASES = ('begun', 'prepared', 'submitted', 'committed', 'indexed', 'pushed')
+AUTOMATION = '.agent-work/automation.json'
+MAX_BYTES = 64 * 1024 * 1024
+
+
+def _git(path, *args, env=None, data=None):
+    """Byte-level Git call. Only temporary-index operations receive env."""
+    proc = subprocess.run(['git', '--literal-pathspecs', '-C', str(path), *args], input=data, env=env,
+                          capture_output=True, timeout=60)
+    a.require(proc.returncode == 0, 'Git operation failed: ' + args[0])
+    return proc.stdout
+
+
+def _rows(raw):
+    a.require(not raw or raw.endswith(b'\0'), 'Ambiguous Git listing')
+    for row in filter(None, raw.split(b'\0')):
+        meta, name = row.split(b'\t', 1)
+        yield meta.decode('ascii').split(), name.decode('utf-8')
+
+
+def _tree(path, commit, names):
+    """{name: [mode, oid]} for regular blobs at exact paths in a commit."""
+    entries = {}
+    for meta, name in (_rows(_git(path, 'ls-tree', '-z', commit, '--', *names)) if names else ()):
+        a.require(name in names and meta[1] == 'blob' and meta[0] in ('100644', '100755'),
+                  'Unsupported committed object: ' + name)
+        entries[name] = [meta[0], meta[2]]
+    return entries
+
+
+def _index(path, names):
+    """{name: [mode, oid]} from the shared index; never called with a temporary index."""
+    entries = {}
+    for meta, name in (_rows(_git(path, 'ls-files', '--stage', '-z', '--', *names)) if names else ()):
+        a.require(meta[2] == '0', 'Unresolved index conflict: ' + name)
+        entries[name] = [meta[0], meta[1]]
+    return entries
+
+
+def _worktree(path, name, index):
+    """The entry shape of control_gate._reviewed_blob, plus the bytes it describes."""
+    file = a.relative(path, name)
+    if not file.exists():
+        return {'path': name, 'state': 'deleted', 'raw_sha256': None}, None
+    a.require(file.is_file() and file.stat().st_size <= MAX_BYTES, 'Unsupported publication file: ' + name)
+    data = file.read_bytes()
+    oid = _git(path, 'hash-object', '--path=' + name, '--stdin', data=data).decode('ascii').strip()
+    mode = index[name][0] if name in index else '100644'
+    if os.name != 'nt' and r.git(path, 'config', '--get', 'core.filemode', optional=True) == 'true':
+        mode = '100755' if file.stat().st_mode & 0o111 else '100644'
+    a.require(mode in ('100644', '100755'), 'Unsupported publication mode: ' + name)
+    return {'path': name, 'state': 'file', 'oid': oid, 'mode': mode, 'raw_sha256': a.digest(data)}, data
+
+
+def _same(entry, committed):
+    if entry['state'] == 'deleted':
+        return committed is None
+    return committed == [entry['mode'], entry['oid']]
+
+
+def _record_oid(path, name, data):
+    return _git(path, 'hash-object', '--path=' + name, '--stdin', data=data).decode('ascii').strip()
+
+
+def _decode(files):
+    return {name: base64.b64decode(data) for name, data in files.items()}
+
+
+def _branch_ref(path, settings):
+    return r.git(path, 'rev-parse', '--verify', '-q', 'refs/heads/' + settings['branch'], optional=True)
+
+
+def verify_commit_object(task_id, root, path, value, payload):
+    """Check the commit object alone: parent, exact diff, sealed content, records, scans, gate."""
+    commit, parent, paths = payload['commit'], payload['parent'], payload['paths']
+    a.require(r.git(path, 'rev-list', '--parents', '-n', '1', commit).split() == [commit, parent],
+              'Unexpected commit parent; push stopped')
+    actual = sorted(set(r.git(path, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
+                              '--no-renames', parent, commit, strip=False).split('\0')) - {''})
+    a.require(actual == paths, 'Commit contains unexpected paths; push stopped')
+    records = _decode(payload['repository_files'])
+    entries = payload['entries'] + ([payload['automation']] if payload['automation'] else [])
+    committed = _tree(path, commit, sorted({e['path'] for e in entries} | set(records)))
+    for entry in entries:
+        a.require(_same(entry, committed.get(entry['path'])), 'Commit content differs from publication seal: ' + entry['path'])
+    for name, data in records.items():
+        a.require(committed.get(name) == ['100644', _record_oid(path, name, data)], 'Commit record differs: ' + name)
+    task_evidence.validate(path, task_id, value, commit=commit)
+    for source in payload['recovered']:
+        source_run, _, _ = context(source, root)
+        task_evidence.validate(path, source, a.read_json(source_run / 'publication.json'), commit=commit)
+    secret_scan.scan_commit(path, commit, parent, paths)
+    return _gate(task_id, root, payload)
+
+
+def _gate(task_id, root, payload, receipt=False):
+    def framework(name):
+        raw = payload['framework_files'].get('runs/' + task_id + '/' + name)
+        return None if raw is None else json.loads(base64.b64decode(raw).decode('utf-8'))
+    return a.control_gate_call('check_commit', task_id, root, commit=payload['commit'], parent=payload['parent'],
+                               paths=payload['paths'], records=_decode(payload['repository_files']),
+                               seal=framework('gate-submission.json'), task=framework('task.json'),
+                               result=framework('result.json'), receipt=receipt)
+
+
+def _subject(task_id, root, path, value):
+    """Current review subject: result, submission seal, owned bytes, approvals and handoffs."""
+    submission = a.submission(task_id, root)
+    a.require(submission['result']['status'] == 'completed',
+              'Only a completed task can publish automatically; close incomplete work separately')
+    import legacy_memory
+    legacy_memory.validate_publication(path, value)
+    import task_recovery
+    recovered = task_recovery.validate(task_id, root, value)
+    return submission, sorted(recovered)
+
+
+def _prepare(task_id, root, run, path, value, settings):
+    submission, recovered = _subject(task_id, root, path, value)
+    parent = value['base_head']
+    a.require(_branch_ref(path, settings) == parent, 'Unexpected local commits appeared during task')
+    a.require(remote_head(path, settings) == parent, 'Remote is ahead or diverged; reconcile separately')
+    a.require(not staged_paths(path), 'Unrelated staged changes block automatic publication')
+    binding = a.read_json(a.relative(run, 'repository.json', file=True))
+    _, entry = r.repo(binding['repository_id'], root)
+    records = r.record_files(task_id, root, path, entry, binding, submission['task'], submission['result'],
+                             submission['snapshot'], r.git_state(path), a.now())
+    owned = sorted(set(value['paths']) - set(records))
+    index = _index(path, owned + [AUTOMATION])
+    data, entries = {}, []
+    for name in owned:
+        item, data[name] = _worktree(path, name, index)
+        entries.append(item)
+    automation, data[AUTOMATION] = _worktree(path, AUTOMATION, index)
+    base = _tree(path, parent, owned + sorted(records) + [AUTOMATION])
+    changed = [e for e in entries if not _same(e, base.get(e['path']))]
+    if _same(automation, base.get(AUTOMATION)):
+        automation = None
+    else:
+        a.require(automation['raw_sha256'] == value['policy_sha256'], 'Publication policy changed since task began')
+        changed.append(automation)
+    changed_records = sorted(n for n, d in records.items() if base.get(n) != ['100644', _record_oid(path, n, d)])
+    paths = sorted({e['path'] for e in changed} | set(changed_records))
+    a.require(paths, 'No task-owned changes to publish')
+    publish = a.relative(run, 'publish')
+    publish.mkdir(exist_ok=True)
+    temporary = a.relative(publish, 'index')
+    temporary.unlink(missing_ok=True)
+    env = {**os.environ, 'GIT_INDEX_FILE': str(temporary)}
+    zero = '0' * len(parent)
+    try:
+        _git(path, 'read-tree', parent, env=env)
+        info = []
+        for item in changed:
+            name = item['path']
+            if item['state'] == 'deleted':
+                info.append(f'0 {zero}\t{name}')
+                continue
+            oid = _git(path, 'hash-object', '-w', '--path=' + name, '--stdin', data=data[name]).decode('ascii').strip()
+            a.require(oid == item['oid'], 'Sealed bytes produced another Git object: ' + name)
+            info.append(f"{item['mode']} {oid}\t{name}")
+        for name in changed_records:
+            oid = _git(path, 'hash-object', '-w', '--path=' + name, '--stdin', data=records[name]).decode('ascii').strip()
+            info.append(f'100644 {oid}\t{name}')
+        _git(path, 'update-index', '-z', '--index-info', env=env, data=''.join(i + '\0' for i in info).encode('utf-8'))
+        tree = _git(path, 'write-tree', env=env).decode('ascii').strip()
+        commit = _git(path, 'commit-tree', tree, '-p', parent, '-m', 'Complete task ' + task_id).decode('ascii').strip()
+    finally:
+        temporary.unlink(missing_ok=True)
+    payload = {'schema_version': '1.0.0', 'task_id': task_id, 'kind': 'product', 'mode': 'local-update',
+               'base': value['base_head'], 'parent': parent, 'commit': commit, 'paths': paths,
+               'entries': entries, 'automation': automation, 'index_before': _index(path, paths),
+               'recovered': recovered,
+               'framework_files': {n: base64.b64encode(d).decode('ascii') for n, d in submission['files'].items()},
+               'repository_files': {n: base64.b64encode(d).decode('ascii') for n, d in records.items()}}
+    gate = verify_commit_object(task_id, root, path, value, payload)
+    raw = a.json_bytes(payload)
+    a.atomic_bytes(a.relative(publish, 'payload.json'), raw)
+    value.update(phase='prepared', commit=commit, parent=parent, publication_paths=paths, payload_sha256=a.digest(raw))
+    return payload, gate
+
+
+def _reverify(task_id, root, run, path, value, settings):
+    """Common checks on every resume; saved bytes are reinstalled, never regenerated."""
+    raw = a.relative(run, 'publish/payload.json', file=True).read_bytes()
+    a.require(a.digest(raw) == value.get('payload_sha256'), 'Saved publication payload changed')
+    payload = json.loads(raw.decode('utf-8'), object_pairs_hook=a.unique_pairs)
+    a.require(payload['commit'] == value['commit'] and payload['parent'] == value['parent'] and
+              payload['paths'] == value['publication_paths'] and payload['mode'] == 'local-update',
+              'Saved publication payload differs from manifest')
+    submission, recovered = _subject(task_id, root, path, value)
+    a.require({n: base64.b64encode(d).decode('ascii') for n, d in submission['files'].items()} ==
+              payload['framework_files'] and recovered == payload['recovered'],
+              'Submission, seal, tests, review or evidence changed after publication was prepared')
+    index = _index(path, [e['path'] for e in payload['entries']])
+    for item in payload['entries'] + ([payload['automation']] if payload['automation'] else []):
+        a.require(_worktree(path, item['path'], index)[0] == item, 'Owned file changed after publication was prepared: ' + item['path'])
+    if PHASES.index(value['phase']) >= PHASES.index('submitted'):
+        for name, data in _decode(payload['repository_files']).items():
+            a.require(a.relative(path, name, file=True).read_bytes() == data, 'Installed task record changed: ' + name)
+    a.require(remote_head(path, settings) in (payload['parent'], payload['commit']), 'Remote changed; refusing history rewrite')
+    return payload, verify_commit_object(task_id, root, path, value, payload)
+
+
+def _install(task_id, root, run, path, payload):
+    previous = a.read_json(a.relative(run, 'task.json', file=True))['state']
+    a.install_submission(task_id, root, _decode(payload['framework_files']))
+    if previous != 'submitted':
+        a.event(run, 'submitted', status='completed')
+    for name, data in _decode(payload['repository_files']).items():
+        file = a.relative(path, name)
+        if not file.is_file() or file.read_bytes() != data:
+            a.atomic_bytes(file, data)
+        a.require(file.read_bytes() == data, 'Installed task record differs: ' + name)
+
+
+def _update_ref(path, settings, payload):
+    a.require(r.git(path, 'symbolic-ref', 'HEAD') == 'refs/heads/' + settings['branch'], 'Branch changed')
+    a.require(not staged_paths(path), 'Unrelated staged changes block automatic publication')
+    a.require(_index(path, payload['paths']) == payload['index_before'], 'Index changed after publication was prepared')
+    r.git(path, 'update-ref', '-m', 'Complete task ' + payload['task_id'], 'refs/heads/' + settings['branch'],
+          payload['commit'], payload['parent'])
+
+
+def _sync_index(path, payload):
+    paths, commit = payload['paths'], payload['commit']
+    target = _tree(path, commit, paths)
+    current = _index(path, paths)
+    for name in paths:
+        a.require(current.get(name) in (payload['index_before'].get(name), target.get(name)),
+                  'Index entry is neither the prepared nor the published state: ' + name)
+    a.require(set(staged_paths(path)) <= set(paths), 'Unrelated staged changes block index synchronization')
+    r.git(path, '--literal-pathspecs', 'reset', '-q', commit, '--', *paths)
+    a.require(_index(path, paths) == target and not staged_paths(path), 'Index synchronization failed')
+
+
 def finish(task_id, root=a.ROOT):
     run, task, path = context(task_id, root)
     file = a.relative(run, 'publication.json', file=True)
-    with a.lock(a.relative(path, '.agent-work/publication.lock')):
+    with a.lock(a.relative(path, '.agent-work/publication.lock')), a.lock(run / '.operation.lock'):
         value = a.read_json(file)
         settings = policy(path)
-        a.require(settings == value['policy'] and a.digest(a.relative(path, '.agent-work/automation.json', file=True).read_bytes()) == value['policy_sha256'], 'Publication policy changed since task began')
+        a.require(settings == value['policy'] and a.digest(a.relative(path, AUTOMATION, file=True).read_bytes()) == value['policy_sha256'], 'Publication policy changed since task began')
         assert_destination(path, settings)
-        result, task, _ = a.validate_result(task_id, root)
-        a.require(task['state'] == 'submitted' and result['status'] == 'completed',
-                  'Only a submitted completed task can publish automatically')
-        import legacy_memory
-        legacy_memory.validate_publication(path, value)
-        import task_recovery
-        recovered = task_recovery.validate(task_id, root, value)
-        head = r.git(path, 'rev-parse', 'HEAD')
-        if value['phase'] == 'pushed':
-            a.require(head == value['commit'], 'HEAD changed after publication')
-            a.require(remote_head(path, settings) == value['commit'], 'Remote moved after publication')
-            return value
-        if value['phase'] == 'committed':
-            a.require(head == value['commit'], 'Unexpected local commits appeared before retry')
+        a.require(value['phase'] in PHASES, 'Unknown publication phase')
+        if value['phase'] == 'begun':
+            payload, gate = _prepare(task_id, root, run, path, value, settings)
+            a.write_json(file, value)
         else:
-            a.require(head == value['base_head'], 'Unexpected local commits appeared during task')
-            a.require(remote_head(path, settings) == head, 'Remote is ahead or diverged; reconcile separately')
-            a.require(not staged_paths(path), 'Unrelated staged changes block automatic publication')
-            r.checkpoint(task_id, root)
-            task_evidence.validate(path, task_id, value)
-            owned = sorted(set(value['paths'] + ['.agent-work/automation.json'] + [
-                '.agent-work/tasks/' + task_id + '/' + name
-                for name in ('spec.md', 'record.json', 'report.ko.md')]))
-            for name in owned:
-                a.relative(path, name)
-            changed = sorted(set(dirty_paths(path)) & set(owned))
-            a.require(changed, 'No task-owned changes to publish')
-            value['staged_paths'] = changed
+            payload, gate = _reverify(task_id, root, run, path, value, settings)
+        commit, parent = payload['commit'], payload['parent']
+        ref = _branch_ref(path, settings)
+        if value['phase'] == 'prepared':
+            a.require(ref == parent, 'Unexpected local commits appeared before publication')
+            _install(task_id, root, run, path, payload)
+            value['phase'] = 'submitted'
             a.write_json(file, value)
-            r.git(path, '--literal-pathspecs', 'add', '--', *changed)
-            a.require(staged_paths(path) == changed, 'Index contains unexpected files; publication stopped')
-            secret_scan.scan_index(path, changed)
-            try:
-                r.git(path, 'commit', '-m', 'Complete task ' + task_id)
-            except Exception:
-                # Leave the index untouched; user/agent can inspect failed hooks or identity setup.
-                raise a.ContractError('Commit failed; task files remain staged for inspection')
-            commit = r.git(path, 'rev-parse', 'HEAD')
-            actual = sorted(set(r.git(path, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
-                                     '--no-renames', commit, strip=False).split('\0')) - {''})
-            a.require(actual == changed, 'Commit contains unexpected paths; push stopped')
-            a.require(r.git(path, 'rev-parse', commit + '^') == value['base_head'],
-                      'Unexpected commit parent; push stopped')
-            value.update(phase='committed', commit=commit)
+        if value['phase'] == 'submitted':
+            if ref != commit:  # Equal only when update-ref succeeded before the phase was saved.
+                a.require(ref == parent, 'Unexpected local commits appeared before publication')
+                _update_ref(path, settings, payload)
+            value['phase'] = 'committed'
             a.write_json(file, value)
-        # P1 checks the real created/retried commit before any remote effect.
-        # A failure preserves phase=committed, so a retry cannot make a duplicate
-        # completion commit.
-        task_evidence.validate(path, task_id, value, commit=value['commit'])
-        for source in recovered:
-            source_run, _, _ = context(source, root)
-            task_evidence.validate(path, source, a.read_json(source_run / 'publication.json'), commit=value['commit'])
-        gate = a.control_gate_call('check_publication', task_id, root,
-                                  commit=value['commit'], publication=value)
-        remote = remote_head(path, settings)
-        a.require(remote in (value['base_head'], value['commit']), 'Remote changed; refusing history rewrite')
-        secret_scan.scan_commit(path, value['commit'], value['base_head'], value['staged_paths'])
-        if remote != value['commit']:
-            r.git(path, 'push', settings['remote'], value['commit'] + ':refs/heads/' + settings['branch'])
-        a.require(remote_head(path, settings) == value['commit'], 'Remote confirmation failed')
-        value.update(phase='pushed', pushed_at=a.now())
-        a.write_json(file, value)
+        a.require(_branch_ref(path, settings) == commit, 'Local branch moved after publication commit')
+        if value['phase'] == 'committed':
+            _sync_index(path, payload)
+            value['phase'] = 'indexed'
+            a.write_json(file, value)
+        if value['phase'] == 'indexed':
+            if remote_head(path, settings) != commit:
+                r.git(path, 'push', settings['remote'], commit + ':refs/heads/' + settings['branch'])
+            a.require(remote_head(path, settings) == commit, 'Remote confirmation failed')
+            gate = _gate(task_id, root, payload, receipt=True)
+
+            value.update(phase='pushed', pushed_at=a.now())
+            a.write_json(file, value)
+        a.require(remote_head(path, settings) == commit, 'Remote moved after publication')
         return {**value, 'gate': gate} if gate is not None else value
+
+
+def unlock(task_id, root=a.ROOT):
+    """Remove locks only when their recorded owner process is gone."""
+    run, _, path = context(task_id, root)
+    files = [run / '.operation.lock', run / '.publication.lock'] + [
+        path / '.agent-work' / name for name in ('publication.lock', 'record.lock', 'recovery.lock')]
+    states = {file: a.lock_state(file) for file in files}
+    held = [f'{file.name}: {state}' for file, state in states.items() if state in ('alive', 'incomplete')]
+    a.require(not held, 'Lock owner may still be running: ' + ', '.join(held))
+    removed = []
+    for file, state in states.items():
+        if state in ('dead', 'abandoned'):
+            file.unlink()
+            scope = 'task' if file.parent == run else 'repository'
+            a.event(run, 'unlock', lock=file.name, scope=scope, owner=state)
+            removed.append({'lock': file.name, 'scope': scope, 'owner': state})
+    return {'task_id': task_id, 'removed': removed}
 
 
 def startup(repo_id=None, task_id=None, root=a.ROOT, cwd=None, scope=None):

@@ -114,8 +114,9 @@ class GateTests(GateFixture, unittest.TestCase):
         self.ready()
         self.assertEqual(g.check_submission('gate-task', self.root)['status'], 'passed')
         self.assertFalse((self.run / 'gate-submission.json').exists())
-        g.check_submission('gate-task', self.root, persist=True)
-        self.assertTrue((self.run / 'gate-submission.json').is_file())
+        files = g.check_submission('gate-task', self.root, persist=True)['files']
+        self.assertEqual(set(files), {'gate-submission.json'})
+        self.assertFalse((self.run / 'gate-submission.json').exists())
 
     def test_missing_tests_blocks(self):
         with self.assertRaisesRegex(a.ContractError, 'test evidence missing'):
@@ -324,7 +325,7 @@ class GateTests(GateFixture, unittest.TestCase):
         with self.assertRaisesRegex(a.ContractError, 'submission policy denies'):
             g.check_submission('denied-task', self.root, {'status': 'completed'})
         with self.assertRaisesRegex(a.ContractError, 'publication policy denies'):
-            g.check_publication('denied-task', self.root, 'unused')
+            g.check_commit('denied-task', self.root, 'unused')
 
     def test_remote_change_blocks(self):
         r.git(self.root, 'remote', 'set-url', 'origin', 'https://example.invalid/other.git')
@@ -341,8 +342,7 @@ class GateTests(GateFixture, unittest.TestCase):
         a.submit('gate-task', self.root)
         r.checkpoint('gate-task', self.root)
         self.assertFalse((self.run / 'gate-submission.json').exists())
-        self.assertFalse((self.run / 'gate-checkpoint.json').exists())
-        with self.assertRaisesRegex(a.ContractError, 'submitted completed task'):
+        with self.assertRaisesRegex(a.ContractError, 'Only a completed task'):
             auto.finish('gate-task', self.root)
 
     def test_legacy_not_retroactively_enrolled(self):
@@ -375,45 +375,39 @@ class GateTests(GateFixture, unittest.TestCase):
         r.git(self.root, 'commit', '-q', '-m', 'CRLF fixture')
         self.assertEqual(g._blob(self.root, 'product.txt'), g._blob(self.root, 'product.txt', 'HEAD'))
 
-    def test_actual_commit_with_canonical_generated_records(self):
-        self.ready(); a.submit('gate-task', self.root); r.checkpoint('gate-task', self.root)
-        publication = a.read_json(self.run / 'publication.json')
-        paths = sorted({'product.txt'} | g._managed('gate-task'))
+    def manual_commit(self, extra=(), tamper=None):
+        """Commit generated records by hand and return check_commit arguments."""
+        self.ready(); a.submit('gate-task', self.root)
+        submission = a.submission('gate-task', self.root)
+        _, entry = r.repo('sample', self.root)
+        records = r.record_files('gate-task', self.root, self.root, entry, a.read_json(self.run / 'repository.json'),
+                                 submission['task'], submission['result'], submission['snapshot'],
+                                 r.git_state(self.root), a.now())
+        if tamper:
+            tamper(records)
+        for name, data in records.items():
+            (self.root / name).write_bytes(data)
+        paths = sorted({'product.txt', *records, *extra})
+        parent = r.git(self.root, 'rev-parse', 'HEAD')
         r.git(self.root, 'add', '--', *paths)
-        r.git(self.root, 'commit', '-q', '-m', 'generated candidate')
-        commit = r.git(self.root, 'rev-parse', 'HEAD')
-        publication.update(phase='committed', commit=commit, staged_paths=paths)
-        a.write_json(self.run / 'publication.json', publication)
-        self.assertEqual(g.check_publication('gate-task', self.root, commit, publication)['status'], 'passed')
+        r.git(self.root, 'commit', '-q', '-m', 'manual candidate')
+        return dict(commit=r.git(self.root, 'rev-parse', 'HEAD'), parent=parent, paths=paths, records=records,
+                    task=submission['task'], result=submission['result'], seal=a.read_json(self.run / 'gate-submission.json'))
+
+    def test_actual_commit_matches_seal(self):
+        self.assertEqual(g.check_commit('gate-task', self.root, **self.manual_commit())['status'], 'passed')
 
     def test_generated_payload_rejected_even_if_committed(self):
-        self.ready(); a.submit('gate-task', self.root); r.checkpoint('gate-task', self.root)
-        file = self.root / '.agent-work/tasks/gate-task/spec.md'
-        file.write_text(file.read_text(encoding='utf-8') + '\nUnreviewed payload\n', encoding='utf-8')
-        publication = a.read_json(self.run / 'publication.json')
-        paths = sorted({'product.txt'} | g._managed('gate-task'))
-        r.git(self.root, 'add', '--', *paths)
-        r.git(self.root, 'commit', '-q', '-m', 'tampered generated candidate')
-        commit = r.git(self.root, 'rev-parse', 'HEAD')
-        publication.update(phase='committed', commit=commit, staged_paths=paths)
-        a.write_json(self.run / 'publication.json', publication)
+        def tamper(records):
+            name = '.agent-work/tasks/gate-task/spec.md'
+            records[name] += b'\nUnreviewed payload\n'
         with self.assertRaisesRegex(a.ContractError, 'canonical generated'):
-            g.check_publication('gate-task', self.root, commit, publication)
+            g.check_commit('gate-task', self.root, **self.manual_commit(tamper=tamper))
 
-    def test_generated_json_payload_rejected_by_checkpoint_receipt(self):
-        self.ready(); a.submit('gate-task', self.root); r.checkpoint('gate-task', self.root)
-        file = self.root / '.agent-work/tasks/gate-task/record.json'
-        value = a.read_json(file); value['git']['status'] = 'UNREVIEWED PAYLOAD'
-        a.write_json(file, value)
-        publication = a.read_json(self.run / 'publication.json')
-        paths = sorted({'product.txt'} | g._managed('gate-task'))
-        r.git(self.root, 'add', '--', *paths)
-        r.git(self.root, 'commit', '-q', '-m', 'tampered JSON checkpoint')
-        commit = r.git(self.root, 'rev-parse', 'HEAD')
-        publication.update(phase='committed', commit=commit, staged_paths=paths)
-        a.write_json(self.run / 'publication.json', publication)
-        with self.assertRaisesRegex(a.ContractError, 'differ from lifecycle checkpoint'):
-            g.check_publication('gate-task', self.root, commit, publication)
+    def test_actual_commit_extra_path_rejected(self):
+        (self.root / 'unowned.txt').write_text('unowned')
+        with self.assertRaisesRegex(a.ContractError, 'path set'):
+            g.check_commit('gate-task', self.root, **self.manual_commit(extra=('unowned.txt',)))
 
     def test_unicode_and_whitespace_committed_names(self):
         name = '한글 [x] space .txt'
@@ -421,31 +415,6 @@ class GateTests(GateFixture, unittest.TestCase):
         r.git(self.root, 'add', '--', name)
         r.git(self.root, 'commit', '-q', '-m', 'name fixture')
         self.assertEqual(g._blob(self.root, name), g._blob(self.root, name, 'HEAD'))
-
-    def test_actual_commit_matches_seal(self):
-        self.ready()
-        a.submit('gate-task', self.root)
-        r.checkpoint('gate-task', self.root)
-        publication = a.read_json(self.run / 'publication.json')
-        paths = sorted({'product.txt'} | g._managed('gate-task'))
-        r.git(self.root, 'add', '--', *paths)
-        r.git(self.root, 'commit', '-q', '-m', 'candidate')
-        commit = r.git(self.root, 'rev-parse', 'HEAD')
-        publication.update(phase='committed', commit=commit, staged_paths=paths)
-        a.write_json(self.run / 'publication.json', publication)
-        self.assertEqual(g.check_publication('gate-task', self.root, commit, publication)['status'], 'passed')
-
-    def test_actual_commit_extra_path_rejected(self):
-        self.ready(); a.submit('gate-task', self.root)
-        (self.root / 'unowned.txt').write_text('unowned')
-        r.git(self.root, 'add', '--', 'product.txt', 'unowned.txt')
-        r.git(self.root, 'commit', '-q', '-m', 'unexpected')
-        commit = r.git(self.root, 'rev-parse', 'HEAD')
-        publication = a.read_json(self.run / 'publication.json')
-        publication.update(phase='committed', commit=commit, staged_paths=['product.txt', 'unowned.txt'])
-        a.write_json(self.run / 'publication.json', publication)
-        with self.assertRaisesRegex(a.ContractError, 'path set'):
-            g.check_publication('gate-task', self.root, commit, publication)
 
 
 class MixedPublicationTests(GateFixture, unittest.TestCase):
@@ -459,6 +428,7 @@ class MixedPublicationTests(GateFixture, unittest.TestCase):
         a.write_json(self.root / '.agent-work/automation.json', policy)
         (self.root / 'runtime/legacy.py').write_bytes(b'legacy = 1\r\n')
         (self.root / 'runtime/normalized.py').write_bytes(b'normalized = 1\n')
+        (self.root / 'owned-legacy.txt').write_bytes(b'stored crlf\r\n')
 
     def after_initial_commit(self):
         r.git(self.remote, 'fetch', str(self.root), 'refs/heads/main:refs/heads/main')
@@ -469,7 +439,7 @@ class MixedPublicationTests(GateFixture, unittest.TestCase):
         self.assertNotEqual(g._blob(self.root, 'runtime/legacy.py'), g._blob(self.root, 'runtime/legacy.py', 'HEAD'))
         self.assertEqual(g._blob(self.root, 'runtime/normalized.py'), g._blob(self.root, 'runtime/normalized.py', 'HEAD'))
         name = 'runtime/fixture_shared.py'
-        auto.track('gate-task', [name], self.root)
+        auto.track('gate-task', [name, 'owned-legacy.txt'], self.root)
         (self.root / name).unlink()
         before = g.candidate('gate-task', self.root)
         tombstone = {'path': name, 'sha256': None, 'mode': None}
@@ -485,6 +455,10 @@ class MixedPublicationTests(GateFixture, unittest.TestCase):
         self.assertEqual(published['gate']['status'], 'passed')
         self.assertEqual(auto.remote_head(self.root, published['policy']), published['commit'])
         self.assertEqual(g._blob(self.root, name, published['commit'])['state'], 'deleted')
+        # An unchanged owned file stored as a CRLF blob is committed as its sealed (clean) object.
+        sealed = next(e for e in before['candidate']['entries'] if e['path'] == 'owned-legacy.txt')
+        self.assertEqual(g._blob(self.root, 'owned-legacy.txt', published['commit'])['oid'], sealed['oid'])
+        self.assertNotEqual(g._blob(self.root, 'owned-legacy.txt', published['base_head'])['oid'], sealed['oid'])
         print('OWNED_DELETION_PUBLICATION ' + json.dumps({'before_digest': before['digest'],
               'after_digest': after['digest'], 'commit': published['commit'],
               'phase': published['phase'], 'remote_confirmed': True, 'deleted_path': name}))
@@ -562,44 +536,29 @@ class DependencyRepresentationTests(unittest.TestCase):
         with self.assertRaises(a.ContractError):
             g._dependency_matches(self.root, item, 'HEAD')
 
-    def test_reviewed_owned_historic_crlf_and_normal_content(self):
-        for name in ('runtime/legacy.py', 'runtime/normal.py'):
-            with self.subTest(name=name):
-                entry = g._reviewed_blob(self.root, name)
-                self.assertTrue(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+    def test_committed_entry_requires_the_sealed_object(self):
+        legacy, normal = (g._reviewed_blob(self.root, name) for name in ('runtime/legacy.py', 'runtime/normal.py'))
+        self.assertTrue(g._committed_entry_matches(self.root, normal, 'HEAD'))
+        # A stored CRLF blob is another object; publication writes the sealed object instead.
+        self.assertFalse(g._committed_entry_matches(self.root, legacy, 'HEAD'))
+        r.git(self.root, 'rm', '-q', '--cached', '--', legacy['path'])
+        r.git(self.root, 'add', '--', legacy['path'])
+        r.git(self.root, 'commit', '-q', '-m', 'Sealed object')
+        self.assertTrue(g._committed_entry_matches(self.root, legacy, 'HEAD'))
 
-    def test_reviewed_changed_historic_crlf_commit(self):
-        name = 'runtime/legacy.py'
-        (self.root / name).write_bytes(b'value = 7\r\n')
-        entry = g._reviewed_blob(self.root, name)
-        r.git(self.root, 'add', '--', name)
-        r.git(self.root, 'commit', '-q', '-m', 'Changed historical CRLF')
-        self.assertNotEqual(entry['oid'], g._blob(self.root, name, 'HEAD')['oid'])
-        self.assertTrue(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
-
-    def test_reviewed_owned_wrong_committed_bytes_rejected(self):
-        name = 'runtime/legacy.py'
+    def test_committed_entry_wrong_bytes_or_mode_rejected(self):
+        name = 'runtime/normal.py'
         entry = g._reviewed_blob(self.root, name)
         original = (self.root / name).read_bytes()
         (self.root / name).write_bytes(b'value = 999\r\n')
         r.git(self.root, 'add', '--', name)
         r.git(self.root, 'commit', '-q', '-m', 'Wrong committed bytes')
+        self.assertFalse(g._committed_entry_matches(self.root, entry, 'HEAD'))
         (self.root / name).write_bytes(original)
-        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
-
-    def test_reviewed_owned_postreview_raw_change_rejected(self):
-        name = 'runtime/normal.py'
-        entry = g._reviewed_blob(self.root, name)
-        (self.root / name).write_bytes(b'value = 2\n')
-        self.assertEqual(entry['oid'], g._blob(self.root, name)['oid'])
-        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
-
-    def test_reviewed_owned_mode_change_rejected(self):
-        name = 'runtime/legacy.py'
-        entry = g._reviewed_blob(self.root, name)
+        r.git(self.root, 'add', '--', name)
         r.git(self.root, 'update-index', '--chmod=+x', '--', name)
         r.git(self.root, 'commit', '-q', '-m', 'Changed reviewed mode')
-        self.assertFalse(g._reviewed_blob_matches(self.root, entry, 'HEAD'))
+        self.assertFalse(g._committed_entry_matches(self.root, entry, 'HEAD'))
 
 
 if __name__ == '__main__':

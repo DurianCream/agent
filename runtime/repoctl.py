@@ -278,51 +278,47 @@ def specification_text(task_id, binding, task, result, scope, state):
     ])
 
 
+def record_files(task_id, root, path, entry, binding, task, result, snapshot, state, saved_at):
+    """Render the three generated task records as exact bytes; writes nothing."""
+    scope = record_scope(binding)
+    dest = a.relative(path, '.agent-work/tasks/' + a.identifier(task_id))
+    old = a.read_json(dest / 'record.json') if (dest / 'record.json').exists() else None
+    a.require(not old or (old['repository_uuid'] == entry['uuid'] and old['result']['created_at'] == result['created_at']), 'Existing record belongs to another task instance')
+    if old:
+        old_scope = record_scope(old)
+        a.require(old_scope == scope or (old_scope is None and scope is not None and task['state'] not in ('submitted', 'cancelled')), 'Saved task scope is immutable')
+    record = {'schema_version': '1.0.0', 'repository_id': binding['repository_id'],
+              'repository_uuid': entry['uuid'], 'task_id': task_id, 'saved_at': saved_at,
+              'task_state': task['state'], 'git': state, 'result': result,
+              # Enrolled P1 records are sealed against their original loader contract.
+              'source_root': ('.' if snapshot.get('report_paths') == 'repository-relative-v1'
+                              and 'control_enrollment' not in task else str(Path(root).resolve())),
+              'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
+    if scope is not None:
+        record['scope'] = scope
+    report = record_text(result, task, state, scope, saved_at=saved_at)
+    text = specification_text(task_id, binding, task, result, scope, state)
+    record['spec_sha256'] = a.digest(text.encode('utf-8'))
+    prefix = '.agent-work/tasks/' + task_id + '/'
+    return {prefix + 'report.ko.md': report.encode('utf-8'), prefix + 'spec.md': text.encode('utf-8'),
+            prefix + 'record.json': a.json_bytes(record)}
+
+
 def checkpoint(task_id, root=ROOT):
     run, _, _ = a.load_task(task_id, root)
     binding = a.read_json(a.relative(run, 'repository.json', file=True))
     path, entry = repo(binding['repository_id'], root)
     a.require(entry['uuid'] == binding['repository_uuid'] and binding['task_id'] == task_id,
               'Task repository binding mismatch')
-    scope = record_scope(binding)
     result, task, snapshot = a.validate_result(task_id, root)
     state = git_state(path)
     base = a.relative(path, '.agent-work')
     with a.lock(a.relative(base, 'record.lock')):
-        dest = a.relative(base, 'tasks/' + a.identifier(task_id))
-        dest.mkdir(parents=True, exist_ok=True)
-        old = a.read_json(dest / 'record.json') if (dest / 'record.json').exists() else None
-        a.require(not old or (old['repository_uuid'] == entry['uuid'] and old['result']['created_at'] == result['created_at']), 'Existing record belongs to another task instance')
-        if old:
-            old_scope = record_scope(old)
-            a.require(old_scope == scope or (old_scope is None and scope is not None and task['state'] not in ('submitted', 'cancelled')), 'Saved task scope is immutable')
-        record = {'schema_version': '1.0.0', 'repository_id': binding['repository_id'],
-                  'repository_uuid': entry['uuid'], 'task_id': task_id, 'saved_at': a.now(),
-                  'task_state': task['state'], 'git': state, 'result': result,
-                  # Enrolled P1 records are sealed against their original loader contract.
-                  'source_root': ('.' if snapshot.get('report_paths') == 'repository-relative-v1'
-                                  and 'control_enrollment' not in task else str(Path(root).resolve())),
-                  'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
-        if scope is not None:
-            record['scope'] = scope
-        report = record_text(result, task, state, scope, saved_at=record['saved_at'])
-        a.atomic_text(a.relative(dest, 'report.ko.md'), report)
-        text = specification_text(task_id, binding, task, result, scope, state)
-        a.atomic_text(a.relative(dest, 'spec.md'), text)
-        record['spec_sha256'] = a.digest(text.encode('utf-8'))
-        a.write_json(a.relative(dest, 'record.json'), record)
-        # Bind the exact values this checkpoint generated, not mutable files
-        # reread after writing. P1 checks these bytes again in the real commit.
-        def json_bytes(value):
-            return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8')
-        prefix = '.agent-work/tasks/' + task_id + '/'
-        a.control_gate_call('seal_checkpoint', task_id, root, files={
-            prefix + 'spec.md': text.encode('utf-8'),
-            prefix + 'record.json': json_bytes(record),
-            prefix + 'report.ko.md': report.encode('utf-8'),
-        })
-    response = {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
-    return response
+        files = record_files(task_id, root, path, entry, binding, task, result, snapshot, state, a.now())
+        for name, data in files.items():
+            a.atomic_bytes(a.relative(path, name), data)
+    dest = a.relative(base, 'tasks/' + task_id)
+    return {'task_id': task_id, 'repository_id': binding['repository_id'], 'spec': str(dest / 'spec.md')}
 
 
 def resume(repo_id, task_id=None, root=ROOT, scope=None):
@@ -396,7 +392,7 @@ def main(argv=None):
     p = sub.add_parser('checkpoint'); p.add_argument('--task', required=True)
     p = sub.add_parser('resume'); p.add_argument('--repo', required=True); p.add_argument('--task'); add_scope_args(p)
     p = sub.add_parser('startup'); p.add_argument('--repo'); p.add_argument('--task'); add_scope_args(p)
-    for name in ('begin', 'finish'):
+    for name in ('begin', 'finish', 'unlock'):
         p = sub.add_parser(name); p.add_argument('--task', required=True)
     p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
     p = sub.add_parser('import-legacy'); p.add_argument('--repo', required=True); p.add_argument('--source-task', required=True)
@@ -411,7 +407,7 @@ def main(argv=None):
         elif args.command in ('import-legacy', 'approve-memory'):
             import legacy_memory
             value = legacy_memory.import_legacy(args.repo, args.source_task) if args.command == 'import-legacy' else legacy_memory.approve_memory(args.task, args.legacy_task)
-        elif args.command in ('startup', 'begin', 'track', 'finish'):
+        elif args.command in ('startup', 'begin', 'track', 'finish', 'unlock'):
             import repo_automation
             if args.command == 'startup': value = repo_automation.startup(args.repo, args.task, scope=scope_args(args))
             elif args.command == 'track': value = repo_automation.track(args.task, args.path)

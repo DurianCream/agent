@@ -1,5 +1,6 @@
 """Lifecycle boundary regressions; local bare remotes never contact a service."""
 import json
+import subprocess
 import sys
 import types
 import unittest
@@ -22,7 +23,7 @@ class GateIntegrationTests(unittest.TestCase):
 
     def fake_gate(self):
         gate = types.SimpleNamespace(**{name: mock.Mock(return_value=None) for name in
-            ('enroll', 'check_enrollment', 'check_submission', 'check_publication', 'seal_checkpoint')})
+            ('enroll', 'check_enrollment', 'check_submission', 'check_commit')})
         patch = mock.patch.dict(sys.modules, {'control_gate': gate})
         patch.start()
         self.addCleanup(patch.stop)
@@ -66,26 +67,18 @@ class GateIntegrationTests(unittest.TestCase):
                 r.record_text(record['result'], task, record['git'], record['scope'],
                     saved_at=record['saved_at']))
 
-    def test_checkpoint_seal_receives_generated_bytes_not_file_reread(self):
+    def test_commit_gate_receives_exact_committed_record_bytes(self):
         gate = self.fake_gate()
-        original = a.atomic_text
-        def tamper_after_write(file, text):
-            original(file, text)
-            if file.name == 'spec.md':
-                file.write_text(text + 'unreviewed addition', encoding='utf-8')
-        with mock.patch.object(a, 'atomic_text', side_effect=tamper_after_write):
-            self.bind()
-        files = gate.seal_checkpoint.call_args.kwargs['files']
-        self.assertEqual(set(files), {'.agent-work/tasks/auto-task/' + name
-                                      for name in ('spec.md', 'record.json', 'report.ko.md')})
-        self.assertTrue(all(type(value) is bytes for value in files.values()))
-        name = '.agent-work/tasks/auto-task/spec.md'
-        self.assertNotEqual(files[name], (self.path / name).read_bytes())
-        self.assertNotIn(b'unreviewed addition', files[name])
-        for name, expected in files.items():
-            if not name.endswith('/spec.md'):
-                self.assertEqual(expected, (self.path / name).read_bytes())
-
+        self.bind(); self.own_file(); self.complete()
+        published = auto.finish('auto-task', self.root)
+        calls = gate.check_commit.call_args_list
+        self.assertEqual([c.kwargs.get('receipt', False) for c in calls], [False, True])
+        records = calls[-1].kwargs['records']
+        self.assertEqual(set(records), {'.agent-work/tasks/auto-task/' + name
+                                        for name in ('spec.md', 'record.json', 'report.ko.md')})
+        for name, data in records.items():
+            self.assertEqual(subprocess.run(['git', 'show', published['commit'] + ':' + name], cwd=self.path,
+                                            capture_output=True, check=True).stdout, data)
     def test_load_rejects_enrollment_failure(self):
         gate = self.fake_gate()
         gate.check_enrollment.side_effect = a.ContractError('Enrollment changed')
@@ -157,27 +150,30 @@ class GateIntegrationTests(unittest.TestCase):
         a.validate_result('auto-task', self.root)
         self.assertFalse(gate.check_submission.call_args.kwargs.get('persist', False))
 
-    def test_publication_gate_blocks_push_and_retry_reuses_commit(self):
+    def test_publication_gate_blocks_before_any_effect_and_retry_succeeds(self):
         gate = self.fake_gate()
         self.bind(); self.own_file(); self.complete()
         baseline = r.git(self.path, 'rev-parse', 'HEAD')
-        gate.check_publication.side_effect = a.ContractError('Candidate changed')
+        task_before = (self.root / 'runs/auto-task/task.json').read_bytes()
+        records = self.path / '.agent-work/tasks/auto-task'
+        records_before = {p.name: p.read_bytes() for p in records.iterdir()}
+        gate.check_commit.side_effect = a.ContractError('Candidate changed')
         with self.assertRaisesRegex(a.ContractError, 'Candidate changed'):
             auto.finish('auto-task', self.root)
         saved = a.read_json(self.root / 'runs/auto-task/publication.json')
-        self.assertEqual(saved['phase'], 'committed')
+        self.assertEqual(saved['phase'], 'begun')
+        self.assertNotIn('commit', saved)
+        self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), baseline)
         self.assertEqual(auto.remote_head(self.path, saved['policy']), baseline)
-        self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), saved['commit'])
-        args = gate.check_publication.call_args.kwargs
-        self.assertEqual(args['commit'], saved['commit'])
-        self.assertEqual(args['publication']['staged_paths'], saved['staged_paths'])
-        gate.check_publication.side_effect = None
-        gate.check_publication.return_value = {'status': 'passed', 'assurance': 'cooperating-cli'}
+        self.assertEqual(auto.staged_paths(self.path), [])
+        self.assertEqual((self.root / 'runs/auto-task/task.json').read_bytes(), task_before)
+        self.assertEqual({p.name: p.read_bytes() for p in records.iterdir()}, records_before)
+        gate.check_commit.side_effect = None
+        gate.check_commit.return_value = {'status': 'passed', 'assurance': 'cooperating-cli'}
         completed = auto.finish('auto-task', self.root)
-        self.assertEqual(completed['commit'], saved['commit'])
         self.assertEqual(completed['gate']['status'], 'passed')
-        self.assertEqual(auto.remote_head(self.path, saved['policy']), saved['commit'])
-
+        self.assertEqual(auto.remote_head(self.path, saved['policy']), completed['commit'])
+        self.assertEqual(r.git(self.path, 'rev-parse', completed['commit'] + '^'), baseline)
     def test_new_lifecycle_records_only_include_gate_metadata(self):
         gate = self.fake_gate()
         self.bind()
@@ -192,9 +188,8 @@ class GateIntegrationTests(unittest.TestCase):
         self.assertFalse((self.root / 'runs/auto-task/observations').exists())
         self.assertEqual(published['phase'], 'pushed')
         self.assertEqual(auto.remote_head(self.path, published['policy']), published['commit'])
-        gate.seal_checkpoint.assert_called()
         gate.check_submission.assert_called()
-        gate.check_publication.assert_called_once()
+        self.assertEqual(sum(c.kwargs.get('receipt', False) for c in gate.check_commit.call_args_list), 1)
 
     def test_resume_preserves_historical_extra_metadata_and_specification(self):
         self.bind()

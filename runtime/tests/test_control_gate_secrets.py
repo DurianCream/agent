@@ -171,8 +171,8 @@ class PublicationTests(unittest.TestCase):
             auto.finish('auto-task', self.root)
         self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), base)
         self.assertEqual(auto.remote_head(self.path, auto.policy(self.path)), base)
-        # Explicitly repair the rejected staging attempt, preserving unowned files.
-        r.git(self.path, 'reset', '--', *auto.staged_paths(self.path))
+        self.assertEqual(auto.staged_paths(self.path), [])
+        self.assertEqual(a.read_json(self.root / 'runs/auto-task/publication.json')['phase'], 'begun')
         (self.path / 'owned.txt').write_text('clean')
         self.assertEqual(auto.finish('auto-task', self.root)['phase'], 'pushed')
 
@@ -189,22 +189,20 @@ class PublicationTests(unittest.TestCase):
         self.assertIn('.agent-work/tasks/auto-task/', str(caught.exception))
         self.assertNotIn(fake(), str(caught.exception))
 
-    def test_commit_recheck_and_retry_ignore_clean_worktree(self):
+    def test_edit_after_prepare_blocks_resume_until_restored(self):
         self.bind(); self.own_file('owned.txt'); self.complete()
-        original = r.git
-        def hook_edit(path, *args, **kwargs):
-            if args[0] == 'commit':
-                (self.path / 'owned.txt').write_text(fake())
-                original(path, 'add', '--', 'owned.txt')
-            return original(path, *args, **kwargs)
-        with mock.patch.object(r, 'git', side_effect=hook_edit):
-            with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
+        with mock.patch.object(auto, '_install', side_effect=a.ContractError('interrupted')):
+            with self.assertRaisesRegex(a.ContractError, 'interrupted'): auto.finish('auto-task', self.root)
         receipt = a.read_json(self.root / 'runs/auto-task/publication.json')
-        self.assertEqual(receipt['phase'], 'committed')
-        (self.path / 'owned.txt').write_text('clean working copy')
-        with self.assertRaises(a.ContractError): auto.finish('auto-task', self.root)
-        self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), receipt['commit'])
+        self.assertEqual(receipt['phase'], 'prepared')
+        for content in (fake(), 'clean working copy'):
+            (self.path / 'owned.txt').write_text(content)
+            with self.assertRaisesRegex(a.ContractError, 'changed after publication was prepared'):
+                auto.finish('auto-task', self.root)
+        self.assertEqual(r.git(self.path, 'rev-parse', 'HEAD'), receipt['base_head'])
         self.assertEqual(auto.remote_head(self.path, receipt['policy']), receipt['base_head'])
+        (self.path / 'owned.txt').write_text('owned')
+        self.assertEqual(auto.finish('auto-task', self.root)['commit'], receipt['commit'])
 
     def test_clean_retry_preserves_single_commit(self):
         self.bind(); self.own_file('owned.txt'); self.complete()
@@ -236,18 +234,14 @@ class RecordsOnlyTests(recovery_fixture.RecoveryPublicationTests):
         self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), base)
         self.assertEqual(auto.remote_head(self.root, auto.policy(self.root)), base)
 
-        r.git(self.root, 'reset', '--', *auto.staged_paths(self.root))
-        # Simulate a client that omitted the precommit step: actual commit scan
-        # and retry still must reject the preserved, reviewed record bytes.
-        with mock.patch.object(scan, 'scan_index', return_value=None):
-            with self.assertRaisesRegex(a.ContractError, 'Secret scan blocked'):
-                auto.finish('followup', self.root)
-        receipt = a.read_json(self.root / 'runs/followup/publication.json')
-        self.assertEqual(receipt['phase'], 'committed')
+        # The commit object is scanned before any ref, index or record changes; a retry scans again.
         with self.assertRaisesRegex(a.ContractError, 'Secret scan blocked'):
             auto.finish('followup', self.root)
-        self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), receipt['commit'])
-        self.assertEqual(auto.remote_head(self.root, receipt['policy']), receipt['base_head'])
+        receipt = a.read_json(self.root / 'runs/followup/publication.json')
+        self.assertEqual(receipt['phase'], 'begun')
+        self.assertEqual(auto.staged_paths(self.root), [])
+        self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), base)
+        self.assertEqual(auto.remote_head(self.root, receipt['policy']), base)
         for name, raw in self.originals.items(): self.assertEqual((self.root / name).read_bytes(), raw)
 
     def test_records_only_clean_retry_preserves_commit(self):

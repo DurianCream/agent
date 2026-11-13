@@ -111,8 +111,82 @@ def atomic_text(file, text):
             os.unlink(temp)
 
 
+def json_bytes(value):
+    return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8")
+
+
+def atomic_bytes(file, data):
+    file = Path(file)
+    file.parent.mkdir(parents=True, exist_ok=True)
+    fd, temp = tempfile.mkstemp(prefix=".agentctl-", dir=file.parent)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(data)
+        os.replace(temp, file)
+    finally:
+        if os.path.exists(temp):
+            os.unlink(temp)
+
+
 def write_json(file, value):
-    atomic_text(file, json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+    atomic_bytes(file, json_bytes(value))
+
+
+def process_start(pid):
+    """Return an opaque start marker for a live PID, False for a dead PID, or None if unknown."""
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.OpenProcess.restype = wintypes.HANDLE
+        kernel.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+        kernel.GetExitCodeProcess.argtypes = (wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD))
+        kernel.GetProcessTimes.argtypes = (wintypes.HANDLE,) + (ctypes.POINTER(wintypes.FILETIME),) * 4
+        kernel.CloseHandle.argtypes = (wintypes.HANDLE,)
+        handle = kernel.OpenProcess(0x1000, False, pid)  # PROCESS_QUERY_LIMITED_INFORMATION
+        if not handle:
+            # ERROR_INVALID_PARAMETER means no such process; access denial is not death.
+            return False if ctypes.get_last_error() == 87 else None
+        try:
+            code = wintypes.DWORD()
+            if kernel.GetExitCodeProcess(handle, ctypes.byref(code)) and code.value != 259:
+                return False
+            times = [wintypes.FILETIME() for _ in range(4)]
+            if not kernel.GetProcessTimes(handle, *(ctypes.byref(t) for t in times)):
+                return None
+            return str((times[0].dwHighDateTime << 32) | times[0].dwLowDateTime)
+        finally:
+            kernel.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return None
+    try:
+        return Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[19]
+    except (OSError, IndexError):
+        return None
+
+
+def lock_state(file, grace=60):
+    """alive, dead, incomplete (recent unparsable), abandoned (old unparsable) or missing."""
+    file = Path(file)
+    try:
+        raw, age = file.read_text(encoding="utf-8"), datetime.now().timestamp() - file.stat().st_mtime
+    except FileNotFoundError:
+        return "missing"
+    try:
+        # Older lock files hold only the PID.
+        value = json.loads(raw) if raw.lstrip().startswith("{") else {"pid": int(raw), "start": None}
+        pid, start = value["pid"], value["start"]
+        require(type(pid) is int and pid > 0, "Invalid lock owner")
+    except (ValueError, KeyError, TypeError, ContractError):
+        return "incomplete" if age < grace else "abandoned"
+    current = process_start(pid)
+    if current is False or (start is not None and current is not None and current != start):
+        return "dead"
+    return "alive"
 
 
 @contextmanager
@@ -121,9 +195,10 @@ def lock(file):
     file.parent.mkdir(parents=True, exist_ok=True)
     try:
         with file.open("x", encoding="utf-8") as stream:
-            stream.write(str(os.getpid()))
+            stream.write(json.dumps({"pid": os.getpid(), "start": process_start(os.getpid()) or None}))
     except FileExistsError:
-        raise ContractError(f"Another operation holds {file.name}; inspect the owner before removing it")
+        raise ContractError(f"Another operation holds {file.name} (owner {lock_state(file)}); "
+                            "run repoctl unlock only after its owner has exited")
     try:
         yield
     finally:
@@ -446,7 +521,7 @@ def transition(task_id, state, root=ROOT):
     return {"task_id": task_id, "state": state}
 
 
-def validate_result(task_id, root=ROOT, value=None):
+def validate_result(task_id, root=ROOT, value=None, *, gate=True):
     root = Path(root).resolve()
     run, task, snapshot = load_task(task_id, root)
     result = copy.deepcopy(value) if value is not None else read_json(relative(run, "result.json", file=True))
@@ -512,7 +587,8 @@ def validate_result(task_id, root=ROOT, value=None):
         for evidence in receipt["evidence"]:
             file = relative(root, evidence["path"], file=True)
             require(digest(file.read_bytes()) == evidence["sha256"], "Submitted evidence was changed")
-    control_gate_call("check_submission", task_id, root, result=result)
+    if gate:
+        control_gate_call("check_submission", task_id, root, result=result)
     return result, task, snapshot
 
 
@@ -581,52 +657,72 @@ def render(task_id, root=ROOT):
     return {"task_id": task_id, "report": str(run / "result.md"), "published": False}
 
 
+def submission(task_id, root=ROOT):
+    """Return the exact bytes a submission writes, without writing them.
+
+    The gate runs once here; publication stores these bytes and installs them later.
+    """
+    root = Path(root).resolve()
+    result, task, snapshot = validate_result(task_id, root, gate=False)
+    require(task["state"] in ("running", "submitted"), "Submission requires a running task")
+    for artifact in result["artifacts"]:
+        artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
+    gate = control_gate_call("check_submission", task_id, root, result=result, persist=True) or {}
+    text = report_text(result, task, snapshot, root)
+    require(relative(root, f"outputs/{task_id}").is_dir(), "Task output directory is missing")
+    files = {f"runs/{task_id}/{name}": json_bytes(value) for name, value in gate.get("files", {}).items()}
+    for prefix in (f"runs/{task_id}/", f"outputs/{task_id}/"):
+        files[prefix + "result.json"] = json_bytes(result)
+        files[prefix + "result.md"] = text.encode("utf-8")
+    submitted = copy.deepcopy(task)
+    if task["state"] != "submitted":
+        submitted["state"] = "submitted"
+        submitted["result_status"] = result["status"]
+        submitted["submission"] = {
+            "result_sha256": digest(json_bytes(result)),
+            "report_sha256": digest(text.encode("utf-8")),
+            "evidence": [{"path": name, "sha256": digest(relative(root, name, file=True).read_bytes())}
+                         for name in sorted({name for check in result["verification"] for name in check["evidence"]})],
+        }
+        if gate.get("incomplete_candidate_sha256"):
+            submitted["submission"]["incomplete_candidate_sha256"] = gate["incomplete_candidate_sha256"]
+    files[f"runs/{task_id}/task.json"] = json_bytes(submitted)  # Written last: the state switch.
+    return {"result": result, "task": submitted, "snapshot": snapshot, "previous_state": task["state"], "files": files}
+
+
+def install_submission(task_id, root, files):
+    """Write saved submission bytes in order and confirm them; repeated calls are no-ops."""
+    root = Path(root).resolve()
+    for name, data in files.items():
+        file = relative(root, name)
+        if not file.is_file() or file.read_bytes() != data:
+            atomic_bytes(file, data)
+    for name, data in files.items():
+        require(relative(root, name, file=True).read_bytes() == data, "Installed submission bytes differ: " + name)
+
+
 def submit(task_id, root=ROOT):
     root = Path(root).resolve()
     run = relative(root, f"runs/{identifier(task_id)}")
     relative(run, "task.json", file=True)
     with lock(run / ".operation.lock"):
-        result, task, snapshot = validate_result(task_id, root)
-        require(task["state"] in ("running", "submitted"), "Submission requires a running task")
-        for artifact in result["artifacts"]:
-            artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
-        # Revalidate sealed content before any published write.
-        validate_result(task_id, root, result)
-        gate_submission = control_gate_call("check_submission", task_id, root, result=result, persist=True)
-        text = report_text(result, task, snapshot, root)
+        value = submission(task_id, root)
         output = relative(root, f"outputs/{task_id}")
-        require(output.is_dir(), "Task output directory is missing")
-        publications = {
-            "result.json": json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
-            "result.md": text,
-        }
-        for name, expected in publications.items():
+        for name in ("result.json", "result.md"):
             target = relative(output, name)
+            expected = value["files"][f"outputs/{task_id}/{name}"]
             if target.exists():
-                require(target.read_text(encoding="utf-8") == expected,
+                require(target.read_bytes() == expected,
                         "Published report differs; start a new task to change a submitted result")
-            elif task["state"] == "submitted":
+            elif value["previous_state"] == "submitted":
                 raise ContractError("Submitted report is missing")
-        if task["state"] == "submitted":
-            return {"task_id": task_id, "state": "submitted", "result_status": result["status"],
+        status = value["result"]["status"]
+        if value["previous_state"] == "submitted":
+            return {"task_id": task_id, "state": "submitted", "result_status": status,
                     "report": str(output / "result.md"), "idempotent": True}
-        write_json(run / "result.json", result)
-        atomic_text(run / "result.md", text)
-        write_json(output / "result.json", result)
-        atomic_text(output / "result.md", text)
-        task["state"] = "submitted"
-        task["result_status"] = result["status"]
-        task["submission"] = {
-            "result_sha256": digest((run / "result.json").read_bytes()),
-            "report_sha256": digest(text.encode("utf-8")),
-            "evidence": [{"path": name, "sha256": digest(relative(root, name, file=True).read_bytes())}
-                         for name in sorted({name for check in result["verification"] for name in check["evidence"]})],
-        }
-        if gate_submission and gate_submission.get("incomplete_candidate_sha256"):
-            task["submission"]["incomplete_candidate_sha256"] = gate_submission["incomplete_candidate_sha256"]
-        write_json(run / "task.json", task)
-        event(run, "submitted", status=result["status"])
-    return {"task_id": task_id, "state": "submitted", "result_status": result["status"],
+        install_submission(task_id, root, value["files"])
+        event(run, "submitted", status=status)
+    return {"task_id": task_id, "state": "submitted", "result_status": status,
             "report": str(output / "result.md")}
 
 

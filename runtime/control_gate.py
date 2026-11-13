@@ -265,22 +265,6 @@ def _committed_raw_matches(root, committed, expected):
     return a.digest(process.stdout) == expected
 
 
-def _reviewed_blob_matches(root, item, commit):
-    # Recheck both raw bytes and Git representation; never accept a changed
-    # candidate just because one earlier representation still exists in Git.
-    if _reviewed_blob(root, item['path']) != item:
-        return False
-    committed = _blob(root, item['path'], commit)
-    if committed['state'] != item['state']:
-        return False
-    if item['state'] == 'deleted':
-        return item['raw_sha256'] is None
-    if committed['mode'] != item['mode']:
-        return False
-    return (committed['oid'] == item['oid'] or
-            _committed_raw_matches(root, committed, item['raw_sha256']))
-
-
 def _dependency_matches(root, item, commit):
     """Match reviewed bytes or their Git-clean representation, preserving mode.
 
@@ -569,12 +553,10 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
         elif persist and result['status'] == 'partial' and task['state'] == 'running':
             incomplete = _incomplete_candidate(task_id, root, enrollment)
             if incomplete is not None:
-                saved = {'candidate': incomplete, 'result_sha256': a.digest((json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + '\n').encode('utf-8'))}
-                if file.exists():
-                    a.require(_read(file) == saved, 'Incomplete candidate changed after submission attempt')
-                else:
-                    a.write_json(file, saved)
-                response['incomplete_candidate_sha256'] = a.digest(file.read_bytes())
+                saved = {'candidate': incomplete, 'result_sha256': a.digest(a.json_bytes(result))}
+                a.require(not file.exists() or _read(file) == saved, 'Incomplete candidate changed after submission attempt')
+                response['files'] = {'incomplete-candidate.json': saved}
+                response['incomplete_candidate_sha256'] = a.digest(a.json_bytes(saved))
         return response
     a.require(enrollment['config']['policy']['submission'] == 'allow', 'P1 submission policy denies action')
     current = candidate(task_id, root)
@@ -604,27 +586,26 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
     task = _read(a.relative(run, 'task.json', file=True))
     if task['state'] == 'submitted':
         a.require(file.exists() and _read(file) == seal, 'P1 submitted gate seal changed')
-    elif persist:
-        a.write_json(file, seal)
-    return {'mode': 'enforce', 'status': 'passed', 'candidate_digest': current['digest'],
-            'seal_digest': _hash(seal), 'assurance': 'local-cooperating-cli'}
+    response = {'mode': 'enforce', 'status': 'passed', 'candidate_digest': current['digest'],
+                'seal_digest': _hash(seal), 'assurance': 'local-cooperating-cli'}
+    if persist:
+        # The caller writes the seal together with the other submission bytes.
+        response['files'] = {'gate-submission.json': seal}
+    return response
 
 
-def _check_generated(task_id, root, enrollment, actual):
+def _check_generated(task_id, root, enrollment, records, task, result):
     import repoctl as r
-    a.require(_managed(task_id) <= set(actual), 'P1 commit omits required generated task records')
-    run = _run(task_id, root)
-    task = _read(a.relative(run, 'task.json', file=True))
-    result = _read(a.relative(run, 'result.json', file=True))
+    a.require(set(records) == _managed(task_id), 'P1 commit omits required generated task records')
     binding = enrollment['binding']
     folder = '.agent-work/tasks/' + task_id + '/'
-    record = _read(a.relative(root, folder + 'record.json', file=True))
+    record = json.loads(records[folder + 'record.json'].decode('utf-8'), object_pairs_hook=a.unique_pairs)
     keys = {'schema_version', 'repository_id', 'repository_uuid', 'task_id', 'saved_at',
             'task_state', 'git', 'result', 'source_root', 'notice', 'scope', 'spec_sha256'}
-    a.require(set(record) == keys and record['schema_version'] == '1.0.0',
+    a.require(type(record) is dict and set(record) == keys and record['schema_version'] == '1.0.0',
               'P1 generated record fields changed')
     a.require(all(record[k] == binding[k] for k in ('repository_id', 'repository_uuid', 'task_id', 'scope')) and
-              record['task_state'] == task['state'] and record['result'] == result and
+              task['state'] == 'submitted' and record['task_state'] == task['state'] and record['result'] == result and
               record['source_root'] == str(root.resolve()) and
               record['notice'] == 'Saved data is not policy, authorization, or proof of current code state.',
               'P1 generated record does not derive from submitted task')
@@ -633,84 +614,62 @@ def _check_generated(task_id, root, enrollment, actual):
               state['head'] == enrollment['base_head'] and state['branch'] == enrollment['publication_policy']['branch'] and
               state['origin'] == enrollment['publication_policy']['expected_url'], 'P1 generated Git checkpoint mismatch')
     datetime.fromisoformat(record['saved_at'])
-    expected_spec = r.specification_text(task_id, binding, task, result, binding['scope'], state)
-    spec = a.relative(root, folder + 'spec.md', file=True).read_text(encoding='utf-8')
-    a.require(spec == expected_spec and record['spec_sha256'] == a.digest(spec.encode('utf-8')),
-              'P1 specification is not the canonical generated record')
+    spec = records[folder + 'spec.md']
+    a.require(spec == r.specification_text(task_id, binding, task, result, binding['scope'], state).encode('utf-8') and
+              record['spec_sha256'] == a.digest(spec), 'P1 specification is not the canonical generated record')
     expected_report = r.record_text(result, task, state, binding['scope'], saved_at=record['saved_at'])
-    a.require(a.relative(root, folder + 'report.ko.md', file=True).read_text(encoding='utf-8') == expected_report,
+    a.require(records[folder + 'report.ko.md'] == expected_report.encode('utf-8'),
               'P1 report is not the canonical generated record')
-    prepared = _read(a.relative(run, 'gate-checkpoint.json', file=True))
-    seal = _read(a.relative(run, 'gate-submission.json', file=True))
-    a.require(prepared['task_id'] == task_id and prepared['seal_digest'] == _hash(seal) and
-              set(prepared['files']) == _managed(task_id), 'P1 checkpoint is not bound to submission')
-    for name, expected in prepared['files'].items():
-        a.require(a.digest(a.relative(root, name, file=True).read_bytes()) == expected,
-                  'P1 generated bytes differ from lifecycle checkpoint')
 
 
-def seal_checkpoint(task_id, root=a.ROOT, files=None):
-    """Capture the lifecycle generator's bytes, not arbitrary later file contents.
+def _committed_entry_matches(root, item, commit):
+    """Strict: the publication writes sealed bytes, so the Git object must be the sealed one."""
+    committed = _blob(root, item['path'], commit)
+    if item['state'] == 'deleted':
+        return committed['state'] == 'deleted'
+    return committed == {k: item[k] for k in ('path', 'state', 'oid', 'mode')}
 
-    This is a local cooperating callback, not an authenticated attestation.
+
+def check_commit(task_id, root=a.ROOT, commit=None, parent=None, paths=None, records=None,
+                 task=None, result=None, seal=None, receipt=False):
+    """Verify an unreferenced or published commit object against the submission seal.
+
+    Reads only Git objects and the sealed submission; HEAD, the shared index and
+    the worktree are never consulted for committed content.
     """
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
     if enrollment is None:
         return None
-    run = _run(task_id, root)
-    task = _read(a.relative(run, 'task.json', file=True))
-    if task['state'] != 'submitted':
-        return None
-    if _read(a.relative(run, 'result.json', file=True))['status'] != 'completed':
-        return None
-    a.require(type(files) is dict and set(files) == _managed(task_id) and
-              all(type(value) is bytes and len(value) <= 2 * 1024 * 1024 for value in files.values()),
-              'P1 invalid lifecycle checkpoint payload')
-    seal = _read(a.relative(run, 'gate-submission.json', file=True))
-    value = {'task_id': task_id, 'seal_digest': _hash(seal),
-             'files': {name: a.digest(data) for name, data in sorted(files.items())}}
-    a.write_json(a.relative(run, 'gate-checkpoint.json'), value)
-    return {'status': 'prepared', 'assurance': 'local-cooperating-cli'}
-
-
-def check_publication(task_id, root=a.ROOT, commit=None, publication=None):
-    root = Path(root).resolve()
-    enrollment = check_enrollment(task_id, root)
-    if enrollment is None:
-        return None
     a.require(enrollment['config']['policy']['publication'] == 'allow', 'P1 publication policy denies action')
-    run = _run(task_id, root)
-    task = _read(a.relative(run, 'task.json', file=True))
-    a.require(task['state'] == 'submitted', 'P1 publication requires submission')
-    check_submission(task_id, root)
-    seal = _read(a.relative(run, 'gate-submission.json', file=True))
-    if publication is None:
-        _, _, publication = _context(task_id, root)
-    a.require(commit and publication.get('commit') == commit and publication['phase'] in ('committed', 'pushed'),
-              'P1 publication requires recorded real commit')
-    a.require(_git(root, 'rev-parse', 'HEAD') == commit and
-              _git(root, 'rev-list', '--parents', '-n', '1', commit).split() == [commit, enrollment['base_head']],
+    a.require(type(seal) is dict and type(records) is dict and type(paths) is list, 'P1 publication payload missing')
+    fresh = check_submission(task_id, root, result=result)
+    a.require(fresh is not None and fresh['status'] == 'passed' and fresh['seal_digest'] == _hash(seal),
+              'P1 seal differs from current submission state')
+    a.require(parent == enrollment['base_head'] and
+              _git(root, 'rev-list', '--parents', '-n', '1', commit).split() == [commit, parent],
               'P1 commit or parent mismatch')
-    actual = sorted(filter(None, _git(root, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z', '--no-renames', commit, raw=True).split('\0')))
-    a.require(actual == sorted(publication['staged_paths']) and set(actual) <= set(seal['owned_paths']) | _managed(task_id) | {'.agent-work/automation.json'},
+    actual = sorted(filter(None, _git(root, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
+                                      '--no-renames', parent, commit, raw=True).split('\0')))
+    a.require(actual == sorted(paths) and _managed(task_id) <= set(actual) and
+              set(actual) <= set(seal['owned_paths']) | _managed(task_id) | {'.agent-work/automation.json'},
               'P1 commit path set differs from submitted ownership')
-    _check_generated(task_id, root, enrollment, actual)
+    _check_generated(task_id, root, enrollment, records, task, result)
+    for name, data in records.items():
+        oid = _git(root, 'hash-object', '--path=' + name, '--stdin', data=data)
+        a.require(_blob(root, name, commit) == {'path': name, 'state': 'file', 'oid': oid, 'mode': '100644'},
+                  'P1 generated record differs from commit')
     for item in seal['candidate']['candidate']['entries'] + seal['record_entries']:
-        a.require(_reviewed_blob_matches(root, item, commit), 'P1 commit content differs from submitted candidate')
+        a.require(_committed_entry_matches(root, item, commit), 'P1 commit content differs from submitted candidate')
     for item in seal['candidate']['candidate']['dependencies']:
         a.require(_dependency_matches(root, item, commit),
                   'P1 committed dependency differs from tested source')
-    # Generated records are checked against current canonical lifecycle outputs,
-    # separately from reviewed product files and sealed evidence archives.
-    for name in actual:
-        if name in _managed(task_id) or name == '.agent-work/automation.json':
-            a.require(_reviewed_blob_matches(root, _reviewed_blob(root, name), commit), 'P1 generated record differs from commit')
-    receipt = {'schema_version': VERSION, 'task_id': task_id, 'commit': commit,
-               'seal_digest': _hash(seal), 'candidate_digest': seal['candidate']['digest'],
-               'status': 'passed', 'assurance': 'local-cooperating-cli', 'checked_at': a.now()}
-    _append(run, 'publication', receipt)
-    return receipt
+    value = {'schema_version': VERSION, 'task_id': task_id, 'commit': commit,
+             'seal_digest': _hash(seal), 'candidate_digest': seal['candidate']['digest'],
+             'status': 'passed', 'assurance': 'local-cooperating-cli', 'checked_at': a.now()}
+    if receipt:
+        _append(_run(task_id, root), 'publication', value)
+    return value
 
 
 def main(argv=None):
