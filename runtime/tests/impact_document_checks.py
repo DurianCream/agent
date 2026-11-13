@@ -8,6 +8,11 @@ import agentctl as a
 import control_gate as g
 import sync_codex
 
+# Outside the gate there is no task to check; the gate itself counts any skip as a failure.
+needs_task = unittest.skipUnless('AGENT_SUBMISSION_TASK' in os.environ,
+                                 'needs a gate task; run through control_gate.py run-tests')
+
+
 class ImpactDocumentChecks(unittest.TestCase):
     def test_adapter_consistency(self):
         result = sync_codex.synchronize(write=False)
@@ -17,6 +22,7 @@ class ImpactDocumentChecks(unittest.TestCase):
         result = a.doctor()
         self.assertGreater(result['modules'], 0)
 
+    @needs_task
     def test_result_contract(self):
         task_id = a.identifier(os.environ['AGENT_SUBMISSION_TASK'])
         run, task, _ = a.load_task(task_id)
@@ -27,6 +33,7 @@ class ImpactDocumentChecks(unittest.TestCase):
         self.assertEqual(result['objective'], task['objective'])
         self.assertEqual([{k: c[k] for k in ('id', 'description', 'required')} for c in result['acceptance_criteria']], task['criteria'])
 
+    @needs_task
     def test_document_integrity(self):
         task = a.identifier(os.environ['AGENT_SUBMISSION_TASK'])
         current = g.candidate(task)

@@ -383,6 +383,30 @@ def impact_selection(task_id, current, enrollment, root):
     return impact.select(current, enrollment, root)
 
 
+QUIET = ('skipped', 'expected failures', 'unexpected successes')
+
+
+def _summary(log):
+    """The last unittest summary line as counts; None when absent or not exactly that form.
+
+    A gate run may not skip or expect failure: such a test proved nothing about the candidate.
+    """
+    lines = re.findall(rb'^(OK|FAILED)(?: \(([^()\r\n]*)\))?\r?$', re.sub(rb'\x1b\[[0-9;]*m', b'', log), re.MULTILINE)
+    if not lines:
+        return None
+    value = {'status': lines[-1][0].decode('ascii')}
+    for part in filter(None, lines[-1][1].split(b', ')):
+        key, separator, number = part.partition(b'=')
+        if not separator or not number.isdigit() or not re.fullmatch(rb'[a-z ]+', key):
+            return None
+        value[key.decode('ascii')] = int(number)
+    return value
+
+
+def _clean(summary):
+    return type(summary) is dict and summary.get('status') == 'OK' and not any(summary.get(key) for key in QUIET)
+
+
 def run_tests(task_id, suite_id, root=a.ROOT):
     root = Path(root).resolve()
     before = candidate(task_id, root)
@@ -439,10 +463,11 @@ def run_tests(task_id, suite_id, root=a.ROOT):
     log_bytes = log.read_bytes()
     counts = re.findall(rb'^Ran ([0-9]+) tests? in ', log_bytes, re.MULTILINE)
     count = int(counts[-1]) if counts else 0
+    summary = _summary(log_bytes)
     value = {'kind': 'test', 'task_id': task_id, 'candidate_digest': before['digest'],
              'suite_id': suite_id, 'suite_digest': _hash(suite), 'created_at': _now(),
-             'outcome': 'passed' if code == 0 and reason is None and count > 0 and before == after else 'failed',
-             'tests_run': count,
+             'outcome': 'passed' if code == 0 and reason is None and count > 0 and _clean(summary) and before == after else 'failed',
+             'tests_run': count, 'summary': summary,
              'exit_code': code, 'reason': reason, 'candidate_unchanged': before == after,
              'evidence': {'path': log.relative_to(root).as_posix(), 'sha256': a.digest(log_bytes)},
              'assurance': 'local-executed-untrusted-candidate'}
@@ -522,11 +547,13 @@ def _proofs(task_id, current, root, review_required=True, kind='product', tested
         a.require('profile_digest' not in proof, 'Legacy submission profile proof is unsupported')
         a.require(proof['suite_digest'] == _hash(suite) and proof['outcome'] == 'passed' and
                   proof['exit_code'] == 0 and type(proof.get('tests_run')) is int and proof['tests_run'] > 0 and
-                  proof['candidate_unchanged'] is True,
+                  _clean(proof.get('summary')) and proof['candidate_unchanged'] is True,
                   'P1 mandatory test did not pass')
         if 'impact_tests' in enrollment:
             a.require(proof.get('impact_selection') == impact_selection(task_id, current, enrollment, root), 'P1 impact selection changed')
         _evidence_valid(root, proof['evidence'])
+        a.require(_clean(_summary(a.relative(root, proof['evidence']['path'], file=True).read_bytes())),
+                  'P1 mandatory test log has no clean unittest summary')
         selected.append({'path': 'runs/' + task_id + '/gates/' + name, 'sha256': a.digest((run / 'gates' / name).read_bytes())})
     if not review_required:
         return selected

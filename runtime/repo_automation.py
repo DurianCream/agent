@@ -72,13 +72,42 @@ def begin(task_id, root=a.ROOT):
     return value
 
 
-def track(task_id, paths, root=a.ROOT):
+def _open_owners(task_id, root, binding):
+    """{path: task} for files that other unfinished tasks of this repository own."""
+    owners = {}
+    for file in sorted(Path(root, 'runs').glob('*/publication.json')):
+        folder = file.parent
+        if folder.name == task_id or not (folder / 'task.json').is_file() or not (folder / 'repository.json').is_file():
+            continue
+        if (a.read_json(folder / 'task.json').get('state') in ('submitted', 'cancelled') or
+                a.read_json(folder / 'repository.json').get('repository_uuid') != binding['repository_uuid']):
+            continue
+        owners.update({name: folder.name for name in a.read_json(file).get('paths', [])})
+    return owners
+
+
+def track(task_id, paths=None, root=a.ROOT, changed=False, yes=False):
+    """Register exact owned files. changed proposes them instead: files changed since the
+    baseline, minus what was already dirty and what another open task owns; yes registers them."""
     run, task, path = context(task_id, root)
     file = a.relative(run, 'publication.json', file=True)
+    a.require(bool(paths) != bool(changed), 'Give either --path or --changed')
     with a.lock(run / '.publication.lock'):
         value = a.read_json(file)
         a.require(value['phase'] == 'begun', 'Cannot change a publishing/completed manifest')
+        owners = _open_owners(task_id, root, a.read_json(a.relative(run, 'repository.json', file=True)))
+        if changed:
+            names = r.git(path, 'diff', value['base_head'], '--name-only', '-z', '--no-renames', strip=False) + \
+                r.git(path, 'ls-files', '--others', '--exclude-standard', '-z', strip=False)
+            skip = set(value['preexisting_dirty']) | set(owners) | set(value['paths'])
+            paths = sorted(n for n in set(names.split('\0')) - {''} - skip
+                           if n != AUTOMATION and (not n.startswith('.agent-work/tasks/') or
+                                                   n.startswith('.agent-work/tasks/' + task_id + '/evidence/')))
+            if not yes:
+                return {'task_id': task_id, 'registered': False, 'candidates': paths,
+                        'notice': 'Nothing was registered. Check that every file is this task\'s work, then repeat with --yes.'}
         for name in paths:
+            a.require(name not in owners, f'Another open task owns this file: {name} ({owners.get(name)})')
             a.relative(path, name)
             a.require(not name.startswith(('.agent-work/legacy/', '.agent-work/classifications/')),
                       'Use approve-memory for validated historical publication')

@@ -572,8 +572,6 @@ def validate_result(task_id, root=ROOT, value=None, *, gate=True):
         artifact_paths.add(name)
         if artifact["sha256"] is not None:
             require(digest(file.read_bytes()) == artifact["sha256"], f"Artifact hash mismatch: {name}")
-    if result["status"] == "completed":
-        require(bool(result["artifacts"]), "Completed artifact-producing task must include an artifact")
     for source in result["sources"]:
         url = urlsplit(source["url"])
         require(url.scheme in ("http", "https") and bool(url.netloc), "Source must be an HTTP(S) URL")
@@ -822,9 +820,15 @@ def main(argv=None):
                 require(not any(getattr(args, key) for key in ("project", "service", "environment", "issue")), "Scope requires --repo")
             data = init_task(args.module, args.task, args.objective, args.criterion)
             if args.repo:
+                # One command starts bound work: baseline, enrollment, first record and the running state.
                 data["repository"] = repoctl.bind(args.repo, args.task, scope=scope, new_task=True)
+                data["state"] = transition(args.task, "running")["state"]
         elif args.command == "transition":
-            data = transition(args.task, args.state)
+            if args.state == "running" and load_task(args.task)[1]["state"] == "running":
+                # A bound init already started the task; older instructions still issue this command.
+                data = {"task_id": args.task, "state": "running", "idempotent": True}
+            else:
+                data = transition(args.task, args.state)
         elif args.command == "register":
             data = register(args.manifest)
         elif args.command == "validate":

@@ -401,7 +401,9 @@ def main(argv=None):
         p = sub.add_parser(name); p.add_argument('--task', required=True)
     sub.choices['finish'].add_argument('--close', choices=('partial', 'failed', 'cancelled'),
                                        help='Publish only the records of work that ends incomplete')
-    p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
+    p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append')
+    p.add_argument('--changed', action='store_true', help='List files changed since the baseline that no other open task owns')
+    p.add_argument('--yes', action='store_true', help='With --changed, register the listed files')
     p = sub.add_parser('import-legacy'); p.add_argument('--repo', required=True); p.add_argument('--source-task', required=True)
     p = sub.add_parser('approve-memory'); p.add_argument('--task', required=True); p.add_argument('--legacy-task', required=True)
     p = sub.add_parser('transfer-ownership'); p.add_argument('--task', required=True); p.add_argument('--source-task', required=True); p.add_argument('--path', action='append', required=True)
@@ -416,7 +418,7 @@ def main(argv=None):
         elif args.command in ('startup', 'begin', 'track', 'finish', 'unlock'):
             import repo_automation
             if args.command == 'startup': value = repo_automation.startup(args.repo, args.task, scope=scope_args(args))
-            elif args.command == 'track': value = repo_automation.track(args.task, args.path)
+            elif args.command == 'track': value = repo_automation.track(args.task, args.path, changed=args.changed, yes=args.yes)
             elif args.command == 'finish': value = repo_automation.finish(args.task, close=args.close)
             else: value = getattr(repo_automation, args.command)(args.task)
         elif args.command == 'register': value = register(args.id, args.path)

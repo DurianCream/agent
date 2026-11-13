@@ -192,12 +192,12 @@ def synchronize(root=ROOT, write=False):
             receipt_path.parent.mkdir(parents=True, exist_ok=True)
             receipt_path.write_text(json.dumps({"python": interpreter or sys.executable,
                                                 "sha256": hashlib.sha256(hook_file.read_bytes()).hexdigest()}),
-                                    encoding="utf-8")
+                                    encoding="utf-8", newline="\n")
             hook_ready = True
         state_path.write_text(json.dumps({
             "schema_version": "1.0.0", "agents": agents, "skills": skills,
             "files": hashes
-        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
         missing, changed = [], []
     elif old != hashes:
         changed.append("runtime/native-map.json")

@@ -132,6 +132,29 @@ class GateTests(GateFixture, unittest.TestCase):
     def test_zero_tests_fail(self):
         self.assertEqual(self.execute(b'Ran 0 tests in 0.001s\nOK\n')['outcome'], 'failed')
 
+    def test_summary_must_be_clean(self):
+        ran = b'Ran 3 tests in 0.001s\n\n'
+        cases = {b'OK (skipped=1)\n': False, b'OK (expected failures=1)\n': False,
+                 b'OK (skipped=0, unexpected successes=2)\n': False, b'FAILED (failures=1)\n': False,
+                 b'OK\n\n' + ran + b'FAILED (errors=1)\n': False,  # The last summary decides.
+                 b'OK (skip': False, b'': False, b'OK (skipped=one)\n': False, b'not OK\n': False,
+                 b'\x1b[32mOK\x1b[0m\r\n': True, b'OK (skipped=0)\n': True}
+        for tail, clean in cases.items():
+            with self.subTest(tail=tail):
+                self.assertEqual(g._clean(g._summary(ran + tail)), clean)
+        skipped = self.execute(ran + b'OK (skipped=1)\n')
+        self.assertEqual((skipped['outcome'], skipped['summary']), ('failed', {'status': 'OK', 'skipped': 1}))
+        # A stored proof cannot vouch for a log that says otherwise.
+        passed = self.execute(); self.review()
+        self.assertEqual(g.check_submission('gate-task', self.root)['status'], 'passed')
+        log = self.root / passed['evidence']['path']
+        log.write_bytes(ran + b'OK (skipped=1)\n')
+        proof = self.run / 'gates' / passed['record']
+        value = a.read_json(proof); value['evidence']['sha256'] = a.digest(log.read_bytes())
+        a.write_json(proof, value)
+        with self.assertRaisesRegex(a.ContractError, 'no clean unittest summary'):
+            g._proofs('gate-task', g.candidate('gate-task', self.root), self.root, review_required=False)
+
     def test_failed_exit_fails(self):
         self.assertEqual(self.execute(code=1)['outcome'], 'failed')
 
