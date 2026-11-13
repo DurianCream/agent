@@ -413,6 +413,9 @@ def finish(task_id, root=a.ROOT, close=None):
         if payload['mode'] == 'remote-only':
             # The remote advanced: the local branch and shared index stay at the task base.
             a.require(ref == payload['base'], 'Local branch moved during remote-only publication')
+            # Read-only: nothing here touches the index, but a foreign staged change still stops publication.
+            a.require(value['phase'] == 'pushed' or not staged_paths(path),
+                      'Staged changes block publication; unstage them before retrying')
             if value['phase'] == 'prepared':
                 _install(task_id, root, run, path, payload)
                 value['phase'] = 'submitted'

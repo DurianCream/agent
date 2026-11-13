@@ -210,7 +210,9 @@ class RecoveryPublicationTests(RecoveryTests):
             self.assertEqual(a.read_json(self.run/'publication.json')['phase'],'begun')
             self.assertEqual(a.read_json(self.run/'task.json')['state'],'running')
             return None
-        published=auto.finish('gate-task',self.root,close=close)
+        # Cancelling hands nothing over: the product files are never captured, whatever their state.
+        with mock.patch.object(g,'_incomplete_candidate',side_effect=AssertionError('no anchor for a cancelled task') if close=='cancelled' else g._incomplete_candidate):
+            published=auto.finish('gate-task',self.root,close=close)
         commit=published['commit']
         self.assertEqual((published['phase'],published['kind'],published['parent']),('pushed','records',tip))
         self.assertEqual(auto.remote_head(self.root,published['policy']),commit)

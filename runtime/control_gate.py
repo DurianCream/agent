@@ -573,8 +573,11 @@ def _incomplete_candidate(task_id, root, enrollment):
     return {'digest': _hash(value), 'candidate': value}
 
 
-def check_submission(task_id, root=a.ROOT, result=None, persist=False, publish=False):
-    """Seal a submission. Incomplete results need a review only when they are published."""
+def check_submission(task_id, root=a.ROOT, result=None, persist=False, publish=False, cancel=False):
+    """Seal a submission. Incomplete results need a review only when they are published.
+
+    cancel closes without a transfer anchor: product files are neither read nor required.
+    """
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
     if enrollment is None:
@@ -597,7 +600,7 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False, publish=F
             a.require(saved['candidate']['digest'] == _hash(saved['candidate']['candidate']), 'Incomplete candidate digest mismatch')
             files['incomplete-candidate.json'] = saved
             response['incomplete_candidate_sha256'] = anchor
-        elif persist and result['status'] == 'partial' and task['state'] == 'running':
+        elif persist and not cancel and result['status'] == 'partial' and task['state'] == 'running':
             incomplete = _incomplete_candidate(task_id, root, enrollment)
             if incomplete is not None:
                 saved = {'candidate': incomplete, 'result_sha256': a.digest(a.json_bytes(result))}

@@ -255,6 +255,14 @@ class RecordsOnlyTests(recovery_fixture.RecoveryPublicationTests):
                 auto.finish('gate-task', self.root, close='partial')
         receipt = a.read_json(self.run / 'publication.json')
         self.assertEqual((receipt['phase'], receipt['mode'], receipt['parent']), ('submitted', 'remote-only', tip))
+        # Remote-only never touches the index, yet a foreign staged change still stops the retry.
+        (self.root / 'unrelated.txt').write_text('user work')
+        r.git(self.root, 'add', '--', 'unrelated.txt')
+        with self.assertRaisesRegex(a.ContractError, 'Staged changes block'):
+            auto.finish('gate-task', self.root, close='partial')
+        self.assertEqual(auto.remote_head(self.root, receipt['policy']), tip)
+        self.assertEqual(auto.staged_paths(self.root), ['unrelated.txt'])
+        r.git(self.root, 'rm', '-q', '--cached', '--', 'unrelated.txt')
         published = auto.finish('gate-task', self.root, close='partial')
         self.assertEqual(published['commit'], receipt['commit'])
         self.assertEqual(published['phase'], 'pushed')

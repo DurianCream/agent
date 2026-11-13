@@ -677,12 +677,12 @@ def submission(task_id, root=ROOT, close=None, publish=False):
         require(close is None or result["status"] == close, f"Result status is not {close}")
         for artifact in result["artifacts"]:
             artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
-    options = {"publish": True} if publish else {}
+    # A cancelled task hands nothing over, so the gate must not capture (or fail on) its product files.
+    options = {**({"publish": True} if publish else {}), **({"cancel": True} if cancel else {})}
     gate = control_gate_call("check_submission", task_id, root, result=result, persist=True, **options) or {}
     files = {f"runs/{task_id}/{name}": json_bytes(value) for name, value in gate.get("files", {}).items()}
     if cancel:
-        # No submitted report and no transfer anchor: the result stays as written.
-        files.pop(f"runs/{task_id}/incomplete-candidate.json", None)
+        # No submitted report: the result stays as written.
         files[f"runs/{task_id}/result.json"] = relative(root, f"runs/{task_id}/result.json", file=True).read_bytes()
     else:
         text = report_text(result, task, snapshot, root)
