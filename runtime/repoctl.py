@@ -278,8 +278,11 @@ def specification_text(task_id, binding, task, result, scope, state):
     ])
 
 
-def record_files(task_id, root, path, entry, binding, task, result, snapshot, state, saved_at):
-    """Render the three generated task records as exact bytes; writes nothing."""
+def record_files(task_id, root, path, entry, binding, task, result, snapshot, state, saved_at, assessment=None):
+    """Render the three generated task records as exact bytes; writes nothing.
+
+    Publication passes the accepted review as assessment; a checkpoint has none yet.
+    """
     scope = record_scope(binding)
     dest = a.relative(path, '.agent-work/tasks/' + a.identifier(task_id))
     old = a.read_json(dest / 'record.json') if (dest / 'record.json').exists() else None
@@ -296,6 +299,8 @@ def record_files(task_id, root, path, entry, binding, task, result, snapshot, st
               'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
     if scope is not None:
         record['scope'] = scope
+    if assessment is not None:
+        record['assessment'] = assessment
     report = record_text(result, task, state, scope, saved_at=saved_at)
     text = specification_text(task_id, binding, task, result, scope, state)
     record['spec_sha256'] = a.digest(text.encode('utf-8'))
@@ -394,16 +399,17 @@ def main(argv=None):
     p = sub.add_parser('startup'); p.add_argument('--repo'); p.add_argument('--task'); add_scope_args(p)
     for name in ('begin', 'finish', 'unlock'):
         p = sub.add_parser(name); p.add_argument('--task', required=True)
+    sub.choices['finish'].add_argument('--close', choices=('partial', 'failed', 'cancelled'),
+                                       help='Publish only the records of work that ends incomplete')
     p = sub.add_parser('track'); p.add_argument('--task', required=True); p.add_argument('--path', action='append', required=True)
     p = sub.add_parser('import-legacy'); p.add_argument('--repo', required=True); p.add_argument('--source-task', required=True)
     p = sub.add_parser('approve-memory'); p.add_argument('--task', required=True); p.add_argument('--legacy-task', required=True)
     p = sub.add_parser('transfer-ownership'); p.add_argument('--task', required=True); p.add_argument('--source-task', required=True); p.add_argument('--path', action='append', required=True)
-    p = sub.add_parser('prepare-records-only'); p.add_argument('--task', required=True); p.add_argument('--source-task', required=True)
     args = cli.parse_args(argv)
     try:
-        if args.command in ('transfer-ownership', 'prepare-records-only'):
+        if args.command == 'transfer-ownership':
             import task_recovery
-            value = task_recovery.prepare(args.task, args.source_task, args.path if args.command == 'transfer-ownership' else None)
+            value = task_recovery.prepare(args.task, args.source_task, args.path)
         elif args.command in ('import-legacy', 'approve-memory'):
             import legacy_memory
             value = legacy_memory.import_legacy(args.repo, args.source_task) if args.command == 'import-legacy' else legacy_memory.approve_memory(args.task, args.legacy_task)
@@ -411,6 +417,7 @@ def main(argv=None):
             import repo_automation
             if args.command == 'startup': value = repo_automation.startup(args.repo, args.task, scope=scope_args(args))
             elif args.command == 'track': value = repo_automation.track(args.task, args.path)
+            elif args.command == 'finish': value = repo_automation.finish(args.task, close=args.close)
             else: value = getattr(repo_automation, args.command)(args.task)
         elif args.command == 'register': value = register(args.id, args.path)
         elif args.command == 'index': value = write_index(repo(args.repo, ROOT)[0])

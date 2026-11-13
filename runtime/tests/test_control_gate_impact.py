@@ -109,6 +109,22 @@ class ImpactTests(GateFixture, unittest.TestCase):
         self.assertEqual(impact.select(g.candidate('gate-task',self.root),legacy,self.root)['reasons'][0]['reason'],'legacy enrollment')
 
     def test_unowned_dependency_forces_full(self):
+        # A completed task without product selects nothing, until an unowned dependency changes.
+        selected=self.selection([])
+        self.assertEqual((selected['mode'],selected['suites'],selected['reasons']),('none',[],[]))
+        value={'kind':'records','candidate_digest':g.candidate('gate-task',self.root)['digest'],
+               'reviewer':{'subject':'reviewer','session':'review'},'verdict':'accepted',
+               'evidence':['outputs/gate-task/artifact.txt','runs/gate-task/evidence/check.txt'],
+               'impact_digest':g._hash(selected),'impact_review':{}}
+        with self.assertRaisesRegex(a.ContractError,'differs from the publication kind'):
+            g.assess('gate-task',{**value,'kind':'product'},self.root)
+        g.assess('gate-task',value,self.root)  # No suite to run: the records review alone seals it.
+        self.assertEqual(g.check_submission('gate-task',self.root)['publication_kind'],'records')
+        (self.root/'runtime/context_checkpoint.py').write_text('unowned change\n')
+        self.assertEqual(g.impact_selection('gate-task',g.candidate('gate-task',self.root),g.check_enrollment('gate-task',self.root),self.root)['mode'],'full')
+        with self.assertRaisesRegex(a.ContractError,'test evidence missing'):
+            g.check_submission('gate-task',self.root)
+        (self.root/'runtime/context_checkpoint.py').write_text('before\n')
         self.selection(['docs/guide.md'])
         (self.root/'runtime/context_checkpoint.py').write_text('unowned change\n')
         self.assertEqual(g.impact_selection('gate-task',g.candidate('gate-task',self.root),g.check_enrollment('gate-task',self.root),self.root)['mode'],'full')
@@ -129,7 +145,7 @@ class ImpactTests(GateFixture, unittest.TestCase):
         self.assertEqual(test['impact_selection']['mode'],'impact')
         current=g.candidate('gate-task',self.root)
         selection=g.impact_selection('gate-task',current,g.check_enrollment('gate-task',self.root),self.root)
-        value={'candidate_digest':current['digest'],'reviewer':{'subject':'reviewer','session':'review'},'verdict':'accepted',
+        value={'kind':'product','candidate_digest':current['digest'],'reviewer':{'subject':'reviewer','session':'review'},'verdict':'accepted',
                'evidence':['outputs/gate-task/artifact.txt','runs/gate-task/evidence/check.txt'],
                'impact_digest':g._hash(selection),'impact_review':{'docs/guide.md':'Verified only existing documentation changed.'}}
         g.assess('gate-task',value,self.root)

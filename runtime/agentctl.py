@@ -657,25 +657,43 @@ def render(task_id, root=ROOT):
     return {"task_id": task_id, "report": str(run / "result.md"), "published": False}
 
 
-def submission(task_id, root=ROOT):
+def submission(task_id, root=ROOT, close=None, publish=False):
     """Return the exact bytes a submission writes, without writing them.
 
     The gate runs once here; publication stores these bytes and installs them later.
+    close names the intended incomplete outcome: partial or failed must equal the
+    result status, cancelled ends an unsubmitted task without a submitted report.
+    publish asks the gate for the review seal that an incomplete result needs only
+    when its records are published.
     """
     root = Path(root).resolve()
     result, task, snapshot = validate_result(task_id, root, gate=False)
-    require(task["state"] in ("running", "submitted"), "Submission requires a running task")
-    for artifact in result["artifacts"]:
-        artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
-    gate = control_gate_call("check_submission", task_id, root, result=result, persist=True) or {}
-    text = report_text(result, task, snapshot, root)
-    require(relative(root, f"outputs/{task_id}").is_dir(), "Task output directory is missing")
+    cancel = close == "cancelled" or task["state"] == "cancelled"
+    if cancel:
+        require(close == "cancelled" and task["state"] != "submitted" and result["status"] != "completed",
+                "Only an unsubmitted, incomplete task can be closed as cancelled")
+    else:
+        require(task["state"] in ("running", "submitted"), "Submission requires a running task")
+        require(close is None or result["status"] == close, f"Result status is not {close}")
+        for artifact in result["artifacts"]:
+            artifact["sha256"] = digest(relative(root, artifact["path"], file=True).read_bytes())
+    options = {"publish": True} if publish else {}
+    gate = control_gate_call("check_submission", task_id, root, result=result, persist=True, **options) or {}
     files = {f"runs/{task_id}/{name}": json_bytes(value) for name, value in gate.get("files", {}).items()}
-    for prefix in (f"runs/{task_id}/", f"outputs/{task_id}/"):
-        files[prefix + "result.json"] = json_bytes(result)
-        files[prefix + "result.md"] = text.encode("utf-8")
+    if cancel:
+        # No submitted report and no transfer anchor: the result stays as written.
+        files.pop(f"runs/{task_id}/incomplete-candidate.json", None)
+        files[f"runs/{task_id}/result.json"] = relative(root, f"runs/{task_id}/result.json", file=True).read_bytes()
+    else:
+        text = report_text(result, task, snapshot, root)
+        require(relative(root, f"outputs/{task_id}").is_dir(), "Task output directory is missing")
+        for prefix in (f"runs/{task_id}/", f"outputs/{task_id}/"):
+            files[prefix + "result.json"] = json_bytes(result)
+            files[prefix + "result.md"] = text.encode("utf-8")
     submitted = copy.deepcopy(task)
-    if task["state"] != "submitted":
+    if cancel:
+        submitted["state"] = "cancelled"
+    elif task["state"] != "submitted":
         submitted["state"] = "submitted"
         submitted["result_status"] = result["status"]
         submitted["submission"] = {

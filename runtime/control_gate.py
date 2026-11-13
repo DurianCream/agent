@@ -19,6 +19,9 @@ import agentctl as a
 import impact_tests as impact
 
 VERSION = '0.1.0'
+ENROLLMENT = '0.4.0'
+# Older enrollments stay loadable so their tasks can be closed as records, never published as product.
+LEGACY_ENROLLMENTS = ('0.1.0', '0.2.0', '0.3.0')
 CONFIG = '.agent-work/gates.json'
 MAX_BYTES = 64 * 1024 * 1024
 
@@ -134,14 +137,13 @@ def enroll(task_id, root=a.ROOT):
     a.write_json(taskfile, task)
     a.require(len(task_id) <= 128, 'P1 task ID exceeds limit')
     run, binding, publication = _context(task_id, root)
-    value = {'schema_version': VERSION, 'mode': 'enforce', 'assurance': 'local-cooperating-cli',
+    value = {'schema_version': ENROLLMENT, 'mode': 'enforce', 'assurance': 'local-cooperating-cli',
              'task_id': task_id, 'binding': binding, 'base_head': publication['base_head'],
              'publication_policy': publication['policy'], 'publication_policy_sha256': publication['policy_sha256'],
              'config': profile, 'config_sha256': a.digest(config.read_bytes()),
              'created_at': _now(), 'nonce': uuid.uuid4().hex}
     impact_capability = impact.capture(root, publication['base_head'])
     if impact_capability is not None:
-        value['schema_version'] = impact.ENROLLMENT_VERSION
         value['impact_tests'] = impact_capability
     digest = _hash(value)
     a.write_json(companion, value)
@@ -155,36 +157,41 @@ def check_enrollment(task_id, root=a.ROOT):
     root = Path(root).resolve()
     run = _run(task_id, root)
     task = _read(a.relative(run, 'task.json', file=True))
-    a.require('submission_profile_state' not in task and
-              not a.relative(run, 'submission-profile-state.json').exists() and
-              not any(a.relative(run, 'gates').glob('profile-*.json')),
-              'Legacy submission profile state is unsupported; start a new task')
+    obsolete = ('submission_profile_state' in task or
+                a.relative(run, 'submission-profile-state.json').exists() or
+                any(a.relative(run, 'gates').glob('profile-*.json')))
     companion = a.relative(run, 'controls.json')
     ledger = a.relative(root, 'runs/control-enrollments/' + task_id + '.json')
     if not (companion.exists() or ledger.exists() or 'control_enrollment' in task):
+        a.require(not obsolete, 'Legacy submission profile state is unsupported; start a new task')
         return None
     a.require(companion.is_file() and ledger.is_file() and 'control_enrollment' in task,
               'P1 enrollment is missing or downgraded')
     value = _read(companion)
-    a.require('submission_profile' not in value and value.get('schema_version') != '0.2.0',
-              'Legacy submission profile enrollment is unsupported; start a new task')
     stored = _read(ledger)
-    a.require(stored == {'digest': _hash(value), 'enrollment': value} and
+    a.require(type(value) is dict and stored == {'digest': _hash(value), 'enrollment': value} and
               task['control_enrollment'] == _hash(value), 'P1 enrollment differs from local ledger')
     expected_keys = {'schema_version', 'mode', 'assurance', 'task_id', 'binding', 'base_head',
                      'publication_policy', 'publication_policy_sha256', 'config', 'config_sha256',
                      'created_at', 'nonce'}
-    if value.get('schema_version') == impact.ENROLLMENT_VERSION:
-        expected_keys.add('impact_tests')
-        a.require(value['impact_tests'] == impact.capture(root, value['base_head']), 'Impact capture differs from baseline')
-    a.require(set(value) == expected_keys, 'Invalid P1 enrollment fields')
-    a.require(value['schema_version'] in (VERSION, impact.ENROLLMENT_VERSION) and value['mode'] == 'enforce' and
+    legacy = value.get('schema_version') in LEGACY_ENROLLMENTS
+    optional = {'impact_tests', 'submission_profile'} if legacy else {'impact_tests'}
+    a.require(expected_keys <= set(value) <= expected_keys | optional, 'Invalid P1 enrollment fields')
+    a.require((legacy or value['schema_version'] == ENROLLMENT) and value['mode'] == 'enforce' and
               value['assurance'] == 'local-cooperating-cli' and value['task_id'] == task_id,
               'Invalid P1 enrollment')
-    _profile(value['config'])
-    config = a.relative(root, CONFIG, file=True)
-    a.require(a.digest(config.read_bytes()) == value['config_sha256'] and
-              _read(config) == value['config'], 'P1 configuration changed after enrollment')
+    if legacy:
+        # Intact by its own ledger. Its configuration and removed profile rules are frozen
+        # history; only the declared author is still used, to keep the closing review independent.
+        _identity(value['config']['author'])
+    else:
+        a.require(not obsolete, 'Legacy submission profile state is unsupported; start a new task')
+        if 'impact_tests' in value:
+            a.require(value['impact_tests'] == impact.capture(root, value['base_head']), 'Impact capture differs from baseline')
+        _profile(value['config'])
+        config = a.relative(root, CONFIG, file=True)
+        a.require(a.digest(config.read_bytes()) == value['config_sha256'] and
+                  _read(config) == value['config'], 'P1 configuration changed after enrollment')
     _, binding, publication = _context(task_id, root)
     a.require(binding == value['binding'] and publication['base_head'] == value['base_head'] and
               publication['policy'] == value['publication_policy'] and
@@ -197,6 +204,30 @@ def check_enrollment(task_id, root=a.ROOT):
               'P1 standing publication policy changed')
     auto.assert_destination(root, settings)
     return value
+
+
+def _legacy(enrollment):
+    return enrollment['schema_version'] != ENROLLMENT
+
+
+def _kind(task_id, root, result):
+    import repo_automation as auto
+    _, _, publication = _context(task_id, root)
+    return auto.publication_kind(task_id, publication['paths'], result)
+
+
+def _subject(task_id, root, result, enrollment):
+    """What a review binds: the tested candidate, or the identity of an incomplete closure.
+
+    Incomplete work runs no tests and publishes no product, so its review is bound
+    to the task identity here and to the exact result through result_digest.
+    """
+    if result['status'] == 'completed':
+        return candidate(task_id, root)
+    _, binding, publication = _context(task_id, root)
+    value = {'schema_version': VERSION, 'kind': 'incomplete-records', 'task_id': task_id,
+             'enrollment_digest': _hash(enrollment), 'binding': binding, 'base_head': publication['base_head']}
+    return {'digest': _hash(value), 'candidate': value}
 
 
 def _managed(task_id):
@@ -292,6 +323,7 @@ def candidate(task_id, root=a.ROOT):
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
     a.require(enrollment is not None, 'Task is not P1 enrolled')
+    a.require(not _legacy(enrollment), 'Legacy enrollment can only be closed as incomplete records; start a new task')
     _, _, publication = _context(task_id, root)
     import task_recovery
     task_recovery.validate(task_id, root, publication)
@@ -301,8 +333,8 @@ def candidate(task_id, root=a.ROOT):
     for name in paths:
         a.relative(root, name)
         a.require(not name.startswith(('runs/', 'outputs/', '.git/')), 'P1 publication path unsupported')
+    # No product is a records publication: the candidate still binds environment and dependencies.
     product = sorted(name for name in paths if name not in _managed(task_id) and not _evidence_path(name, task_id))
-    a.require(product, 'P1 candidate has no reviewed product files')
     dependencies = []
     index_modes = {}
     for row in filter(None, _git(root, 'ls-files', '--stage', '-z', raw=True).split('\0')):
@@ -422,10 +454,13 @@ def run_tests(task_id, suite_id, root=a.ROOT):
 
 def assess(task_id, value, root=a.ROOT):
     root = Path(root).resolve()
-    current = candidate(task_id, root)
     enrollment = check_enrollment(task_id, root)
-    required_fields = {'candidate_digest', 'reviewer', 'verdict', 'evidence'}
-    if 'impact_tests' in enrollment:
+    a.require(enrollment is not None, 'Task is not P1 enrolled')
+    result = _read(a.relative(_run(task_id, root), 'result.json', file=True))
+    kind, tested = _kind(task_id, root, result), result['status'] == 'completed'
+    current = _subject(task_id, root, result, enrollment)
+    required_fields = {'kind', 'candidate_digest', 'reviewer', 'verdict', 'evidence'}
+    if tested and 'impact_tests' in enrollment:
         required_fields |= {'impact_digest', 'impact_review'}
         selection = impact_selection(task_id, current, enrollment, root)
         a.require(value.get('impact_digest') == _hash(selection), 'Impact review selection is stale')
@@ -433,6 +468,7 @@ def assess(task_id, value, root=a.ROOT):
         a.require(type(review) is dict and set(review) == {e['path'] for e in current['candidate']['entries']} and all(type(v) is str and len(v) >= 10 for v in review.values()), 'Independent impact review must cover every owned path')
     a.require(type(value) is dict and set(value) == required_fields,
               'Invalid P1 assessment fields')
+    a.require(value['kind'] == kind, 'P1 assessment kind differs from the publication kind: ' + kind)
     _identity(value['reviewer'])
     author = enrollment['config']['author']
     a.require(all(value['reviewer'][k] != author[k] for k in ('subject', 'session')),
@@ -448,12 +484,12 @@ def assess(task_id, value, root=a.ROOT):
         file = a.relative(root, name, file=True)
         a.require(0 < file.stat().st_size <= MAX_BYTES, 'Invalid P1 assessment evidence size')
         items.append({'path': name, 'sha256': a.digest(file.read_bytes())})
-    record = {'kind': 'review', 'task_id': task_id, 'candidate_digest': current['digest'],
+    record = {'kind': 'review', 'publication_kind': kind, 'task_id': task_id, 'candidate_digest': current['digest'],
               'reviewer': value['reviewer'], 'verdict': value['verdict'], 'evidence': items,
-              'tests': _proofs(task_id, current, root, review_required=False),
-              'result_digest': _hash(_result_subject(_read(a.relative(_run(task_id, root), 'result.json', file=True)), root)),
+              'tests': _proofs(task_id, current, root, review_required=False, tested=tested),
+              'result_digest': _hash(_result_subject(result, root)),
               'created_at': _now(), 'identity_authenticated': False}
-    if 'impact_tests' in enrollment:
+    if tested and 'impact_tests' in enrollment:
         record.update(impact_digest=value['impact_digest'], impact_review=value['impact_review'])
     name = _append(_run(task_id, root), 'review', record)
     return {'record': name, **record}
@@ -464,7 +500,11 @@ def _evidence_valid(root, item):
     a.require(a.digest(file.read_bytes()) == item['sha256'], 'P1 evidence bytes changed')
 
 
-def _proofs(task_id, current, root, review_required=True):
+def _proofs(task_id, current, root, review_required=True, kind='product', tested=True):
+    """Passing executions of every selected suite, then the accepted review of this kind.
+
+    An incomplete closure (tested=False) selects no suite; its review is still required.
+    """
     run = _run(task_id, root)
     enrollment = check_enrollment(task_id, root)
     records = []
@@ -473,7 +513,7 @@ def _proofs(task_id, current, root, review_required=True):
         if value.get('candidate_digest') == current['digest']:
             a.require(value.get('task_id') == task_id, 'P1 evidence task mismatch')
             records.append((file.name, value))
-    suites = impact_selection(task_id, current, enrollment, root)['suites']
+    suites = impact_selection(task_id, current, enrollment, root)['suites'] if tested else []
     selected = []
     for suite in suites:
         matching = [(n, v) for n, v in records if v.get('kind') == 'test' and v.get('suite_id') == suite['id']]
@@ -496,7 +536,8 @@ def _proofs(task_id, current, root, review_required=True):
     _identity(review['reviewer'])
     a.require(review['verdict'] == 'accepted' and all(review['reviewer'][k] != enrollment['config']['author'][k]
               for k in ('subject', 'session')), 'P1 review is unresolved or not independent')
-    if 'impact_tests' in enrollment:
+    a.require(review.get('publication_kind') == kind, 'P1 review is for another publication kind')
+    if tested and 'impact_tests' in enrollment:
         a.require(review.get('impact_digest') == _hash(impact_selection(task_id, current, enrollment, root)), 'P1 impact review changed')
     a.require(review.get('tests') == selected, 'P1 review does not cover current test executions')
     a.require(review['evidence'], 'P1 review evidence missing')
@@ -532,7 +573,8 @@ def _incomplete_candidate(task_id, root, enrollment):
     return {'digest': _hash(value), 'candidate': value}
 
 
-def check_submission(task_id, root=a.ROOT, result=None, persist=False):
+def check_submission(task_id, root=a.ROOT, result=None, persist=False, publish=False):
+    """Seal a submission. Incomplete results need a review only when they are published."""
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
     if enrollment is None:
@@ -540,8 +582,12 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
     run = _run(task_id, root)
     if result is None:
         result = _read(a.relative(run, 'result.json', file=True))
-    if result['status'] != 'completed':
-        response = {'mode': 'enforce', 'status': 'incomplete-result', 'assurance': 'local-cooperating-cli'}
+    completed = result['status'] == 'completed'
+    response = {'mode': 'enforce', 'status': 'incomplete-result', 'assurance': 'local-cooperating-cli'}
+    files = {}
+    if completed:
+        a.require(enrollment['config']['policy']['submission'] == 'allow', 'P1 submission policy denies action')
+    else:
         task = _read(run / 'task.json')
         file = run / 'incomplete-candidate.json'
         anchor = task.get('submission', {}).get('incomplete_candidate_sha256')
@@ -549,18 +595,22 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
             a.require(file.is_file() and a.digest(file.read_bytes()) == anchor, 'Incomplete candidate differs from source submission anchor')
             saved = _read(file)
             a.require(saved['candidate']['digest'] == _hash(saved['candidate']['candidate']), 'Incomplete candidate digest mismatch')
+            files['incomplete-candidate.json'] = saved
             response['incomplete_candidate_sha256'] = anchor
         elif persist and result['status'] == 'partial' and task['state'] == 'running':
             incomplete = _incomplete_candidate(task_id, root, enrollment)
             if incomplete is not None:
                 saved = {'candidate': incomplete, 'result_sha256': a.digest(a.json_bytes(result))}
                 a.require(not file.exists() or _read(file) == saved, 'Incomplete candidate changed after submission attempt')
-                response['files'] = {'incomplete-candidate.json': saved}
+                files['incomplete-candidate.json'] = saved
                 response['incomplete_candidate_sha256'] = a.digest(a.json_bytes(saved))
-        return response
-    a.require(enrollment['config']['policy']['submission'] == 'allow', 'P1 submission policy denies action')
-    current = candidate(task_id, root)
-    proofs = _proofs(task_id, current, root)
+        if not publish:
+            if persist and files:
+                response['files'] = files
+            return response
+    kind = _kind(task_id, root, result)
+    current = _subject(task_id, root, result, enrollment)
+    proofs = _proofs(task_id, current, root, kind=kind, tested=completed)
     review_record = _read(a.relative(root, proofs[-1]['path'], file=True))
     a.require(review_record.get('result_digest') == _hash(_result_subject(result, root)),
               'P1 result or referenced evidence changed after review')
@@ -579,39 +629,50 @@ def check_submission(task_id, root=a.ROOT, result=None, persist=False):
     for item in record_entries:
         a.require(item['state'] == 'file' and a.digest(a.relative(root, item['path'], file=True).read_bytes()) in reviewed_hashes,
                   'P1 archive is not an exact reviewed evidence copy')
-    seal = {'schema_version': VERSION, 'task_id': task_id, 'candidate': current, 'proofs': proofs,
-            'subject': _result_subject(result, root), 'record_entries': record_entries,
+    seal = {'schema_version': VERSION, 'task_id': task_id, 'publication_kind': kind, 'candidate': current,
+            'proofs': proofs, 'subject': _result_subject(result, root), 'record_entries': record_entries,
             'owned_paths': sorted(publication['paths'])}
     file = a.relative(run, 'gate-submission.json')
     task = _read(a.relative(run, 'task.json', file=True))
-    if task['state'] == 'submitted':
+    # A completed submission always wrote its seal. An incomplete one is sealed only by publication.
+    if task['state'] in ('submitted', 'cancelled') and (completed or file.exists()):
         a.require(file.exists() and _read(file) == seal, 'P1 submitted gate seal changed')
-    response = {'mode': 'enforce', 'status': 'passed', 'candidate_digest': current['digest'],
-                'seal_digest': _hash(seal), 'assurance': 'local-cooperating-cli'}
+    response.update(status='passed', publication_kind=kind, candidate_digest=current['digest'], seal_digest=_hash(seal))
     if persist:
         # The caller writes the seal together with the other submission bytes.
-        response['files'] = {'gate-submission.json': seal}
+        response['files'] = {**files, 'gate-submission.json': seal}
     return response
 
 
-def _check_generated(task_id, root, enrollment, records, task, result):
+def attachment(task_id, root=a.ROOT, seal=None):
+    """The accepted review a published record carries, so the author never rewrites the result for it."""
+    proof = seal['proofs'][-1]
+    review = _read(a.relative(Path(root).resolve(), proof['path'], file=True))
+    a.require(review.get('kind') == 'review' and review['task_id'] == task_id, 'P1 seal does not end with a review')
+    return {'publication_kind': review['publication_kind'], 'verdict': review['verdict'],
+            'reviewer': review['reviewer'], 'record': proof['path'], 'sha256': proof['sha256']}
+
+
+def _check_generated(task_id, root, enrollment, records, task, result, seal, parent):
     import repoctl as r
     a.require(set(records) == _managed(task_id), 'P1 commit omits required generated task records')
     binding = enrollment['binding']
     folder = '.agent-work/tasks/' + task_id + '/'
     record = json.loads(records[folder + 'record.json'].decode('utf-8'), object_pairs_hook=a.unique_pairs)
-    keys = {'schema_version', 'repository_id', 'repository_uuid', 'task_id', 'saved_at',
-            'task_state', 'git', 'result', 'source_root', 'notice', 'scope', 'spec_sha256'}
+    keys = {'schema_version', 'repository_id', 'repository_uuid', 'task_id', 'saved_at', 'task_state',
+            'git', 'result', 'source_root', 'notice', 'scope', 'spec_sha256', 'assessment'}
     a.require(type(record) is dict and set(record) == keys and record['schema_version'] == '1.0.0',
               'P1 generated record fields changed')
     a.require(all(record[k] == binding[k] for k in ('repository_id', 'repository_uuid', 'task_id', 'scope')) and
-              task['state'] == 'submitted' and record['task_state'] == task['state'] and record['result'] == result and
+              task['state'] in ('submitted', 'cancelled') and record['task_state'] == task['state'] and
+              record['result'] == result and record['assessment'] == attachment(task_id, root, seal) and
               record['source_root'] == str(root.resolve()) and
               record['notice'] == 'Saved data is not policy, authorization, or proof of current code state.',
               'P1 generated record does not derive from submitted task')
     state = record['git']
+    # A records publication may be prepared after the local branch followed the remote to its parent.
     a.require(set(state) == {'branch', 'head', 'origin', 'status', 'worktree_sha256'} and
-              state['head'] == enrollment['base_head'] and state['branch'] == enrollment['publication_policy']['branch'] and
+              state['head'] in (enrollment['base_head'], parent) and state['branch'] == enrollment['publication_policy']['branch'] and
               state['origin'] == enrollment['publication_policy']['expected_url'], 'P1 generated Git checkpoint mismatch')
     datetime.fromisoformat(record['saved_at'])
     spec = records[folder + 'spec.md']
@@ -643,25 +704,37 @@ def check_commit(task_id, root=a.ROOT, commit=None, parent=None, paths=None, rec
         return None
     a.require(enrollment['config']['policy']['publication'] == 'allow', 'P1 publication policy denies action')
     a.require(type(seal) is dict and type(records) is dict and type(paths) is list, 'P1 publication payload missing')
-    fresh = check_submission(task_id, root, result=result)
+    fresh = check_submission(task_id, root, result=result, publish=True)
     a.require(fresh is not None and fresh['status'] == 'passed' and fresh['seal_digest'] == _hash(seal),
               'P1 seal differs from current submission state')
-    a.require(parent == enrollment['base_head'] and
-              _git(root, 'rev-list', '--parents', '-n', '1', commit).split() == [commit, parent],
+    product = seal['publication_kind'] == 'product'
+    base = enrollment['base_head']
+    if product:
+        a.require(parent == base, 'P1 commit or parent mismatch')
+        allowed = set(seal['owned_paths']) | {'.agent-work/automation.json'}
+    else:
+        # Records may follow a remote that advanced, but only if nobody touched this task's records.
+        a.require(_git(root, 'merge-base', '--is-ancestor', base, parent, optional=True) is not None and
+                  not _git(root, 'diff-tree', '-r', '--name-only', '-z', base, parent, '--',
+                           '.agent-work/tasks/' + task_id, raw=True),
+                  'P1 records parent is not an untouched descendant of the task base')
+        allowed = {name for name in seal['owned_paths'] if _evidence_path(name, task_id)}
+    a.require(_git(root, 'rev-list', '--parents', '-n', '1', commit).split() == [commit, parent],
               'P1 commit or parent mismatch')
     actual = sorted(filter(None, _git(root, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
                                       '--no-renames', parent, commit, raw=True).split('\0')))
     a.require(actual == sorted(paths) and _managed(task_id) <= set(actual) and
-              set(actual) <= set(seal['owned_paths']) | _managed(task_id) | {'.agent-work/automation.json'},
+              set(actual) <= allowed | _managed(task_id),
               'P1 commit path set differs from submitted ownership')
-    _check_generated(task_id, root, enrollment, records, task, result)
+    _check_generated(task_id, root, enrollment, records, task, result, seal, parent)
     for name, data in records.items():
         oid = _git(root, 'hash-object', '--path=' + name, '--stdin', data=data)
         a.require(_blob(root, name, commit) == {'path': name, 'state': 'file', 'oid': oid, 'mode': '100644'},
                   'P1 generated record differs from commit')
-    for item in seal['candidate']['candidate']['entries'] + seal['record_entries']:
+    # Unfinished or absent product stays in the worktree: a records commit binds records only.
+    for item in seal['record_entries'] + (seal['candidate']['candidate']['entries'] if product else []):
         a.require(_committed_entry_matches(root, item, commit), 'P1 commit content differs from submitted candidate')
-    for item in seal['candidate']['candidate']['dependencies']:
+    for item in seal['candidate']['candidate']['dependencies'] if product else []:
         a.require(_dependency_matches(root, item, commit),
                   'P1 committed dependency differs from tested source')
     value = {'schema_version': VERSION, 'task_id': task_id, 'commit': commit,

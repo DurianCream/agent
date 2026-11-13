@@ -217,52 +217,51 @@ class PublicationTests(unittest.TestCase):
 
 
 class RecordsOnlyTests(recovery_fixture.RecoveryPublicationTests):
-    def successor(self, *args, **kwargs):
-        if getattr(self, 'inject_canary', False):
+    def reviewed(self, summary=None):
+        self.incomplete()
+        if summary:
             result = a.read_json(self.run / 'result.json')
-            result['summary'] = fake()
+            result['summary'] = summary
             a.write_json(self.run / 'result.json', result)
-        return super().successor(*args, **kwargs)
+        self.review(kind='records', extra=('runs/gate-task/evidence/summary.json',))
 
-    def test_records_only_secret_blocks_with_preserved_source(self):
-        self.inject_canary = True
+    def test_records_only_secret_blocks_before_any_effect(self):
         self.assertTrue(task_evidence.enabled(self.root,a.read_json(self.run/'publication.json')))
+        self.reviewed(fake())
         base = r.git(self.root, 'rev-parse', 'HEAD')
-        with self.assertRaises(a.ContractError) as caught: self.publish_successor()
-        self.assertIn('.agent-work/tasks/gate-task/', str(caught.exception))
-        self.assertNotIn(fake(), str(caught.exception))
-        self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), base)
-        self.assertEqual(auto.remote_head(self.root, auto.policy(self.root)), base)
-
+        task = (self.run / 'task.json').read_bytes()
         # The commit object is scanned before any ref, index or record changes; a retry scans again.
-        with self.assertRaisesRegex(a.ContractError, 'Secret scan blocked'):
-            auto.finish('followup', self.root)
-        receipt = a.read_json(self.root / 'runs/followup/publication.json')
+        for _ in range(2):
+            with self.assertRaisesRegex(a.ContractError, 'Secret scan blocked') as caught:
+                auto.finish('gate-task', self.root, close='partial')
+            self.assertIn('.agent-work/tasks/gate-task/', str(caught.exception))
+            self.assertNotIn(fake(), str(caught.exception))
+        receipt = a.read_json(self.run / 'publication.json')
         self.assertEqual(receipt['phase'], 'begun')
         self.assertEqual(auto.staged_paths(self.root), [])
         self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), base)
         self.assertEqual(auto.remote_head(self.root, receipt['policy']), base)
-        for name, raw in self.originals.items(): self.assertEqual((self.root / name).read_bytes(), raw)
+        self.assertEqual((self.run / 'task.json').read_bytes(), task)
 
     def test_records_only_clean_retry_preserves_commit(self):
+        self.reviewed()
+        tip = self.advance_remote('remote.txt')
         original = r.git
         def fail_push(path, *args, **kwargs):
             if args[0] == 'push': raise a.ContractError('fixture network failure')
             return original(path, *args, **kwargs)
         with mock.patch.object(r, 'git', side_effect=fail_push):
             with self.assertRaisesRegex(a.ContractError, 'fixture network failure'):
-                self.publish_successor()
-        receipt = a.read_json(self.root / 'runs/followup/publication.json')
-        published = auto.finish('followup', self.root)
+                auto.finish('gate-task', self.root, close='partial')
+        receipt = a.read_json(self.run / 'publication.json')
+        self.assertEqual((receipt['phase'], receipt['mode'], receipt['parent']), ('submitted', 'remote-only', tip))
+        published = auto.finish('gate-task', self.root, close='partial')
         self.assertEqual(published['commit'], receipt['commit'])
         self.assertEqual(published['phase'], 'pushed')
         self.assertEqual(auto.remote_head(self.root, published['policy']), published['commit'])
-        actual = set(r.git(self.root, 'diff-tree', '--no-commit-id', '--name-only', '-r', '-z',
-                           published['commit'], strip=False).split('\0')) - {''}
-        self.assertNotIn('product.txt', actual)
-        self.assertEqual(actual,{'.agent-work/tasks/'+task+'/'+name
-                                 for task in ('gate-task','followup') for name in task_evidence.FILES})
-        for name, raw in self.originals.items(): self.assertEqual((self.root / name).read_bytes(), raw)
+        self.assertEqual(r.git(self.root, 'rev-parse', 'HEAD'), receipt['base_head'])
+        self.assertEqual(self.changed(published['commit']),
+                         {'.agent-work/tasks/gate-task/' + name for name in task_evidence.FILES})
 
 
 # Reuse setup helpers, not the parent class's already registered test cases.

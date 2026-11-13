@@ -1,8 +1,12 @@
-"""Recovery never rewrites originals and keeps normal P1 publication checks."""
+"""Incomplete work closes through its own records; a transfer never rewrites the source."""
+import copy
+import io
 import json
+import subprocess
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import agentctl as a
@@ -25,17 +29,14 @@ class RecoveryTests(GateFixture,unittest.TestCase):
         a.write_json(self.root/('runs/'+task_id+'/evidence/summary.json'),summary)
         auto.track(task_id,[name],self.root)
 
-    def successor(self, status='partial', cancelled=False):
-        if task_evidence.enabled(self.root,a.read_json(self.run/'publication.json')):
-            self.compact_summary('gate-task','runs/gate-task/evidence/check.txt')
-        result=a.read_json(self.run/'result.json');result['status']=status;result['limitations']=['Incomplete']
+    def incomplete(self, status='partial'):
+        self.compact_summary('gate-task','runs/gate-task/evidence/check.txt')
+        result=a.read_json(self.run/'result.json')
+        if status!='completed':
+            result['status']=status;result['limitations']=['Incomplete']
         a.write_json(self.run/'result.json',result)
-        if cancelled:
-            a.transition('gate-task','cancelled',self.root)
-            r.checkpoint('gate-task',self.root)
-        else:
-            a.submit('gate-task',self.root)
-            r.checkpoint('gate-task',self.root)
+
+    def followup(self):
         a.init_task('coding','followup','Follow up',['Verify recovery'],self.root)
         r.bind('sample','followup',self.root,scope={**self.profile['selector'],'issue':'gate'},new_task=True)
         a.transition('followup','running',self.root)
@@ -43,14 +44,36 @@ class RecoveryTests(GateFixture,unittest.TestCase):
         self.originals={str(p.relative_to(self.root)):p.read_bytes() for folder in folders for p in folder.rglob('*') if p.is_file()}
         return self.root/'runs/followup'
 
+    def successor(self):
+        self.incomplete()
+        a.submit('gate-task',self.root)
+        r.checkpoint('gate-task',self.root)
+        return self.followup()
+
+    def make_legacy(self):
+        """Re-enroll under an older version with its removed profile block, consistently in all three places."""
+        value={**a.read_json(self.run/'controls.json'),'schema_version':'0.3.0','submission_profile':{'schema_version':'0.1.0'}}
+        a.write_json(self.run/'controls.json',value)
+        a.write_json(self.root/'runs/control-enrollments/gate-task.json',{'digest':g._hash(value),'enrollment':value})
+        a.write_json(self.run/'task.json',{**a.read_json(self.run/'task.json'),'control_enrollment':g._hash(value)})
+        # The standing configuration moved on since that enrollment.
+        a.write_json(self.root/g.CONFIG,{**self.profile,'timeout_seconds':20})
+
     def test_transfer_requires_exact_hash_and_preserves_originals(self):
-        target=self.successor()
+        self.successor()
         receipt=recovery.prepare('followup','gate-task',['product.txt'],self.root)
-        self.assertEqual(receipt['kind'],'transfer')
-        self.assertNotIn('receipts',receipt)
-        self.assertFalse((self.root/'.agent-work/tasks/gate-task/recovery').exists())
-        self.assertFalse((self.root/'.agent-work/tasks/followup/recovery').exists())
+        self.assertEqual((receipt['kind'],set(receipt['anchor'])),('transfer',{'result_sha256','incomplete_candidate_sha256'}))
+        publication=a.read_json(self.root/'runs/followup/publication.json')
+        self.assertEqual(publication['paths'],['product.txt'])  # The source keeps its own records.
         for name,raw in self.originals.items(): self.assertEqual((self.root/name).read_bytes(),raw)
+        a.init_task('coding','second','Second',['Verify recovery'],self.root)
+        r.bind('sample','second',self.root,scope={**self.profile['selector'],'issue':'gate'},new_task=True)
+        a.transition('second','running',self.root)
+        with self.assertRaisesRegex(a.ContractError,'already transferred'):
+            recovery.prepare('second','gate-task',['product.txt'],self.root)
+        # Continuing the file is the point of a transfer; it must pass the successor's own gate.
+        (self.root/'product.txt').write_text('continued\n')
+        self.assertEqual(recovery.validate('followup',self.root,publication),{'gate-task'})
         current=g.candidate('followup',self.root)
         self.assertIn('product.txt',{e['path'] for e in current['candidate']['entries']})
         with self.assertRaisesRegex(a.ContractError,'test evidence missing'):
@@ -64,65 +87,25 @@ class RecoveryTests(GateFixture,unittest.TestCase):
         with self.assertRaisesRegex(a.ContractError,'not original owned'):
             recovery.prepare('followup','gate-task',['unknown.txt'],self.root)
 
-    def test_records_only_excludes_sources_and_pins_index(self):
-        target=self.successor()
-        receipt=recovery.prepare('followup','gate-task',root=self.root)
-        pub=a.read_json(target/'publication.json')
-        self.assertNotIn('product.txt',pub['paths'])
-        with self.assertRaisesRegex(a.ContractError,'cannot track product'):
-            auto.track('followup',['product.txt'],self.root)
-        pub['paths'].append('product.txt')
-        with self.assertRaisesRegex(a.ContractError,'contains product'):
-            recovery.validate('followup',self.root,pub)
-
-    def test_failed_and_cancelled_records_supported(self):
-        self.successor('failed')
-        self.assertEqual(recovery.prepare('followup','gate-task',root=self.root)['kind'],'records-only')
-
-    def test_cancelled_records_supported(self):
-        self.successor(cancelled=True)
-        self.assertEqual(recovery.prepare('followup','gate-task',root=self.root)['kind'],'records-only')
-
-    def test_source_record_tamper_blocks(self):
-        target=self.successor()
-        recovery.prepare('followup','gate-task',root=self.root)
-        publication=a.read_json(target/'publication.json')
-        folder=self.root/'.agent-work/tasks/gate-task'
-        unexpected=folder/'unexpected.txt';unexpected.write_text('extra record')
-        with self.assertRaisesRegex(a.ContractError,'exactly four files'):
-            recovery.validate('followup',self.root,publication)
-        unexpected.unlink()
-        report=folder/'report.ko.md';original=report.read_bytes()
-        report.write_bytes(b'x'*(task_evidence.POLICY['file_bytes']+1))
-        with self.assertRaisesRegex(a.ContractError,'exceeds 65536'):
-            recovery.validate('followup',self.root,publication)
-        report.write_bytes(original)
-        raw=self.run/'evidence/check.txt';original=raw.read_bytes();raw.write_text('changed raw evidence')
-        with self.assertRaisesRegex(a.ContractError,'Submitted evidence was changed'):
-            recovery.validate('followup',self.root,publication)
-        raw.write_bytes(original)
-        (self.root/'.agent-work/tasks/gate-task/report.ko.md').write_text('tampered')
-        with self.assertRaisesRegex(a.ContractError,'records changed'):
-            g.candidate('followup',self.root)
-
     def test_live_source_and_scope_mismatch_rejected(self):
-        with self.assertRaisesRegex(a.ContractError,'closed incomplete'):
-            recovery.closed('gate-task',self.root)
+        with self.assertRaisesRegex(a.ContractError,'Only submitted partial'):
+            recovery.anchor('gate-task',self.root)
         target=self.successor()
         binding=a.read_json(target/'repository.json');binding['scope']['issue']='different'
         a.write_json(target/'repository.json',binding)
-        with self.assertRaises(a.ContractError):recovery.prepare('followup','gate-task',root=self.root)
+        with self.assertRaises(a.ContractError):recovery.prepare('followup','gate-task',['product.txt'],self.root)
 
-    def test_generated_source_entry_remains_pinned(self):
+    def test_source_submission_change_blocks_transferred_successor(self):
         target=self.successor()
-        recovery.prepare('followup','gate-task',root=self.root)
-        pub=a.read_json(target/'publication.json')
-        self.assertEqual(recovery.validate('followup',self.root,pub), {'gate-task'})
-        file=self.root/'.agent-work/tasks/gate-task/record.json'
-        record=a.read_json(file);record['result']['summary']='tampered'
-        a.write_json(file,record)
-        with self.assertRaisesRegex(a.ContractError,'records changed'):
-            recovery.validate('followup',self.root,pub)
+        recovery.prepare('followup','gate-task',['product.txt'],self.root)
+        publication=a.read_json(target/'publication.json')
+        old={**publication,'recovery':{**publication['recovery'],'kind':'records-only'}}
+        with self.assertRaisesRegex(a.ContractError,'Unsupported recovery manifest'):
+            recovery.validate('followup',self.root,old)
+        task=a.read_json(self.run/'task.json');task['submission']['result_sha256']='0'*64
+        a.write_json(self.run/'task.json',task)
+        with self.assertRaises(a.ContractError):
+            g.candidate('followup',self.root)
 
     def test_candidate_file_tamper_cannot_replace_submitted_source(self):
         self.successor()
@@ -139,6 +122,26 @@ class RecoveryTests(GateFixture,unittest.TestCase):
                 recovery.prepare('followup','gate-task',['product.txt'],self.root)
         self.assertEqual((self.run/'task.json').read_bytes(), original)
 
+    def test_legacy_enrollment_loads_only_to_close_records(self):
+        self.incomplete()
+        self.make_legacy()
+        a.load_task('gate-task',self.root)  # The loader no longer rejects it before it can be closed.
+        with self.assertRaisesRegex(a.ContractError,'start a new task'):
+            g.candidate('gate-task',self.root)
+        self.review(kind='records',extra=('runs/gate-task/evidence/summary.json',))
+        self.assertEqual(g.check_submission('gate-task',self.root,publish=True)['publication_kind'],'records')
+        # A legacy enrollment cannot claim completion, and damage is still damage.
+        result=a.read_json(self.run/'result.json');result.update(status='completed',limitations=[])
+        with self.assertRaisesRegex(a.ContractError,'start a new task'):
+            g.check_submission('gate-task',self.root,result=result)
+        ledger=self.root/'runs/control-enrollments/gate-task.json';saved=ledger.read_bytes()
+        ledger.unlink()
+        with self.assertRaisesRegex(a.ContractError,'missing or downgraded'):
+            a.load_task('gate-task',self.root)
+        ledger.write_bytes(saved)
+        a.write_json(self.run/'controls.json',{**a.read_json(self.run/'controls.json'),'nonce':'changed'})
+        with self.assertRaisesRegex(a.ContractError,'differs from local ledger'):
+            a.load_task('gate-task',self.root)
 
     def test_partial_submission_without_test_environment_keeps_file_anchor(self):
         for file in (self.root/'.venv-controls').rglob('*'):
@@ -164,9 +167,8 @@ class RecoveryTests(GateFixture,unittest.TestCase):
 
 
 class RecoveryPublicationTests(RecoveryTests):
-    # Run only the two additional end-to-end cases in this class.
+    # Run only the additional end-to-end cases in this class.
     def before_initial_commit(self):
-        import subprocess
         super().before_initial_commit()
         self.remote = self.root/'work/remote.git'
         self.remote.parent.mkdir(exist_ok=True)
@@ -178,12 +180,80 @@ class RecoveryPublicationTests(RecoveryTests):
     def after_initial_commit(self):
         r.git(self.remote,'fetch',str(self.root),'refs/heads/main:refs/heads/main')
 
-    def publish_successor(self, transfer=False, status='partial', cancelled=False):
-        import io
-        import subprocess
-        from unittest import mock
-        target=self.successor(status,cancelled)
-        recovery.prepare('followup','gate-task',['product.txt'] if transfer else None,self.root)
+    def advance_remote(self, name):
+        """Another checkout pushes first; this checkout does not have that commit."""
+        other=self.root/'work/other'
+        subprocess.run(['git','clone','-q','-b','main',str(self.remote),str(other)],check=True)
+        r.git(other,'config','user.name','Other');r.git(other,'config','user.email','other@example.invalid')
+        file=other/name;file.parent.mkdir(parents=True,exist_ok=True);file.write_text('remote work')
+        r.git(other,'add','-f','--',name);r.git(other,'commit','-q','-m','Remote advance');r.git(other,'push','-q','origin','main')
+        return r.git(other,'rev-parse','HEAD')
+
+    def changed(self, commit):
+        return set(r.git(self.root,'diff-tree','--no-commit-id','--name-only','-r','-z',commit,strip=False).split('\0'))-{''}
+
+    def close(self, close, status='partial', legacy=False, advance=None):
+        base=r.git(self.root,'rev-parse','HEAD')
+        if status=='completed':  # Completed without product: nothing owned but the records.
+            publication=a.read_json(self.run/'publication.json');publication['paths']=[]
+            a.write_json(self.run/'publication.json',publication)
+        self.incomplete(status)
+        if legacy: self.make_legacy()
+        if status=='completed': self.execute()
+        with self.assertRaisesRegex(a.ContractError,'review missing'):
+            auto.finish('gate-task',self.root,close=close)
+        self.review(kind='records',extra=('runs/gate-task/evidence/summary.json',))
+        tip=self.advance_remote(advance) if advance else base
+        if advance and advance.startswith('.agent-work/tasks/gate-task/'):
+            with self.assertRaisesRegex(a.ContractError,'records changed on the remote'):
+                auto.finish('gate-task',self.root,close=close)
+            self.assertEqual(a.read_json(self.run/'publication.json')['phase'],'begun')
+            self.assertEqual(a.read_json(self.run/'task.json')['state'],'running')
+            return None
+        published=auto.finish('gate-task',self.root,close=close)
+        commit=published['commit']
+        self.assertEqual((published['phase'],published['kind'],published['parent']),('pushed','records',tip))
+        self.assertEqual(auto.remote_head(self.root,published['policy']),commit)
+        self.assertEqual(self.changed(commit),{'.agent-work/tasks/gate-task/'+name for name in task_evidence.FILES})
+        # Unfinished product is neither published nor disturbed.
+        self.assertEqual((self.root/'product.txt').read_text(),'after\n')
+        self.assertEqual(r.git(self.root,'show',base+':product.txt'),'before')
+        self.assertEqual(r.git(self.root,'show',commit+':product.txt'),'before')
+        self.assertEqual(published['mode'],'remote-only' if advance else 'local-update')
+        self.assertEqual(r.git(self.root,'rev-parse','HEAD'),base if advance else commit)
+        self.assertEqual('notice' in published,bool(advance))
+        self.assertEqual(auto.staged_paths(self.root),[])
+        record=json.loads(r.git(self.root,'show',commit+':.agent-work/tasks/gate-task/record.json'))
+        state='cancelled' if close=='cancelled' else 'submitted'
+        self.assertEqual((record['task_state'],record['result']['status'],a.read_json(self.run/'task.json')['state']),(state,status,state))
+        self.assertEqual((record['assessment']['publication_kind'],record['assessment']['verdict'],record['assessment']['reviewer']['subject']),
+                         ('records','accepted','reviewer'))
+        self.assertEqual(a.digest((self.root/record['assessment']['record']).read_bytes()),record['assessment']['sha256'])
+        self.assertEqual((self.run/'incomplete-candidate.json').exists(),close=='partial')
+        self.assertEqual(auto.finish('gate-task',self.root)['commit'],commit)
+        with self.assertRaisesRegex(a.ContractError,'another --close'):
+            auto.finish('gate-task',self.root,close='failed' if close!='failed' else 'partial')
+        return published
+
+    def test_close_publishes_own_records_actual_commit_and_remote(self):
+        self.close('partial')
+        for case in (dict(close='failed',status='failed',advance='remote.txt'),
+                     dict(close='cancelled',legacy=True,advance='remote.txt'),
+                     dict(close=None,status='completed'),
+                     dict(close='partial',advance='.agent-work/tasks/gate-task/foreign.txt')):
+            with self.subTest(**case):
+                fixture=RecoveryPublicationTests('test_close_publishes_own_records_actual_commit_and_remote')
+                fixture.setUp()
+                try: fixture.close(**case)
+                finally: fixture.doCleanups()
+
+    def test_transfer_after_source_published_its_records(self):
+        source=self.close('partial')
+        target=self.followup()
+        recovery.prepare('followup','gate-task',['product.txt'],self.root)
+        (self.root/'product.txt').write_text('finished\n')
+        # The source's saved publication still verifies after the successor continues its file.
+        self.assertEqual(auto.finish('gate-task',self.root)['commit'],source['commit'])
         result=a.read_json(target/'result.json')
         evidence=target/'evidence/review.txt';evidence.write_text('Fixture independent evaluation evidence')
         self.compact_summary('followup','runs/followup/evidence/review.txt')
@@ -201,32 +271,20 @@ class RecoveryPublicationTests(RecoveryTests):
         def dispatch(argv,**kw): return Process() if '.venv-controls' in argv[0] else original(argv,**kw)
         with mock.patch.object(g.subprocess,'Popen',side_effect=dispatch):
             g.run_tests('followup','unit',self.root)
-        g.assess('followup',{'candidate_digest':g.candidate('followup',self.root)['digest'],'reviewer':{'subject':'independent','session':'independent-session'},'verdict':'accepted','evidence':['runs/followup/evidence/review.txt','outputs/followup/recovery.txt','runs/followup/evidence/summary.json']},self.root)
-        a.submit('followup',self.root)
+        review={'kind':'records','candidate_digest':g.candidate('followup',self.root)['digest'],'reviewer':{'subject':'independent','session':'independent-session'},'verdict':'accepted','evidence':['runs/followup/evidence/review.txt','outputs/followup/recovery.txt','runs/followup/evidence/summary.json']}
+        with self.assertRaisesRegex(a.ContractError,'differs from the publication kind'):
+            g.assess('followup',review,self.root)
+        forged=g.assess('followup',{**review,'kind':'product'},self.root)
+        file=target/'gates'/forged['record'];accepted=file.read_bytes()
+        a.write_json(file,{**a.read_json(file),'publication_kind':'records'})
+        with self.assertRaisesRegex(a.ContractError,'another publication kind'):  # A records review cannot publish product.
+            auto.finish('followup',self.root)
+        file.write_bytes(accepted)
         published=auto.finish('followup',self.root)
-        self.assertEqual(published['phase'],'pushed')
+        self.assertEqual((published['phase'],published['kind'],published['parent']),('pushed','product',source['commit']))
         self.assertEqual(auto.remote_head(self.root,published['policy']),published['commit'])
-        actual=set(r.git(self.root,'diff-tree','--no-commit-id','--name-only','-r','-z',published['commit'],strip=False).split('\0'))-{''}
-        self.assertEqual('product.txt' in actual,transfer)
-        records={'.agent-work/tasks/'+task+'/'+name for task in ('gate-task','followup') for name in task_evidence.FILES}
-        self.assertEqual(actual,records | ({'product.txt'} if transfer else set()))
-        for task in ('gate-task','followup'):
-            publication=a.read_json(self.root/('runs/'+task+'/publication.json'))
-            task_evidence.validate(self.root,task,publication,commit=published['commit'])
+        self.assertEqual(self.changed(published['commit']),{'product.txt'}|{'.agent-work/tasks/followup/'+name for name in task_evidence.FILES})
         for name,raw in self.originals.items(): self.assertEqual((self.root/name).read_bytes(),raw)
-        return published
-
-    def test_publish_records_only_actual_commit_and_remote(self):
-        self.publish_successor()
-        for status,cancelled in (('failed',False),('partial',True)):
-            with self.subTest(status=status,cancelled=cancelled):
-                fixture=RecoveryPublicationTests('test_publish_records_only_actual_commit_and_remote')
-                fixture.setUp()
-                try: fixture.publish_successor(status=status,cancelled=cancelled)
-                finally: fixture.doCleanups()
-
-    def test_publish_transfer_actual_commit_and_remote(self):
-        self.publish_successor(transfer=True)
 
 # Inherited boundary cases already run in RecoveryTests; avoid duplicate fixture executions.
 for _name in list(vars(RecoveryTests)):

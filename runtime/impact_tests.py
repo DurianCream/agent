@@ -7,7 +7,6 @@ from pathlib import Path
 import agentctl as a
 
 VERSION = '1.0.0'
-ENROLLMENT_VERSION = '0.3.0'
 CONFIG = '.agent-work/impact-tests.json'
 # Protected paths always add the gate's required suites to their mapped suites.
 # Agent instruction documents (AGENTS.md, shared/workflows) are mapped to the
@@ -181,6 +180,10 @@ def select(current, enrollment, root):
         suites = full
     else:
         suites = _merge((list(required) if protected else []) + [s for s in config['suites'] if s['id'] in ids])
-    a.require(suites, 'Impact selection cannot be empty')
+    if not suites:
+        # An explicit, digest-bound result: a task without owned product needs no suite.
+        a.require(not entries, 'Impact selection cannot be empty')
+        return {'mode': 'none', 'reason': 'no owned product and no changed dependency', 'suites': [],
+                'reasons': reasons, 'mapping_sha256': captured['baseline_sha256']}
     return {'mode': 'full' if fallback else 'impact', 'suites': suites, 'reasons': reasons,
             'mapping_sha256': captured['baseline_sha256']}

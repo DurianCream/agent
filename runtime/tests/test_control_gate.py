@@ -99,8 +99,10 @@ class GateFixture:
         with mock.patch.object(g.subprocess, 'Popen', side_effect=dispatch):
             return g.run_tests('gate-task', 'unit', self.root)
 
-    def review(self, verdict='accepted', extra=()):
-        return g.assess('gate-task', {'candidate_digest': g.candidate('gate-task', self.root)['digest'],
+    def review(self, verdict='accepted', extra=(), kind='product'):
+        result = a.read_json(self.run / 'result.json')
+        subject = g._subject('gate-task', self.root, result, g.check_enrollment('gate-task', self.root))
+        return g.assess('gate-task', {'kind': kind, 'candidate_digest': subject['digest'],
             'reviewer': {'subject': 'reviewer', 'session': 'reviewer-session'}, 'verdict': verdict,
             'evidence': ['outputs/gate-task/artifact.txt', 'runs/gate-task/evidence/check.txt', *extra]}, self.root)
 
@@ -157,7 +159,7 @@ class GateTests(GateFixture, unittest.TestCase):
     def test_self_review_rejected(self):
         self.execute()
         with self.assertRaisesRegex(a.ContractError, 'independent'):
-            g.assess('gate-task', {'candidate_digest': g.candidate('gate-task', self.root)['digest'],
+            g.assess('gate-task', {'kind': 'product', 'candidate_digest': g.candidate('gate-task', self.root)['digest'],
                 'reviewer': self.profile['author'], 'verdict': 'accepted',
                 'evidence': ['outputs/gate-task/artifact.txt']}, self.root)
 
@@ -269,16 +271,12 @@ class GateTests(GateFixture, unittest.TestCase):
 
     def test_changed_companion_blocks(self):
         original = a.read_json(self.run / 'controls.json')
-        for old_value in (None, False, {}, 'unexpected'):
-            value = copy.deepcopy(original); value['submission_profile'] = old_value
-            a.write_json(self.run / 'controls.json', value)
-            with self.subTest(old_value=old_value), mock.patch.object(g.impact, 'capture', side_effect=AssertionError('Must reject before validation')):
-                with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile enrollment is unsupported'):
+        # A companion edited into an older shape is damage, not a legacy enrollment.
+        for change in ({'submission_profile': {}}, {'schema_version': '0.2.0'}, {'schema_version': '0.3.0'}):
+            a.write_json(self.run / 'controls.json', {**original, **change})
+            with self.subTest(change=change), mock.patch.object(g.impact, 'capture', side_effect=AssertionError('Must reject before validation')):
+                with self.assertRaisesRegex(a.ContractError, 'differs from local ledger'):
                     g.check_enrollment('gate-task', self.root)
-        value = copy.deepcopy(original); value['schema_version'] = '0.2.0'
-        a.write_json(self.run / 'controls.json', value)
-        with self.assertRaisesRegex(a.ContractError, 'Legacy submission profile enrollment is unsupported'):
-            g.check_enrollment('gate-task', self.root)
         a.write_json(self.run / 'controls.json', original)
         taskfile = self.run / 'task.json'; task = a.read_json(taskfile)
         a.write_json(taskfile, {**task, 'submission_profile_state': None})
@@ -380,9 +378,10 @@ class GateTests(GateFixture, unittest.TestCase):
         self.ready(); a.submit('gate-task', self.root)
         submission = a.submission('gate-task', self.root)
         _, entry = r.repo('sample', self.root)
+        seal = a.read_json(self.run / 'gate-submission.json')
         records = r.record_files('gate-task', self.root, self.root, entry, a.read_json(self.run / 'repository.json'),
                                  submission['task'], submission['result'], submission['snapshot'],
-                                 r.git_state(self.root), a.now())
+                                 r.git_state(self.root), a.now(), g.attachment('gate-task', self.root, seal))
         if tamper:
             tamper(records)
         for name, data in records.items():
