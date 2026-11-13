@@ -62,7 +62,7 @@ This file defines advisory role behavior. Actual agent creation, filesystem/netw
 
 ## Governance for publication checks
 
-Publication checks apply to new tasks in the configured repository scope. Assess profile, scope, evidence and exception requirements without retroactively enrolling historical tasks. An enrolled task's missing or downgraded local control records must block its cooperating lifecycle checks; deleting the controls is not a recovery procedure.
+Publication checks apply to new tasks in the configured repository scope. Assess gate configuration, impact selection, scope, evidence and exception requirements without retroactively enrolling historical tasks. An enrolled task's missing or downgraded local control records must block its cooperating lifecycle checks; deleting the controls is not a recovery procedure.
 
 Review the exact candidate and evidence boundary, including how generated submission records are deterministically sealed and how the real publication commit is compared with that seal. A favorable recommendation cannot override a failed mandatory check, a changed artifact, a different destination or unresolved reviewer findings. Existing exact standing Git authorization remains applicable without repeated approval requests.
 
