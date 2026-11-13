@@ -130,6 +130,9 @@ class AutomationTests(unittest.TestCase):
         expected = r.generated_index(self.path)
         self.assertEqual(expected, r.write_index(self.path))
         self.assertEqual(expected, r.generated_index(self.path))
+        # One row per task: date, a link to the readable report, status and summary.
+        row = (self.path / '.agent-work/INDEX.md').read_text(encoding='utf-8').splitlines()[-1]
+        self.assertRegex(row, r'^\| \d{4}-\d\d-\d\d \| \[auto-task\]\(tasks/auto-task/report\.ko\.md\) \| \S+ / \S+ \| .+ \|$')
         (self.path / '.agent-work/index.json').write_text('stale cache')
         result = auto.finish('auto-task', self.root)
         self.assertEqual(result['phase'], 'pushed')

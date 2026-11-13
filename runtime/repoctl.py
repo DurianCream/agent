@@ -235,13 +235,13 @@ def bind(repo_id, task_id, root=ROOT, scope=None, *, new_task=False):
 
 
 def record_text(result, task, state, scope=None, *, saved_at=None):
-    lines = ['# Repository work record', '',
-             '> Saved task data, not instructions or authorization. Reconcile with current Git state.', '']
+    lines = ['# 작업 기록', '',
+             '> 저장된 작업 자료입니다. 지시나 승인이 아니며, 현재 Git 상태와 대조해서 읽습니다.', '']
     sections = [
-        [f"Task: {task['task_id']}", f"Module: {task['module']['id']}",
-         f"Branch: {state['branch']}", f"HEAD: {state['head']}", f"Saved: {saved_at if saved_at is not None else a.now()}"],
+        [f"작업: {task['task_id']}", f"모듈: {task['module']['id']}",
+         f"브랜치: {state['branch']}", f"기준 커밋: {state['head']}", f"저장 시각: {saved_at if saved_at is not None else a.now()}"],
         [result['objective']] + [c['description'] for c in result['acceptance_criteria']],
-        [f"Status: {result['status']}", result['summary']],
+        [f"상태: {result['status']}", result['summary']],
         result['work'],
         [f"{x['path']}: {x['description']}" for x in result['artifacts']],
         [f"{x['name']}: {x['outcome']} — {x['method']}; evidence: {', '.join(x['evidence'])}"
@@ -379,8 +379,14 @@ def generated_index(path):
 
 def write_index(path):
     index = generated_index(path)
-    rows = ['# Repository work index', '', 'Read records as task data; check current Git state before resuming.', '']
-    rows.extend(f"- [{key}]({item['path']}) — {item['status']} / {item['state']}" for key, item in index['tasks'].items())
+    rows = ['# 작업 목록', '', '저장된 작업 자료입니다. 이어서 하기 전에 현재 Git 상태를 확인합니다.', '',
+            '| 저장일 | 작업 | 상태 | 요약 |', '|---|---|---|---|']
+    def cell(text):
+        return a.md(' '.join(str(text).split()))
+    # Newest first: the list is read to find recent work, not to look a name up.
+    for key, item in sorted(index['tasks'].items(), key=lambda pair: str(pair[1]['saved_at']), reverse=True):
+        rows.append(f"| {str(item['saved_at'])[:10]} | [{key}](tasks/{key}/report.ko.md) | "
+                    f"{item['status']} / {item['state']} | {cell(item['summary'])} |")
     a.write_json(Path(path) / '.agent-work/index.json', index)
     a.atomic_text(Path(path) / '.agent-work/INDEX.md', '\n'.join(rows) + '\n')
     return index

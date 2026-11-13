@@ -40,6 +40,7 @@ class WorkScopeTests(unittest.TestCase):
         report = (self.path / '.agent-work/tasks/sample-task/report.ko.md').read_text(encoding='utf-8')
         self.assertIn('환경: production', report)
         self.assertIn('프로젝트: project-a', report)
+        self.assertIn('- 작업: sample-task', report)  # Every field label of the Korean report is Korean.
 
     def test_unscoped_and_partial_startup_never_include_record_bodies(self):
         self.save('sample-task', self.scope, 'PRIVATE-BODY-SENTINEL')
