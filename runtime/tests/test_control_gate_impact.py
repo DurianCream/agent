@@ -139,7 +139,9 @@ class ImpactTests(GateFixture, unittest.TestCase):
             def wait(self,timeout): return 0
             def kill(self): pass
         original=subprocess.Popen
-        def dispatch(argv,**kw):return Process() if '.venv-controls' in argv[0] else original(argv,**kw)
+        def dispatch(argv,**kw):
+            if '.venv-controls' not in argv[0]: return original(argv,**kw)
+            self.runner_result(argv,b'Ran 4 tests in 0.001s\n');return Process()
         with mock.patch.object(g.subprocess,'Popen',side_effect=dispatch):
             test=g.run_tests('gate-task','impact-document-integrity',self.root)
         self.assertEqual(test['impact_selection']['mode'],'impact')

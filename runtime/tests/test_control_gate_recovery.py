@@ -61,14 +61,20 @@ class RecoveryTests(GateFixture,unittest.TestCase):
 
     def test_transfer_requires_exact_hash_and_preserves_originals(self):
         self.successor()
+        a.init_task('coding','second','Second',['Verify recovery'],self.root)
+        r.bind('sample','second',self.root,scope={**self.profile['selector'],'issue':'gate'},new_task=True)
+        a.transition('second','running',self.root)
+        # A file another open task already owns cannot be handed over as well.
+        manifest=self.root/'runs/second/publication.json';saved=manifest.read_bytes()
+        a.write_json(manifest,{**a.read_json(manifest),'paths':['product.txt']})
+        with self.assertRaisesRegex(a.ContractError,'Another open task owns'):
+            recovery.prepare('followup','gate-task',['product.txt'],self.root)
+        manifest.write_bytes(saved)
         receipt=recovery.prepare('followup','gate-task',['product.txt'],self.root)
         self.assertEqual((receipt['kind'],set(receipt['anchor'])),('transfer',{'result_sha256','incomplete_candidate_sha256'}))
         publication=a.read_json(self.root/'runs/followup/publication.json')
         self.assertEqual(publication['paths'],['product.txt'])  # The source keeps its own records.
         for name,raw in self.originals.items(): self.assertEqual((self.root/name).read_bytes(),raw)
-        a.init_task('coding','second','Second',['Verify recovery'],self.root)
-        r.bind('sample','second',self.root,scope={**self.profile['selector'],'issue':'gate'},new_task=True)
-        a.transition('second','running',self.root)
         with self.assertRaisesRegex(a.ContractError,'already transferred'):
             recovery.prepare('second','gate-task',['product.txt'],self.root)
         # Continuing the file is the point of a transfer; it must pass the successor's own gate.
@@ -270,7 +276,9 @@ class RecoveryPublicationTests(RecoveryTests):
             def wait(self,timeout): return 0
             def kill(self): pass
         original=subprocess.Popen
-        def dispatch(argv,**kw): return Process() if '.venv-controls' in argv[0] else original(argv,**kw)
+        def dispatch(argv,**kw):
+            if '.venv-controls' not in argv[0]: return original(argv,**kw)
+            self.runner_result(argv);return Process()
         with mock.patch.object(g.subprocess,'Popen',side_effect=dispatch):
             g.run_tests('followup','unit',self.root)
         review={'kind':'records','candidate_digest':g.candidate('followup',self.root)['digest'],'reviewer':{'subject':'independent','session':'independent-session'},'verdict':'accepted','evidence':['runs/followup/evidence/review.txt','outputs/followup/recovery.txt','runs/followup/evidence/summary.json']}

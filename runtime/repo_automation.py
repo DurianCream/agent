@@ -92,7 +92,9 @@ def track(task_id, paths=None, root=a.ROOT, changed=False, yes=False):
     run, task, path = context(task_id, root)
     file = a.relative(run, 'publication.json', file=True)
     a.require(bool(paths) != bool(changed), 'Give either --path or --changed')
-    with a.lock(run / '.publication.lock'):
+    # One repository-wide lock covers reading other tasks' ownership and saving this one's,
+    # so two tasks cannot both register the same file. Transfers take the same lock.
+    with a.lock(a.relative(path, '.agent-work/recovery.lock')), a.lock(run / '.publication.lock'):
         value = a.read_json(file)
         a.require(value['phase'] == 'begun', 'Cannot change a publishing/completed manifest')
         owners = _open_owners(task_id, root, a.read_json(a.relative(run, 'repository.json', file=True)))
@@ -101,7 +103,8 @@ def track(task_id, paths=None, root=a.ROOT, changed=False, yes=False):
                 r.git(path, 'ls-files', '--others', '--exclude-standard', '-z', strip=False)
             skip = set(value['preexisting_dirty']) | set(owners) | set(value['paths'])
             paths = sorted(n for n in set(names.split('\0')) - {''} - skip
-                           if n != AUTOMATION and (not n.startswith('.agent-work/tasks/') or
+                           if n != AUTOMATION and not (n.startswith('.agent-work/') and n.endswith('.lock')) and
+                           (not n.startswith('.agent-work/tasks/') or
                                                    n.startswith('.agent-work/tasks/' + task_id + '/evidence/')))
             if not yes:
                 return {'task_id': task_id, 'registered': False, 'candidates': paths,

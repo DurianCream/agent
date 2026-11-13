@@ -94,6 +94,9 @@ class AutomationTests(unittest.TestCase):
         (self.path / 'theirs.txt').write_text('other task'); auto.track('other-task', ['theirs.txt'], self.root)
         (self.path / 'seed.txt').write_text('changed'); (self.path / 'mine [1].txt').write_text('new')
         with self.assertRaisesRegex(a.ContractError, 'Another open task owns'): auto.track('auto-task', ['theirs.txt'], self.root)
+        with a.lock(self.path / '.agent-work/recovery.lock'):  # Another task is registering right now.
+            with self.assertRaisesRegex(a.ContractError, 'Another operation holds'):
+                auto.track('auto-task', ['mine [1].txt'], self.root)
         proposal = auto.track('auto-task', root=self.root, changed=True)
         self.assertEqual((proposal['registered'], proposal['candidates']), (False, ['mine [1].txt', 'seed.txt']))
         self.assertEqual(a.read_json(self.root / 'runs/auto-task/publication.json')['paths'], [])

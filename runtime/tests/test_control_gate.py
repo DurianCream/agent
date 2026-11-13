@@ -84,7 +84,15 @@ class GateFixture:
         result['acceptance_criteria'][0]['verification_ids'] = ['check']
         a.write_json(self.run / 'result.json', result)
 
-    def execute(self, text=b'Ran 1 test in 0.001s\n\nOK\n', code=0, mutation=None):
+    @staticmethod
+    def runner_result(argv, text=b'Ran 1 test in 0.001s\n\nOK\n', **counts):
+        """Write what the gate's runner would report for a stubbed test process."""
+        import re
+        ran = re.findall(rb'Ran ([0-9]+) tests? in ', text)
+        value = {**dict.fromkeys(g.COUNTS, 0), 'tests_run': int(ran[-1]) if ran else 0, **counts}
+        Path(argv[argv.index(g.RUNNER) + 1]).write_text(json.dumps(value), encoding='utf-8')
+
+    def execute(self, text=b'Ran 1 test in 0.001s\n\nOK\n', code=0, mutation=None, report=True, **counts):
         class Process:
             stdout = io.BytesIO(text)
             def wait(inner, timeout):
@@ -95,7 +103,11 @@ class GateFixture:
                 pass
         actual_popen = subprocess.Popen
         def dispatch(argv, **kwargs):
-            return Process() if '.venv-controls' in argv[0] else actual_popen(argv, **kwargs)
+            if '.venv-controls' not in argv[0]:
+                return actual_popen(argv, **kwargs)
+            if report:
+                self.runner_result(argv, text, **counts)
+            return Process()
         with mock.patch.object(g.subprocess, 'Popen', side_effect=dispatch):
             return g.run_tests('gate-task', 'unit', self.root)
 
@@ -132,28 +144,51 @@ class GateTests(GateFixture, unittest.TestCase):
     def test_zero_tests_fail(self):
         self.assertEqual(self.execute(b'Ran 0 tests in 0.001s\nOK\n')['outcome'], 'failed')
 
-    def test_summary_must_be_clean(self):
-        ran = b'Ran 3 tests in 0.001s\n\n'
-        cases = {b'OK (skipped=1)\n': False, b'OK (expected failures=1)\n': False,
-                 b'OK (skipped=0, unexpected successes=2)\n': False, b'FAILED (failures=1)\n': False,
-                 b'OK\n\n' + ran + b'FAILED (errors=1)\n': False,  # The last summary decides.
-                 b'OK (skip': False, b'': False, b'OK (skipped=one)\n': False, b'not OK\n': False,
-                 b'\x1b[32mOK\x1b[0m\r\n': True, b'OK (skipped=0)\n': True}
-        for tail, clean in cases.items():
-            with self.subTest(tail=tail):
-                self.assertEqual(g._clean(g._summary(ran + tail)), clean)
-        skipped = self.execute(ran + b'OK (skipped=1)\n')
-        self.assertEqual((skipped['outcome'], skipped['summary']), ('failed', {'status': 'OK', 'skipped': 1}))
-        # A stored proof cannot vouch for a log that says otherwise.
-        passed = self.execute(); self.review()
+    def test_runner_counts_decide_not_the_log(self):
+        # Text a test prints cannot stand in for the runner's result, in either direction.
+        for name in g.COUNTS[1:]:
+            with self.subTest(count=name):
+                stopped = self.execute(b'Ran 3 tests in 0.001s\n\nOK\n', **{name: 1})
+                self.assertEqual((stopped['outcome'], stopped['counts'][name]), ('failed', 1))
+        missing = self.execute(report=False)
+        self.assertEqual((missing['outcome'], missing['counts'], 'result' in missing), ('failed', None, False))
+        noisy = self.execute(b'FAILED (errors=1)\nOK (skipped=4)\n', tests_run=2)
+        self.assertEqual((noisy['outcome'], noisy['tests_run']), ('passed', 2))
+        # A stored proof cannot vouch for a result file that says otherwise, nor the reverse.
+        self.review()
         self.assertEqual(g.check_submission('gate-task', self.root)['status'], 'passed')
-        log = self.root / passed['evidence']['path']
-        log.write_bytes(ran + b'OK (skipped=1)\n')
-        proof = self.run / 'gates' / passed['record']
-        value = a.read_json(proof); value['evidence']['sha256'] = a.digest(log.read_bytes())
+        result, proof = self.root / noisy['result']['path'], self.run / 'gates' / noisy['record']
+        a.write_json(result, {**noisy['counts'], 'skipped': 1})
+        value = a.read_json(proof); value['result']['sha256'] = a.digest(result.read_bytes())
         a.write_json(proof, value)
-        with self.assertRaisesRegex(a.ContractError, 'no clean unittest summary'):
-            g._proofs('gate-task', g.candidate('gate-task', self.root), self.root, review_required=False)
+        current = g.candidate('gate-task', self.root)
+        with self.assertRaisesRegex(a.ContractError, 'differs from its proof'):
+            g._proofs('gate-task', current, self.root, review_required=False)
+        value['counts']['skipped'] = 1
+        a.write_json(proof, value)
+        with self.assertRaisesRegex(a.ContractError, 'did not pass'):
+            g._proofs('gate-task', current, self.root, review_required=False)
+
+    def test_real_runner_reports_skips_whatever_tests_print(self):
+        folder = self.root / 'work/runner-fixture'; folder.mkdir(parents=True)
+        (folder / 'test_sample.py').write_text(
+            "import unittest\n"
+            "class Sample(unittest.TestCase):\n"
+            "    def test_prints(self):\n        print('OK'); print('FAILED (errors=1)')\n"
+            "    @unittest.skipIf(__import__('os').environ.get('FIXTURE_SKIP'), 'fixture')\n"
+            "    def test_maybe_skipped(self):\n        pass\n"
+            "    @unittest.expectedFailure\n"
+            "    def test_expected(self):\n        raise AssertionError('always expected')\n")
+        def run(**extra):
+            out = folder / 'counts.json'; out.unlink(missing_ok=True)
+            done = subprocess.run([sys.executable, '-I', '-B', '-c', g.RUNNER, str(out), 'discover', '-s', str(folder), '-p', 'test_sample.py'],
+                                  capture_output=True, env={**os.environ, **extra}, cwd=self.root)
+            return done, g._counts(out)
+        done, counts = run(FIXTURE_SKIP='1')
+        # unittest's own exit status is success here; only the counts show nothing was proved.
+        self.assertEqual((done.returncode, counts['tests_run'], counts['skipped'], counts['expected_failures']), (0, 3, 1, 1))
+        self.assertIn(b'OK (skipped=1, expected failures=1)', done.stderr)
+        self.assertFalse(g._clean(counts))
 
     def test_failed_exit_fails(self):
         self.assertEqual(self.execute(code=1)['outcome'], 'failed')
@@ -233,7 +268,10 @@ class GateTests(GateFixture, unittest.TestCase):
         process.wait.side_effect = [subprocess.TimeoutExpired('fixture', 10), -9]
         actual_popen = subprocess.Popen
         def dispatch(argv, **kwargs):
-            return process if '.venv-controls' in argv[0] else actual_popen(argv, **kwargs)
+            if '.venv-controls' not in argv[0]:
+                return actual_popen(argv, **kwargs)
+            self.runner_result(argv)
+            return process
         with mock.patch.object(g.subprocess, 'Popen', side_effect=dispatch):
             result = g.run_tests('gate-task', 'unit', self.root)
         self.assertEqual(result['outcome'], 'failed')

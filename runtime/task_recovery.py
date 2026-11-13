@@ -55,6 +55,9 @@ def prepare(task_id, source, paths, root=a.ROOT):
         for other in Path(root, 'runs').glob('*/publication.json'):
             recovery = a.read_json(other).get('recovery')
             a.require(not recovery or recovery['source'] != source or not set(paths) & {e['path'] for e in recovery['entries']}, 'Source ownership already transferred')
+        owners = auto._open_owners(task_id, root, binding)
+        for name in paths:
+            a.require(name not in owners, f'Another open task owns this file: {name} ({owners.get(name)})')
         value['recovery'] = record
         value['paths'] = sorted(set(value['paths']) | set(paths))
         a.write_json(run / 'publication.json', value)

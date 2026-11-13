@@ -383,28 +383,34 @@ def impact_selection(task_id, current, enrollment, root):
     return impact.select(current, enrollment, root)
 
 
-QUIET = ('skipped', 'expected failures', 'unexpected successes')
+COUNTS = ('tests_run', 'failures', 'errors', 'skipped', 'expected_failures', 'unexpected_successes')
+# Runs the suite exactly like `python -m unittest <arguments>` and writes the runner's own result
+# counts to a file. Test output shares stdout and stderr and can print anything, including text
+# that looks like a unittest summary, so the log is evidence only and is never parsed for the verdict.
+RUNNER = '''import json, sys, unittest
+result = unittest.main(module=None, argv=['python -m unittest'] + sys.argv[2:], exit=False).result
+counts = {'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
+          'skipped': len(result.skipped), 'expected_failures': len(result.expectedFailures),
+          'unexpected_successes': len(result.unexpectedSuccesses)}
+with open(sys.argv[1], 'w', encoding='utf-8') as stream:
+    json.dump(counts, stream)
+sys.exit(0 if result.wasSuccessful() else 1)
+'''
 
 
-def _summary(log):
-    """The last unittest summary line as counts; None when absent or not exactly that form.
-
-    A gate run may not skip or expect failure: such a test proved nothing about the candidate.
-    """
-    lines = re.findall(rb'^(OK|FAILED)(?: \(([^()\r\n]*)\))?\r?$', re.sub(rb'\x1b\[[0-9;]*m', b'', log), re.MULTILINE)
-    if not lines:
+def _counts(file):
+    """The runner's result counts, or None when the file is absent or not exactly that shape."""
+    try:
+        value = _read(file)
+    except (OSError, ValueError):
         return None
-    value = {'status': lines[-1][0].decode('ascii')}
-    for part in filter(None, lines[-1][1].split(b', ')):
-        key, separator, number = part.partition(b'=')
-        if not separator or not number.isdigit() or not re.fullmatch(rb'[a-z ]+', key):
-            return None
-        value[key.decode('ascii')] = int(number)
-    return value
+    return value if type(value) is dict and set(value) == set(COUNTS) and all(type(v) is int for v in value.values()) else None
 
 
-def _clean(summary):
-    return type(summary) is dict and summary.get('status') == 'OK' and not any(summary.get(key) for key in QUIET)
+def _clean(counts):
+    """A gate run may not skip or expect failure: such a test proved nothing about the candidate."""
+    return (type(counts) is dict and set(counts) == set(COUNTS) and type(counts['tests_run']) is int and
+            counts['tests_run'] > 0 and all(counts[key] == 0 for key in COUNTS[1:]))
 
 
 def run_tests(task_id, suite_id, root=a.ROOT):
@@ -417,14 +423,16 @@ def run_tests(task_id, suite_id, root=a.ROOT):
     executable = a.relative(root, '.venv-controls/Scripts/python.exe' if os.name == 'nt'
                             else '.venv-controls/bin/python', file=True)
     run = _run(task_id, root)
-    argv = [str(executable), '-I', '-B', *suite['argv'][1:]]
+    stem = 'evidence/gate-test-' + uuid.uuid4().hex
+    outcome = a.relative(run, stem + '.json')
+    argv = [str(executable), '-I', '-B', '-c', RUNNER, str(outcome), *suite['argv'][3:]]
     # The child is local candidate code, not a sandbox or trusted runner.
     env = dict(os.environ)
     for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP'):
         env.pop(key, None)
     env['PYTHONDONTWRITEBYTECODE'] = '1'
     env['AGENT_SUBMISSION_TASK'] = task_id
-    log = a.relative(run, 'evidence/gate-test-' + uuid.uuid4().hex + '.log')
+    log = a.relative(run, stem + '.log')
     code, reason = None, None
     with log.open('wb') as output:
         proc = subprocess.Popen(argv, cwd=root, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -461,16 +469,16 @@ def run_tests(task_id, suite_id, root=a.ROOT):
     after = candidate(task_id, root)
     a.require(log.stat().st_size <= MAX_BYTES, 'P1 test output exceeds limit')
     log_bytes = log.read_bytes()
-    counts = re.findall(rb'^Ran ([0-9]+) tests? in ', log_bytes, re.MULTILINE)
-    count = int(counts[-1]) if counts else 0
-    summary = _summary(log_bytes)
+    counts = _counts(outcome)
     value = {'kind': 'test', 'task_id': task_id, 'candidate_digest': before['digest'],
              'suite_id': suite_id, 'suite_digest': _hash(suite), 'created_at': _now(),
-             'outcome': 'passed' if code == 0 and reason is None and count > 0 and _clean(summary) and before == after else 'failed',
-             'tests_run': count, 'summary': summary,
+             'outcome': 'passed' if code == 0 and reason is None and _clean(counts) and before == after else 'failed',
+             'tests_run': counts['tests_run'] if counts else 0, 'counts': counts,
              'exit_code': code, 'reason': reason, 'candidate_unchanged': before == after,
              'evidence': {'path': log.relative_to(root).as_posix(), 'sha256': a.digest(log_bytes)},
              'assurance': 'local-executed-untrusted-candidate'}
+    if counts:
+        value['result'] = {'path': outcome.relative_to(root).as_posix(), 'sha256': a.digest(outcome.read_bytes())}
     if 'impact_tests' in enrollment:
         value['impact_selection'] = impact_selection(task_id, before, enrollment, root)
     record = _append(run, 'test', value)
@@ -547,13 +555,15 @@ def _proofs(task_id, current, root, review_required=True, kind='product', tested
         a.require('profile_digest' not in proof, 'Legacy submission profile proof is unsupported')
         a.require(proof['suite_digest'] == _hash(suite) and proof['outcome'] == 'passed' and
                   proof['exit_code'] == 0 and type(proof.get('tests_run')) is int and proof['tests_run'] > 0 and
-                  _clean(proof.get('summary')) and proof['candidate_unchanged'] is True,
+                  _clean(proof.get('counts')) and proof['candidate_unchanged'] is True,
                   'P1 mandatory test did not pass')
         if 'impact_tests' in enrollment:
             a.require(proof.get('impact_selection') == impact_selection(task_id, current, enrollment, root), 'P1 impact selection changed')
         _evidence_valid(root, proof['evidence'])
-        a.require(_clean(_summary(a.relative(root, proof['evidence']['path'], file=True).read_bytes())),
-                  'P1 mandatory test log has no clean unittest summary')
+        # The stored counts must still be what the runner wrote.
+        _evidence_valid(root, proof['result'])
+        a.require(_counts(a.relative(root, proof['result']['path'], file=True)) == proof['counts'],
+                  'P1 mandatory test result differs from its proof')
         selected.append({'path': 'runs/' + task_id + '/gates/' + name, 'sha256': a.digest((run / 'gates' / name).read_bytes())})
     if not review_required:
         return selected
