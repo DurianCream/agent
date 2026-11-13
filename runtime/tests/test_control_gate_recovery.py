@@ -130,7 +130,11 @@ class RecoveryTests(GateFixture,unittest.TestCase):
 
     def test_legacy_enrollment_loads_only_to_close_records(self):
         self.incomplete()
+        binding=a.read_json(self.run/'repository.json')
+        self.assertEqual(auto._open_owners('other',self.root,binding).get('product.txt'),'gate-task')
         self.make_legacy()
+        # It can never publish product, so its ownership no longer blocks a new task.
+        self.assertNotIn('product.txt',auto._open_owners('other',self.root,binding))
         a.load_task('gate-task',self.root)  # The loader no longer rejects it before it can be closed.
         with self.assertRaisesRegex(a.ContractError,'start a new task'):
             g.candidate('gate-task',self.root)

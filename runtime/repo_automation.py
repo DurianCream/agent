@@ -74,10 +74,15 @@ def begin(task_id, root=a.ROOT):
 
 def _open_owners(task_id, root, binding):
     """{path: task} for files that other unfinished tasks of this repository own."""
+    import control_gate
     owners = {}
     for file in sorted(Path(root, 'runs').glob('*/publication.json')):
         folder = file.parent
         if folder.name == task_id or not (folder / 'task.json').is_file() or not (folder / 'repository.json').is_file():
+            continue
+        controls = folder / 'controls.json'
+        # A task enrolled under an older version can never publish product, so it holds nothing.
+        if controls.is_file() and a.read_json(controls).get('schema_version') in control_gate.LEGACY_ENROLLMENTS:
             continue
         if (a.read_json(folder / 'task.json').get('state') in ('submitted', 'cancelled') or
                 a.read_json(folder / 'repository.json').get('repository_uuid') != binding['repository_uuid']):
