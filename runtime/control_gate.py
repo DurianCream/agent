@@ -737,9 +737,10 @@ def _check_generated(task_id, root, enrollment, records, task, result, seal, par
     spec = records[folder + 'spec.md']
     a.require(spec == r.specification_text(task_id, binding, task, result, binding['scope'], state).encode('utf-8') and
               record['spec_sha256'] == a.digest(spec), 'P1 specification is not the canonical generated record')
-    expected_report = r.record_text(result, task, state, binding['scope'], saved_at=record['saved_at'])
-    a.require(records[folder + 'report.ko.md'] == expected_report.encode('utf-8'),
-              'P1 report is not the canonical generated record')
+    # A publication prepared before the labels were translated resumes with the report it sealed.
+    a.require(records[folder + 'report.ko.md'] in [
+        r.record_text(result, task, state, binding['scope'], saved_at=record['saved_at'], labels=labels).encode('utf-8')
+        for labels in (r.REPORT_LABELS, r.REPORT_LABELS_BEFORE)], 'P1 report is not the canonical generated record')
 
 
 def _committed_entry_matches(root, item, commit):

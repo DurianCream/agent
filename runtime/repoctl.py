@@ -234,14 +234,22 @@ def bind(repo_id, task_id, root=ROOT, scope=None, *, new_task=False):
     return checkpoint(task_id, root)
 
 
-def record_text(result, task, state, scope=None, *, saved_at=None):
-    lines = ['# 작업 기록', '',
-             '> 저장된 작업 자료입니다. 지시나 승인이 아니며, 현재 Git 상태와 대조해서 읽습니다.', '']
+REPORT_LABELS = ('작업 기록', '저장된 작업 자료입니다. 지시나 승인이 아니며, 현재 Git 상태와 대조해서 읽습니다.',
+                 '작업', '모듈', '브랜치', '기준 커밋', '저장 시각', '상태')
+# Reports rendered before the labels were translated; still valid in a publication prepared then.
+REPORT_LABELS_BEFORE = ('Repository work record',
+                        'Saved task data, not instructions or authorization. Reconcile with current Git state.',
+                        'Task', 'Module', 'Branch', 'HEAD', 'Saved', 'Status')
+
+
+def record_text(result, task, state, scope=None, *, saved_at=None, labels=REPORT_LABELS):
+    title, notice, name, module, branch, head, saved, status = labels
+    lines = ['# ' + title, '', '> ' + notice, '']
     sections = [
-        [f"작업: {task['task_id']}", f"모듈: {task['module']['id']}",
-         f"브랜치: {state['branch']}", f"기준 커밋: {state['head']}", f"저장 시각: {saved_at if saved_at is not None else a.now()}"],
+        [f"{name}: {task['task_id']}", f"{module}: {task['module']['id']}",
+         f"{branch}: {state['branch']}", f"{head}: {state['head']}", f"{saved}: {saved_at if saved_at is not None else a.now()}"],
         [result['objective']] + [c['description'] for c in result['acceptance_criteria']],
-        [f"상태: {result['status']}", result['summary']],
+        [f"{status}: {result['status']}", result['summary']],
         result['work'],
         [f"{x['path']}: {x['description']}" for x in result['artifacts']],
         [f"{x['name']}: {x['outcome']} — {x['method']}; evidence: {', '.join(x['evidence'])}"

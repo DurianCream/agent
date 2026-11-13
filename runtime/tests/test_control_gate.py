@@ -486,7 +486,14 @@ class GateTests(GateFixture, unittest.TestCase):
                     task=submission['task'], result=submission['result'], seal=a.read_json(self.run / 'gate-submission.json'))
 
     def test_actual_commit_matches_seal(self):
-        self.assertEqual(g.check_commit('gate-task', self.root, **self.manual_commit())['status'], 'passed')
+        def earlier(records):  # A publication prepared before the report labels were translated.
+            name = '.agent-work/tasks/gate-task/report.ko.md'
+            text = records[name].decode('utf-8')
+            for new, old in zip(r.REPORT_LABELS, r.REPORT_LABELS_BEFORE):
+                self.assertIn(new, text)
+                text = text.replace('# ' + new, '# ' + old).replace('> ' + new, '> ' + old).replace(f'- {new}: ', f'- {old}: ')
+            records[name] = text.encode('utf-8')
+        self.assertEqual(g.check_commit('gate-task', self.root, **self.manual_commit(tamper=earlier))['status'], 'passed')
 
     def test_generated_payload_rejected_even_if_committed(self):
         def tamper(records):
