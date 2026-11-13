@@ -24,13 +24,44 @@ class GateFixture:
     def after_initial_commit(self):
         pass
 
+    # Each fixture class is built once per process and copied for every later test.
+    # Its records hold absolute paths, so every copy is restored to the same folder.
+    _templates = {}
+
+    @staticmethod
+    def _remove(folder):
+        def writable(function, path, _):
+            os.chmod(path, 0o700)
+            function(path)
+        if Path(folder).exists():
+            shutil.rmtree(folder, onerror=writable)
+
     def setUp(self):
+        base = Path(a.__file__).resolve().parents[1] / 'work/gate-fixtures'
+        base.mkdir(parents=True, exist_ok=True)
+        self.root = base / f'run-{os.getpid()}'
+        self._remove(self.root)
+        self.addCleanup(self._remove, self.root)
+        before = set(vars(self))
+        saved = GateFixture._templates.get(type(self))
+        if saved is None:
+            self.root.mkdir()
+            self.build()
+            template = base / f'template-{os.getpid()}-{len(GateFixture._templates)}'
+            self._remove(template)
+            shutil.copytree(self.root, template, symlinks=True)
+            unittest.addModuleCleanup(GateFixture._templates.pop, type(self), None)
+            unittest.addModuleCleanup(self._remove, template)
+            GateFixture._templates[type(self)] = (template, copy.deepcopy(
+                {k: v for k, v in vars(self).items() if k not in before}))
+        else:
+            shutil.copytree(saved[0], self.root, symlinks=True)
+            vars(self).update(copy.deepcopy(saved[1]))
+            # Copied files have new timestamps; plumbing commands would read that as a change.
+            subprocess.run(['git', '-C', str(self.root), 'update-index', '-q', '--refresh'], check=False)
+
+    def build(self):
         source = Path(a.__file__).resolve().parents[1]
-        fixture_base = source / 'work/gate-fixtures'
-        fixture_base.mkdir(parents=True, exist_ok=True)
-        self.temp = tempfile.TemporaryDirectory(dir=fixture_base)
-        self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
         for name in ('shared', 'core', 'modules'):
             shutil.copytree(source / name, self.root / name)
         for name in ('registry.json', 'AGENTS.md'):
