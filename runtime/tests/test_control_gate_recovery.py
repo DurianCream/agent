@@ -132,6 +132,11 @@ class RecoveryTests(GateFixture,unittest.TestCase):
         self.incomplete()
         binding=a.read_json(self.run/'repository.json')
         self.assertEqual(auto._open_owners('other',self.root,binding).get('product.txt'),'gate-task')
+        # A companion edited on its own releases nothing: the ledger and task marker must agree.
+        saved=(self.run/'controls.json').read_bytes()
+        a.write_json(self.run/'controls.json',{**a.read_json(self.run/'controls.json'),'schema_version':'0.3.0'})
+        self.assertEqual(auto._open_owners('other',self.root,binding).get('product.txt'),'gate-task')
+        (self.run/'controls.json').write_bytes(saved)
         self.make_legacy()
         # It can never publish product, so its ownership no longer blocks a new task.
         self.assertNotIn('product.txt',auto._open_owners('other',self.root,binding))

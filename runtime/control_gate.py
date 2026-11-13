@@ -206,6 +206,25 @@ def check_enrollment(task_id, root=a.ROOT):
     return value
 
 
+def legacy_enrolled(task_id, root=a.ROOT):
+    """True only when the companion, the ledger and the task marker agree on an older enrollment.
+
+    Ownership is released on this answer, so a companion edited on its own must not count.
+    """
+    run = _run(task_id, Path(root).resolve())
+    companion = run / 'controls.json'
+    ledger = Path(root).resolve() / 'runs/control-enrollments' / (task_id + '.json')
+    if not (companion.is_file() and ledger.is_file()):
+        return False
+    try:
+        value, stored, task = _read(companion), _read(ledger), _read(run / 'task.json')
+    except (a.ContractError, OSError, ValueError):
+        return False
+    return (type(value) is dict and value.get('schema_version') in LEGACY_ENROLLMENTS and
+            value.get('task_id') == task_id and stored == {'digest': _hash(value), 'enrollment': value} and
+            type(task) is dict and task.get('control_enrollment') == _hash(value))
+
+
 def _legacy(enrollment):
     return enrollment['schema_version'] != ENROLLMENT
 
