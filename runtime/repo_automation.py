@@ -296,7 +296,7 @@ def _reverify(task_id, root, run, path, value, settings):
     a.require({n: base64.b64encode(d).decode('ascii') for n, d in submission['files'].items()} ==
               payload['framework_files'] and recovered == payload['recovered'],
               'Submission, seal, tests, review or evidence changed after publication was prepared')
-    index = _index(path, [e['path'] for e in payload['entries']])
+    index = _index(path, [e['path'] for e in payload['entries']] + [AUTOMATION])
     for item in payload['entries'] + ([payload['automation']] if payload['automation'] else []):
         a.require(_worktree(path, item['path'], index)[0] == item, 'Owned file changed after publication was prepared: ' + item['path'])
     if PHASES.index(value['phase']) >= PHASES.index('submitted'):
@@ -338,6 +338,12 @@ def _sync_index(path, payload):
     a.require(_index(path, paths) == target and not staged_paths(path), 'Index synchronization failed')
 
 
+def _push(path, settings, commit):
+    if remote_head(path, settings) != commit:
+        r.git(path, 'push', settings['remote'], commit + ':refs/heads/' + settings['branch'])
+    a.require(remote_head(path, settings) == commit, 'Remote confirmation failed')
+
+
 def finish(task_id, root=a.ROOT):
     run, task, path = context(task_id, root)
     file = a.relative(run, 'publication.json', file=True)
@@ -371,11 +377,11 @@ def finish(task_id, root=a.ROOT):
             value['phase'] = 'indexed'
             a.write_json(file, value)
         if value['phase'] == 'indexed':
-            if remote_head(path, settings) != commit:
-                r.git(path, 'push', settings['remote'], commit + ':refs/heads/' + settings['branch'])
-            a.require(remote_head(path, settings) == commit, 'Remote confirmation failed')
+            # Read-only: a foreign staged change is reported, never reset.
+            a.require(_index(path, payload['paths']) == _tree(path, commit, payload['paths']) and
+                      not staged_paths(path), 'Index changed after publication commit; unstage it before retrying')
+            _push(path, settings, commit)
             gate = _gate(task_id, root, payload, receipt=True)
-
             value.update(phase='pushed', pushed_at=a.now())
             a.write_json(file, value)
         a.require(remote_head(path, settings) == commit, 'Remote moved after publication')
@@ -387,16 +393,20 @@ def unlock(task_id, root=a.ROOT):
     run, _, path = context(task_id, root)
     files = [run / '.operation.lock', run / '.publication.lock'] + [
         path / '.agent-work' / name for name in ('publication.lock', 'record.lock', 'recovery.lock')]
-    states = {file: a.lock_state(file) for file in files}
-    held = [f'{file.name}: {state}' for file, state in states.items() if state in ('alive', 'incomplete')]
-    a.require(not held, 'Lock owner may still be running: ' + ', '.join(held))
     removed = []
-    for file, state in states.items():
-        if state in ('dead', 'abandoned'):
-            file.unlink()
-            scope = 'task' if file.parent == run else 'repository'
-            a.event(run, 'unlock', lock=file.name, scope=scope, owner=state)
-            removed.append({'lock': file.name, 'scope': scope, 'owner': state})
+    # Only unlock deletes another owner's lock, and only while holding this guard.
+    # A dead owner's file cannot vanish or be replaced in between, so inspecting
+    # and deleting refer to the same lock. A stale guard needs manual inspection.
+    with a.lock(path / '.agent-work' / 'unlock.lock'):
+        states = {file: a.lock_state(file) for file in files}
+        held = [f'{file.name}: {state}' for file, state in states.items() if state in ('alive', 'incomplete')]
+        a.require(not held, 'Lock owner may still be running: ' + ', '.join(held))
+        for file, state in states.items():
+            if state in ('dead', 'abandoned'):
+                file.unlink()
+                scope = 'task' if file.parent == run else 'repository'
+                a.event(run, 'unlock', lock=file.name, scope=scope, owner=state)
+                removed.append({'lock': file.name, 'scope': scope, 'owner': state})
     return {'task_id': task_id, 'removed': removed}
 
 

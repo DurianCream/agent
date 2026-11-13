@@ -155,7 +155,8 @@ class AutomationTests(unittest.TestCase):
             raise a.ContractError('crash after ref update')
         stops = {'prepared': ('_install', a.ContractError('stop')),
                  'submitted': ('_update_ref', update_then_crash),
-                 'committed': ('_sync_index', a.ContractError('stop'))}
+                 'committed': ('_sync_index', a.ContractError('stop')),
+                 'indexed': ('_push', a.ContractError('stop'))}
         for phase, (name, effect) in stops.items():
             with self.subTest(phase=phase):
                 fixture = AutomationTests('test_interrupted_phases_resume_to_one_commit')
@@ -182,6 +183,15 @@ class AutomationTests(unittest.TestCase):
         if phase == 'prepared':
             r.git(self.path, 'add', '--', 'unrelated.txt')
             with self.assertRaisesRegex(a.ContractError, 'staged'): auto.finish('auto-task', self.root)
+            r.git(self.path, 'rm', '-q', '--cached', '--', 'unrelated.txt')
+        if phase == 'indexed':
+            # A foreign staged object for an owned path, with the sealed bytes restored in the worktree.
+            owned = self.path / 'a[1].txt'
+            owned.write_text('foreign'); r.git(self.path, '--literal-pathspecs', 'add', '--', 'a[1].txt'); owned.write_text('owned')
+            with self.assertRaisesRegex(a.ContractError, 'Index changed'): auto.finish('auto-task', self.root)
+            r.git(self.path, '--literal-pathspecs', 'reset', '-q', '--', 'a[1].txt')
+            r.git(self.path, 'add', '--', 'unrelated.txt')
+            with self.assertRaisesRegex(a.ContractError, 'Index changed'): auto.finish('auto-task', self.root)
             r.git(self.path, 'rm', '-q', '--cached', '--', 'unrelated.txt')
         published = auto.finish('auto-task', self.root)
         self.assertEqual((published['phase'], published['commit']), ('pushed', saved['commit']))
@@ -238,6 +248,12 @@ class AutomationTests(unittest.TestCase):
         os.utime(lock, (1, 1))
         self.assertEqual(a.lock_state(lock), 'abandoned')
         self.assertEqual(auto.unlock('auto-task', self.root)['removed'], [{'lock': 'publication.lock', 'scope': 'repository', 'owner': 'abandoned'}])
+        guard = self.path / '.agent-work/unlock.lock'  # Another unlock is inspecting.
+        lock.write_text(json.dumps({'pid': 4242, 'start': 'reused'}), encoding='utf-8')
+        guard.write_text(json.dumps({'pid': os.getpid(), 'start': own}), encoding='utf-8')
+        with self.assertRaisesRegex(a.ContractError, 'unlock.lock'): auto.unlock('auto-task', self.root)
+        self.assertTrue(lock.exists())
+        guard.unlink(); lock.unlink()
         events = (self.root / 'runs/auto-task/events.jsonl').read_text(encoding='utf-8')
         self.assertEqual(events.count('"unlock"'), 3)
 
