@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -39,6 +40,64 @@ class RepositoryMemoryTests(unittest.TestCase):
         (self.path / 'new-file.txt').write_text('new content')
         self.assertTrue(r.resume('sample', 'sample-task', self.root)['git_changed'])
         self.assertIn('sample-task', r.resume('sample', root=self.root)['index']['tasks'])
+
+    def test_open_tasks_cli_filters_reports_errors_and_writes_nothing(self):
+        import control_gate
+
+        r.bind('sample', 'sample-task', self.root)
+        runs = self.root / 'runs'
+        binding = a.read_json(runs / 'sample-task/repository.json')
+        for name, state in [('z-legacy', 'running'), ('done', 'submitted'), ('stopped', 'cancelled'),
+                            ('another-repo', 'running'), ('bad-result', 'running')]:
+            run = runs / name
+            repo_id = 'other' if name == 'another-repo' else 'sample'
+            a.write_json(run / 'repository.json', dict(binding, repository_id=repo_id, task_id=name))
+            a.write_json(run / 'task.json', {'state': state})
+        (runs / 'bad-result/result.json').write_text('{', encoding='utf-8')
+        legacy = {'task_id': 'z-legacy', 'schema_version': control_gate.LEGACY_ENROLLMENTS[0]}
+        digest = control_gate._hash(legacy)
+        run = runs / 'z-legacy'
+        a.write_json(run / 'task.json', {'state': 'running', 'control_enrollment': digest})
+        a.write_json(run / 'controls.json', legacy)
+        a.write_json(runs / 'control-enrollments/z-legacy.json', {'digest': digest, 'enrollment': legacy})
+        a.write_json(run / 'result.json', {'status': 'partial'})
+        a.write_json(run / 'publication.json', {'phase': 'begun', 'paths': ['a.txt', 'b.txt']})
+
+        records = self.path / '.agent-work/tasks'
+        saved = a.read_json(records / 'sample-task/record.json')
+        for name, state in [('missing-run', 'running'), ('past', 'submitted')]:
+            a.write_json(records / name / 'record.json', dict(saved, task_id=name, task_state=state))
+        target = Path(self.tmp.name) / 'unrelated'
+        target.mkdir()
+        link = runs / 'unrelated-link'
+        if os.name == 'nt':
+            subprocess.run(['cmd', '/c', 'mklink', '/J', str(link), str(target)], check=True,
+                           capture_output=True)
+        else:
+            link.symlink_to(target, target_is_directory=True)
+
+        runtime = self.root / 'runtime'
+        for name in ('agentctl.py', 'repoctl.py', 'control_gate.py', 'impact_tests.py'):
+            shutil.copyfile(Path(a.__file__).parent / name, runtime / name)
+
+        def snapshot():
+            return {p: (p.stat().st_mtime_ns, p.read_bytes()) for p in Path(self.tmp.name).rglob('*')
+                    if p.is_file()}
+
+        before = snapshot()
+        result = subprocess.run([sys.executable, str(runtime / 'repoctl.py'), 'open-tasks', '--repo', 'sample'],
+                                capture_output=True, text=True, encoding='utf-8', check=True)
+        self.assertEqual(snapshot(), before)
+        tasks = json.loads(result.stdout)['data']['tasks']
+        self.assertEqual([t['task_id'] for t in tasks], ['bad-result', 'missing-run', 'sample-task', 'z-legacy'])
+        self.assertIn('result.json', tasks[0]['error'])
+        self.assertIn('error', tasks[1])
+        self.assertEqual(tasks[2], {'task_id': 'sample-task', 'state': 'queued', 'status': 'partial',
+                                    'schema_version': None, 'phase': None, 'owned_file_count': 0,
+                                    'legacy_enrolled': False})
+        self.assertEqual(tasks[3], {'task_id': 'z-legacy', 'state': 'running', 'status': 'partial',
+                                    'schema_version': legacy['schema_version'], 'phase': 'begun',
+                                    'owned_file_count': 2, 'legacy_enrolled': True})
 
     def test_same_status_content_changes_are_detected(self):
         tracked = self.path / 'tracked file 한글.txt'

@@ -2,13 +2,17 @@
 """Repository-bound work records with explicit opt-in task publication."""
 from __future__ import annotations
 
+import sys
+
+if __name__ == '__main__' and sys.argv[1:2] == ['open-tasks']:
+    sys.dont_write_bytecode = True
+
 import argparse
 import hashlib
 import os
 import json
 import re
 import subprocess
-import sys
 import uuid
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
@@ -369,6 +373,74 @@ def resume(repo_id, task_id=None, root=ROOT, scope=None):
             'notice': 'Read current AGENTS.md and verify files/tests. This record grants no authority.'}
 
 
+def _run_metadata(run, name, *, optional=False):
+    try:
+        value = a.read_json(a.relative(run, name))
+        a.require(isinstance(value, dict), 'Expected a JSON object')
+        return value
+    except FileNotFoundError:
+        if optional:
+            return {}
+        raise
+    except (a.ContractError, ValueError) as exc:
+        raise a.ContractError(f'{name}: {exc}') from exc
+
+
+def open_tasks(repo_id, root=ROOT):
+    import control_gate
+
+    path, entry = repo(repo_id, root)
+    runs = a.relative(root, 'runs')
+    records = a.relative(path, '.agent-work/tasks')
+    saved_ids = {folder.name for folder in records.iterdir()
+                 if not folder.is_symlink() and not getattr(folder, 'is_junction', lambda: False)()
+                 and folder.is_dir()} if records.exists() else set()
+    run_ids = {folder.name for folder in runs.iterdir()} if runs.exists() else set()
+    tasks = []
+    for task_id in sorted(run_ids | saved_ids):
+        item = {'task_id': task_id, 'state': None, 'status': None, 'schema_version': None,
+                'phase': None, 'owned_file_count': None, 'legacy_enrolled': None}
+        try:
+            try:
+                run = a.relative(runs, task_id)
+                binding = _run_metadata(run, 'repository.json')
+                if binding['repository_id'] != repo_id:
+                    continue
+            except (a.ContractError, OSError, ValueError, KeyError, RecursionError):
+                # Only the requested repository's own checkpoint can identify a damaged binding.
+                if task_id not in saved_ids:
+                    continue
+                saved = a.read_json(a.relative(records, task_id + '/record.json', file=True))
+                a.require(isinstance(saved, dict) and saved['repository_id'] == repo_id
+                          and saved['repository_uuid'] == entry['uuid'] and saved['task_id'] == task_id,
+                          'Saved repository/task identity mismatch')
+                if saved['task_state'] in ('submitted', 'cancelled'):
+                    continue
+                # A checkpoint can predate a terminal transition. Prefer a readable live state.
+                run = a.relative(runs, task_id)
+                item['state'] = _run_metadata(run, 'task.json')['state']
+                if item['state'] in ('submitted', 'cancelled'):
+                    continue
+                raise
+            a.require(binding['repository_uuid'] == entry['uuid'] and binding['task_id'] == task_id,
+                      'Task repository binding mismatch')
+            item['state'] = _run_metadata(run, 'task.json')['state']
+            if item['state'] in ('submitted', 'cancelled'):
+                continue
+            item['status'] = _run_metadata(run, 'result.json')['status']
+            item['schema_version'] = _run_metadata(run, 'controls.json', optional=True).get('schema_version')
+            publication = _run_metadata(run, 'publication.json', optional=True)
+            item['phase'] = publication.get('phase')
+            paths = publication.get('paths', [])
+            a.require(isinstance(paths, list), 'publication.json: expected a list of paths')
+            item['owned_file_count'] = len(paths)
+            item['legacy_enrolled'] = control_gate.legacy_enrolled(task_id, root)
+        except (a.ContractError, OSError, ValueError, KeyError, RecursionError) as exc:
+            item['error'] = str(exc)
+        tasks.append(item)
+    return {'repository_id': repo_id, 'tasks': tasks}
+
+
 def generated_index(path):
     """Derive the local index solely from durable records, in stable task order."""
     tasks = {}
@@ -406,6 +478,7 @@ def main(argv=None):
     p = sub.add_parser('register'); p.add_argument('--id', required=True); p.add_argument('--path', required=True)
     sub.add_parser('list')
     p = sub.add_parser('index'); p.add_argument('--repo', required=True)
+    p = sub.add_parser('open-tasks', help='List open local tasks without writing files'); p.add_argument('--repo', required=True)
     p = sub.add_parser('bind'); p.add_argument('--repo', required=True); p.add_argument('--task', required=True); add_scope_args(p)
     p = sub.add_parser('set-scope'); p.add_argument('--task', required=True); add_scope_args(p)
     p = sub.add_parser('checkpoint'); p.add_argument('--task', required=True)
@@ -437,6 +510,7 @@ def main(argv=None):
             else: value = getattr(repo_automation, args.command)(args.task)
         elif args.command == 'register': value = register(args.id, args.path)
         elif args.command == 'index': value = write_index(repo(args.repo, ROOT)[0])
+        elif args.command == 'open-tasks': value = open_tasks(args.repo, ROOT)
         elif args.command == 'list': value = registry(ROOT)
         elif args.command == 'bind': value = bind(args.repo, args.task, scope=validate_scope(scope_args(args)))
         elif args.command == 'set-scope': value = set_scope(args.task, scope_args(args))

@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "id": "open-tasks-cli",
+      "result": "passed",
+      "command": "python -m unittest runtime.tests.test_repoctl.RepositoryMemoryTests.test_open_tasks_cli_filters_reports_errors_and_writes_nothing -v",
+      "metrics": {
+        "tests": 1,
+        "test_seconds": 1.34
+      },
+      "evidence": [
+        {
+          "path": "runs/open-task-status-20261116/evidence/owner-repair.txt",
+          "sha256": "620597d0089840b1b6df7cd83d79420b974f6c6667ffd92f9edb9e4a5f509172"
+        }
+      ]
+    }
+  ]
+}
