@@ -2,6 +2,6 @@
   "schema_version": "1.0.0",
   "enabled": true,
   "remote": "origin",
-  "expected_url": "https://github.com/DurianCream/private.git",
+  "expected_url": "https://github.com/DurianCream/agent.git",
   "branch": "main"
 }
