@@ -751,6 +751,29 @@ def _committed_entry_matches(root, item, commit):
     return committed == {k: item[k] for k in ('path', 'state', 'oid', 'mode')}
 
 
+def _refuse_ungated_product(task_id, root, paths, result):
+    """An unenrolled task may close records, but never publish product into a gated repository.
+
+    Enrollment is skipped when a task's scope differs from the selector, so without this a
+    mistyped scope would publish product with no tests and no review.
+    """
+    config = a.relative(root, CONFIG)
+    if not config.exists():
+        return
+    profile = _profile(_read(config))
+    run = _run(task_id, root)
+    binding = _read(a.relative(run, 'repository.json', file=True))
+    if not profile['enabled'] or binding.get('repository_id') != profile['repository_id']:
+        return
+    if type(result) is not dict:
+        result = _read(a.relative(run, 'result.json', file=True))
+    a.require(type(paths) is list, 'P1 publication payload missing')
+    import repo_automation as auto
+    a.require(auto.publication_kind(task_id, paths, result) != 'product',
+              'P1 gated repository refuses product from an unenrolled task; '
+              'start a new task whose scope matches the gate selector')
+
+
 def check_commit(task_id, root=a.ROOT, commit=None, parent=None, paths=None, records=None,
                  task=None, result=None, seal=None, receipt=False):
     """Verify an unreferenced or published commit object against the submission seal.
@@ -761,6 +784,7 @@ def check_commit(task_id, root=a.ROOT, commit=None, parent=None, paths=None, rec
     root = Path(root).resolve()
     enrollment = check_enrollment(task_id, root)
     if enrollment is None:
+        _refuse_ungated_product(task_id, root, paths, result)
         return None
     a.require(enrollment['config']['policy']['publication'] == 'allow', 'P1 publication policy denies action')
     a.require(type(seal) is dict and type(records) is dict and type(paths) is list, 'P1 publication payload missing')
@@ -771,7 +795,8 @@ def check_commit(task_id, root=a.ROOT, commit=None, parent=None, paths=None, rec
     base = enrollment['base_head']
     if product:
         a.require(parent == base, 'P1 commit or parent mismatch')
-        allowed = set(seal['owned_paths']) | {'.agent-work/automation.json'}
+        # Only owned paths: the publication destination policy changes only as reviewed, owned product.
+        allowed = set(seal['owned_paths'])
     else:
         # Records may follow a remote that advanced, but only if nobody touched this task's records.
         a.require(_git(root, 'merge-base', '--is-ancestor', base, parent, optional=True) is not None and

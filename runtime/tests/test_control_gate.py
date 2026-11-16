@@ -458,6 +458,23 @@ class GateTests(GateFixture, unittest.TestCase):
         self.assertIsNone(g.enroll('other-task', self.root))
         self.assertIsNone(g.check_enrollment('other-task', self.root))
 
+    def test_unselected_task_cannot_publish_product(self):
+        a.init_task('coding', 'other-task', 'Other', ['Leave alone'], self.root)
+        binding = a.read_json(self.run / 'repository.json'); binding['task_id'] = 'other-task'
+        binding['scope']['environment'] = 'staging'
+        a.write_json(self.root / 'runs/other-task/repository.json', binding)
+        self.assertIsNone(g.enroll('other-task', self.root))
+        folder = '.agent-work/tasks/other-task/'
+        records = [folder + n for n in ('spec.md', 'record.json', 'report.ko.md')]
+        with self.assertRaisesRegex(a.ContractError, 'unenrolled'):
+            g.check_commit('other-task', self.root, commit='x', parent='y',
+                           paths=records + ['product.txt'], result={'status': 'completed'})
+        # Records-only closure of such a task stays possible.
+        self.assertIsNone(g.check_commit('other-task', self.root, commit='x', parent='y',
+                                         paths=records, result={'status': 'completed'}))
+        self.assertIsNone(g.check_commit('other-task', self.root, commit='x', parent='y',
+                                         paths=records + ['product.txt'], result={'status': 'partial'}))
+
     def test_crlf_git_canonical_content(self):
         (self.root / '.gitattributes').write_text('*.txt text eol=lf\n')
         (self.root / 'product.txt').write_bytes(b'line\r\n')

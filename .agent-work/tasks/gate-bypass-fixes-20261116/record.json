@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "gate-bypass-fixes-20261116",
+  "saved_at": "2026-11-16T15:51:17+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "f139fa784d2fa2e889091d4cd9ba44511ed5de05",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "M runtime/control_gate.py\n M runtime/tests/test_control_gate.py\n?? .agent-work/tasks/gate-bypass-fixes-20261116/",
+    "worktree_sha256": "08ffa3a87d86169d72ff47f70886ad46858aa5f8c402a8adffba362d4d49c91b"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "gate-bypass-fixes-20261116",
+    "module": {
+      "id": "coding",
+      "version": "0.1.9"
+    },
+    "created_at": "2026-11-16T15:38:27+09:00",
+    "objective": "Block two P1 gate bypasses: product publication by a task whose scope skipped enrollment, and unowned automation.json changes in product commits.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "check_commit refuses product publication from an unenrolled task in a gated repository, while records-only and incomplete closures still pass.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Product commits may change only owned paths; .agent-work/automation.json is no longer implicitly allowed.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Selected gate suites pass and a regression test covers the new refusal.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "게이트 우회 경로 두 개를 막았다. 범위가 달라 등록되지 않은 작업의 product 게시를 거부하고, product 커밋에서 소유하지 않은 automation.json 변경을 더는 허용하지 않는다.",
+    "work": [
+      "위험 등급은 높음이다. 게시 게이트(control_gate.check_commit)를 바꾼다.",
+      "runtime/control_gate.py에 _refuse_ungated_product를 추가했다. gates.json이 켜진 같은 저장소에서 등록되지 않은 작업의 product 게시를 거부하고, records 및 미완료 종료는 허용한다. 결과가 payload에 없으면 runs의 result.json을 읽는다.",
+      "check_commit의 product 허용 경로에서 .agent-work/automation.json 묵시적 허용을 제거했다.",
+      "runtime/tests/test_control_gate.py에 범위가 다른 작업의 product 거부와 records·partial 허용을 확인하는 시험 한 개를 추가했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "impact-document-integrity",
+        "name": "impact-document-integrity",
+        "method": "control_gate run-tests로 선택된 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/gate-bypass-fixes-20261116/evidence/summary.json",
+          "runs/gate-bypass-fixes-20261116/evidence/gate-test-603b3bfeb69044aea53a308806bb435b.log",
+          "runs/gate-bypass-fixes-20261116/evidence/gate-test-603b3bfeb69044aea53a308806bb435b.json"
+        ],
+        "notes": "시험 4개 통과, 실패·오류·건너뜀 0개."
+      },
+      {
+        "id": "all-runtime-tests",
+        "name": "all-runtime-tests",
+        "method": "control_gate run-tests로 선택된 전체 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/gate-bypass-fixes-20261116/evidence/summary.json",
+          "runs/gate-bypass-fixes-20261116/evidence/gate-test-f2bb4f22a58845089769b9c8e0cc6b49.log",
+          "runs/gate-bypass-fixes-20261116/evidence/gate-test-f2bb4f22a58845089769b9c8e0cc6b49.json"
+        ],
+        "notes": "시험 216개 통과, 실패·오류·건너뜀 0개."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "리뷰어 신원 미인증, 시험 코드의 증거 위조 가능성 등 협조적 로컬 CLI 한계는 그대로다."
+    ],
+    "next_actions": []
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "gate-bypass-fixes"
+  },
+  "assessment": {
+    "publication_kind": "product",
+    "verdict": "accepted",
+    "reviewer": {
+      "subject": "independent-evaluator",
+      "session": "/root/review-gate-bypass"
+    },
+    "record": "runs/gate-bypass-fixes-20261116/gates/review-3d7c828849da42d2be71b0b9118bc908.json",
+    "sha256": "ebf44fe52a7c0c65dcc948727c8a6716d44bf20b3b873d956ad5b274e154d258"
+  },
+  "spec_sha256": "435547af0b9741158bf44cb581f47c030112812db0b5a1ba4387dd8789a52b4e"
+}

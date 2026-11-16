@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task gate-bypass-fixes-20261116 --suite impact-document-integrity",
+      "metrics": {
+        "tests": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/gate-bypass-fixes-20261116/evidence/gate-test-603b3bfeb69044aea53a308806bb435b.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/gate-bypass-fixes-20261116/evidence/gate-test-603b3bfeb69044aea53a308806bb435b.log",
+          "sha256": "274c11c8f84e8898607a9f3eacb016e3574c9bc2465c967b874c18bd888a8257"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task gate-bypass-fixes-20261116 --suite all-runtime-tests",
+      "metrics": {
+        "tests": 216
+      },
+      "evidence": [
+        {
+          "path": "runs/gate-bypass-fixes-20261116/evidence/gate-test-f2bb4f22a58845089769b9c8e0cc6b49.json",
+          "sha256": "8e47c4a511a42aa2c4ea14c030fb9920ad09043b8d174152f4cde994ac026a5a"
+        },
+        {
+          "path": "runs/gate-bypass-fixes-20261116/evidence/gate-test-f2bb4f22a58845089769b9c8e0cc6b49.log",
+          "sha256": "1b81c0c2477a2c85866e600507478c55df597bd4df14deb92231d0a47d5ed901"
+        }
+      ]
+    }
+  ]
+}
