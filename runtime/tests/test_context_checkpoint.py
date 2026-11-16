@@ -40,6 +40,22 @@ class CheckpointTests(unittest.TestCase):
             raise RuntimeError("Unsafe cleanup")
         shutil.rmtree(resolved)
 
+    def test_state_replace_waits_out_a_brief_hold(self):
+        real, calls = os.replace, []
+        def held(source, target):
+            calls.append(target)
+            if len(calls) < 3:
+                raise PermissionError(13, "held")
+            return real(source, target)
+        target = self.root / "state.json"
+        with mock.patch.object(hook.os, "replace", held), mock.patch.object(hook.time, "sleep"):
+            hook.atomic_json(target, {"value": 1})
+        self.assertEqual((json.loads(target.read_text(encoding="utf-8")), len(calls)), ({"value": 1}, 3))
+        with mock.patch.object(hook.os, "replace", side_effect=PermissionError(13, "held")), \
+                mock.patch.object(hook.time, "sleep"), self.assertRaises(PermissionError):
+            hook.atomic_json(target, {"value": 2})
+        self.assertEqual([p.name for p in self.root.glob("*state*")], ["state.json"])
+
     def write_rollout(self, used, window=1000, cumulative=400000000, age=0, source="cli", turn="turn-1234"):
         stamp = datetime.fromtimestamp(self.now - age, timezone.utc).isoformat()
         self.records = [

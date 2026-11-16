@@ -39,6 +39,17 @@ def under(root, value):
     return value
 
 
+def replace(temp, path):
+    """os.replace, waiting out the moment another process (on Windows a scanner or indexer) holds the target."""
+    for attempt in range(10):
+        try:
+            return os.replace(temp, path)
+        except PermissionError:
+            if attempt == 9:
+                raise
+            time.sleep(0.02 * (attempt + 1))
+
+
 def atomic_json(path, data):
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=path.parent,
                                      prefix=".state-", suffix=".tmp", delete=False) as handle:
@@ -48,7 +59,7 @@ def atomic_json(path, data):
         handle.flush()
         os.fsync(handle.fileno())
     try:
-        os.replace(temp, path)
+        replace(temp, path)
     finally:
         temp.unlink(missing_ok=True)
 
@@ -327,7 +338,7 @@ def commit(root, session_id, turn_id, request_id, checkpoint, new_context, notes
             handle.write(text)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temp, final)
+        replace(temp, final)
         state.update(status="committed" if available else "unavailable", checkpoint_path=str(final),
                      sha256=hashlib.sha256(final.read_bytes()).hexdigest(),
                      validation="seven_section_structure_only", new_context=new_context, notes=notes,

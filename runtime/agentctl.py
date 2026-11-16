@@ -98,6 +98,18 @@ def read_json(file):
                       object_pairs_hook=unique_pairs, parse_constant=invalid_constant)
 
 
+def replace(temp, file):
+    """os.replace, waiting out the moment another process (on Windows a scanner or indexer) holds the target."""
+    import time
+    for attempt in range(10):
+        try:
+            return os.replace(temp, file)
+        except PermissionError:
+            if attempt == 9:
+                raise
+            time.sleep(0.02 * (attempt + 1))
+
+
 def atomic_text(file, text):
     file = Path(file)
     file.parent.mkdir(parents=True, exist_ok=True)
@@ -105,7 +117,7 @@ def atomic_text(file, text):
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as stream:
             stream.write(text)
-        os.replace(temp, file)
+        replace(temp, file)
     finally:
         if os.path.exists(temp):
             os.unlink(temp)
@@ -122,7 +134,7 @@ def atomic_bytes(file, data):
     try:
         with os.fdopen(fd, "wb") as stream:
             stream.write(data)
-        os.replace(temp, file)
+        replace(temp, file)
     finally:
         if os.path.exists(temp):
             os.unlink(temp)

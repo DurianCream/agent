@@ -52,6 +52,27 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ctl.ContractError):
             ctl.validate_result("sample", self.root)
 
+    def test_replace_waits_out_a_brief_windows_hold(self):
+        from unittest import mock
+        real, calls = ctl.os.replace, []
+        def held(source, target):
+            calls.append(target)
+            if len(calls) < 3:
+                raise PermissionError(13, "held")
+            return real(source, target)
+        with mock.patch.object(ctl.os, "replace", held), mock.patch("time.sleep"):
+            ctl.atomic_text(self.root / "held.txt", "written")
+        self.assertEqual(((self.root / "held.txt").read_text(encoding="utf-8"), len(calls)), ("written", 3))
+        # A hold that does not end is still an error, and no temporary file is left behind.
+        with mock.patch("time.sleep"), \
+                mock.patch.object(ctl.os, "replace", side_effect=PermissionError(13, "held")) as denied:
+            with self.assertRaises(PermissionError):
+                ctl.atomic_bytes(self.root / "held.txt", b"lost")
+        self.assertEqual(denied.call_count, 10)
+        self.assertEqual(sorted(p.name for p in self.root.glob("*held*")) + sorted(p.name for p in self.root.glob(".agentctl-*")),
+                         ["held.txt"])
+        self.assertEqual((self.root / "held.txt").read_text(encoding="utf-8"), "written")
+
     def test_registered_roles_and_skills(self):
         found = ctl.doctor(self.root)
         self.assertEqual((found["modules"], found["skills"]), (8, 5))
