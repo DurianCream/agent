@@ -410,6 +410,9 @@ class GateTests(GateFixture, unittest.TestCase):
         profile = copy.deepcopy(self.profile)
         profile['policy'] = {'submission': 'deny', 'publication': 'deny'}
         a.write_json(self.root / g.CONFIG, profile)
+        # Enrollment reads the committed configuration, so the deny policy is committed first.
+        r.git(self.root, 'add', '--', g.CONFIG)
+        r.git(self.root, 'commit', '-q', '-m', 'deny policy')
         a.init_task('coding', 'denied-task', 'Denied', ['Block'], self.root)
         r.bind('sample', 'denied-task', self.root, scope={**profile['selector'], 'issue': 'denied'}, new_task=True)
         with self.assertRaisesRegex(a.ContractError, 'submission policy denies'):
@@ -457,6 +460,36 @@ class GateTests(GateFixture, unittest.TestCase):
         a.write_json(self.root / 'runs/other-task/repository.json', binding)
         self.assertIsNone(g.enroll('other-task', self.root))
         self.assertIsNone(g.check_enrollment('other-task', self.root))
+
+    def new_selected_task(self, task_id):
+        a.init_task('coding', task_id, 'Config', ['Fail closed'], self.root)
+        binding = a.read_json(self.run / 'repository.json'); binding['task_id'] = task_id
+        a.write_json(self.root / 'runs' / task_id / 'repository.json', binding)
+        return self.root / 'runs' / task_id
+
+    def test_uncommitted_config_edit_cannot_weaken_enrollment(self):
+        run = self.new_selected_task('weakened-task')
+        a.write_json(self.root / g.CONFIG, {**self.profile, 'enabled': False})
+        with self.assertRaisesRegex(a.ContractError, 'differs from the task baseline'):
+            g.enroll('weakened-task', self.root)
+        self.assertEqual(a.read_json(run / 'task.json')['control_enrollment'], 'pending')
+
+    def test_uncommitted_config_deletion_cannot_disable_enrollment(self):
+        run = self.new_selected_task('deleted-config-task')
+        (self.root / g.CONFIG).unlink()
+        with self.assertRaisesRegex(a.ContractError, 'differs from the task baseline'):
+            g.enroll('deleted-config-task', self.root)
+        self.assertEqual(a.read_json(run / 'task.json')['control_enrollment'], 'pending')
+
+    def test_uncommitted_config_cannot_activate_enrollment(self):
+        r.git(self.root, 'rm', '-q', '--cached', '--', g.CONFIG)
+        r.git(self.root, 'commit', '-q', '-m', 'untrack gates')
+        run = self.new_selected_task('uncommitted-config-task')
+        (run / 'publication.json').unlink(missing_ok=True)
+        with self.assertRaisesRegex(a.ContractError, 'not committed at the task baseline'):
+            g.enroll('uncommitted-config-task', self.root)
+        (self.root / g.CONFIG).unlink()
+        self.assertIsNone(g.enroll('uncommitted-config-task', self.root))
 
     def test_unselected_task_cannot_publish_product(self):
         a.init_task('coding', 'other-task', 'Other', ['Leave alone'], self.root)

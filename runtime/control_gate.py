@@ -111,12 +111,21 @@ def enroll(task_id, root=a.ROOT):
     """Called only by new bound task initialization, never by resume/begin."""
     root = Path(root).resolve()
     config = a.relative(root, CONFIG)
-    if not config.exists():
-        return None
     run = _run(task_id, root)
+    present = config.exists() or config.is_symlink()
+    # Only the configuration committed at the baseline selects enrollment: an uncommitted
+    # edit, addition or deletion must neither weaken nor switch off the gates.
+    manifest = run / 'publication.json'
+    base = _read(manifest)['base_head'] if manifest.is_file() else _git(root, 'rev-parse', '--verify', 'HEAD^{commit}', optional=True)
+    committed = _blob(root, CONFIG, base) if base else {'state': 'deleted'}
+    if committed['state'] == 'deleted' and not present:
+        return None
     taskfile = a.relative(run, 'task.json', file=True)
     task = _read(taskfile)
     try:
+        a.require(committed['state'] == 'file', 'P1 configuration is not committed at the task baseline')
+        a.require(present and config.is_file() and _blob(root, CONFIG)['oid'] == committed['oid'],
+                  'P1 configuration differs from the task baseline commit')
         profile = _profile(_read(config))
     except Exception:
         task['control_enrollment'] = 'pending'

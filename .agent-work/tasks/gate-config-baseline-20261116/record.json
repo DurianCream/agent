@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "gate-config-baseline-20261116",
+  "saved_at": "2026-11-16T16:23:03+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "4f59bc7c10c665e033f1cec33f2c44fcdba6c858",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "M runtime/control_gate.py\n M runtime/tests/test_control_gate.py\n?? .agent-work/tasks/gate-config-baseline-20261116/",
+    "worktree_sha256": "c5054204df194a4cc1301a423010807d95d14bbcb0c5dcf2fadeaa657185128c"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "gate-config-baseline-20261116",
+    "module": {
+      "id": "coding",
+      "version": "0.1.9"
+    },
+    "created_at": "2026-11-16T15:55:26+09:00",
+    "objective": "Enroll P1 gates from the gate configuration committed at the task baseline, not from uncommitted worktree bytes.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Enrollment uses .agent-work/gates.json from the publication base commit; an uncommitted edit, addition or deletion of the worktree copy cannot weaken, activate or disable enrollment and fails closed when it differs.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Selected gate suites pass and regression tests cover modified and deleted worktree configuration.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "게이트 등록이 작업 기준 커밋에 들어 있는 gates.json만 따르게 했다. 커밋하지 않은 수정·추가·삭제로는 게이트를 약화하거나 끄거나 켤 수 없고, 다르면 등록이 실패한다.",
+    "work": [
+      "위험 등급은 높음이다. 게시 게이트 등록 조건을 바꾼다.",
+      "runtime/control_gate.py enroll이 publication.json의 base_head(없으면 HEAD)에 커밋된 gates.json을 기준으로 삼는다. 워크트리 사본이 커밋된 객체와 다르거나 삭제됐거나, 커밋 없이 새로 생겼으면 실패하고 pending으로 남는다. 둘 다 없으면 이전처럼 등록하지 않는다.",
+      "runtime/tests/test_control_gate.py에 수정·삭제·미커밋 추가를 확인하는 시험 세 개를 추가하고, 거부 정책 시험은 설정을 먼저 커밋하도록 고쳤다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "impact-document-integrity",
+        "name": "impact-document-integrity",
+        "method": "control_gate run-tests로 선택된 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/gate-config-baseline-20261116/evidence/summary.json",
+          "runs/gate-config-baseline-20261116/evidence/gate-test-79ac9861560c4e59be95127444dc0b52.log",
+          "runs/gate-config-baseline-20261116/evidence/gate-test-79ac9861560c4e59be95127444dc0b52.json"
+        ],
+        "notes": "시험 4개 통과, 실패·오류·건너뜀 0개."
+      },
+      {
+        "id": "all-runtime-tests",
+        "name": "all-runtime-tests",
+        "method": "control_gate run-tests로 선택된 전체 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/gate-config-baseline-20261116/evidence/summary.json",
+          "runs/gate-config-baseline-20261116/evidence/gate-test-94d474f2cf2c416eb5aaefbc20735e5f.log",
+          "runs/gate-config-baseline-20261116/evidence/gate-test-94d474f2cf2c416eb5aaefbc20735e5f.json"
+        ],
+        "notes": "시험 219개 통과, 실패·오류·건너뜀 0개."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "새 저장소에서 게이트를 처음 켜려면 gates.json을 먼저 커밋해야 한다."
+    ],
+    "next_actions": []
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "gate-config-baseline"
+  },
+  "assessment": {
+    "publication_kind": "product",
+    "verdict": "accepted",
+    "reviewer": {
+      "subject": "independent-evaluator",
+      "session": "/root/review-gate-config"
+    },
+    "record": "runs/gate-config-baseline-20261116/gates/review-57caf5f8e80b41718d82d2737bb1bcfa.json",
+    "sha256": "4a4214d4446cf47718776e82b4a1b4174d043784723741f81410150da8c9c78b"
+  },
+  "spec_sha256": "8f260794686f4fa0ea2a473f6e9d9e230a2df1a8da468d366b93d102005c859d"
+}
