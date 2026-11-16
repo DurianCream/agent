@@ -302,7 +302,8 @@ class CheckpointTests(unittest.TestCase):
                                    stderr=subprocess.PIPE, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         try:
             deadline = time.monotonic() + 10
-            while not marker.exists() and process.poll() is None and time.monotonic() < deadline:
+            # The child creates the marker and then writes it; wait for the content, not just the file.
+            while not (marker.exists() and marker.stat().st_size) and process.poll() is None and time.monotonic() < deadline:
                 time.sleep(0.02)
             self.assertTrue(marker.exists(), process.stderr.read().decode() if process.poll() is not None else "Lock child timed out")
             self.assertEqual(marker.read_text(), "True:" + str(process.pid))
