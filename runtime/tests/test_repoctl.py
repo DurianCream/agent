@@ -82,7 +82,7 @@ class RepositoryMemoryTests(unittest.TestCase):
             r.resume('sample', 'sample-task', self.root)
 
     def test_redaction_and_safe_paths(self):
-        self.assertEqual(r.clean_remote('https://user:secret@example.com/repo.git?token=secret#secret'),
+        self.assertEqual(r.clean_remote('https://user:secret@example.com/repo.git?access=secret#secret'),
                          'https://example.com/repo.git')
         self.assertEqual(r.clean_remote('git@example.com:team/repo.git'), 'example.com:team/repo.git')
         with self.assertRaises(a.ContractError):
