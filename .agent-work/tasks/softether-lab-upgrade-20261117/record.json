@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "softether-lab-upgrade-20261117",
+  "saved_at": "2026-11-17T11:32:33+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "96e96d61736a37607952689da1119178d107020d",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "?? .agent-work/tasks/softether-lab-upgrade-20261117/",
+    "worktree_sha256": "0c9e41af8116a4ff6c5c8e8b0e2196de9f2365ec8330bce57e66969bc2cacbfa"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "softether-lab-upgrade-20261117",
+    "module": {
+      "id": "infrastructure",
+      "version": "0.1.13"
+    },
+    "created_at": "2026-11-17T11:27:54+09:00",
+    "objective": "Upgrade the supplied lab VPN guest and evaluate private server access.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Verify the guest OS and VPN upgrade with recovery conditions.",
+        "required": true,
+        "verification_ids": [
+          "ssh",
+          "upgrade"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Verify the Windows client path or document precise limitations and VPC recommendations.",
+        "required": true,
+        "verification_ids": [
+          "client",
+          "port",
+          "session"
+        ]
+      }
+    ],
+    "status": "partial",
+    "summary": "테스트 VM에 대한 SSH 인증이 거절되어 서버 업그레이드와 VPN 세션 시험은 진행하지 못했다. PC의 클라이언트와 기존 프로필 상태를 확인했다.",
+    "work": [
+      "인프라 담당이 지정된 VM의 SSH 응답, Windows 클라이언트 및 프로필의 수신 포트 접근을 확인했다.",
+      "OS 이전은 복구 가능 여부가 중요한 고위험 변경이다. 게스트 로그인 및 복구 경로를 확보하지 못했으며 서버와 PC 설정은 변경하지 않았다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "name": "PC 클라이언트",
+        "method": "로컬 서비스와 프로필 읽기",
+        "id": "client",
+        "notes": "Windows 11, SoftEther VPN Client 4.44 Build 9807, 기존 프로필 오프라인. 서버 인증서 검증이 꺼져 있다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/softether-lab-upgrade-20261117/evidence/guest.txt"
+        ]
+      },
+      {
+        "name": "게스트 관리 로그인",
+        "method": "지정된 SSH 서버 인증",
+        "id": "ssh",
+        "notes": "SSH 응답은 받았지만 root 암호 인증은 거절됐다. 구체적인 원인은 확인할 수 없다.",
+        "outcome": "failed",
+        "evidence": [
+          "runs/softether-lab-upgrade-20261117/evidence/guest.txt"
+        ]
+      },
+      {
+        "name": "VPN 수신 포트 접근",
+        "method": "지정된 VM에 TCP 연결",
+        "id": "port",
+        "notes": "기존 프로필 포트와 표준 HTTPS 포트 모두 5초 시간 초과.",
+        "outcome": "failed",
+        "evidence": [
+          "runs/softether-lab-upgrade-20261117/evidence/guest.txt"
+        ]
+      },
+      {
+        "name": "OS 및 VPN 업그레이드",
+        "method": "게스트 버전 및 재시작 후 서비스 확인",
+        "id": "upgrade",
+        "notes": "게스트 로그인 불가.",
+        "outcome": "not_run",
+        "evidence": [
+          "runs/softether-lab-upgrade-20261117/evidence/guest.txt"
+        ]
+      },
+      {
+        "name": "VPN 세션",
+        "method": "PC와 서버에서 연결 상태 대조",
+        "id": "session",
+        "notes": "VPN 수신 포트 접근 불가.",
+        "outcome": "not_run",
+        "evidence": [
+          "runs/softether-lab-upgrade-20261117/evidence/guest.txt"
+        ]
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "게스트 OS 및 VPN 서버 버전, 방화벽 상태, 인증 거절 이유는 미확인. 현재 Windows 세션에는 Hyper-V 관리 권한이 없다.",
+      "요청에 따라 별도 VPC 서버 접속은 시험 범위에서 제외했다."
+    ],
+    "next_actions": [
+      "사용 가능한 SSH 계정 또는 키를 확보하고 VM 복구 경로를 확인한다.",
+      "VPN 연결 시험은 서버 인증서를 확인하는 별도 테스트 프로필에서 진행한다. EC2 적용 시에는 업무 서브넷만 터널로 보내고 대상 보안 그룹에서 필요한 포트만 허용한다."
+    ]
+  },
+  "source_root": ".",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "softether-vpn",
+    "service": "softether",
+    "environment": "test-vm",
+    "issue": "os-vpn-upgrade"
+  },
+  "spec_sha256": "087c40fc8d9f7fe98daca2e89c4b91d7b550913ee0ce4d361caf7f2807f2a7f4"
+}

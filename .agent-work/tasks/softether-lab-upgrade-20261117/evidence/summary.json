@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "command": "로컬 서비스와 프로필 읽기",
+      "id": "client",
+      "evidence": [
+        {
+          "path": "runs/softether-lab-upgrade-20261117/evidence/guest.txt",
+          "sha256": "805d4f266986b163ac60a3a200484d15d0d0f70790fa8d6d905d93da409f7c07"
+        }
+      ],
+      "metrics": {},
+      "result": "passed"
+    },
+    {
+      "command": "지정된 SSH 서버 인증",
+      "id": "ssh",
+      "evidence": [
+        {
+          "path": "runs/softether-lab-upgrade-20261117/evidence/guest.txt",
+          "sha256": "805d4f266986b163ac60a3a200484d15d0d0f70790fa8d6d905d93da409f7c07"
+        }
+      ],
+      "metrics": {},
+      "result": "failed"
+    },
+    {
+      "command": "지정된 VM에 TCP 연결",
+      "id": "port",
+      "evidence": [
+        {
+          "path": "runs/softether-lab-upgrade-20261117/evidence/guest.txt",
+          "sha256": "805d4f266986b163ac60a3a200484d15d0d0f70790fa8d6d905d93da409f7c07"
+        }
+      ],
+      "metrics": {},
+      "result": "failed"
+    },
+    {
+      "command": "게스트 버전 및 재시작 후 서비스 확인",
+      "id": "upgrade",
+      "evidence": [
+        {
+          "path": "runs/softether-lab-upgrade-20261117/evidence/guest.txt",
+          "sha256": "805d4f266986b163ac60a3a200484d15d0d0f70790fa8d6d905d93da409f7c07"
+        }
+      ],
+      "metrics": {},
+      "result": "not_run"
+    },
+    {
+      "command": "PC와 서버에서 연결 상태 대조",
+      "id": "session",
+      "evidence": [
+        {
+          "path": "runs/softether-lab-upgrade-20261117/evidence/guest.txt",
+          "sha256": "805d4f266986b163ac60a3a200484d15d0d0f70790fa8d6d905d93da409f7c07"
+        }
+      ],
+      "metrics": {},
+      "result": "not_run"
+    }
+  ]
+}
