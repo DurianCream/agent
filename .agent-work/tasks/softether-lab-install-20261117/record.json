@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "softether-lab-install-20261117",
+  "saved_at": "2026-11-17T12:07:55+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "b090bd77a842fd04a54da70e318087ae34d9ebd5",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "?? .agent-work/tasks/softether-lab-install-20261117/",
+    "worktree_sha256": "0c9e41af8116a4ff6c5c8e8b0e2196de9f2365ec8330bce57e66969bc2cacbfa"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "softether-lab-install-20261117",
+    "module": {
+      "id": "infrastructure",
+      "version": "0.1.13"
+    },
+    "created_at": "2026-11-17T11:54:24+09:00",
+    "objective": "Update the disposable guest and verify a VPN session from the supplied Windows client.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Verify installed guest OS updates and running VPN server version with recovery information.",
+        "required": true,
+        "verification_ids": [
+          "os",
+          "server"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Verify an authenticated Windows VPN client session and provide relevant VPC settings.",
+        "required": true,
+        "verification_ids": [
+          "client"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "운영 기준은 Rocky Linux 10.2와 SoftEther VPN Server 4.44 Build 9807이다. 테스트 VM은 Rocky 10.3으로 유지하며 Windows 접속을 확인했다.",
+    "work": [
+      "고위험 OS 변경으로 네트워크·SSH 설정과 패키지 목록을 보관했다. 전체 VM 체크포인트는 확보하지 못했다.",
+      "기존 서버 설치가 없어 공식 RTM을 신규 설치했다. 접속 포트를 테스트 PC로 제한하고 별도 프로필에서 서버 인증서 검증을 켰다.",
+      "운영 EC2에는 업무 서브넷 경로만 배포하고 내부 보안 그룹의 목적지 포트를 제한하도록 권장한다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "evidence": [
+          "runs/softether-lab-install-20261117/evidence/guest.txt"
+        ],
+        "method": "dnf 및 재부팅 후 uname, OS 확인",
+        "name": "Rocky 10.3 부팅",
+        "id": "os",
+        "outcome": "passed",
+        "notes": "Rocky 10.2에서 10.3으로 업데이트했고 이전 커널을 보존했다."
+      },
+      {
+        "evidence": [
+          "runs/softether-lab-install-20261117/evidence/guest.txt"
+        ],
+        "method": "systemctl is-active 및 ServerInfoGet·ListenerList",
+        "name": "서버 자동 시작",
+        "id": "server",
+        "outcome": "passed",
+        "notes": "SoftEther 4.44 Build 9807, TCP 10443 수신 중."
+      },
+      {
+        "evidence": [
+          "runs/softether-lab-install-20261117/evidence/guest.txt"
+        ],
+        "method": "AccountStatusGet 및 서버 SessionList 대조",
+        "name": "Windows 실제 접속 및 재접속",
+        "id": "client",
+        "outcome": "passed",
+        "notes": "두 세션이 양쪽에서 일치했다. 인증서 검증 활성, 기본 경로 유지, 시험 후 오프라인."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.softether.org/5-download/history",
+        "claim_kind": "fact",
+        "title": "SoftEther 공식 변경 이력",
+        "accessed_at": "2026-11-17T12:00:00+09:00"
+      }
+    ],
+    "limitations": [
+      "실제 연결 시험은 10.3에서 수행했다. 운영 기준 10.2 및 VPC 내부 서버 접속은 미검증이다.",
+      "시험 구성에는 SecureNAT와 로컬 브리지가 없다."
+    ],
+    "next_actions": [
+      "Windows에서 SoftEther-Lab-10443 프로필로 접속한다.",
+      "운영 적용 전 Rocky 10.2에서 재부팅 후 VPN 접속과 실제 대상 포트의 경로를 검증한다."
+    ]
+  },
+  "source_root": ".",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "softether-vpn",
+    "service": "softether",
+    "environment": "test-vm",
+    "issue": "os-vpn-upgrade"
+  },
+  "spec_sha256": "cf4cf886b119caf3a4feceefc08c9230fbbecd8561a41d30242f0a18438aae82"
+}

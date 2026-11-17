@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "metrics": {},
+      "result": "passed",
+      "command": "dnf 및 재부팅 후 uname, OS 확인",
+      "evidence": [
+        {
+          "sha256": "2f02398b446a579637557d61549dc7d11f4066ccf62e66f66f8b92e03db7d1f8",
+          "path": "runs/softether-lab-install-20261117/evidence/guest.txt"
+        }
+      ],
+      "id": "os"
+    },
+    {
+      "metrics": {},
+      "result": "passed",
+      "command": "systemctl is-active 및 ServerInfoGet·ListenerList",
+      "evidence": [
+        {
+          "sha256": "2f02398b446a579637557d61549dc7d11f4066ccf62e66f66f8b92e03db7d1f8",
+          "path": "runs/softether-lab-install-20261117/evidence/guest.txt"
+        }
+      ],
+      "id": "server"
+    },
+    {
+      "metrics": {},
+      "result": "passed",
+      "command": "AccountStatusGet 및 서버 SessionList 대조",
+      "evidence": [
+        {
+          "sha256": "2f02398b446a579637557d61549dc7d11f4066ccf62e66f66f8b92e03db7d1f8",
+          "path": "runs/softether-lab-install-20261117/evidence/guest.txt"
+        }
+      ],
+      "id": "client"
+    }
+  ]
+}
