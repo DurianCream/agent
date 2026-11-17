@@ -1,0 +1,78 @@
+{
+  "checks": [
+    {
+      "id": "codex-discovery",
+      "result": "passed",
+      "command": "codex app-server skills/list (fresh stdio server)",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/traffic-light-20261117/evidence/discovery.json",
+          "sha256": "ae9c8c0a161264c81453f8fa9f1e3495f4abbce92701c49e62d9201fe355ed5e"
+        }
+      ]
+    },
+    {
+      "id": "activity-monitor",
+      "result": "passed",
+      "command": "Project skill entry, focused regression tests, and adapter checks as recorded by the skill owner",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/traffic-light-20261117/evidence/owner.json",
+          "sha256": "4895cc3f80ad3c90c2dcffb1dd244e4ffeb480e6b6f87c87cd95ad9876d4c311"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task traffic-light-20261117 --suite all-runtime-tests",
+      "metrics": {
+        "tests_run": 223
+      },
+      "evidence": [
+        {
+          "path": "runs/traffic-light-20261117/evidence/gate-test-d85142ea0f0c4eddb4186dab99651043.json",
+          "sha256": "cfcf768992e76705612b895af94ed3bb1c9cc4d6dbb462d7a94ece90b2bbea18"
+        },
+        {
+          "path": "runs/traffic-light-20261117/evidence/gate-test-d85142ea0f0c4eddb4186dab99651043.log",
+          "sha256": "526e63abe2bf8efa5a4e411c5ea0146f9a3cfb0be8a836fc8ce5c1e165d72192"
+        }
+      ]
+    },
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task traffic-light-20261117 --suite impact-document-integrity",
+      "metrics": {
+        "tests_run": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/traffic-light-20261117/evidence/gate-test-b14691644092471d98907db524f8fb1a.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/traffic-light-20261117/evidence/gate-test-b14691644092471d98907db524f8fb1a.log",
+          "sha256": "ee7b2c3989de378643ea684e36030e857ec5bac81c97cb4fce0fce994fb0d209"
+        }
+      ]
+    },
+    {
+      "id": "sandbox-regression-attempt",
+      "result": "failed",
+      "command": "python runtime/control_gate.py run-tests --task traffic-light-20261117 --suite all-runtime-tests (sandbox)",
+      "metrics": {
+        "tests_run": 223
+      },
+      "evidence": [
+        {
+          "path": "runs/traffic-light-20261117/evidence/gate-test-85db5fd4436842089095cc19f10755d4.json",
+          "sha256": "a5df88953bd865af72dfc92de8b9dbd38eabadaaa1ca4359648284d59bcb5d8f"
+        }
+      ]
+    }
+  ]
+}

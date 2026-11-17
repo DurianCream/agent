@@ -75,7 +75,7 @@ class ContractTests(unittest.TestCase):
 
     def test_registered_roles_and_skills(self):
         found = ctl.doctor(self.root)
-        self.assertEqual((found["modules"], found["skills"]), (8, 5))
+        self.assertEqual((found["modules"], found["skills"]), (8, 6))
 
     def test_complete_submission_has_fixed_report_and_sealed_artifact(self):
         ctl.submit("sample", self.root)
