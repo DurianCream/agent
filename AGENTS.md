@@ -8,7 +8,11 @@ Every main or delegated role reads shared/workflows/owner-led-delivery.md before
 
 When several agents work on one task at once, allocate a workspace per agent as described in shared/workflows/owner-led-delivery.md section 1. Reuse an instance's assignment for follow-ups.
 
-Read registry.json, the selected module.json and the unconditional entry of instructions.md. Read a role's conditional appendix only for its named trigger. For section references below, read only the named section. Load only relevant policies and skills. Work in authorized workspaces. Place temporary files in the allocated workspace or work/, deliverables in outputs/<task-id>/ and evidence in runs/<task-id>/. Agent instructions, specifications and recovery notes use English; user-facing reports and explanations use Korean. Report only verified results. Host capabilities govern real agent creation and enforcement.
+Read registry.json, the selected module.json and the unconditional entry of instructions.md. Read a role's conditional appendix only for its named trigger. For section references below, read only the named section. Load only relevant policies and skills. Work in authorized workspaces. Place temporary files in the allocated workspace or work/ and evidence in runs/<task-id>/. Agent instructions, specifications and recovery notes use English; user-facing reports and explanations use Korean. Report only verified results. Host capabilities govern real agent creation and enforcement. This repository holds framework material only: instructions, skills, policies and runtime.
+
+Deliverable location:
+- Infrastructure and research deliverables (runbooks, verification and adoption reports): bind the task to the registered infra-docs repository, write each deliverable there as a tracked file under docs/<topic>/ and register it with repoctl track. Do not also copy it to outputs/<task-id>/; leave result.json artifacts empty and name the docs/ path in work and verification. This overrides "artifacts in outputs/<task-id>/" in shared/skills/submit-result/SKILL.md and "submit the report as an artifact" in modules/oss-rnd/instructions.md for such work.
+- Framework work in this repository: deliverables go in outputs/<task-id>/ as before.
 
 ## Apply these references at their trigger
 

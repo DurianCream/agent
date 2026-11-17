@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task deliverable-repository-20261117 --suite impact-document-integrity",
+      "metrics": {
+        "tests": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/deliverable-repository-20261117/evidence/gate-test-991649042b5a4476a4b1299590cfb0b9.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/deliverable-repository-20261117/evidence/gate-test-991649042b5a4476a4b1299590cfb0b9.log",
+          "sha256": "c2e8f299fbd75a14c19281b788b8a38bfc1195adc5f478c9b817487c30e840ac"
+        }
+      ]
+    }
+  ]
+}
