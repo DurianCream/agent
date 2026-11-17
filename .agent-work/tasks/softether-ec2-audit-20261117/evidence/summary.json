@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "result": "passed",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/softether-ec2-audit-20261117/evidence/checks.txt",
+          "sha256": "0029f4d6c18cb3579a7aeae8fc77ec3acef6c60edfb29c1ecc609a4ccb40597e"
+        }
+      ],
+      "id": "guide",
+      "command": "설치 및 네트워크 정책, 보안 그룹, 검수 순서 정적 검토"
+    },
+    {
+      "result": "passed",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/softether-ec2-audit-20261117/evidence/checks.txt",
+          "sha256": "0029f4d6c18cb3579a7aeae8fc77ec3acef6c60edfb29c1ecc609a4ccb40597e"
+        }
+      ],
+      "id": "audit",
+      "command": "테스트 VM에서 보안 로그와 접속 및 종료 이벤트 대조"
+    },
+    {
+      "result": "passed",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/softether-ec2-audit-20261117/evidence/checks.txt",
+          "sha256": "0029f4d6c18cb3579a7aeae8fc77ec3acef6c60edfb29c1ecc609a4ccb40597e"
+        }
+      ],
+      "id": "radius",
+      "command": "실행 버전, 허용·거절 및 VPN 세션 기록 확인"
+    }
+  ]
+}
