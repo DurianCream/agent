@@ -39,6 +39,9 @@ class ImpactDocumentChecks(unittest.TestCase):
         current = g.candidate(task)
         for item in current['candidate']['entries']:
             if item['path'].endswith(('.md', '.txt', '.json', '.toml')):
+                if item['state'] == 'deleted':
+                    self.assertFalse(a.relative(a.ROOT, item['path']).exists())
+                    continue
                 self.assertEqual(item['state'], 'file')
                 raw = a.relative(a.ROOT, item['path'], file=True).read_bytes()
                 self.assertLessEqual(len(raw), g.MAX_BYTES)

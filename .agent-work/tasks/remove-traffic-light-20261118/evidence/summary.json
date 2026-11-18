@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "id": "removal",
+      "result": "passed",
+      "command": "Owner removal checks",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/owner.json",
+          "sha256": "825077dfdb9067fa51d47b9a8f4e2aad262d50a1e492eb309d078b09cb48ff80"
+        }
+      ]
+    },
+    {
+      "id": "discovery",
+      "result": "passed",
+      "command": "codex app-server skills/list",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/discovery.json",
+          "sha256": "ee64f5d1d02028446cbbee60915a06b818d06b10f4120408ebe8c7d4c12df6c1"
+        }
+      ]
+    },
+    {
+      "id": "deletion-integrity",
+      "result": "passed",
+      "command": "12 isolated cases against the production document checker",
+      "metrics": {},
+      "evidence": [
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/integrity-repair.json",
+          "sha256": "29f50aa0bf655854a96157fa491ea687304e497b8521edd30246584f620010b1"
+        }
+      ]
+    },
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task remove-traffic-light-20261118 --suite impact-document-integrity",
+      "metrics": {
+        "tests_run": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/gate-test-042368b72c1e4dda9c3146f770ad4522.log",
+          "sha256": "c2c4823ee275c259162cbbd5e749a1968fab27425ace04e6d00066163d8a3f9b"
+        },
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/gate-test-042368b72c1e4dda9c3146f770ad4522.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task remove-traffic-light-20261118 --suite all-runtime-tests",
+      "metrics": {
+        "tests_run": 219
+      },
+      "evidence": [
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/gate-test-b45a16b242104592a9e6773ae07e707a.log",
+          "sha256": "0fa312e75fc301c05ccd5b26ce6a244ecd09e066f8cd34a7d905c390d6826fae"
+        },
+        {
+          "path": "runs/remove-traffic-light-20261118/evidence/gate-test-b45a16b242104592a9e6773ae07e707a.json",
+          "sha256": "9a6e67c5358f0e963fc15ee00fa813a5f9d8a98a68d0e4169cc8bc99fbe3e42f"
+        }
+      ]
+    }
+  ]
+}

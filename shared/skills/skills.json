@@ -25,11 +25,6 @@
       "id": "infrastructure-environment",
       "version": "1.0.1",
       "path": "modules/infrastructure/p2-test-environment.md"
-    },
-    {
-      "id": "traffic-light",
-      "version": "0.1.0",
-      "path": "shared/skills/traffic-light/SKILL.md"
     }
   ]
 }

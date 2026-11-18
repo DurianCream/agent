@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "remove-traffic-light-20261118",
+  "saved_at": "2026-11-18T10:20:48+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "5ff6b7c06a2c8c42fbd470d6eae908039fb70f44",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "D .agents/skills/traffic-light/SKILL.md\n M README.md\n M runtime/native-map.json\n M runtime/tests/impact_document_checks.py\n M runtime/tests/test_contract.py\n D runtime/tests/test_traffic_light.py\n M shared/skills/skills.json\n D shared/skills/traffic-light/SKILL.md\n D shared/skills/traffic-light/scripts/traffic_light.py\n?? .agent-work/tasks/remove-traffic-light-20261118/",
+    "worktree_sha256": "5ab4e83f13f6827075470df330274cb37a194a8517c80f9bad014d171b4fc40d"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "remove-traffic-light-20261118",
+    "module": {
+      "id": "skill-manager",
+      "version": "0.1.9"
+    },
+    "created_at": "2026-11-18T10:01:57+09:00",
+    "objective": "Remove the project-local traffic-light skill and its runtime, registration, documentation and tests at the user request.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "Traffic-light is absent from active project skills, runtime and usage documentation.",
+        "required": true,
+        "verification_ids": [
+          "removal",
+          "discovery"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Remaining project skills and repository checks pass.",
+        "required": true,
+        "verification_ids": [
+          "checks",
+          "discovery"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "프로젝트의 traffic-light 스킬, 실행 코드, 등록 정보, 사용 안내와 전용 테스트를 제거했다.",
+    "work": [
+      "일반 영향의 되돌릴 수 있는 기능 제거로 분류했다. skill-manager가 제거를 맡았다.",
+      "기존 8개 기능 파일에서 제거 사항을 반영하고 Codex 어댑터를 동기화했다.",
+      "Codex 앱 서버의 새 스킬 목록에서 traffic-light가 사라지고 기존 프로젝트 스킬이 활성 상태임을 확인했다.",
+      "문서 검사가 삭제된 Markdown도 존재해야 한다고 요구해 실패했다. 실제 부재를 검사하도록 수정하고 12개 사례를 검증했다.",
+      "수정 전 전체 시험을 중단하고 수정된 후보에서 필수 시험을 다시 실행했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "removal",
+        "name": "기능 제거 확인",
+        "method": "파일 부재와 등록·안내의 참조 점검",
+        "outcome": "passed",
+        "evidence": [
+          "runs/remove-traffic-light-20261118/evidence/owner.json"
+        ],
+        "notes": "코드·스킬·등록·안내·전용 테스트 제거 확인."
+      },
+      {
+        "id": "discovery",
+        "name": "Codex 탐색 결과",
+        "method": "새 앱 서버의 skills/list 조회",
+        "outcome": "passed",
+        "evidence": [
+          "runs/remove-traffic-light-20261118/evidence/discovery.json"
+        ],
+        "notes": "제거 항목 부재와 기존 스킬 활성 확인."
+      },
+      {
+        "id": "checks",
+        "name": "저장소 검증",
+        "method": "필수 시험과 삭제 검사 회귀 사례",
+        "outcome": "passed",
+        "evidence": [
+          "runs/remove-traffic-light-20261118/evidence/summary.json"
+        ],
+        "notes": "전체 런타임 시험 및 문서 검사 통과."
+      }
+    ],
+    "sources": [],
+    "limitations": [],
+    "next_actions": []
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "remove-traffic-light"
+  },
+  "assessment": {
+    "publication_kind": "product",
+    "verdict": "accepted",
+    "reviewer": {
+      "subject": "evaluator",
+      "session": "remove-traffic-light-review"
+    },
+    "record": "runs/remove-traffic-light-20261118/gates/review-a266da60238b40d5819f181fdbcf18af.json",
+    "sha256": "0dd63db6b95afbef30594403aa6c1388ec5b72ec771123bde6ed8339b1f03751"
+  },
+  "spec_sha256": "05265fae0b1a61e2081f098c24657323993cdf087ba328d1553641873bbb99c7"
+}
