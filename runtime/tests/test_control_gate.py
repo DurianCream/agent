@@ -481,6 +481,36 @@ class GateTests(GateFixture, unittest.TestCase):
             g.enroll('deleted-config-task', self.root)
         self.assertEqual(a.read_json(run / 'task.json')['control_enrollment'], 'pending')
 
+    def test_task_bound_to_other_repository_is_not_enrolled(self):
+        # A second repository with its own history: its baseline commit does not exist here.
+        other = self.root / 'work/other-repo'
+        other.mkdir(parents=True)
+        subprocess.run(['git', 'init', '-q', '-b', 'main', str(other)], check=True)
+        for key, value in (('user.name', 'Fixture'), ('user.email', 'fixture@example.invalid'),
+                           ('core.autocrlf', 'false')):
+            r.git(other, 'config', key, value)
+        r.git(other, 'remote', 'add', 'origin', 'https://example.invalid/other.git')
+        (other / 'docs').mkdir()
+        (other / 'docs/guide.md').write_text('guide\n')
+        r.register('other', other, self.root)
+        a.write_json(other / '.agent-work/automation.json', {
+            'schema_version': '1.0.0', 'enabled': True, 'remote': 'origin',
+            'expected_url': 'https://example.invalid/other.git', 'branch': 'main'})
+        r.git(other, 'add', '--', '.')
+        r.git(other, 'commit', '-q', '-m', 'other baseline')
+        base = r.git(other, 'rev-parse', 'HEAD')
+        self.assertIsNone(r.git(self.root, 'cat-file', '-e', base + '^{commit}', optional=True))
+        a.init_task('coding', 'other-repo-task', 'Other repo', ['Bind elsewhere'], self.root)
+        r.bind('other', 'other-repo-task', self.root,
+               scope={**self.profile['selector'], 'issue': 'other'}, new_task=True)
+        run = self.root / 'runs/other-repo-task'
+        self.assertEqual(a.read_json(run / 'publication.json')['base_head'], base)
+        self.assertNotIn('control_enrollment', a.read_json(run / 'task.json'))
+        self.assertIsNone(g.check_enrollment('other-repo-task', self.root))
+        a.load_task('other-repo-task', self.root)
+        # The framework task is still enrolled from its own baseline configuration.
+        self.assertIsNotNone(g.check_enrollment('gate-task', self.root))
+
     def test_uncommitted_config_cannot_activate_enrollment(self):
         r.git(self.root, 'rm', '-q', '--cached', '--', g.CONFIG)
         r.git(self.root, 'commit', '-q', '-m', 'untrack gates')

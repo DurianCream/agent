@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "cross-repo-enrollment-20261118",
+  "saved_at": "2026-11-18T10:53:31+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "07f472c804a118fc8c6362c210a7bfab6e14b644",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "M runtime/control_gate.py\n M runtime/tests/test_control_gate.py\n?? .agent-work/tasks/cross-repo-enrollment-20261118/",
+    "worktree_sha256": "7d0850687bbefb334a1a8469d487dc350033c4381de81aa3c48d24de5994f702"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "cross-repo-enrollment-20261118",
+    "module": {
+      "id": "coding",
+      "version": "0.1.9"
+    },
+    "created_at": "2026-11-18T10:41:15+09:00",
+    "objective": "Stop P1 enrollment from resolving another repository's baseline commit inside the framework checkout.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "A new task bound to a registered repository other than the framework checkout initializes without a P1 Git inspection failure and is not enrolled, while framework tasks keep baseline-config enrollment.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "Selected gate suites pass and a regression test binds a task to a second repository with an independent history.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "다른 저장소에 연결된 새 작업이 P1 등록 단계에서 Git 조회 오류로 막히던 문제를 고쳤다. 게이트는 multi 작업에만 적용되므로 다른 저장소 작업은 기준 커밋을 multi에서 찾지 않고 등록 대상에서 빠진다.",
+    "work": [
+      "위험 등급은 높음이다. 게시 게이트 등록 조건을 바꾼다.",
+      "원인: gate-config-baseline-20261116에서 enroll이 publication.json의 base_head로 gates.json을 multi에서 조회하게 됐는데, infra-docs 작업의 base_head는 infra-docs에만 있어 P1 Git inspection failed가 났다. 이 때문에 softether-clean-20261118이 pending으로 막혔다.",
+      "runtime/control_gate.py enroll 시작 부분에서 연결된 저장소 경로가 multi가 아니면 바로 None을 돌려준다. multi 작업은 기존처럼 기준 커밋의 설정으로 등록한다.",
+      "runtime/tests/test_control_gate.py에 독립 이력을 가진 두 번째 저장소에 작업을 연결하는 시험을 추가했다. 수정 전 코드에서는 같은 오류로 실패하고 수정 후 통과함을 확인했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "impact-document-integrity",
+        "name": "impact-document-integrity",
+        "method": "control_gate run-tests로 선택된 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/cross-repo-enrollment-20261118/evidence/summary.json",
+          "runs/cross-repo-enrollment-20261118/evidence/gate-test-1b91b25c978d444f9939497b17fbfa33.log",
+          "runs/cross-repo-enrollment-20261118/evidence/gate-test-1b91b25c978d444f9939497b17fbfa33.json"
+        ],
+        "notes": "시험 4개 통과, 실패·오류·건너뜀 0개."
+      },
+      {
+        "id": "all-runtime-tests",
+        "name": "all-runtime-tests",
+        "method": "control_gate run-tests로 선택된 전체 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/cross-repo-enrollment-20261118/evidence/summary.json",
+          "runs/cross-repo-enrollment-20261118/evidence/gate-test-d5119a45c62648d399a3ac22f4999e3c.log",
+          "runs/cross-repo-enrollment-20261118/evidence/gate-test-d5119a45c62648d399a3ac22f4999e3c.json"
+        ],
+        "notes": "시험 220개 통과, 실패·오류·건너뜀 0개."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "이미 pending으로 막힌 softether-clean-20261118은 자동으로 풀리지 않는다. cancelled로 닫고 같은 범위로 새 작업을 만들어야 한다."
+    ],
+    "next_actions": [
+      "softether-clean-20261118을 닫고 새 작업으로 재설치를 이어간다."
+    ]
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "cross-repo-enrollment"
+  },
+  "assessment": {
+    "publication_kind": "product",
+    "verdict": "accepted",
+    "reviewer": {
+      "subject": "independent-evaluator",
+      "session": "/root/review-cross-repo"
+    },
+    "record": "runs/cross-repo-enrollment-20261118/gates/review-8b1fab7e02a148939086ddb5f6d15462.json",
+    "sha256": "16de679a533f51069b61e48046ae6bd055dd1a8aab968ad0b751100fe9ac0501"
+  },
+  "spec_sha256": "3a0f45a5aef60f9e0d81968421cd8eae2f2516426fca4f0ea242188b2525d83b"
+}

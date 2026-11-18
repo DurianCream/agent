@@ -112,6 +112,12 @@ def enroll(task_id, root=a.ROOT):
     root = Path(root).resolve()
     config = a.relative(root, CONFIG)
     run = _run(task_id, root)
+    # P1 gates only cover the framework checkout. A task bound to another repository has its
+    # baseline commit in that repository, so it must not be looked up here.
+    import repoctl as r
+    bound, _ = r.repo(_read(a.relative(run, 'repository.json', file=True))['repository_id'], root)
+    if Path(bound).resolve() != root:
+        return None
     present = config.exists() or config.is_symlink()
     # Only the configuration committed at the baseline selects enrollment: an uncommitted
     # edit, addition or deletion must neither weaken nor switch off the gates.

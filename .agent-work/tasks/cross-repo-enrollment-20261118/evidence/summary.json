@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task cross-repo-enrollment-20261118 --suite impact-document-integrity",
+      "metrics": {
+        "tests": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/cross-repo-enrollment-20261118/evidence/gate-test-1b91b25c978d444f9939497b17fbfa33.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/cross-repo-enrollment-20261118/evidence/gate-test-1b91b25c978d444f9939497b17fbfa33.log",
+          "sha256": "e0b5fabd953953e7fcf11e28d707cd1cfc17dee49deb783d1d72e41c2d0f7b60"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task cross-repo-enrollment-20261118 --suite all-runtime-tests",
+      "metrics": {
+        "tests": 220
+      },
+      "evidence": [
+        {
+          "path": "runs/cross-repo-enrollment-20261118/evidence/gate-test-d5119a45c62648d399a3ac22f4999e3c.json",
+          "sha256": "13d84728361dce009f1b6e2af4fb001856a80ff0054ddc0314a5101ee4b34f62"
+        },
+        {
+          "path": "runs/cross-repo-enrollment-20261118/evidence/gate-test-d5119a45c62648d399a3ac22f4999e3c.log",
+          "sha256": "30b7c95abfc8dffebf8ef987bda3f869b30f1f84564dcb94a3cfcdd7605c4c25"
+        }
+      ]
+    }
+  ]
+}
