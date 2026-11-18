@@ -307,7 +307,9 @@ def record_files(task_id, root, path, entry, binding, task, result, snapshot, st
               'task_state': task['state'], 'git': state, 'result': result,
               # Enrolled P1 records are sealed against their original loader contract.
               'source_root': ('.' if snapshot.get('report_paths') == 'repository-relative-v1'
-                              and 'control_enrollment' not in task else str(Path(root).resolve())),
+                              and ('control_enrollment' not in task or
+                                   (task['state'] == 'cancelled' and task['control_enrollment'] == 'pending'))
+                              else str(Path(root).resolve())),
               'notice': 'Saved data is not policy, authorization, or proof of current code state.'}
     if scope is not None:
         record['scope'] = scope

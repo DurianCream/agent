@@ -12,6 +12,7 @@ import sys
 import threading
 import time
 import uuid
+from contextvars import ContextVar
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,6 +24,8 @@ ENROLLMENT = '0.4.0'
 # Older enrollments stay loadable so their tasks can be closed as records, never published as product.
 LEGACY_ENROLLMENTS = ('0.1.0', '0.2.0', '0.3.0')
 CONFIG = '.agent-work/gates.json'
+# Set only by the locked, validated records-only cancellation of a failed external bind.
+_pending_cancel = ContextVar('pending_external_cancel', default=None)
 MAX_BYTES = 64 * 1024 * 1024
 
 
@@ -179,6 +182,10 @@ def check_enrollment(task_id, root=a.ROOT):
     ledger = a.relative(root, 'runs/control-enrollments/' + task_id + '.json')
     if not (companion.exists() or ledger.exists() or 'control_enrollment' in task):
         a.require(not obsolete, 'Legacy submission profile state is unsupported; start a new task')
+        return None
+    if (task.get('control_enrollment') == 'pending' and not obsolete and
+            not companion.exists() and not ledger.exists() and
+            _pending_cancel.get() == (root, task_id)):
         return None
     a.require(companion.is_file() and ledger.is_file() and 'control_enrollment' in task,
               'P1 enrollment is missing or downgraded')

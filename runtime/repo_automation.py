@@ -4,7 +4,9 @@ from __future__ import annotations
 import base64
 import json
 import os
+import re
 import subprocess
+from contextlib import contextmanager
 from pathlib import Path
 
 import agentctl as a
@@ -24,12 +26,16 @@ def policy(path):
     return data
 
 
-def context(task_id, root):
-    run, task, _ = a.load_task(task_id, root)
+def _bound_path(run, root):
     binding = a.read_json(a.relative(run, 'repository.json', file=True))
     path, entry = r.repo(binding['repository_id'], root)
     a.require(entry['uuid'] == binding['repository_uuid'], 'Repository binding mismatch')
-    return run, task, path
+    return path
+
+
+def context(task_id, root):
+    run, task, _ = a.load_task(task_id, root)
+    return run, task, _bound_path(run, root)
 
 
 def dirty_paths(path):
@@ -429,11 +435,78 @@ def _publish(task_id, root, file, path, value, settings, payload):
     return gate
 
 
+@contextmanager
+def _cancel_pending_external(task_id, root, run, path, close):
+    """Accept the historical pre-checkpoint bind failure only for its cancellation commit."""
+    task = a.read_json(a.relative(run, 'task.json', file=True))
+    if close != 'cancelled' or task.get('control_enrollment') != 'pending':
+        yield False
+        return
+
+    import control_gate as g
+    root = Path(root).resolve()
+    a.require(path != root and task['state'] in ('queued', 'cancelled') and
+              'submission' not in task and 'result_status' not in task,
+              'Only an unstarted external enrollment can be recovered')
+    binding = a.read_json(a.relative(run, 'repository.json', file=True))
+    r.validate_scope(binding['scope'])
+    manifest = a.read_json(a.relative(run, 'publication.json', file=True))
+    base = manifest['base_head']
+    a.require(binding['task_id'] == manifest['task_id'] == task_id and not manifest['paths'] and
+              re.fullmatch(r'(?:[0-9a-f]{40}|[0-9a-f]{64})', base),
+              'Invalid unstarted external publication baseline')
+    a.require(not any(a.relative(root, 'outputs/' + task_id).iterdir()) and
+              not any(a.relative(run, 'evidence').iterdir()) and
+              not any(a.relative(run, name).exists() for name in
+                      ('result.md', 'gate-submission.json', 'incomplete-candidate.json', 'gates')),
+              'Task contains output, evidence or control records')
+    # Verify the repository identity and standing publication settings at the actual
+    # target baseline, not just against the local binding. Never recover a gated target.
+    identity = json.loads(r.git(path, 'show', base + ':.agent-work/repository.json'))
+    a.require(identity['uuid'] == binding['repository_uuid'] and identity['id'] == binding['repository_id'] and
+              json.loads(r.git(path, 'show', base + ':' + AUTOMATION)) == manifest['policy'] and
+              not r.git(path, 'ls-tree', base, '--', g.CONFIG) and not a.relative(path, g.CONFIG).exists(),
+              'External repository baseline does not qualify for cancellation')
+    events = [json.loads(line) for line in a.relative(run, 'events.jsonl', file=True).read_text(
+        encoding='utf-8').splitlines()]
+    # A killed finish can leave precisely these two locks. Its official unlock is not execution.
+    events = [event for event in events if not (
+        set(event) == {'at', 'event', 'lock', 'scope', 'owner'} and event['event'] == 'unlock' and
+        event['owner'] in ('dead', 'abandoned') and
+        (event['scope'], event['lock']) in (('repository', 'publication.lock'), ('task', '.operation.lock')))]
+    a.require(events and events[0].get('event') == 'created' and events[0].get('module') == task['module']['id'] and
+              (len(events) == 1 or (task['state'] == 'cancelled' and len(events) == 2 and
+               events[1].get('event') == 'transition' and events[1].get('state') == 'cancelled')),
+              'Task history shows activity after initialization')
+    result = a.read_json(a.relative(run, 'result.json', file=True))
+    a.require(result['status'] in ('partial', 'failed') and not result['artifacts'] and
+              all(check['outcome'] == 'not_run' and not check['evidence'] for check in result['verification']),
+              'Task has execution results; cannot recover unstarted cancellation')
+    allowed = {f'.agent-work/tasks/{task_id}/{name}' for name in ('spec.md', 'record.json', 'report.ko.md')}
+    if manifest['phase'] == 'begun':
+        a.require(task['state'] == 'queued', 'Unexpected state for pending cancellation')
+    else:
+        saved = a.read_json(a.relative(run, 'publish/payload.json', file=True))
+        a.require(saved['kind'] == 'records' and saved['close'] == 'cancelled' and
+                  not saved['entries'] and saved['automation'] is None and
+                  set(saved['paths']) <= allowed and set(saved['repository_files']) <= allowed,
+                  'Retry requires the saved cancellation records')
+    previous_context = g._pending_cancel.set((root, task_id))
+    try:
+        yield True
+    finally:
+        g._pending_cancel.reset(previous_context)
+
+
 def finish(task_id, root=a.ROOT, close=None):
     """Publish a completed task, or with close the records of one that ends incomplete."""
-    run, task, path = context(task_id, root)
+    run = a.relative(root, 'runs/' + a.identifier(task_id))
+    path = _bound_path(run, root)
     file = a.relative(run, 'publication.json', file=True)
-    with a.lock(a.relative(path, '.agent-work/publication.lock')), a.lock(run / '.operation.lock'):
+    with (a.lock(a.relative(path, '.agent-work/publication.lock')), a.lock(run / '.operation.lock'),
+          _cancel_pending_external(task_id, root, run, path, close)):
+        # Validate the frozen task and its ordinary controls inside the publication lock.
+        a.load_task(task_id, root)
         value = a.read_json(file)
         settings = policy(path)
         a.require(settings == value['policy'] and a.digest(a.relative(path, AUTOMATION, file=True).read_bytes()) == value['policy_sha256'], 'Publication policy changed since task began')
@@ -488,19 +561,24 @@ def finish(task_id, root=a.ROOT, close=None):
 
 def unlock(task_id, root=a.ROOT):
     """Remove locks only when their recorded owner process is gone."""
-    run, _, path = context(task_id, root)
+    run = a.relative(root, 'runs/' + a.identifier(task_id))
+    path = _bound_path(run, root)
     files = [run / '.operation.lock', run / '.publication.lock'] + [
         path / '.agent-work' / name for name in ('publication.lock', 'record.lock', 'recovery.lock')]
     removed = []
     # Only unlock deletes another owner's lock, and only while holding this guard.
     # A dead owner's file cannot vanish or be replaced in between, so inspecting
     # and deleting refer to the same lock. A stale guard needs manual inspection.
-    with a.lock(path / '.agent-work' / 'unlock.lock'):
+    with (a.lock(path / '.agent-work' / 'unlock.lock'),
+          _cancel_pending_external(task_id, root, run, path, 'cancelled') as pending_cancel):
+        a.load_task(task_id, root)
         states = {file: a.lock_state(file) for file in files}
         held = [f'{file.name}: {state}' for file, state in states.items() if state in ('alive', 'incomplete')]
         a.require(not held, 'Lock owner may still be running: ' + ', '.join(held))
         for file, state in states.items():
             if state in ('dead', 'abandoned'):
+                if pending_cancel and file not in (run / '.operation.lock', path / '.agent-work/publication.lock'):
+                    continue
                 file.unlink()
                 scope = 'task' if file.parent == run else 'repository'
                 a.event(run, 'unlock', lock=file.name, scope=scope, owner=state)

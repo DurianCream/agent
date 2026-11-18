@@ -1,0 +1,54 @@
+{
+  "checks": [
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task pending-cancel-recovery-20261118 --suite impact-document-integrity",
+      "metrics": {
+        "tests": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/pending-cancel-recovery-20261118/evidence/gate-test-a79f9c110071434eb49220259d2cc066.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/pending-cancel-recovery-20261118/evidence/gate-test-a79f9c110071434eb49220259d2cc066.log",
+          "sha256": "c88da09f219d6a66510ff4e7d8af3dac60591ac2c35bfb442dde90a686430a83"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task pending-cancel-recovery-20261118 --suite all-runtime-tests",
+      "metrics": {
+        "tests": 223
+      },
+      "evidence": [
+        {
+          "path": "runs/pending-cancel-recovery-20261118/evidence/gate-test-640d372b10ca42a69ee6344caddc0d87.json",
+          "sha256": "cfcf768992e76705612b895af94ed3bb1c9cc4d6dbb462d7a94ece90b2bbea18"
+        },
+        {
+          "path": "runs/pending-cancel-recovery-20261118/evidence/gate-test-640d372b10ca42a69ee6344caddc0d87.log",
+          "sha256": "2e50e6626ea1078686195e91e80e972c0dbd5b50b9b78c2a111a6bdba1a46535"
+        }
+      ]
+    },
+    {
+      "id": "live-cancel",
+      "result": "passed",
+      "command": "python runtime/repoctl.py finish --task softether-clean-20261118 --close cancelled",
+      "metrics": {
+        "record_files": 3
+      },
+      "evidence": [
+        {
+          "path": "runs/pending-cancel-recovery-20261118/evidence/live-cancellation.json",
+          "sha256": "3b16d9a0bf14820739491af0771151148350ffaddc36ddf4b7e41ff09a433227"
+        }
+      ]
+    }
+  ]
+}

@@ -66,6 +66,94 @@ class AutomationTests(unittest.TestCase):
         (self.path / name).write_text('owned', encoding='utf-8')
         auto.track('auto-task', [name], self.root)
 
+    def failed_external_bind(self):
+        import control_gate as g
+        # Reproduce the historical error between begin and checkpoint with real binding,
+        # pending marker retention, distinct Git history and the real publication commands.
+        source = Path(a.__file__).resolve().parents[1]
+        config = self.root / g.CONFIG
+        config.parent.mkdir(exist_ok=True)
+        shutil.copyfile(source / g.CONFIG, config)
+        r.git(self.path, 'add', '--', '.agent-work/automation.json')
+        r.git(self.path, 'commit', '-m', 'Enable publication')
+        r.git(self.remote, 'fetch', str(self.path), 'refs/heads/main:refs/heads/main')
+        with mock.patch.object(g, 'enroll', side_effect=a.ContractError('old external bind error')):
+            with self.assertRaisesRegex(a.ContractError, 'old external bind error'):
+                r.bind('sample', 'auto-task', self.root, new_task=True,
+                       scope={'project': 'test-project', 'service': 'test-service',
+                              'environment': 'test', 'issue': 'cancel'})
+        return self.root / 'runs/auto-task'
+
+    def test_pending_external_cancel_is_record_only_and_retryable(self):
+        run = self.failed_external_bind()
+        base = r.git(self.path, 'rev-parse', 'HEAD')
+        for close in (None, 'failed', 'partial'):
+            with self.subTest(close=close), self.assertRaises(a.ContractError):
+                auto.finish('auto-task', self.root, close=close)
+        with self.assertRaises(a.ContractError):
+            a.transition('auto-task', 'running', self.root)
+        (self.path / 'seed.txt').write_text('unrelated work')
+        with mock.patch.object(auto, '_push', side_effect=a.ContractError('offline')):
+            with self.assertRaisesRegex(a.ContractError, 'offline'):
+                auto.finish('auto-task', self.root, close='cancelled')
+        outcome = auto.finish('auto-task', self.root, close='cancelled')
+        self.assertEqual(outcome['phase'], 'pushed')
+        expected = {f'.agent-work/tasks/auto-task/{n}' for n in ('spec.md', 'record.json', 'report.ko.md')}
+        changed = r.git(self.remote, 'diff', '--name-only', base, outcome['commit']).splitlines()
+        self.assertEqual(set(changed), expected)
+        record = json.loads(r.git(self.remote, 'show', 'main:.agent-work/tasks/auto-task/record.json'))
+        self.assertEqual(record['task_state'], 'cancelled')
+        self.assertEqual(record['source_root'], '.')
+        self.assertEqual(a.read_json(run / 'task.json')['control_enrollment'], 'pending')
+        self.assertEqual(auto.finish('auto-task', self.root, close='cancelled')['commit'], outcome['commit'])
+
+    def test_pending_external_cancel_rejects_started_owned_or_enrolled_work(self):
+        run = self.failed_external_bind()
+        manifest = run / 'publication.json'
+        original = manifest.read_bytes()
+        value = a.read_json(manifest)
+        value['paths'] = ['seed.txt']
+        a.write_json(manifest, value)
+        with self.assertRaises(a.ContractError):
+            auto.finish('auto-task', self.root, close='cancelled')
+        manifest.write_bytes(original)
+        controls = run / 'controls.json'
+        controls.write_text('{}')
+        with self.assertRaises(a.ContractError):
+            auto.finish('auto-task', self.root, close='cancelled')
+        controls.unlink()
+        a.event(run, 'transition', state='running')
+        with self.assertRaises(a.ContractError):
+            auto.finish('auto-task', self.root, close='cancelled')
+        self.assertEqual(a.read_json(run / 'task.json')['state'], 'queued')
+
+    def test_interrupted_pending_cancel_unlocks_only_its_dead_locks(self):
+        run = self.failed_external_bind()
+        publication_lock = self.path / '.agent-work/publication.lock'
+        with a.lock(publication_lock):
+            with self.assertRaisesRegex(a.ContractError, 'may still be running'):
+                auto.unlock('auto-task', self.root)
+            self.assertTrue(publication_lock.is_file())
+        # Exit after both finish locks have been acquired, deliberately skipping finally blocks.
+        script = ("import os, sys; from pathlib import Path; sys.path.insert(0, sys.argv[1]); "
+                  "import repo_automation as auto; auto._prepare = lambda *args: os._exit(37); "
+                  "auto.finish('auto-task', Path(sys.argv[2]), close='cancelled')")
+        child = subprocess.run([sys.executable, '-c', script, str(Path(a.__file__).parent), str(self.root)])
+        self.assertEqual(child.returncode, 37)
+        with self.assertRaisesRegex(a.ContractError, 'Another operation holds'):
+            auto.finish('auto-task', self.root, close='cancelled')
+        unrelated = self.path / '.agent-work/record.lock'
+        unrelated.write_bytes(publication_lock.read_bytes())
+        removed = auto.unlock('auto-task', self.root)['removed']
+        self.assertEqual({item['lock'] for item in removed}, {'.operation.lock', 'publication.lock'})
+        self.assertTrue(unrelated.exists())
+        unrelated.unlink()
+        with self.assertRaises(a.ContractError):
+            a.transition('auto-task', 'running', self.root)
+        outcome = auto.finish('auto-task', self.root, close='cancelled')
+        self.assertEqual(outcome['phase'], 'pushed')
+        self.assertEqual(a.read_json(run / 'task.json')['state'], 'cancelled')
+
     def test_real_publish_and_fresh_clone_startup(self):
         (self.path / 'unrelated.txt').write_text('existing')
         (self.path / 'owned l.txt').write_text('must not match bracket pathspec')
