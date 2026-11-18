@@ -12,6 +12,7 @@ Read registry.json, the selected module.json and the unconditional entry of inst
 
 Deliverable location:
 - Infrastructure and research deliverables (runbooks, verification and adoption reports): bind the task to the registered infra-docs repository, write each deliverable there as a tracked file under docs/<topic>/ and register it with repoctl track. Do not also copy it to outputs/<task-id>/; leave result.json artifacts empty and name the docs/ path in work and verification. This overrides "artifacts in outputs/<task-id>/" in shared/skills/submit-result/SKILL.md and "submit the report as an artifact" in modules/oss-rnd/instructions.md for such work.
+- Runbooks, guides and feature or verification documents in infra-docs follow shared/templates/reference-doc.ko.md: a reusable reference, not a task report. Keep dates, actors, task narrative and test-result tables in the task records; the document carries only a short verification-scope section. Adoption decisions keep modules/oss-rnd/adoption-report.ko.md. The evaluator checks template conformance as part of the review.
 - Framework work in this repository: deliverables go in outputs/<task-id>/ as before.
 
 ## Apply these references at their trigger

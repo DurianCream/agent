@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "id": "impact-document-integrity",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task reference-doc-template-20261118 --suite impact-document-integrity",
+      "metrics": {
+        "tests": 4
+      },
+      "evidence": [
+        {
+          "path": "runs/reference-doc-template-20261118/evidence/gate-test-45b2d11678bc4fcc982db719f9bfd396.json",
+          "sha256": "d0e5d65ceee35f7e995c39bae6807434ade52521654a0115d53143df6ef80d8e"
+        },
+        {
+          "path": "runs/reference-doc-template-20261118/evidence/gate-test-45b2d11678bc4fcc982db719f9bfd396.log",
+          "sha256": "59822c2ea89e2d163dff262bfb1134edf416b552a998d0c65258177dfbc9c1cb"
+        }
+      ]
+    },
+    {
+      "id": "all-runtime-tests",
+      "result": "passed",
+      "command": "python runtime/control_gate.py run-tests --task reference-doc-template-20261118 --suite all-runtime-tests",
+      "metrics": {
+        "tests": 223
+      },
+      "evidence": [
+        {
+          "path": "runs/reference-doc-template-20261118/evidence/gate-test-c3eb2a6e542b42ff839e6e4c0bae2432.json",
+          "sha256": "cfcf768992e76705612b895af94ed3bb1c9cc4d6dbb462d7a94ece90b2bbea18"
+        },
+        {
+          "path": "runs/reference-doc-template-20261118/evidence/gate-test-c3eb2a6e542b42ff839e6e4c0bae2432.log",
+          "sha256": "9484986f2f28c0f16e11fecce12308376cbdf090f923dbe9f41887b9971b31c4"
+        }
+      ]
+    }
+  ]
+}

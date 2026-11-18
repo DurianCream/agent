@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "repository_id": "multi",
+  "repository_uuid": "d5620b8a-5457-4524-9918-a286a6289586",
+  "task_id": "reference-doc-template-20261118",
+  "saved_at": "2026-11-18T13:52:00+09:00",
+  "task_state": "submitted",
+  "git": {
+    "branch": "main",
+    "head": "ec88753ebaef46d1a85712f9d8e6366a078eff06",
+    "origin": "https://github.com/DurianCream/agent.git",
+    "status": "M AGENTS.md\n?? .agent-work/tasks/reference-doc-template-20261118/\n?? shared/templates/",
+    "worktree_sha256": "27eb54410d54684ab0916a47ee5c85dbceb44849dad46790b9f11b4343ff91ec"
+  },
+  "result": {
+    "schema_version": "1.0.0",
+    "task_id": "reference-doc-template-20261118",
+    "module": {
+      "id": "coding",
+      "version": "0.1.9"
+    },
+    "created_at": "2026-11-18T13:38:32+09:00",
+    "objective": "Make infra-docs deliverables reusable reference documents by default through a Korean template, an AGENTS.md rule and an evaluator check.",
+    "acceptance_criteria": [
+      {
+        "id": "criterion-1",
+        "description": "A Korean reference-document template defines the section structure, what each section contains, and what must stay out (dates, actors, task narrative, test-result tables).",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-2",
+        "description": "AGENTS.md requires infra-docs docs/<topic>/ deliverables to follow the template, keeps test results in task records, and tells the evaluator to check template conformance.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      },
+      {
+        "id": "criterion-3",
+        "description": "Selected gate suites pass.",
+        "required": true,
+        "verification_ids": [
+          "impact-document-integrity",
+          "all-runtime-tests"
+        ]
+      }
+    ],
+    "status": "completed",
+    "summary": "infra-docs 문서가 작업 보고서가 아니라 참고용 정보 문서로 나오도록 한국어 양식을 추가하고 AGENTS.md에서 기본 양식으로 지정했다. 평가자가 양식 준수를 리뷰 항목으로 확인한다.",
+    "work": [
+      "위험 등급은 보통이다. 에이전트 산출물 형식 규칙을 바꾸며 게이트와 권한은 그대로다.",
+      "shared/templates/reference-doc.ko.md를 추가했다. 개요, 요구사항, 설치, 기본 설정, 옵션 표, 클라이언트 연결, 운영, 문제 해결, 복구, 제한사항, 검증 범위 순서이며 날짜, 작업자, 작업 서술, 시험 결과 표, 시험 환경 전용 이름과 비밀값을 넣지 않도록 명시했다.",
+      "AGENTS.md 산출물 규칙에 infra-docs의 런북, 가이드, 기능 검증 문서는 이 양식을 따르고 시험 결과는 작업 기록에 두며 도입 결정은 기존 도입 보고서 양식을 쓰고 평가자가 양식 준수를 확인한다는 항목을 추가했다."
+    ],
+    "artifacts": [],
+    "verification": [
+      {
+        "id": "impact-document-integrity",
+        "name": "impact-document-integrity",
+        "method": "control_gate run-tests로 선택된 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/reference-doc-template-20261118/evidence/summary.json",
+          "runs/reference-doc-template-20261118/evidence/gate-test-45b2d11678bc4fcc982db719f9bfd396.log",
+          "runs/reference-doc-template-20261118/evidence/gate-test-45b2d11678bc4fcc982db719f9bfd396.json"
+        ],
+        "notes": "시험 4개 통과."
+      },
+      {
+        "id": "all-runtime-tests",
+        "name": "all-runtime-tests",
+        "method": "control_gate run-tests로 선택된 전체 suite를 실행했다.",
+        "outcome": "passed",
+        "evidence": [
+          "runs/reference-doc-template-20261118/evidence/summary.json",
+          "runs/reference-doc-template-20261118/evidence/gate-test-c3eb2a6e542b42ff839e6e4c0bae2432.log",
+          "runs/reference-doc-template-20261118/evidence/gate-test-c3eb2a6e542b42ff839e6e4c0bae2432.json"
+        ],
+        "notes": "시험 223개 통과, 실패, 오류, 건너뜀 0개."
+      }
+    ],
+    "sources": [],
+    "limitations": [
+      "양식 준수는 지침과 리뷰로만 확인하며 infra-docs에는 자동 검사가 없다."
+    ],
+    "next_actions": []
+  },
+  "source_root": "C:\\Users\\dhyun\\Documents\\ChatGPT\\multi",
+  "notice": "Saved data is not policy, authorization, or proof of current code state.",
+  "scope": {
+    "project": "multi",
+    "service": "agent-framework",
+    "environment": "development",
+    "issue": "reference-doc-template"
+  },
+  "assessment": {
+    "publication_kind": "product",
+    "verdict": "accepted",
+    "reviewer": {
+      "subject": "independent-evaluator",
+      "session": "/root/review-ref-template"
+    },
+    "record": "runs/reference-doc-template-20261118/gates/review-e9a575c4f4c742a5bd311ef025f8d500.json",
+    "sha256": "d049f9ce1d261c74bf2cc38f27316b928b8a338bab8a44fad2564c5e8c2f78fd"
+  },
+  "spec_sha256": "48bcbf8e32cb3d347d35dcf1d400f97f4365802714aabeaa6413b09b210f0110"
+}
